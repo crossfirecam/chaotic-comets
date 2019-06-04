@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: 6a64b9a0b7529f1408767e5ace0c7f0b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - largeAsteroid: {instanceID: 0}
+  - alienShip: {instanceID: 0}
+  - canister: {instanceID: 0}
+  - playerShip1: {instanceID: 0}
+  - playerShip2: {instanceID: 0}
+  - player2GUI: {instanceID: 0}
+  - gameOverPanel: {instanceID: 0}
+  - gamePausePanel: {instanceID: 0}
+  - gameLevelPanel: {instanceID: 0}
+  - gameLevelShieldRechargeText: {instanceID: 0}
+  - swapP1text: {instanceID: 0}
+  - swapP2text: {instanceID: 0}
+  - buttonWhenPaused: {instanceID: 0}
+  - buttonWhenGameOver: {instanceID: 0}
+  - buttonWhenLeavingPauseBugFix: {instanceID: 0}
+  - musicLoop: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

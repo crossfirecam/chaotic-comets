@@ -5,6 +5,9 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 
+# Compiled versions and old compiled versions
+/Packages/
+
 # Visual Studio cache directory
 .vs/
 
