@@ -21,6 +21,7 @@ public class SpaceshipControls : MonoBehaviour {
 
     // Ship movement & teleport variables
     public float thrust, turnThrust;
+    private float brakingPower = 2f;
     private float thrustInput, turnInput;
     private GameObject teleportIn, teleportOut;
     private bool isNotTeleporting = true;
@@ -76,7 +77,8 @@ public class SpaceshipControls : MonoBehaviour {
             else { // If spaceship object resumed from savefile, ask savefile
                 Saving_PlayerManager data = Saving_SaveManager.LoadData();
                 if (playerNumber == 1) {
-                    credits = data.player1credits;
+                    credits = BetweenScenesScript.player1TempCredits;
+                    Debug.Log(credits);
                     shields = data.player1health;
                     bonus = data.player1bonus;
                     lives = data.player1lives;
@@ -87,7 +89,7 @@ public class SpaceshipControls : MonoBehaviour {
                     if (data.player1powerups[4] == 1) { ifTripleShot = true; tripleShotPowerup.gameObject.SetActive(true); }
                 }
                 else { // (playerNumber == 2)
-                    credits = data.player2credits;
+                    credits = BetweenScenesScript.player2TempCredits;
                     shields = data.player2health;
                     bonus = data.player2bonus;
                     lives = data.player2lives;
@@ -106,27 +108,31 @@ public class SpaceshipControls : MonoBehaviour {
                     prevshields = 80;
                 }
                 // Report back what was loaded from ships.
-                Debug.Log("Loaded. Player " + playerNumber + ": " + shields + " shields, " + credits + " credits, "
-                    + bonus + " bonus threshold, " + lives + " lives.");
+                Debug.Log("Loaded. Player " + playerNumber + ": " + shields + " shields, " + credits + " credits (previous shop save), "
+                    + BetweenScenesScript.player1TempCredits + " credits (current level)," + bonus + " bonus threshold, " + lives + " lives.");
             }
             if (playerNumber == 1) {
-                upgradeSpeed = BetweenScenesScript.UpgradesP1[0];
-                upgradeBrake = BetweenScenesScript.UpgradesP1[1];
-                upgradeFireRate = BetweenScenesScript.UpgradesP1[2];
-                upgradeShotSpeed = BetweenScenesScript.UpgradesP1[3];
+                upgradeSpeed = BetweenScenesScript.UpgradesP1[0] / 10f;
+                upgradeBrake = BetweenScenesScript.UpgradesP1[1] / 10f;
+                upgradeFireRate = BetweenScenesScript.UpgradesP1[2] / 10f;
+                upgradeShotSpeed = BetweenScenesScript.UpgradesP1[3] / 10f;
             }
             else if (playerNumber == 2) {
-                upgradeSpeed = BetweenScenesScript.UpgradesP2[0];
-                upgradeBrake = BetweenScenesScript.UpgradesP2[1];
-                upgradeFireRate = BetweenScenesScript.UpgradesP2[2];
-                upgradeShotSpeed = BetweenScenesScript.UpgradesP2[3];
+                upgradeSpeed = BetweenScenesScript.UpgradesP2[0] / 10f;
+                upgradeBrake = BetweenScenesScript.UpgradesP2[1] / 10f;
+                upgradeFireRate = BetweenScenesScript.UpgradesP2[2] / 10f;
+                upgradeShotSpeed = BetweenScenesScript.UpgradesP2[3] / 10f;
             }
             scoreText.text = "Credits:\n" + credits;
             livesText.text = "Lives: " + lives;
+            // Bullet force and fire rate are affected by multipliers purchased from the shop
             bulletForce = bulletForce * upgradeShotSpeed;
             fireRateNormal = fireRateNormal / upgradeFireRate;
             fireRateRapid = fireRateRapid / upgradeFireRate;
             fireRateTriple = fireRateTriple / upgradeFireRate;
+            // Thrust and brake efficiency are affected by multipliers purchased from the shop
+            thrust = thrust * upgradeSpeed;
+            brakingPower = brakingPower / upgradeBrake;
         }
     }
 	
@@ -199,22 +205,29 @@ public class SpaceshipControls : MonoBehaviour {
             transform.Rotate(Vector3.forward * turnInput * Time.deltaTime * turnThrust);
         }
 
+        // Active thrusting (forward or braking thrust)
         // Apply force on Y axis of spaceship, multiply by thrust
         if (thrustInput != 0 && sprite.enabled && isNotTeleporting) {
             if (!audioShipThrust.isPlaying) { audioShipThrust.Play(); }
             if (!thruster1.isPlaying) { thruster1.Play(); }
             if (!thruster2.isPlaying) { thruster2.Play(); }
-            // If thrust is less than 0, then ship is braking. On difficulty hard, ignore brake.
+
+            // If thrust is less than 0, then ship is braking. On hard difficulty, brake is less powerful.
             if (thrustInput > 0) {
                 if (BetweenScenesScript.Difficulty != 2) {
-                    rb.drag = rb.velocity.magnitude / 2f;
+                    rb.drag = rb.velocity.magnitude / brakingPower;
+                }
+                else {
+                    rb.drag = rb.velocity.magnitude / brakingPower / 2;
                 }
             }
+            // If thrust is more than 0, then ship is moving forward.
             else {
                 rb.AddRelativeForce(Vector2.up * -thrustInput * Time.deltaTime * thrust);
                 rb.drag = rb.velocity.magnitude / 10f;
             }
         }
+        // Passive Drag (no thruster controls pressed)
         // Apply passive drag depending on if retro thrusters are equipped or not
         else {
             if (audioShipThrust.isPlaying) { audioShipThrust.Stop(); }
@@ -228,7 +241,7 @@ public class SpaceshipControls : MonoBehaviour {
                     rb.drag = rb.velocity.magnitude / 2f;
                 }
             }
-            else { rb.drag = rb.velocity.magnitude / 8; }
+            else { rb.drag = rb.velocity.magnitude / 8f; }
         }
     }
 
@@ -475,33 +488,32 @@ public class SpaceshipControls : MonoBehaviour {
     void GivePowerup() {
         powerupUndecided = true;
         while (powerupUndecided) {
-            gM.AlienAndPowerupLogic("powerupRespawn");
             float randomiser = Random.Range(0f, 6f);
             if (randomiser < 0.2f) { // Award 1000 credits (least likely - 1/30 chance)
-                powerupUndecided = false; ScorePoints(1000);
+                PowerupDecided(); ScorePoints(1000);
             }
             else if (randomiser < 1f && !ifInsuranceActive && AtLeastOneOtherPowerup()) { // Give insurance powerup
-                powerupUndecided = false; ifInsuranceActive = true; insurancePowerup.gameObject.SetActive(true);
+                PowerupDecided(); ifInsuranceActive = true; insurancePowerup.gameObject.SetActive(true);
             }
             else if (randomiser < 2f && !ifFarShot) { // Give far shot powerup
-                powerupUndecided = false; ifFarShot = true; farShotPowerup.gameObject.SetActive(true);
+                PowerupDecided(); ifFarShot = true; farShotPowerup.gameObject.SetActive(true);
             }
             else if (randomiser < 3f && !ifTripleShot) { // Give triple shot powerup
-                powerupUndecided = false; ifTripleShot = true; tripleShotPowerup.gameObject.SetActive(true);
+                PowerupDecided(); ifTripleShot = true; tripleShotPowerup.gameObject.SetActive(true);
             }
             else if (randomiser < 4f && !ifRapidShot) { // Give rapid shot powerup
-                powerupUndecided = false; ifRapidShot = true; rapidShotPowerup.gameObject.SetActive(true);
+                PowerupDecided(); ifRapidShot = true; rapidShotPowerup.gameObject.SetActive(true);
             }
             else if (randomiser < 5f && !ifRetroThruster) { // Give retro thruster powerup
-                powerupUndecided = false; ifRetroThruster = true; retroThrusterPowerup.gameObject.SetActive(true);
+                PowerupDecided(); ifRetroThruster = true; retroThrusterPowerup.gameObject.SetActive(true);
             }
             // Give shield top-up if less than 60 (if respawning, select another powerup)
             else if (randomiser < 6f && shields <= 60f && colliderEnabled) {
-                powerupUndecided = false; shields = 80;
+                PowerupDecided(); shields = 80;
             }
             // If all powerups have been collected, refill shields or award 1000/200 credits
             else if (ifInsuranceActive && ifFarShot && ifTripleShot && ifRapidShot && ifRetroThruster) {
-                powerupUndecided = false;
+                PowerupDecided();
                 if (randomiser < 0.2f) { ScorePoints(1000); }
                 else if (randomiser < 4f && shields <= 60f && colliderEnabled) { shields = 80; } // (if respawning, select a score prize)
                 else { ScorePoints(200); }
@@ -510,6 +522,10 @@ public class SpaceshipControls : MonoBehaviour {
         Destroy(canister);
         audioShipImpact.clip = powerupReceived;
         audioShipImpact.Play();
+    }
+    private void PowerupDecided() {
+        gM.AlienAndPowerupLogic("powerupRespawn");
+        powerupUndecided = false;
     }
 
     // Basically only gives insurance powerup once at least one other powerup is received
@@ -588,5 +604,9 @@ public class SpaceshipControls : MonoBehaviour {
         if (transform.position.x > gM.screenRight) { newPosition.x = gM.screenLeft; }
         if (transform.position.x < gM.screenLeft) { newPosition.x = gM.screenRight; }
         transform.position = newPosition;
+    }
+
+    public void CheatGiveCredits() {
+        credits += 10000;
     }
 }

@@ -26,9 +26,9 @@ public class MainMenuScript : MonoBehaviour {
     public GameObject diffSelectedObject;
     private readonly string diffTitle0 = "Select difficulty", diffTitle1 = "Select difficulty\n(both players)";
     private readonly string diffText0 = "Go back to main menu.";
-    private readonly string diffText1 = "Ship is always equipped with Auto-Brake and comes to a near-complete stop.";
+    private readonly string diffText1 = "Ship is always equipped with Auto-Brake and comes to a near-complete stop. No manual braking required.";
     private readonly string diffText2 = "Ship is able to brake. Standard gameplay. Try other difficulties to change ship's handling.";
-    private readonly string diffText3 = "Ship is not able to brake. Auto-Brake is less effective. A real test of maneuverability.";
+    private readonly string diffText3 = "Ship's manual brake and Auto-Brake are less effective. A real test of maneuverability.";
 
     // Controller selection screen
     private readonly string conText1a = "P1 Keyboard", conText2a = "P1 Gamepad"; // One Player selected
@@ -50,6 +50,8 @@ public class MainMenuScript : MonoBehaviour {
         BetweenScenesScript.ResumingFromSave = false; // Set to false first, in case game is closed while save is being loaded
         BetweenScenesScript.MusicVolume = PlayerPrefs.GetFloat("Music");
         BetweenScenesScript.SFXVolume = PlayerPrefs.GetFloat("SFX");
+        BetweenScenesScript.player1TempCredits = 0; // Reset temporary credit count to 0. These will be set if a store is loaded and progressed past
+        BetweenScenesScript.player2TempCredits = 0;
         mixer.SetFloat("MusicVolume", Mathf.Log10(BetweenScenesScript.MusicVolume) * 20);
         mixer.SetFloat("SFXVolume", Mathf.Log10(BetweenScenesScript.SFXVolume) * 20);
         StartCoroutine(FadeBlack("from"));

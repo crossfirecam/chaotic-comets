@@ -37,14 +37,16 @@ public class ShopScript : MonoBehaviour {
     public bool p1IsReady = false, p2IsReady = false;
 
     // Shop UI
-    public Button p1UpgButton1, p1UpgButton2, p1UpgButton3, p1UpgButton4, p2UpgButton1, p2UpgButton2, p2UpgButton3, p2UpgButton4;
+    public Button p1UpgButton0, p1UpgButton1, p1UpgButton2, p1UpgButton3, p2UpgButton0, p2UpgButton1, p2UpgButton2, p2UpgButton3;
+    private int baseUpgradePrice = 500, priceIncreasePerLevel = 500, upgradeCap = 15;
 
     void Start() {
         if (BetweenScenesScript.MusicVolume > 0f) { musicLoop.Play(); }
 
+        // Nullexception is possible here, but only if shop is loaded without a save file. In typical gameplay it isn't possible
         data = Saving_SaveManager.LoadData();
         p1ShieldBar.fillAmount = data.player1health / 80;
-        p1ScoreText.text = "Credits:\n" + data.player1credits;
+        BetweenScenesScript.player1TempCredits = data.player1credits;
         p1LivesText.text = "Lives: " + data.player1lives;
         if (data.player1powerups[0] == 1) { p1InsurancePowerup.gameObject.SetActive(true); }
         if (data.player1powerups[1] == 1) { p1FarShotPowerup.gameObject.SetActive(true); }
@@ -58,7 +60,7 @@ public class ShopScript : MonoBehaviour {
         else if (data.playerCount == 2) {
             player2GUI.SetActive(true); player2AbsentText.gameObject.SetActive(false);
             p2ShieldBar.fillAmount = data.player2health / 80;
-            p2ScoreText.text = "Credits:\n" + data.player2credits;
+            BetweenScenesScript.player2TempCredits = data.player2credits;
             p2LivesText.text = "Lives: " + data.player2lives;
             if (data.player2powerups[0] == 1) { p2InsurancePowerup.gameObject.SetActive(true); }
             if (data.player2powerups[1] == 1) { p2FarShotPowerup.gameObject.SetActive(true); }
@@ -70,6 +72,7 @@ public class ShopScript : MonoBehaviour {
         UpdateButtonText();
         UpdateEventSystemChoices();
         StartCoroutine(FadeBlack("from"));
+        Cursor.visible = false;
     }
 
     void Update() {
@@ -85,14 +88,17 @@ public class ShopScript : MonoBehaviour {
         }
     }
 
+    // Code for shop's Ready system. If both players are ready, shop closes.
     public void ReadyUp(int i) {
+        // 
         Navigation customNav = new Navigation {
             mode = Navigation.Mode.Explicit };
-
         Button[] listOfButtons = GameObject.FindObjectsOfType<Button>();
+
+
         if (!p1IsReady && i == 1) {
             p1IsReady = true; p1ReadyButton.GetComponentInChildren<Text>().text = "Unready";
-            //customNav.selectOnUp = null; p1ReadyButton.GetComponent<Button>().navigation = customNav;
+            customNav.selectOnUp = null; p1ReadyButton.GetComponent<Button>().navigation = customNav;
 
             foreach (Button gameObj in listOfButtons) { // Find all P1 buttons that aren't 'Ready' button, and disable them
                 if (gameObj.transform.name.StartsWith("P1") && !gameObj.transform.name.EndsWith("Ready")) {
@@ -102,7 +108,7 @@ public class ShopScript : MonoBehaviour {
         }
         else if (p1IsReady && i == 1) {
             p1IsReady = false; p1ReadyButton.GetComponentInChildren<Text>().text = "Ready";
-            //customNav.selectOnUp = p1UpgButton4; p1ReadyButton.GetComponent<Button>().navigation = customNav;
+            customNav.selectOnUp = p1UpgButton3; p1ReadyButton.GetComponent<Button>().navigation = customNav;
 
             foreach (Button gameObj in listOfButtons) { // Find all P1 buttons that aren't 'Ready' button, and disable them
                 if (gameObj.transform.name.StartsWith("P1") && !gameObj.transform.name.EndsWith("Ready")) {
@@ -110,9 +116,10 @@ public class ShopScript : MonoBehaviour {
                 }
             }
         }
+
         if (!p2IsReady && i == 2) {
             p2IsReady = true; p2ReadyButton.GetComponentInChildren<Text>().text = "Unready";
-            //customNav.selectOnUp = null; p1ReadyButton.GetComponent<Button>().navigation = customNav;
+            customNav.selectOnUp = null; p1ReadyButton.GetComponent<Button>().navigation = customNav;
 
             foreach (Button gameObj in listOfButtons) { // Find all P1 buttons that aren't 'Ready' button, and disable them
                 if (gameObj.transform.name.StartsWith("P2") && !gameObj.transform.name.EndsWith("Ready")) {
@@ -122,7 +129,7 @@ public class ShopScript : MonoBehaviour {
         }
         else if (p2IsReady && i == 2) {
             p2IsReady = false; p2ReadyButton.GetComponentInChildren<Text>().text = "Ready";
-            //customNav.selectOnUp = p2UpgButton4; p1ReadyButton.GetComponent<Button>().navigation = customNav;  
+            customNav.selectOnUp = p2UpgButton3; p1ReadyButton.GetComponent<Button>().navigation = customNav;  
 
             foreach (Button gameObj in listOfButtons) { // Find all P1 buttons that aren't 'Ready' button, and disable them
                 if (gameObj.transform.name.StartsWith("P2") && !gameObj.transform.name.EndsWith("Ready")) {
@@ -153,17 +160,40 @@ public class ShopScript : MonoBehaviour {
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
-    * Upgrades code
+    * Upgrades code.
+    * They must be separate functions due to how Unity handles button press scripting. Only one variable can be passed per button.
     * ------------------------------------------------------------------------------------------------------------------ */
 
-    public void PerformUpgrade(int whichUpgrade) {
+    public void PerformUpgradeP1(int whichUpgrade) {
         if (p1JoyEvents.currentSelectedGameObject.name.StartsWith("P1") || p1KeyEvents.currentSelectedGameObject.name.StartsWith("P1")) {
-            BetweenScenesScript.UpgradesP1[whichUpgrade] += 0.1f;
-            Debug.Log(string.Join(",", BetweenScenesScript.UpgradesP1));
+            if (BetweenScenesScript.UpgradesP1[whichUpgrade] < upgradeCap) {
+                int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP1[whichUpgrade] - 10);
+                if (BetweenScenesScript.player1TempCredits > price) {
+                    BetweenScenesScript.UpgradesP1[whichUpgrade] += 1;
+                    BetweenScenesScript.player1TempCredits -= price;
+                    Debug.Log("Upgrades: " + string.Join(",", BetweenScenesScript.UpgradesP1) + " Credits left: " + BetweenScenesScript.player1TempCredits);
+                }
+                else {
+                    Debug.Log("Upgrade failed, not enough credits");
+                }
+            }
         }
-        else if (p2JoyEvents.currentSelectedGameObject.name.StartsWith("P2") || p2KeyEvents.currentSelectedGameObject.name.StartsWith("P2")) {
-            BetweenScenesScript.UpgradesP2[whichUpgrade] += 0.1f;
-            Debug.Log(string.Join(",", BetweenScenesScript.UpgradesP2));
+        UpdateButtonText();
+    }
+
+    public void PerformUpgradeP2(int whichUpgrade) {
+        if (p2JoyEvents.currentSelectedGameObject.name.StartsWith("P2") || p2KeyEvents.currentSelectedGameObject.name.StartsWith("P2")) {
+            if (BetweenScenesScript.UpgradesP2[whichUpgrade] < upgradeCap) {
+                int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP2[whichUpgrade] - 10);
+                if (BetweenScenesScript.player2TempCredits > price) {
+                    BetweenScenesScript.UpgradesP2[whichUpgrade] += 1;
+                    BetweenScenesScript.player2TempCredits -= price;
+                    Debug.Log("Upgrades: " + string.Join(",", BetweenScenesScript.UpgradesP2) + " Credits left: " + BetweenScenesScript.player2TempCredits);
+                }
+                else {
+                    Debug.Log("Upgrade failed, not enough credits");
+                }
+            }
         }
         UpdateButtonText();
     }
@@ -212,6 +242,7 @@ public class ShopScript : MonoBehaviour {
             buttonWhenPaused.Select();
             Time.timeScale = 0;
             CheckPlayerControls();
+            Cursor.visible = true;
         }
         else if (intent == 1) { // Resume game
 
@@ -230,6 +261,7 @@ public class ShopScript : MonoBehaviour {
             if (BetweenScenesScript.MusicVolume > 0f) { musicLoop.Play(); }
             gamePausePanel.SetActive(false);
             Time.timeScale = 1;
+            Cursor.visible = false;
         }
     }
     // Each time the pause menu is used, change the buttons for controller swapping depending on their state
@@ -245,29 +277,38 @@ public class ShopScript : MonoBehaviour {
      * Misc code
      * ------------------------------------------------------------------------------------------------------------------ */
     
+
+    // If a button pressed begins with 'P1' or 'P2', and does not end with 'Ready', then update the button's text based on BetweenScenesScript variables
     private void UpdateButtonText() {
         Button[] listOfButtons = GameObject.FindObjectsOfType<Button>();
-        //int i = 0; int j = 0;
-        /*foreach (Button gameObj in listOfButtons) {
+        foreach (Button gameObj in listOfButtons) {
+            string tempName = gameObj.transform.name;
+            tempName = tempName.Substring(tempName.Length - 1, 1);
+            if (int.TryParse(tempName, out int i)) {
+                i = int.Parse(tempName);
+            }
+            int priceP1 = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP1[i] - 10);
+            int priceP2 = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP2[i] - 10);
+            string upgradeTier; int tempUpgradeNumLength;
             if (gameObj.transform.name.StartsWith("P1") && !gameObj.transform.name.EndsWith("Ready")) {
-                gameObj.GetComponentInChildren<Text>().text = "x" + BetweenScenesScript.UpgradesP1[i].ToString() +
-                    " (Upgrade: 1000c)";
-                i += 1;
+                tempUpgradeNumLength = BetweenScenesScript.UpgradesP1[i].ToString().Length - 1;
+                upgradeTier = BetweenScenesScript.UpgradesP1[i].ToString().Insert(tempUpgradeNumLength, ".");
+                gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Upgrade: " + priceP1.ToString() + "c)";
+                if (BetweenScenesScript.UpgradesP1[i] == upgradeCap) {
+                    gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Maximum upgrade)";
+                }
             }
-            if (gameObj.transform.name.StartsWith("P2") && !gameObj.transform.name.EndsWith("Ready")) {
-                gameObj.GetComponentInChildren<Text>().text = "x" + BetweenScenesScript.UpgradesP2[j].ToString() +
-                    " (Upgrade: 1000c)";
-                j += 1;
+            else if (gameObj.transform.name.StartsWith("P2") && !gameObj.transform.name.EndsWith("Ready")) {
+                tempUpgradeNumLength = BetweenScenesScript.UpgradesP2[i].ToString().Length - 1;
+                upgradeTier = BetweenScenesScript.UpgradesP2[i].ToString().Insert(tempUpgradeNumLength, ".");
+                gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Upgrade: " + priceP2.ToString() + "c)";
+                if (BetweenScenesScript.UpgradesP2[i] == upgradeCap) {
+                    gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Maximum upgrade)";
+                }
             }
-        }*/
-        p1UpgButton1.GetComponentInChildren<Text>().text = "x" + BetweenScenesScript.UpgradesP1[0].ToString() + " (Upgrade: 1000c)";
-        p1UpgButton2.GetComponentInChildren<Text>().text = "x" + BetweenScenesScript.UpgradesP1[1].ToString() + " (Upgrade: 1000c)";
-        p1UpgButton3.GetComponentInChildren<Text>().text = "x" + BetweenScenesScript.UpgradesP1[2].ToString() + " (Upgrade: 1000c)";
-        p1UpgButton4.GetComponentInChildren<Text>().text = "x" + BetweenScenesScript.UpgradesP1[3].ToString() + " (Upgrade: 1000c)";
-        p2UpgButton1.GetComponentInChildren<Text>().text = "x" + BetweenScenesScript.UpgradesP2[0].ToString() + " (Upgrade: 1000c)";
-        p2UpgButton2.GetComponentInChildren<Text>().text = "x" + BetweenScenesScript.UpgradesP2[1].ToString() + " (Upgrade: 1000c)";
-        p2UpgButton3.GetComponentInChildren<Text>().text = "x" + BetweenScenesScript.UpgradesP2[2].ToString() + " (Upgrade: 1000c)";
-        p2UpgButton4.GetComponentInChildren<Text>().text = "x" + BetweenScenesScript.UpgradesP2[3].ToString() + " (Upgrade: 1000c)";
+            p1ScoreText.text = "Credits:\n" + BetweenScenesScript.player1TempCredits;
+            if (data.playerCount == 2) { p2ScoreText.text = "Credits:\n" + BetweenScenesScript.player2TempCredits; }
+        }
     }
 
 

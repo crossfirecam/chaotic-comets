@@ -42,10 +42,10 @@ public class Saving_PlayerManager
         if (player1GameObject.ifRetroThruster) { player1powerups[2] = 1; }
         if (player1GameObject.ifRapidShot) { player1powerups[3] = 1; }
         if (player1GameObject.ifTripleShot) { player1powerups[4] = 1; }
-        player1upgrades[0] = player1GameObject.upgradeSpeed;
-        player1upgrades[1] = player1GameObject.upgradeBrake;
-        player1upgrades[2] = player1GameObject.upgradeFireRate;
-        player1upgrades[3] = player1GameObject.upgradeShotSpeed;
+        player1upgrades[0] = BetweenScenesScript.UpgradesP1[0];
+        player1upgrades[1] = BetweenScenesScript.UpgradesP1[1];
+        player1upgrades[2] = BetweenScenesScript.UpgradesP1[2];
+        player1upgrades[3] = BetweenScenesScript.UpgradesP1[3];
         Debug.Log("Saved. Player 1: " + player1health + " shields, " + player1credits + " credits, "
             + player1bonus + " bonus threshold, " + player1lives + " lives. Powerups: " + string.Join(",", player1powerups)
             + ", Upgrades: " + string.Join(",", player1upgrades));
@@ -59,10 +59,10 @@ public class Saving_PlayerManager
             if (player2GameObject.ifRetroThruster) { player2powerups[2] = 1; }
             if (player2GameObject.ifRapidShot) { player2powerups[3] = 1; }
             if (player2GameObject.ifTripleShot) { player2powerups[4] = 1; }
-            player1upgrades[0] = player1GameObject.upgradeSpeed;
-            player1upgrades[1] = player1GameObject.upgradeBrake;
-            player1upgrades[2] = player1GameObject.upgradeFireRate;
-            player1upgrades[3] = player1GameObject.upgradeShotSpeed;
+            player2upgrades[0] = BetweenScenesScript.UpgradesP2[0];
+            player2upgrades[1] = BetweenScenesScript.UpgradesP2[1];
+            player2upgrades[2] = BetweenScenesScript.UpgradesP2[2];
+            player2upgrades[3] = BetweenScenesScript.UpgradesP2[3];
             Debug.Log("Saved. Player 2: " + player2health + " shields, " + player2credits + " credits, "
                 + player2bonus + " bonus threshold, " + player2lives + " lives. Powerups: " + string.Join(",", player2powerups)
                 + ", Upgrades: " + string.Join(",", player2upgrades));

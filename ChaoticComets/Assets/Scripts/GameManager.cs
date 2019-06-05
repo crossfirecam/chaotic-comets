@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
     // Gameplay related objects
     public GameObject largeAsteroid, alienShip, canister;
     public GameObject playerShip1, playerShip2;
+    private float ufoAmountSpawned, canisterAmountSpawned, propCap; // Variables used to track how many props have, and can spawn.
 
     // UI related objects
     public GameObject fadeBlack, player2GUI;
@@ -100,17 +101,17 @@ public class GameManager : MonoBehaviour {
     }
 
     public void AlienAndPowerupLogic(string reason) {
-        // Alien has 10% chance of not coming the first time. 10-15sec to spawn.
-        // Alien has 50% chance of not coming next times. 15-20sec to spawn.
-        // Canister has 20% chance of not coming the first time. 8-20sec to spawn.
-        // Canister has 80% chance of not coming next times. 16-24sec to spawn.
+        // Alien has 10-15sec to spawn the first time.
+        // Alien has 15-30sec to spawn all following times.
+        // Canister has 8-20sec to spawn the first time.
+        // Canister has 20-40sec to spawn all following times.
         
-        float[] alienFirstTimeArray = { 0.1f, 10f, 15f };
-        float[] alienSubsequentArray = { 0.5f, 15f, 20f };
-        float[] canisterFirstTimeArray = { 0.2f, 8f, 20f };
-        float[] canisterSubsequentArray = { 0.8f, 16f, 24f };
+        float[] alienFirstTimeArray = { 10f, 15f };
+        float[] alienSubsequentArray = { 15f, 30f };
+        float[] canisterFirstTimeArray = { 8f, 16f };
+        float[] canisterSubsequentArray = { 20f, 40f };
         float[] chosenArray = { }; // Left blank to be filled by one of the above
-        float noAppear; float minTime; float maxTime;
+        float minTime; float maxTime;
 
         if (reason == "initialAlienSetup") {
             chosenArray = alienFirstTimeArray; }
@@ -120,25 +121,24 @@ public class GameManager : MonoBehaviour {
             chosenArray = alienSubsequentArray; }
         else { // (reason == "powerupRespawn")
             chosenArray = canisterSubsequentArray; }
-
-        noAppear = chosenArray[0];
-        minTime = chosenArray[1];
-        maxTime = chosenArray[2];
+        
+        minTime = chosenArray[0];
+        maxTime = chosenArray[1];
 
         float randomiser = Random.Range(0f, 1f);
         float randomTime = Random.Range(minTime, maxTime);
-        // If the randomiser is less than noAppear, the alien/canister doesn't spawn
-        if (randomiser >= noAppear) {
-            if (reason == "initialAlienSetup" || reason == "alienRespawn") {
-                if (levelNo > 1) { // Alien will not appear on lvl 1
-                    Debug.Log("Alien will spawn in: " + randomTime);
-                    Invoke("RespawnAlien", randomTime);
-                }
+
+        if ((reason == "initialAlienSetup" || reason == "alienRespawn") && ufoAmountSpawned < propCap) {
+            if (levelNo > 1) { // Alien will not appear on lvl 1
+                ufoAmountSpawned += 1;
+                Debug.Log("Next UFO will spawn in: " + randomTime + ". Only " + (propCap - ufoAmountSpawned) + " more can spawn.");
+                Invoke("RespawnAlien", randomTime);
             }
-            else if (reason == "initialPowerupSetup" || reason == "powerupRespawn") {
-                Debug.Log("Powerup will spawn in: " + randomTime);
-                Invoke("RespawnCanister", randomTime);
-            }
+        }
+        else if ((reason == "initialPowerupSetup" || reason == "powerupRespawn") && canisterAmountSpawned < propCap) {
+            canisterAmountSpawned += 1;
+            Debug.Log("Next canister will spawn in: " + randomTime + ". Only " + (propCap - canisterAmountSpawned) + " more can spawn.");
+            Invoke("RespawnCanister", randomTime);
         }
     }
 
@@ -245,6 +245,12 @@ public class GameManager : MonoBehaviour {
         // Player Respawn
         if (!player1dead) { playerShip1.SendMessage("RespawnShip"); }
         if (!player2dead) { playerShip2.SendMessage("RespawnShip"); }
+
+        // Set a cap on how many UFOs or canisters can spawn
+        if (levelNo == 1) { propCap = 2; }
+        else if (levelNo < 3) { propCap = 3; }
+        else if (levelNo < 9) { propCap = 4; }
+        else { propCap = 5; }
         // Set when the first UFO and canister will spawn
         AlienAndPowerupLogic("initialAlienSetup");
         AlienAndPowerupLogic("initialPowerupSetup");
