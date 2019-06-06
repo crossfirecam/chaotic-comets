@@ -124,6 +124,7 @@ public class MainMenuScript : MonoBehaviour {
 
     // Display a prompt to select difficulty
     public void ShowDifficulties() {
+        saveOptionDialog.SetActive(false);
         difficultyDialog.SetActive(true);
         diffNormalButton.Select();
         mainMenuPanel.SetActive(false);
@@ -151,6 +152,7 @@ public class MainMenuScript : MonoBehaviour {
     // If i = 9, then this was called from the Control Test button. This value isn't used in gameplay,
     // instead just to tell the Update loop here if a B press needs to send the user back to main menu instead of difficulty panel.
     public void ShowControlOptions() {
+        saveOptionDialog.SetActive(false);
         diffSelectedObject.SetActive(true);
         if (BetweenScenesScript.Difficulty == 0) { diffSelectedText.text = diffSelect0; }
         if (BetweenScenesScript.Difficulty == 1) { diffSelectedText.text = diffSelect1; }

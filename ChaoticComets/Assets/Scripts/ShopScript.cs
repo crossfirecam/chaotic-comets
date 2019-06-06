@@ -31,6 +31,7 @@ public class ShopScript : MonoBehaviour {
     // Event System handling
     public EventSystem pauseEventSystem;
     public EventSystemShop p1JoyEvents, p1KeyEvents, p2JoyEvents, p2KeyEvents;
+    private EventSystem p1SelectedSystem, p2SelectedSystem;
 
     // Readying before level transition
     public Button p1ReadyButton, p2ReadyButton;
@@ -69,10 +70,28 @@ public class ShopScript : MonoBehaviour {
             if (data.player2powerups[4] == 1) { p2TripleShotPowerup.gameObject.SetActive(true); }
             readyPromptText.text = "Both players 'Ready' to\nContinue to Level " + (data.level + 1).ToString() + "...";
         }
+
+        SetActiveEventSystems(1);
+        // If space or K is held during level transition, the player will instantly ready up. This small section of code prevents
+        // that by calling the Ready button to activate one frame later.
+        StartCoroutine(DelayedReady());
+
         UpdateButtonText();
         UpdateEventSystemChoices();
         StartCoroutine(FadeBlack("from"));
         Cursor.visible = false;
+    }
+
+    private IEnumerator DelayedReady() {
+        p1SelectedSystem.SetSelectedGameObject(buttonWhenLeavingPauseBugFix.gameObject);
+        if (BetweenScenesScript.PlayerCount == 2) {
+            p2SelectedSystem.SetSelectedGameObject(buttonWhenLeavingPauseBugFix.gameObject);
+        }
+        yield return new WaitForSeconds(0.2f);
+        p1SelectedSystem.SetSelectedGameObject(p1ReadyButton.gameObject);
+        if (BetweenScenesScript.PlayerCount == 2) {
+            p2SelectedSystem.SetSelectedGameObject(p2ReadyButton.gameObject);
+        }
     }
 
     void Update() {
@@ -84,6 +103,18 @@ public class ShopScript : MonoBehaviour {
             }
             else {
                 PauseGame(0);
+            }
+        }
+        // Each frame, check what button is highlighted. Pull a button back into focus if mouse clicks away from a button.
+        // If the mouse is used to click auto highlight away, then drag a highlight back onto a certain button.
+        if (p1SelectedSystem.gameObject.activeInHierarchy) {
+            if (p1SelectedSystem.currentSelectedGameObject == null || p1SelectedSystem.currentSelectedGameObject.Equals(null)) {
+                p1SelectedSystem.SetSelectedGameObject(p1ReadyButton.gameObject);
+            }
+        }
+        if (BetweenScenesScript.PlayerCount == 2 && p2SelectedSystem.gameObject.activeInHierarchy) {
+            if (p2SelectedSystem.currentSelectedGameObject == null || p2SelectedSystem.currentSelectedGameObject.Equals(null)) {
+                p2SelectedSystem.SetSelectedGameObject(p2ReadyButton.gameObject);
             }
         }
     }
@@ -165,7 +196,7 @@ public class ShopScript : MonoBehaviour {
     * ------------------------------------------------------------------------------------------------------------------ */
 
     public void PerformUpgradeP1(int whichUpgrade) {
-        if (p1JoyEvents.currentSelectedGameObject.name.StartsWith("P1") || p1KeyEvents.currentSelectedGameObject.name.StartsWith("P1")) {
+        if (p1SelectedSystem.currentSelectedGameObject.name.StartsWith("P1")) {
             if (BetweenScenesScript.UpgradesP1[whichUpgrade] < upgradeCap) {
                 int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP1[whichUpgrade] - 10);
                 if (BetweenScenesScript.player1TempCredits > price) {
@@ -182,7 +213,7 @@ public class ShopScript : MonoBehaviour {
     }
 
     public void PerformUpgradeP2(int whichUpgrade) {
-        if (p2JoyEvents.currentSelectedGameObject.name.StartsWith("P2") || p2KeyEvents.currentSelectedGameObject.name.StartsWith("P2")) {
+        if (p2SelectedSystem.currentSelectedGameObject.name.StartsWith("P2")) {
             if (BetweenScenesScript.UpgradesP2[whichUpgrade] < upgradeCap) {
                 int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP2[whichUpgrade] - 10);
                 if (BetweenScenesScript.player2TempCredits > price) {
@@ -229,13 +260,9 @@ public class ShopScript : MonoBehaviour {
 
     public void PauseGame(int intent) {
         if (intent == 0) { // Pause game
-            
+
             // This section is Shop-specific. It deactivates all shop-related Event Systems, and enables pause Event System
-            pauseEventSystem.GetComponent<StandaloneInputModule>().enabled = true;
-            p1JoyEvents.gameObject.SetActive(false);
-            p2JoyEvents.gameObject.SetActive(false);
-            p1KeyEvents.gameObject.SetActive(false);
-            p2KeyEvents.gameObject.SetActive(false);
+            SetActiveEventSystems(0);
 
             musicLoop.Pause();
             gamePausePanel.SetActive(true);
@@ -250,13 +277,7 @@ public class ShopScript : MonoBehaviour {
 
             // This section is Shop-specific. It deactivates pause Event System, and activates only the Event System that matches the control scheme chosen
             UpdateEventSystemChoices();
-            pauseEventSystem.GetComponent<StandaloneInputModule>().enabled = false;
-            if (BetweenScenesScript.ControlTypeP1 == 0) { p1JoyEvents.gameObject.SetActive(true); }
-            else { p1KeyEvents.gameObject.SetActive(true); }
-            if (BetweenScenesScript.PlayerCount == 2) {
-                if (BetweenScenesScript.ControlTypeP2 == 0) { p2JoyEvents.gameObject.SetActive(true); }
-                else { p2KeyEvents.gameObject.SetActive(true); }
-            }
+            SetActiveEventSystems(1);
 
             if (BetweenScenesScript.MusicVolume > 0f) { musicLoop.Play(); }
             gamePausePanel.SetActive(false);
@@ -277,6 +298,36 @@ public class ShopScript : MonoBehaviour {
      * Misc code
      * ------------------------------------------------------------------------------------------------------------------ */
     
+    private void SetActiveEventSystems(int intent) {
+        if (intent == 0) {
+            pauseEventSystem.GetComponent<StandaloneInputModule>().enabled = true;
+            p1JoyEvents.gameObject.SetActive(false);
+            p2JoyEvents.gameObject.SetActive(false);
+            p1KeyEvents.gameObject.SetActive(false);
+            p2KeyEvents.gameObject.SetActive(false);
+        }
+        else if (intent == 1) {
+            pauseEventSystem.GetComponent<StandaloneInputModule>().enabled = false;
+            if (BetweenScenesScript.ControlTypeP1 == 0) {
+                p1JoyEvents.gameObject.SetActive(true);
+                p1SelectedSystem = p1JoyEvents;
+            }
+            else {
+                p1KeyEvents.gameObject.SetActive(true);
+                p1SelectedSystem = p1KeyEvents;
+            }
+            if (BetweenScenesScript.PlayerCount == 2) {
+                if (BetweenScenesScript.ControlTypeP2 == 0) {
+                    p2JoyEvents.gameObject.SetActive(true);
+                    p2SelectedSystem = p2JoyEvents;
+}
+                else {
+                    p2KeyEvents.gameObject.SetActive(true);
+                    p2SelectedSystem = p2KeyEvents;
+                }
+            }
+        }
+    }
 
     // If a button pressed begins with 'P1' or 'P2', and does not end with 'Ready', then update the button's text based on BetweenScenesScript variables
     private void UpdateButtonText() {
