@@ -19,7 +19,7 @@ public class AlienScript : MonoBehaviour {
     public float lastTimeShot = 0f;
 
     // Defence system variables
-    private float difficultyIncrease = 0.95f;
+    // private float difficultyIncrease = 0.95f; TODO add this functionality later
     public AudioSource audioAlienImpact, audioAlienHum;
     public AudioClip audioClipShieldReflect, audioClipTakenDamage;
     public float alienHealth, alienMaxHealth;
@@ -112,6 +112,7 @@ public class AlienScript : MonoBehaviour {
     // Destroy gameobject
     void TeleportEnd() {
         if (!deathStarted) {
+            gM.AlienAndPowerupLogic("alienRespawn");
             Destroy(gameObject);
         }
     }

@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour {
      * ------------------------------------------------------------------------------------------------------------------ */
 
     void Start() {
+        Cursor.visible = false;
         // If in normal gameplay, set player ships to become active and start gameplay
         if (!helpMenuMode) {
             if (BetweenScenesScript.MusicVolume > 0f) {
@@ -50,10 +51,10 @@ public class GameManager : MonoBehaviour {
             if (BetweenScenesScript.ResumingFromSave) { // If resuming from save file, read from save file first
                 Saving_PlayerManager data = Saving_SaveManager.LoadData();
                 levelNo = data.level;
-                // Tell ships to 'play dead' (disable sprite & colliders) if save file says they're dead
-                if (data.player1lives == 0) {
+                // Tell ships to 'play dead' (disable sprite & colliders) if previous shop says they're dead
+                if (BetweenScenesScript.player1TempLives == 0) {
                     playerShip1.SendMessage("PretendShipDoesntExist"); }
-                if (data.player2lives == 0 && BetweenScenesScript.PlayerCount == 2) {
+                if (BetweenScenesScript.player2TempLives == 0 && BetweenScenesScript.PlayerCount == 2) {
                     playerShip2.SendMessage("PretendShipDoesntExist"); }
             }
             StartCoroutine(FadeBlack("from"));
@@ -68,12 +69,9 @@ public class GameManager : MonoBehaviour {
         }
         // Each frame, check if pause menu is open, and what button is highlighted.
         if (gamePausePanel.activeInHierarchy || gameOverPanel.activeInHierarchy) {
-            if (EventSystem.current.currentSelectedGameObject != null && !EventSystem.current.currentSelectedGameObject.Equals(null)) {
-
-            }
             // If the mouse is used to click auto highlight away, then drag a highlight back onto a certain button.
             // If on game quit panel, then select the resume button. If on game over panel, select play again button.
-            else {
+            if (EventSystem.current.currentSelectedGameObject == null || EventSystem.current.currentSelectedGameObject.Equals(null)) {
                 if (gamePausePanel.activeInHierarchy) { buttonWhenPaused.Select(); }
                 else { buttonWhenGameOver.Select(); }
             }
@@ -201,6 +199,7 @@ public class GameManager : MonoBehaviour {
 
     public void PauseGame(int intent) {
         if (intent == 0) { // Pause game
+            Cursor.visible = true;
             if (!player1dead) { playerShip1.SendMessage("CheckSounds", 1); }
             if (!player2dead) { playerShip2.SendMessage("CheckSounds", 1); }
 
@@ -214,6 +213,7 @@ public class GameManager : MonoBehaviour {
             CheckPlayerControls();
         }
         else if (intent == 1) { // Resume game
+            Cursor.visible = false;
             if (!player1dead) { playerShip1.SendMessage("CheckSounds", 2); playerShip1.SendMessage("InputChoice"); }
             if (!player2dead) { playerShip2.SendMessage("CheckSounds", 2); playerShip2.SendMessage("InputChoice"); }
 
@@ -291,6 +291,7 @@ public class GameManager : MonoBehaviour {
 
     // Show game over panel and pause the game when the game is over
     public void GameOver() {
+        Cursor.visible = true;
         BetweenScenesScript.ResumingFromSave = false;
         Saving_SaveManager.EraseData();
         gameOverPanel.SetActive(true);

@@ -29,4 +29,6 @@ public static class BetweenScenesScript {
     // Credits count for each player is stored here, and only saved to a file when the shop at the end of a level is loaded.
     public static int player1TempCredits = 0;
     public static int player2TempCredits = 0;
+    public static int player1TempLives = 0;
+    public static int player2TempLives = 0;
 }

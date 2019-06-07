@@ -11,7 +11,7 @@ public class ShopScript : MonoBehaviour {
     private Saving_PlayerManager data;
 
     // Pause UI
-    public GameObject gamePausePanel, shopShip1, shopShip2;
+    public GameObject gamePausePanel;
     public Button buttonWhenPaused, buttonWhenLeavingPauseBugFix;
     public Text swapP1text, swapP2text;
 
@@ -26,7 +26,7 @@ public class ShopScript : MonoBehaviour {
     const int bonusInterval = 10000;
     public Image p1ShieldBar, p1PowerBar, p2ShieldBar, p2PowerBar;
     public Text p1ScoreText, p1LivesText, p2ScoreText, p2LivesText;
-    public TextMeshProUGUI readyPromptText, player2AbsentText;
+    public TextMeshProUGUI readyPromptText;
 
     // Event System handling
     public EventSystem pauseEventSystem;
@@ -39,7 +39,7 @@ public class ShopScript : MonoBehaviour {
 
     // Shop UI
     public Button p1UpgButton0, p1UpgButton1, p1UpgButton2, p1UpgButton3, p2UpgButton0, p2UpgButton1, p2UpgButton2, p2UpgButton3;
-    private int baseUpgradePrice = 500, priceIncreasePerLevel = 500, upgradeCap = 15;
+    private int baseUpgradePrice = 1000, priceIncreasePerLevel = 2000, upgradeCap = 15;
 
     void Start() {
         if (BetweenScenesScript.MusicVolume > 0f) { musicLoop.Play(); }
@@ -48,7 +48,7 @@ public class ShopScript : MonoBehaviour {
         data = Saving_SaveManager.LoadData();
         p1ShieldBar.fillAmount = data.player1health / 80;
         BetweenScenesScript.player1TempCredits = data.player1credits;
-        p1LivesText.text = "Lives: " + data.player1lives;
+        BetweenScenesScript.player1TempLives = data.player1lives;
         if (data.player1powerups[0] == 1) { p1InsurancePowerup.gameObject.SetActive(true); }
         if (data.player1powerups[1] == 1) { p1FarShotPowerup.gameObject.SetActive(true); }
         if (data.player1powerups[2] == 1) { p1RetroThrusterPowerup.gameObject.SetActive(true); }
@@ -57,12 +57,13 @@ public class ShopScript : MonoBehaviour {
         if (data.playerCount == 1) {
             readyPromptText.text = "Press 'Ready' to\nContinue to Level " + (data.level + 1).ToString() + "...";
             p2IsReady = true;
+            Player1OnlyGUI();
         }
         else if (data.playerCount == 2) {
-            player2GUI.SetActive(true); player2AbsentText.gameObject.SetActive(false);
+            player2GUI.SetActive(true);
             p2ShieldBar.fillAmount = data.player2health / 80;
             BetweenScenesScript.player2TempCredits = data.player2credits;
-            p2LivesText.text = "Lives: " + data.player2lives;
+            BetweenScenesScript.player2TempLives = data.player2lives;
             if (data.player2powerups[0] == 1) { p2InsurancePowerup.gameObject.SetActive(true); }
             if (data.player2powerups[1] == 1) { p2FarShotPowerup.gameObject.SetActive(true); }
             if (data.player2powerups[2] == 1) { p2RetroThrusterPowerup.gameObject.SetActive(true); }
@@ -115,6 +116,11 @@ public class ShopScript : MonoBehaviour {
         if (BetweenScenesScript.PlayerCount == 2 && p2SelectedSystem.gameObject.activeInHierarchy) {
             if (p2SelectedSystem.currentSelectedGameObject == null || p2SelectedSystem.currentSelectedGameObject.Equals(null)) {
                 p2SelectedSystem.SetSelectedGameObject(p2ReadyButton.gameObject);
+            }
+        }
+        if (pauseEventSystem.gameObject.activeInHierarchy) {
+            if (pauseEventSystem.currentSelectedGameObject == null || pauseEventSystem.currentSelectedGameObject.Equals(null)) {
+                pauseEventSystem.SetSelectedGameObject(buttonWhenPaused.gameObject);
             }
         }
     }
@@ -199,7 +205,7 @@ public class ShopScript : MonoBehaviour {
         if (p1SelectedSystem.currentSelectedGameObject.name.StartsWith("P1")) {
             if (BetweenScenesScript.UpgradesP1[whichUpgrade] < upgradeCap) {
                 int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP1[whichUpgrade] - 10);
-                if (BetweenScenesScript.player1TempCredits > price) {
+                if (BetweenScenesScript.player1TempCredits >= price) {
                     BetweenScenesScript.UpgradesP1[whichUpgrade] += 1;
                     BetweenScenesScript.player1TempCredits -= price;
                     Debug.Log("Upgrades: " + string.Join(",", BetweenScenesScript.UpgradesP1) + " Credits left: " + BetweenScenesScript.player1TempCredits);
@@ -216,7 +222,7 @@ public class ShopScript : MonoBehaviour {
         if (p2SelectedSystem.currentSelectedGameObject.name.StartsWith("P2")) {
             if (BetweenScenesScript.UpgradesP2[whichUpgrade] < upgradeCap) {
                 int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP2[whichUpgrade] - 10);
-                if (BetweenScenesScript.player2TempCredits > price) {
+                if (BetweenScenesScript.player2TempCredits >= price) {
                     BetweenScenesScript.UpgradesP2[whichUpgrade] += 1;
                     BetweenScenesScript.player2TempCredits -= price;
                     Debug.Log("Upgrades: " + string.Join(",", BetweenScenesScript.UpgradesP2) + " Credits left: " + BetweenScenesScript.player2TempCredits);
@@ -224,6 +230,25 @@ public class ShopScript : MonoBehaviour {
                 else {
                     Debug.Log("Upgrade failed, not enough credits");
                 }
+            }
+        }
+        UpdateButtonText();
+    }
+
+    // Give a life to player number 'i'
+    public void GiveLife(int playerSendingLife) {
+        if (playerSendingLife == 1 && BetweenScenesScript.player1TempLives > 1) {
+            BetweenScenesScript.player1TempLives -= 1;
+            BetweenScenesScript.player2TempLives += 1;
+            if (BetweenScenesScript.player2TempLives == 1) {
+                p2ShieldBar.fillAmount = 1f;
+            }
+        }
+        if (playerSendingLife == 2 && BetweenScenesScript.player2TempLives > 1) {
+            BetweenScenesScript.player2TempLives -= 1;
+            BetweenScenesScript.player1TempLives += 1;
+            if (BetweenScenesScript.player1TempLives == 1) {
+                p1ShieldBar.fillAmount = 1f;
             }
         }
         UpdateButtonText();
@@ -329,7 +354,8 @@ public class ShopScript : MonoBehaviour {
         }
     }
 
-    // If a button pressed begins with 'P1' or 'P2', and does not end with 'Ready', then update the button's text based on BetweenScenesScript variables
+    // If a button pressed begins with 'P1' or 'P2', and does not end with 'Ready' or 'Transfer', then update the button's text based on BetweenScenesScript variables
+    // If button ends with 'Transfer', then change the life transfer button text
     private void UpdateButtonText() {
         Button[] listOfButtons = GameObject.FindObjectsOfType<Button>();
         foreach (Button gameObj in listOfButtons) {
@@ -341,24 +367,48 @@ public class ShopScript : MonoBehaviour {
             int priceP1 = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP1[i] - 10);
             int priceP2 = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP2[i] - 10);
             string upgradeTier; int tempUpgradeNumLength;
+
             if (gameObj.transform.name.StartsWith("P1") && !gameObj.transform.name.EndsWith("Ready")) {
-                tempUpgradeNumLength = BetweenScenesScript.UpgradesP1[i].ToString().Length - 1;
-                upgradeTier = BetweenScenesScript.UpgradesP1[i].ToString().Insert(tempUpgradeNumLength, ".");
-                gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Upgrade: " + priceP1.ToString() + "c)";
-                if (BetweenScenesScript.UpgradesP1[i] == upgradeCap) {
-                    gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Maximum upgrade)";
+                if (!gameObj.transform.name.EndsWith("Transfer")) {
+                    tempUpgradeNumLength = BetweenScenesScript.UpgradesP1[i].ToString().Length - 1;
+                    upgradeTier = BetweenScenesScript.UpgradesP1[i].ToString().Insert(tempUpgradeNumLength, ".");
+                    gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Upgrade: " + priceP1.ToString() + "c)";
+                    if (BetweenScenesScript.UpgradesP1[i] == upgradeCap) {
+                        gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Maximum upgrade)";
+                    }
+                }
+                else {
+                    if (BetweenScenesScript.PlayerCount == 2) {
+                        if (BetweenScenesScript.player1TempLives > 1) { gameObj.GetComponentInChildren<Text>().text = "Multiple Lives\n(Transfer 1 life to P2)"; }
+                        else if (BetweenScenesScript.player1TempLives == 1) { gameObj.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
+                        else { /*(BetweenScenesScript.player1TempLives < 1)*/ gameObj.GetComponentInChildren<Text>().text = "No Lives";
+                        }
+                    }
                 }
             }
             else if (gameObj.transform.name.StartsWith("P2") && !gameObj.transform.name.EndsWith("Ready")) {
-                tempUpgradeNumLength = BetweenScenesScript.UpgradesP2[i].ToString().Length - 1;
-                upgradeTier = BetweenScenesScript.UpgradesP2[i].ToString().Insert(tempUpgradeNumLength, ".");
-                gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Upgrade: " + priceP2.ToString() + "c)";
-                if (BetweenScenesScript.UpgradesP2[i] == upgradeCap) {
-                    gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Maximum upgrade)";
+                if (!gameObj.transform.name.EndsWith("Transfer")) {
+                    tempUpgradeNumLength = BetweenScenesScript.UpgradesP2[i].ToString().Length - 1;
+                    upgradeTier = BetweenScenesScript.UpgradesP2[i].ToString().Insert(tempUpgradeNumLength, ".");
+                    gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Upgrade: " + priceP2.ToString() + "c)";
+                    if (BetweenScenesScript.UpgradesP2[i] == upgradeCap) {
+                        gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Maximum upgrade)";
+                    }
+                }
+                else {
+                    if (BetweenScenesScript.PlayerCount == 2) {
+                        if (BetweenScenesScript.player2TempLives > 1) { gameObj.GetComponentInChildren<Text>().text = "Multiple Lives\n(Transfer 1 life to P2)"; }
+                        else if (BetweenScenesScript.player2TempLives == 1) { gameObj.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
+                        else { /*(BetweenScenesScript.player2TempLives < 1)*/ gameObj.GetComponentInChildren<Text>().text = "No Lives"; }
+                    }
                 }
             }
             p1ScoreText.text = "Credits:\n" + BetweenScenesScript.player1TempCredits;
-            if (data.playerCount == 2) { p2ScoreText.text = "Credits:\n" + BetweenScenesScript.player2TempCredits; }
+            p1LivesText.text = "Lives: " + BetweenScenesScript.player1TempLives;
+            if (data.playerCount == 2) {
+                p2ScoreText.text = "Credits:\n" + BetweenScenesScript.player2TempCredits;
+                p2LivesText.text = "Lives: " + BetweenScenesScript.player2TempLives;
+            }
         }
     }
 
@@ -378,6 +428,39 @@ public class ShopScript : MonoBehaviour {
                 if (gameObj.transform.name.StartsWith("P2")) {
                     gameObj.GetComponent<MyEventSystemProvider>().DetermineControls();
                 }
+            }
+        }
+    }
+
+    // If One Player mode is selected, edit where the buttons and text are in the shop.
+    private void Player1OnlyGUI() {
+        Button[] listOfButtons = GameObject.FindObjectsOfType<Button>();
+        foreach (Button gameObj in listOfButtons) {
+            if (gameObj.transform.name.StartsWith("P1")) {
+                float tempYPosition = gameObj.transform.localPosition.y;
+                gameObj.transform.localPosition = new Vector3(430, tempYPosition);
+            }
+            if (gameObj.transform.name.EndsWith("Transfer")) {
+                gameObj.gameObject.SetActive(false);
+            }
+            float tempXPosition = gameObj.transform.localPosition.x;
+            float tempYPosition2 = gameObj.transform.localPosition.y + 30;
+            gameObj.transform.localPosition = new Vector3(tempXPosition, tempYPosition2);
+        }
+        TextMeshProUGUI[] listOfTextBoxes = GameObject.FindObjectsOfType<TextMeshProUGUI>();
+        foreach (TextMeshProUGUI gameObj in listOfTextBoxes) {
+            if (gameObj.transform.name == "P1UpgradesTitle") {
+                gameObj.transform.localPosition = new Vector3(430, 7);
+            }
+            if (gameObj.transform.name == "UpgLifeTransfer") {
+                gameObj.gameObject.SetActive(false);
+            }
+            else if (gameObj.transform.name.StartsWith("Upg")) {
+                float tempYPosition = gameObj.transform.localPosition.y;
+                gameObj.transform.localPosition = new Vector3(-144, tempYPosition);
+                float tempXPosition = gameObj.transform.localPosition.x;
+                float tempYPosition2 = gameObj.transform.localPosition.y + 30;
+                gameObj.transform.localPosition = new Vector3(tempXPosition, tempYPosition2);
             }
         }
     }

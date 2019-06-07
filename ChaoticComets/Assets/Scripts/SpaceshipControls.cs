@@ -78,10 +78,10 @@ public class SpaceshipControls : MonoBehaviour {
                 Saving_PlayerManager data = Saving_SaveManager.LoadData();
                 if (playerNumber == 1) {
                     credits = BetweenScenesScript.player1TempCredits;
+                    lives = BetweenScenesScript.player1TempLives;
                     Debug.Log(credits);
                     shields = data.player1health;
                     bonus = data.player1bonus;
-                    lives = data.player1lives;
                     if (data.player1powerups[0] == 1) { ifInsuranceActive = true; insurancePowerup.gameObject.SetActive(true); }
                     if (data.player1powerups[1] == 1) { ifFarShot = true; farShotPowerup.gameObject.SetActive(true); }
                     if (data.player1powerups[2] == 1) { ifRetroThruster = true; retroThrusterPowerup.gameObject.SetActive(true); }
@@ -90,9 +90,9 @@ public class SpaceshipControls : MonoBehaviour {
                 }
                 else { // (playerNumber == 2)
                     credits = BetweenScenesScript.player2TempCredits;
+                    lives = BetweenScenesScript.player2TempLives;
                     shields = data.player2health;
                     bonus = data.player2bonus;
-                    lives = data.player2lives;
                     if (data.player2powerups[0] == 1) { ifInsuranceActive = true; insurancePowerup.gameObject.SetActive(true); }
                     if (data.player2powerups[1] == 1) { ifFarShot = true; farShotPowerup.gameObject.SetActive(true); }
                     if (data.player2powerups[2] == 1) { ifRetroThruster = true; retroThrusterPowerup.gameObject.SetActive(true); }
