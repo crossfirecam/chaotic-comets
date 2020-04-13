@@ -27,8 +27,8 @@ public class Saving_PlayerManager
     public float[] player2upgrades = { 0, 0, 0, 0 };
 
     public Saving_PlayerManager(GameManager gM, GameObject player1, GameObject player2) {
-        SpaceshipControls player1GameObject = player1.GetComponent<SpaceshipControls>();
-        SpaceshipControls player2GameObject = player2.GetComponent<SpaceshipControls>();
+        PlayerMain player1GameObject = player1.GetComponent<PlayerMain>();
+        PlayerMain player2GameObject = player2.GetComponent<PlayerMain>();
 
         playerCount = BetweenScenesScript.PlayerCount;
         difficulty = BetweenScenesScript.Difficulty;
@@ -37,11 +37,11 @@ public class Saving_PlayerManager
         player1credits = player1GameObject.credits;
         player1bonus = player1GameObject.bonus;
         player1lives = player1GameObject.lives;
-        if (player1GameObject.ifInsuranceActive) { player1powerups[0] = 1; }
-        if (player1GameObject.ifFarShot) { player1powerups[1] = 1; }
-        if (player1GameObject.ifRetroThruster) { player1powerups[2] = 1; }
-        if (player1GameObject.ifRapidShot) { player1powerups[3] = 1; }
-        if (player1GameObject.ifTripleShot) { player1powerups[4] = 1; }
+        if (player1GameObject.playerPowerups.ifInsuranceActive) { player1powerups[0] = 1; }
+        if (player1GameObject.playerPowerups.ifFarShot) { player1powerups[1] = 1; }
+        if (player1GameObject.playerPowerups.ifRetroThruster) { player1powerups[2] = 1; }
+        if (player1GameObject.playerPowerups.ifRapidShot) { player1powerups[3] = 1; }
+        if (player1GameObject.playerPowerups.ifTripleShot) { player1powerups[4] = 1; }
         player1upgrades[0] = BetweenScenesScript.UpgradesP1[0];
         player1upgrades[1] = BetweenScenesScript.UpgradesP1[1];
         player1upgrades[2] = BetweenScenesScript.UpgradesP1[2];
@@ -54,11 +54,11 @@ public class Saving_PlayerManager
             player2credits = player2GameObject.credits;
             player2bonus = player2GameObject.bonus;
             player2lives = player2GameObject.lives;
-            if (player2GameObject.ifInsuranceActive) { player2powerups[0] = 1; }
-            if (player2GameObject.ifFarShot) { player2powerups[1] = 1; }
-            if (player2GameObject.ifRetroThruster) { player2powerups[2] = 1; }
-            if (player2GameObject.ifRapidShot) { player2powerups[3] = 1; }
-            if (player2GameObject.ifTripleShot) { player2powerups[4] = 1; }
+            if (player2GameObject.playerPowerups.ifInsuranceActive) { player2powerups[0] = 1; }
+            if (player2GameObject.playerPowerups.ifFarShot) { player2powerups[1] = 1; }
+            if (player2GameObject.playerPowerups.ifRetroThruster) { player2powerups[2] = 1; }
+            if (player2GameObject.playerPowerups.ifRapidShot) { player2powerups[3] = 1; }
+            if (player2GameObject.playerPowerups.ifTripleShot) { player2powerups[4] = 1; }
             player2upgrades[0] = BetweenScenesScript.UpgradesP2[0];
             player2upgrades[1] = BetweenScenesScript.UpgradesP2[1];
             player2upgrades[2] = BetweenScenesScript.UpgradesP2[2];

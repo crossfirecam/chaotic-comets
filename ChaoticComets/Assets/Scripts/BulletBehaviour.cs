@@ -11,8 +11,8 @@ public class BulletBehaviour : MonoBehaviour {
     public bool ifBulletReflected;
 
     // ----------
-	
-	    void Update () {
+    
+        void Update () {
         Vector2 newPosition = transform.position;
         if (transform.position.y > gM.screenTop) {
             newPosition.y = gM.screenBottom;
@@ -29,7 +29,7 @@ public class BulletBehaviour : MonoBehaviour {
         transform.position = newPosition;
     }
 
-    // SpaceshipControls tells bullet to be destroyed at a certain time
+    // PlayerMain tells bullet to be destroyed at a certain time
     public void DestroyBullet(float destroyTime) {
         if (ifBulletReflected) {
             DestroyBullet(0.5f);

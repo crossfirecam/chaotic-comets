@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
 
     // Gameplay related objects
     public GameObject largeAsteroid, alienShip, canister;
-    public GameObject playerShip1, playerShip2;
+    public PlayerMain playerShip1, playerShip2;
     private float ufoAmountSpawned, canisterAmountSpawned, propCap; // Variables used to track how many props have, and can spawn.
 
     // UI related objects
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour {
             }
             if (BetweenScenesScript.PlayerCount == 2) {
                 player2GUI.SetActive(true);
-                playerShip2.SetActive(true);
+                playerShip2.gameObject.SetActive(true);
                 player2dead = false;
             }
             if (BetweenScenesScript.ResumingFromSave) { // If resuming from save file, read from save file first
@@ -214,8 +214,8 @@ public class GameManager : MonoBehaviour {
         }
         else if (intent == 1) { // Resume game
             Cursor.visible = false;
-            if (!player1dead) { playerShip1.SendMessage("CheckSounds", 2); playerShip1.SendMessage("InputChoice"); }
-            if (!player2dead) { playerShip2.SendMessage("CheckSounds", 2); playerShip2.SendMessage("InputChoice"); }
+            if (!player1dead) { playerShip1.SendMessage("CheckSounds", 2); playerShip1.playerInput.SendMessage("InputChoice"); }
+            if (!player2dead) { playerShip2.SendMessage("CheckSounds", 2); playerShip2.playerInput.SendMessage("InputChoice"); }
 
             if (BetweenScenesScript.MusicVolume > 0f && !helpMenuMode) { musicLoop.Play(); }
             GameObject[] listOfObjects = GameObject.FindGameObjectsWithTag("ufo");
@@ -276,7 +276,7 @@ public class GameManager : MonoBehaviour {
     // Leaves Main scene and brings up the shop
     private void BringUpShop() {
         BetweenScenesScript.ResumingFromSave = true;
-        Saving_SaveManager.SaveData(this, playerShip1, playerShip2);
+        Saving_SaveManager.SaveData(this, playerShip1.gameObject, playerShip2.gameObject);
         SceneManager.LoadScene("ShopMenu");
     }
 
