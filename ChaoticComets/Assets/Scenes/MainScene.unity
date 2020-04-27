@@ -295,6 +295,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.6698113, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -433,6 +434,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -623,6 +625,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -700,6 +703,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -916,6 +920,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1147,6 +1152,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1233,6 +1239,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1305,6 +1312,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1078364291, guid: 37b874fcd7b96d743923f53e45a21726, type: 3}
+      propertyPath: insurancePowerup
+      value: 
+      objectReference: {fileID: 321412713}
+    - target: {fileID: 1078364291, guid: 37b874fcd7b96d743923f53e45a21726, type: 3}
+      propertyPath: farShotPowerup
+      value: 
+      objectReference: {fileID: 837702484}
+    - target: {fileID: 1078364291, guid: 37b874fcd7b96d743923f53e45a21726, type: 3}
+      propertyPath: tripleShotPowerup
+      value: 
+      objectReference: {fileID: 2086393833}
+    - target: {fileID: 1078364291, guid: 37b874fcd7b96d743923f53e45a21726, type: 3}
+      propertyPath: rapidShotPowerup
+      value: 
+      objectReference: {fileID: 1094563604}
+    - target: {fileID: 1078364291, guid: 37b874fcd7b96d743923f53e45a21726, type: 3}
+      propertyPath: retroThrusterPowerup
+      value: 
+      objectReference: {fileID: 1330804942}
+    - target: {fileID: 1078364291, guid: 37b874fcd7b96d743923f53e45a21726, type: 3}
+      propertyPath: shieldBar
+      value: 
+      objectReference: {fileID: 274887800}
+    - target: {fileID: 1078364291, guid: 37b874fcd7b96d743923f53e45a21726, type: 3}
+      propertyPath: powerBar
+      value: 
+      objectReference: {fileID: 945549667}
+    - target: {fileID: 1078364291, guid: 37b874fcd7b96d743923f53e45a21726, type: 3}
+      propertyPath: scoreText
+      value: 
+      objectReference: {fileID: 286283189}
+    - target: {fileID: 1078364291, guid: 37b874fcd7b96d743923f53e45a21726, type: 3}
+      propertyPath: livesText
+      value: 
+      objectReference: {fileID: 552306076}
     - target: {fileID: 1719120906056866, guid: 37b874fcd7b96d743923f53e45a21726, type: 3}
       propertyPath: m_Name
       value: SpaceShip (2Player)
@@ -1353,51 +1396,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.209
       objectReference: {fileID: 0}
-    - target: {fileID: 114949645773383002, guid: 37b874fcd7b96d743923f53e45a21726,
-        type: 3}
-      propertyPath: insurancePowerup
-      value: 
-      objectReference: {fileID: 321412713}
-    - target: {fileID: 114949645773383002, guid: 37b874fcd7b96d743923f53e45a21726,
-        type: 3}
-      propertyPath: farShotPowerup
-      value: 
-      objectReference: {fileID: 837702484}
-    - target: {fileID: 114949645773383002, guid: 37b874fcd7b96d743923f53e45a21726,
-        type: 3}
-      propertyPath: tripleShotPowerup
-      value: 
-      objectReference: {fileID: 2086393833}
-    - target: {fileID: 114949645773383002, guid: 37b874fcd7b96d743923f53e45a21726,
-        type: 3}
-      propertyPath: rapidShotPowerup
-      value: 
-      objectReference: {fileID: 1094563604}
-    - target: {fileID: 114949645773383002, guid: 37b874fcd7b96d743923f53e45a21726,
-        type: 3}
-      propertyPath: retroThrusterPowerup
-      value: 
-      objectReference: {fileID: 1330804942}
-    - target: {fileID: 114949645773383002, guid: 37b874fcd7b96d743923f53e45a21726,
-        type: 3}
-      propertyPath: shieldBar
-      value: 
-      objectReference: {fileID: 274887800}
-    - target: {fileID: 114949645773383002, guid: 37b874fcd7b96d743923f53e45a21726,
-        type: 3}
-      propertyPath: powerBar
-      value: 
-      objectReference: {fileID: 945549667}
-    - target: {fileID: 114949645773383002, guid: 37b874fcd7b96d743923f53e45a21726,
-        type: 3}
-      propertyPath: scoreText
-      value: 
-      objectReference: {fileID: 286283189}
-    - target: {fileID: 114949645773383002, guid: 37b874fcd7b96d743923f53e45a21726,
-        type: 3}
-      propertyPath: livesText
-      value: 
-      objectReference: {fileID: 552306076}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37b874fcd7b96d743923f53e45a21726, type: 3}
 --- !u!1 &441448066 stripped
@@ -1464,6 +1462,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1701,6 +1700,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1846,6 +1846,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1934,6 +1935,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.019090425, g: 0.3679245, b: 0.107519194, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2206,6 +2208,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2353,6 +2356,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2499,6 +2503,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2588,6 +2593,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2711,6 +2717,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2884,6 +2891,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2960,6 +2968,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3038,6 +3047,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3118,6 +3128,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.25364897, g: 0.5708804, b: 0.9433962, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3323,6 +3334,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.63529414}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3476,6 +3488,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3629,6 +3642,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3702,6 +3716,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3779,6 +3794,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3931,6 +3947,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4029,6 +4046,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4208,6 +4226,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4292,6 +4311,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4366,6 +4386,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4446,6 +4467,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4524,6 +4546,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4682,6 +4705,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4787,6 +4811,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5021,6 +5046,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5097,6 +5123,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.6698113, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5130,10 +5157,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1146411263, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 412295513, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
+      propertyPath: insurancePowerup
+      value: 
+      objectReference: {fileID: 1097683543}
+    - target: {fileID: 412295513, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
+      propertyPath: farShotPowerup
+      value: 
+      objectReference: {fileID: 1999629082}
+    - target: {fileID: 412295513, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
+      propertyPath: tripleShotPowerup
+      value: 
+      objectReference: {fileID: 283866969}
+    - target: {fileID: 412295513, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
+      propertyPath: rapidShotPowerup
+      value: 
+      objectReference: {fileID: 887651178}
+    - target: {fileID: 412295513, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
+      propertyPath: retroThrusterPowerup
+      value: 
+      objectReference: {fileID: 1404335112}
+    - target: {fileID: 412295513, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
+      propertyPath: shieldBar
+      value: 
+      objectReference: {fileID: 1155510961}
+    - target: {fileID: 412295513, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
+      propertyPath: powerBar
+      value: 
+      objectReference: {fileID: 610497417}
+    - target: {fileID: 412295513, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
+      propertyPath: scoreText
+      value: 
+      objectReference: {fileID: 321079047}
+    - target: {fileID: 412295513, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
+      propertyPath: livesText
+      value: 
+      objectReference: {fileID: 586736468}
     - target: {fileID: 1260381270780048, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
       propertyPath: m_Name
       value: SpaceShip
@@ -5182,51 +5241,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.209
       objectReference: {fileID: 0}
-    - target: {fileID: 114782296946591882, guid: 5cf0dc9415eb8e742aece150306297e5,
-        type: 3}
-      propertyPath: insurancePowerup
-      value: 
-      objectReference: {fileID: 1097683543}
-    - target: {fileID: 114782296946591882, guid: 5cf0dc9415eb8e742aece150306297e5,
-        type: 3}
-      propertyPath: farShotPowerup
-      value: 
-      objectReference: {fileID: 1999629082}
-    - target: {fileID: 114782296946591882, guid: 5cf0dc9415eb8e742aece150306297e5,
-        type: 3}
-      propertyPath: tripleShotPowerup
-      value: 
-      objectReference: {fileID: 283866969}
-    - target: {fileID: 114782296946591882, guid: 5cf0dc9415eb8e742aece150306297e5,
-        type: 3}
-      propertyPath: rapidShotPowerup
-      value: 
-      objectReference: {fileID: 887651178}
-    - target: {fileID: 114782296946591882, guid: 5cf0dc9415eb8e742aece150306297e5,
-        type: 3}
-      propertyPath: retroThrusterPowerup
-      value: 
-      objectReference: {fileID: 1404335112}
-    - target: {fileID: 114782296946591882, guid: 5cf0dc9415eb8e742aece150306297e5,
-        type: 3}
-      propertyPath: shieldBar
-      value: 
-      objectReference: {fileID: 1155510961}
-    - target: {fileID: 114782296946591882, guid: 5cf0dc9415eb8e742aece150306297e5,
-        type: 3}
-      propertyPath: powerBar
-      value: 
-      objectReference: {fileID: 610497417}
-    - target: {fileID: 114782296946591882, guid: 5cf0dc9415eb8e742aece150306297e5,
-        type: 3}
-      propertyPath: scoreText
-      value: 
-      objectReference: {fileID: 321079047}
-    - target: {fileID: 114782296946591882, guid: 5cf0dc9415eb8e742aece150306297e5,
-        type: 3}
-      propertyPath: livesText
-      value: 
-      objectReference: {fileID: 586736468}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
 --- !u!1 &1908532587
@@ -5284,6 +5298,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5416,6 +5431,16 @@ PrefabInstance:
       propertyPath: fadeBlack
       value: 
       objectReference: {fileID: 1315207910}
+    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
+        type: 3}
+      propertyPath: levelToStartEnemies
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
+        type: 3}
+      propertyPath: lastLevelWithoutEnemies
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7573104357208989260, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: m_Volume

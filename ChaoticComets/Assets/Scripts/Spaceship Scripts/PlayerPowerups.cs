@@ -22,24 +22,24 @@ public class PlayerPowerups : MonoBehaviour
             }
             else if (randomiser < 1f && !ifInsuranceActive && AtLeastOneOtherPowerup())
             { // Give insurance powerup
-                PowerupDecided(); ifInsuranceActive = true; p.insurancePowerup.gameObject.SetActive(true);
+                PowerupDecided(); ifInsuranceActive = true; p.playerUI.insurancePowerup.gameObject.SetActive(true);
             }
             else if (randomiser < 2f && !ifFarShot)
             { // Give far shot powerup
-                PowerupDecided(); ifFarShot = true; p.farShotPowerup.gameObject.SetActive(true);
+                PowerupDecided(); ifFarShot = true; p.playerUI.farShotPowerup.gameObject.SetActive(true);
                 p.playerWeapons.bulletDestroyTime = 1.4f;
             }
             else if (randomiser < 3f && !ifTripleShot)
             { // Give triple shot powerup
-                PowerupDecided(); ifTripleShot = true; p.tripleShotPowerup.gameObject.SetActive(true);
+                PowerupDecided(); ifTripleShot = true; p.playerUI.tripleShotPowerup.gameObject.SetActive(true);
             }
             else if (randomiser < 4f && !ifRapidShot)
             { // Give rapid shot powerup
-                PowerupDecided(); ifRapidShot = true; p.rapidShotPowerup.gameObject.SetActive(true);
+                PowerupDecided(); ifRapidShot = true; p.playerUI.rapidShotPowerup.gameObject.SetActive(true);
             }
             else if (randomiser < 5f && !ifRetroThruster)
             { // Give retro thruster powerup
-                PowerupDecided(); ifRetroThruster = true; p.retroThrusterPowerup.gameObject.SetActive(true);
+                PowerupDecided(); ifRetroThruster = true; p.playerUI.retroThrusterPowerup.gameObject.SetActive(true);
             }
             // Give shield top-up if less than 60 (if respawning, select another powerup)
             else if (randomiser < 6f && p.shields <= 60f && p.colliderEnabled)

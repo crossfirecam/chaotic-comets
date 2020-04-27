@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 147570592}
   - component: {fileID: 147570593}
   - component: {fileID: 147570594}
+  - component: {fileID: 1078364291}
   m_Layer: 9
   m_Name: SpaceShip (2Player)
   m_TagString: Player 2
@@ -300,6 +301,7 @@ MonoBehaviour:
   playerMisc: {fileID: 147570588}
   playerAbility: {fileID: 147570594}
   playerSpawnDeath: {fileID: 147570593}
+  playerUI: {fileID: 1078364291}
   credits: 0
   bonus: 0
   lives: 3
@@ -325,17 +327,6 @@ MonoBehaviour:
   upgradeBrake: 0
   upgradeFireRate: 0
   upgradeShotSpeed: 0
-  insurancePowerup: {fileID: 0}
-  farShotPowerup: {fileID: 0}
-  tripleShotPowerup: {fileID: 0}
-  rapidShotPowerup: {fileID: 0}
-  retroThrusterPowerup: {fileID: 0}
-  shieldBar: {fileID: 0}
-  powerBar: {fileID: 0}
-  powerWhenCharging: {fileID: 21300000, guid: bf888890319664e4db75fce954506aad, type: 3}
-  powerWhenReady: {fileID: 21300000, guid: 48f01af672a74e44b8c7e2f7d19e8b43, type: 3}
-  scoreText: {fileID: 0}
-  livesText: {fileID: 0}
 --- !u!70 &70380462356023278
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -553,6 +544,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p: {fileID: 114949645773383002}
+--- !u!114 &1078364291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719120906056866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c32e5122df13d943b54e30a27dfc8db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  p: {fileID: 114949645773383002}
+  insurancePowerup: {fileID: 0}
+  farShotPowerup: {fileID: 0}
+  tripleShotPowerup: {fileID: 0}
+  rapidShotPowerup: {fileID: 0}
+  retroThrusterPowerup: {fileID: 0}
+  shieldBar: {fileID: 0}
+  powerBar: {fileID: 0}
+  powerWhenCharging: {fileID: 21300000, guid: bf888890319664e4db75fce954506aad, type: 3}
+  powerWhenReady: {fileID: 21300000, guid: 48f01af672a74e44b8c7e2f7d19e8b43, type: 3}
+  scoreText: {fileID: 0}
+  livesText: {fileID: 0}
 --- !u!1 &1842560040793606
 GameObject:
   m_ObjectHideFlags: 0

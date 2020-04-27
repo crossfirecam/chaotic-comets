@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
+/*
+ * This class contains all general code for the Player objects, referring to many other scripts for extra functionality.
+ */
 
 public class PlayerMain : MonoBehaviour {
 
@@ -13,8 +16,9 @@ public class PlayerMain : MonoBehaviour {
     [SerializeField] internal PlayerMisc playerMisc = default;
     [SerializeField] internal PlayerAbility playerAbility = default;
     [SerializeField] internal PlayerSpawnDeath playerSpawnDeath = default;
+    [SerializeField] internal PlayerUI playerUI = default;
 
-    // Player Statistics / Bar Lengths
+    // Player Statistics
     public int credits, bonus, lives;
     public float shields, power;
 
@@ -40,14 +44,6 @@ public class PlayerMain : MonoBehaviour {
     // Upgrade Systems
     public float upgradeSpeed, upgradeBrake, upgradeFireRate, upgradeShotSpeed;
 
-    // UI Elements
-    public Image insurancePowerup, farShotPowerup, tripleShotPowerup, rapidShotPowerup, retroThrusterPowerup;
-    const int bonusInterval = 10000;
-    public Image shieldBar, powerBar;
-    public Sprite powerWhenCharging, powerWhenReady;
-    public Text scoreText, livesText;
-    internal float prevshields;
-
     // ----------
     
     void Start () {
@@ -58,28 +54,20 @@ public class PlayerMain : MonoBehaviour {
         playerMisc.OtherStartFunctions();
     }
     
-       void Update () {
+    // If game is not paused, then run per-frame updates
+    void Update () {
         if (!gM.gamePausePanel.activeInHierarchy) {
-            // Determine how long bullet should stay on screen
-
             playerInput.GetInputs();
             playerMovement.ShipMovement();
             playerMovement.CheckScreenWrap();
-            shieldBar.fillAmount = shields / 80;
-            powerBar.fillAmount = power / 80;
+            playerUI.UpdateBars();
         }
     }
 
     // Receives points scored from latest asteroid hit, UFO hit, or canister reward
     internal void ScorePoints(int pointsToAdd) {
         credits += pointsToAdd;
-        scoreText.text = "Credits:\n" + credits;
-        if (credits > bonus) {
-            bonus += bonusInterval;
-            lives++; livesText.text = "Lives: " + lives;
-            audioShipImpact.clip = lifeGained;
-            audioShipImpact.Play();
-        }
+        playerUI.UpdatePointDisplays();
     }
 
     // When ship collides with asteroid or ufo colliders
@@ -129,28 +117,6 @@ public class PlayerMain : MonoBehaviour {
         if (triggerObject.gameObject.tag == "powerup") {
             Destroy(triggerObject.transform.parent.gameObject);
             playerPowerups.GivePowerup();
-        }
-    }
-
-
-    private IEnumerator FadeShip(string inOrOut) {
-        if (inOrOut == "Out") {
-            colliderEnabled = false;
-            playerInput.isNotTeleporting = false;
-            for (float fadeTick = 1f; fadeTick >= 0f; fadeTick -= 0.1f) {
-                gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, fadeTick);
-                yield return new WaitForSeconds(0.1f);
-            }
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0f);
-        }
-        else {
-            playerInput.isNotTeleporting = true;
-            for (float fadeTick = 0f; fadeTick <= 1f; fadeTick += 0.1f) {
-                gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, fadeTick);
-                yield return new WaitForSeconds(0.1f);
-            }
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-            colliderEnabled = true;
         }
     }
 

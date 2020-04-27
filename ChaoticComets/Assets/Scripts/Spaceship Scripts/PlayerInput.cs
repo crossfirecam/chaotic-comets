@@ -33,9 +33,9 @@ public class PlayerInput : MonoBehaviour {
         {
             if (p.colliderEnabled && p.power == 80)
             {
-                p.powerBar.sprite = p.powerWhenCharging;
+                p.playerUI.powerBar.sprite = p.playerUI.powerWhenCharging;
                 p.playerAbility.teleportIn.SetActive(true);
-                p.StartCoroutine("FadeShip", "Out");
+                p.playerMisc.StartCoroutine("FadeShip", "Out");
                 p.playerAbility.Invoke("Hyperspace", 2f);
             }
         }

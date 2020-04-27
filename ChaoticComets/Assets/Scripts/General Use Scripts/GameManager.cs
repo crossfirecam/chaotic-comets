@@ -5,12 +5,17 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
+/*
+ * This class handles all in-game meta logic, such as level transitions, telling objects when and how to spawn, player management, etc.
+ */
+
 public class GameManager : MonoBehaviour {
 
     // General purpose variables
     public bool instantkillAsteroids = false;
     public int asteroidCount;
     public int levelNo = 0;
+    public int lastLevelWithoutEnemies = 1;
     public bool player1dead = false, player2dead = true; // Only one player by default
     public bool player1TEMPDEAD = false, player2TEMPDEAD = false; // Only used to alert UFO that player is temporarily inactive
 
@@ -104,7 +109,7 @@ public class GameManager : MonoBehaviour {
         // Canister has 8-20sec to spawn the first time.
         // Canister has 20-40sec to spawn all following times.
         
-        float[] alienFirstTimeArray = { 10f, 15f };
+        float[] alienFirstTimeArray = { 0f, 0f }; //TODO set back to 10 15
         float[] alienSubsequentArray = { 15f, 30f };
         float[] canisterFirstTimeArray = { 8f, 16f };
         float[] canisterSubsequentArray = { 20f, 40f };
@@ -127,7 +132,7 @@ public class GameManager : MonoBehaviour {
         float randomTime = Random.Range(minTime, maxTime);
 
         if ((reason == "initialAlienSetup" || reason == "alienRespawn") && ufoAmountSpawned < propCap) {
-            if (levelNo > 1) { // Alien will not appear on lvl 1
+            if (levelNo > lastLevelWithoutEnemies) { // Alien will not appear until a certain level
                 ufoAmountSpawned += 1;
                 Debug.Log("Next UFO will spawn in: " + randomTime + ". Only " + (propCap - ufoAmountSpawned) + " more can spawn.");
                 Invoke("RespawnAlien", randomTime);

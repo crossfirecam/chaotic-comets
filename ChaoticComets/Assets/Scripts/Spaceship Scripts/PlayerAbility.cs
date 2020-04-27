@@ -32,7 +32,7 @@ public class PlayerAbility : MonoBehaviour
         transform.position = newPosition;
         p.rb.velocity = Vector2.zero;
         teleportIn.SetActive(false);
-        p.StartCoroutine("FadeShip", "In");
+        p.playerMisc.StartCoroutine("FadeShip", "In");
         teleportOut.SetActive(true);
         StartCoroutine("PowerTimer", "Hyperspace");
     }
@@ -50,7 +50,7 @@ public class PlayerAbility : MonoBehaviour
             }
             teleportOut.SetActive(false);
             p.power = 80f;
-            p.powerBar.sprite = p.powerWhenReady;
+            p.playerUI.powerBar.sprite = p.playerUI.powerWhenReady;
             StopCoroutine("PowerTimer");
         }
     }

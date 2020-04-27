@@ -14,22 +14,22 @@ public class PlayerSpawnDeath : MonoBehaviour
     {
         if (p.playerPowerups.ifInsuranceActive)
         {
-            p.insurancePowerup.gameObject.SetActive(false); p.playerPowerups.ifInsuranceActive = false;
+            p.playerUI.insurancePowerup.gameObject.SetActive(false); p.playerPowerups.ifInsuranceActive = false;
         }
         else
         {
             // If difficulty is easy, do not remove retro thruster
             if (BetweenScenesScript.Difficulty != 0)
             {
-                p.retroThrusterPowerup.gameObject.SetActive(false); p.playerPowerups.ifRetroThruster = false;
+                p.playerUI.retroThrusterPowerup.gameObject.SetActive(false); p.playerPowerups.ifRetroThruster = false;
             }
-            p.rapidShotPowerup.gameObject.SetActive(false); p.playerPowerups.ifRapidShot = false;
-            p.tripleShotPowerup.gameObject.SetActive(false); p.playerPowerups.ifTripleShot = false;
-            p.farShotPowerup.gameObject.SetActive(false); p.playerPowerups.ifFarShot = false;
+            p.playerUI.rapidShotPowerup.gameObject.SetActive(false); p.playerPowerups.ifRapidShot = false;
+            p.playerUI.tripleShotPowerup.gameObject.SetActive(false); p.playerPowerups.ifTripleShot = false;
+            p.playerUI.farShotPowerup.gameObject.SetActive(false); p.playerPowerups.ifFarShot = false;
             p.playerWeapons.bulletDestroyTime = 0.8f; // Reset bullet destroy time to not be 'far shot'
         }
         p.shields = 0;
-        p.lives--; p.livesText.text = "Lives: " + p.lives;
+        p.lives--; p.playerUI.livesText.text = "Lives: " + p.lives;
         GameObject newExplosion = Instantiate(p.deathExplosion, transform.position, transform.rotation);
         Destroy(newExplosion, 2f);
         p.audioShipImpact.clip = p.deathSound;
@@ -40,7 +40,7 @@ public class PlayerSpawnDeath : MonoBehaviour
         {
             p.gM.SendMessage("PlayerDied", p.playerNumber);
         }
-        else { p.prevshields = 80; Invoke("RespawnShip", 3f); }
+        else { p.playerUI.prevshields = 80; Invoke("RespawnShip", 3f); }
     }
 
     void ShipIsRecovering()
@@ -59,7 +59,7 @@ public class PlayerSpawnDeath : MonoBehaviour
             // If difficulty is Easy, equip Retro Thruster every respawn
             if (BetweenScenesScript.Difficulty == 0)
             {
-                p.playerPowerups.ifRetroThruster = true; p.retroThrusterPowerup.gameObject.SetActive(true);
+                p.playerPowerups.ifRetroThruster = true; p.playerUI.retroThrusterPowerup.gameObject.SetActive(true);
             }
             p.sprite.enabled = true;
             p.colliderEnabled = false;
@@ -95,18 +95,18 @@ public class PlayerSpawnDeath : MonoBehaviour
     private IEnumerator InvulnTimer()
     {
         // Or, if ship is respawning at start of a level, set the previousShields level to current shield level instead
-        if (p.prevshields != 80) { p.prevshields = p.shields; }
+        if (p.playerUI.prevshields != 80) { p.playerUI.prevshields = p.shields; }
         p.shields = 0;
-        p.powerBar.sprite = p.powerWhenCharging; // Set power bar to have no text
-        for (int shieldsTick = 0; shieldsTick <= p.prevshields; shieldsTick++)
+        p.playerUI.powerBar.sprite = p.playerUI.powerWhenCharging; // Set power bar to have no text
+        for (int shieldsTick = 0; shieldsTick <= p.playerUI.prevshields; shieldsTick++)
         {
             p.shields = shieldsTick;
-            yield return new WaitForSeconds(3f / p.prevshields);
+            yield return new WaitForSeconds(3f / p.playerUI.prevshields);
         }
-        p.powerBar.sprite = p.powerWhenReady; // Set power bar to have text informing power can be used
+        p.playerUI.powerBar.sprite = p.playerUI.powerWhenReady; // Set power bar to have text informing power can be used
         p.sprite.color = p.normalColor;
         p.colliderEnabled = true;
-        p.prevshields = 0;
+        p.playerUI.prevshields = 0;
     }
 
     // When level transition happens, take a moment to recharge shields by 20, or if above 60 heal up to 80.

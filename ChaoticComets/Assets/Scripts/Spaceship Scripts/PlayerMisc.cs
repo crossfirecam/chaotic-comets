@@ -46,15 +46,15 @@ public class PlayerMisc : MonoBehaviour
             p.lives = BetweenScenesScript.player1TempLives;
             p.shields = data.player1health;
             p.bonus = data.player1bonus;
-            if (data.player1powerups[0] == 1) { p.playerPowerups.ifInsuranceActive = true; p.insurancePowerup.gameObject.SetActive(true); }
+            if (data.player1powerups[0] == 1) { p.playerPowerups.ifInsuranceActive = true; p.playerUI.insurancePowerup.gameObject.SetActive(true); }
             if (data.player1powerups[1] == 1)
             {
-                p.playerPowerups.ifFarShot = true; p.farShotPowerup.gameObject.SetActive(true);
+                p.playerPowerups.ifFarShot = true; p.playerUI.farShotPowerup.gameObject.SetActive(true);
                 p.playerWeapons.bulletDestroyTime = 1.4f;
             }
-            if (data.player1powerups[2] == 1) { p.playerPowerups.ifRetroThruster = true; p.retroThrusterPowerup.gameObject.SetActive(true); }
-            if (data.player1powerups[3] == 1) { p.playerPowerups.ifRapidShot = true; p.rapidShotPowerup.gameObject.SetActive(true); }
-            if (data.player1powerups[4] == 1) { p.playerPowerups.ifTripleShot = true; p.tripleShotPowerup.gameObject.SetActive(true); }
+            if (data.player1powerups[2] == 1) { p.playerPowerups.ifRetroThruster = true; p.playerUI.retroThrusterPowerup.gameObject.SetActive(true); }
+            if (data.player1powerups[3] == 1) { p.playerPowerups.ifRapidShot = true; p.playerUI.rapidShotPowerup.gameObject.SetActive(true); }
+            if (data.player1powerups[4] == 1) { p.playerPowerups.ifTripleShot = true; p.playerUI.tripleShotPowerup.gameObject.SetActive(true); }
         }
         else
         { // (playerNumber == 2)
@@ -62,15 +62,15 @@ public class PlayerMisc : MonoBehaviour
             p.lives = BetweenScenesScript.player2TempLives;
             p.shields = data.player2health;
             p.bonus = data.player2bonus;
-            if (data.player2powerups[0] == 1) { p.playerPowerups.ifInsuranceActive = true; p.insurancePowerup.gameObject.SetActive(true); }
+            if (data.player2powerups[0] == 1) { p.playerPowerups.ifInsuranceActive = true; p.playerUI.insurancePowerup.gameObject.SetActive(true); }
             if (data.player2powerups[1] == 1)
             {
-                p.playerPowerups.ifFarShot = true; p.farShotPowerup.gameObject.SetActive(true);
+                p.playerPowerups.ifFarShot = true; p.playerUI.farShotPowerup.gameObject.SetActive(true);
                 p.playerWeapons.bulletDestroyTime = 1.4f;
             }
-            if (data.player2powerups[2] == 1) { p.playerPowerups.ifRetroThruster = true; p.retroThrusterPowerup.gameObject.SetActive(true); }
-            if (data.player2powerups[3] == 1) { p.playerPowerups.ifRapidShot = true; p.rapidShotPowerup.gameObject.SetActive(true); }
-            if (data.player2powerups[4] == 1) { p.playerPowerups.ifTripleShot = true; p.tripleShotPowerup.gameObject.SetActive(true); }
+            if (data.player2powerups[2] == 1) { p.playerPowerups.ifRetroThruster = true; p.playerUI.retroThrusterPowerup.gameObject.SetActive(true); }
+            if (data.player2powerups[3] == 1) { p.playerPowerups.ifRapidShot = true; p.playerUI.rapidShotPowerup.gameObject.SetActive(true); }
+            if (data.player2powerups[4] == 1) { p.playerPowerups.ifTripleShot = true; p.playerUI.tripleShotPowerup.gameObject.SetActive(true); }
         }
     }
 
@@ -85,7 +85,7 @@ public class PlayerMisc : MonoBehaviour
         // If a player has died, but brought to life by another player, they'll have >1 life and 0 shields. Give revived player 80 shields.
         else if (p.lives > 0 && p.shields == 0)
         {
-            p.prevshields = 80;
+            p.playerUI.prevshields = 80;
         }
     }
 
@@ -109,7 +109,33 @@ public class PlayerMisc : MonoBehaviour
         p.playerInput.brakingPower /= p.upgradeBrake;
 
         // Set text for credits & lives (TODO move)
-        p.scoreText.text = "Credits:\n" + p.credits;
-        p.livesText.text = "Lives: " + p.lives;
+        p.playerUI.scoreText.text = "Credits:\n" + p.credits;
+        p.playerUI.livesText.text = "Lives: " + p.lives;
+    }
+
+    private IEnumerator FadeShip(string inOrOut)
+    {
+        if (inOrOut == "Out")
+        {
+            p.colliderEnabled = false;
+            p.playerInput.isNotTeleporting = false;
+            for (float fadeTick = 1f; fadeTick >= 0f; fadeTick -= 0.1f)
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, fadeTick);
+                yield return new WaitForSeconds(0.1f);
+            }
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0f);
+        }
+        else
+        {
+            p.playerInput.isNotTeleporting = true;
+            for (float fadeTick = 0f; fadeTick <= 1f; fadeTick += 0.1f)
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, fadeTick);
+                yield return new WaitForSeconds(0.1f);
+            }
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+            p.colliderEnabled = true;
+        }
     }
 }
