@@ -15,44 +15,47 @@ public class PlayerPowerups : MonoBehaviour
         powerupUndecided = true;
         while (powerupUndecided)
         {
-            float randomiser = Random.Range(0f, 6f);
-            if (randomiser < 0.2f)
-            { // Award 1000 credits (least likely - 1/30 chance)
-                PowerupDecided(); p.ScorePoints(1000);
-            }
-            else if (randomiser < 1f && !ifInsuranceActive && AtLeastOneOtherPowerup())
-            { // Give insurance powerup
-                PowerupDecided(); ifInsuranceActive = true; p.playerUI.insurancePowerup.gameObject.SetActive(true);
-            }
-            else if (randomiser < 2f && !ifFarShot)
-            { // Give far shot powerup
-                PowerupDecided(); ifFarShot = true; p.playerUI.farShotPowerup.gameObject.SetActive(true);
-                p.playerWeapons.bulletDestroyTime = 1.4f;
-            }
-            else if (randomiser < 3f && !ifTripleShot)
-            { // Give triple shot powerup
-                PowerupDecided(); ifTripleShot = true; p.playerUI.tripleShotPowerup.gameObject.SetActive(true);
-            }
-            else if (randomiser < 4f && !ifRapidShot)
-            { // Give rapid shot powerup
-                PowerupDecided(); ifRapidShot = true; p.playerUI.rapidShotPowerup.gameObject.SetActive(true);
-            }
-            else if (randomiser < 5f && !ifRetroThruster)
-            { // Give retro thruster powerup
-                PowerupDecided(); ifRetroThruster = true; p.playerUI.retroThrusterPowerup.gameObject.SetActive(true);
-            }
-            // Give shield top-up if less than 60 (if respawning, select another powerup)
-            else if (randomiser < 6f && p.shields <= 60f && p.colliderEnabled)
+            // If all powerups have been collected, then give a random reward of credits or shield refill
+            if (ifInsuranceActive && ifFarShot && ifTripleShot && ifRapidShot && ifRetroThruster)
             {
-                PowerupDecided(); p.shields = 80;
+                PowerupDecided(); GivePowerup("AllObtained");
             }
-            // If all powerups have been collected, refill shields or award 1000/200 credits
-            else if (ifInsuranceActive && ifFarShot && ifTripleShot && ifRapidShot && ifRetroThruster)
+            // If not all have been collected, then run a randomiser and pick a powerup
+            else
             {
-                PowerupDecided();
-                if (randomiser < 0.2f) { p.ScorePoints(1000); }
-                else if (randomiser < 4f && p.shields <= 60f && p.colliderEnabled) { p.shields = 80; } // (if respawning, select a score prize)
-                else { p.ScorePoints(200); }
+                int randomiser = Random.Range(0, 100);
+                Debug.Log(randomiser);
+                if (randomiser < 5)
+                { // Award extra life, 1 in 24 chance
+                    PowerupDecided(); GivePowerup("ExtraLife");
+                }
+                else if (randomiser < 20 && !ifFarShot)
+                { // Give far shot powerup
+                    PowerupDecided(); GivePowerup("FarShot");
+                }
+                else if (randomiser < 35 && !ifTripleShot)
+                { // Give triple shot powerup
+                    PowerupDecided(); GivePowerup("TripleShot");
+                }
+                else if (randomiser < 50 && !ifRapidShot)
+                { // Give rapid shot powerup
+                    PowerupDecided(); GivePowerup("RapidShot");
+                }
+                else if (randomiser < 65 && !ifRetroThruster)
+                { // Give retro thruster powerup
+                    PowerupDecided(); GivePowerup("RetroThruster");
+                }
+                else if (randomiser < 80 && !ifInsuranceActive && AtLeastOneOtherPowerup())
+                { // Give insurance powerup
+                    PowerupDecided(); GivePowerup("Insurance");
+                }
+                // Give shield top-up if randomiser = 80 to 100, and shields are less than 60
+                else if (p.shields <= 60f && p.colliderEnabled)
+                {
+                    PowerupDecided(); GivePowerup("ShieldRefill");
+                }
+                // If shield regen is selected but shields are fine or ship is respawning, loop back and select another powerup
+                // This while loop will not get stuck, because even if the loop somehow gets in an invalid position, an extra life will be granted eventually
             }
         }
         Destroy(p.canister);
@@ -83,5 +86,86 @@ public class PlayerPowerups : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void GivePowerup(string powerup)
+    {
+        Debug.Log(powerup + " given to player " + p.playerNumber);
+        if (powerup == "Insurance")
+        {
+            ifInsuranceActive = true;
+            p.playerUI.insurancePowerup.gameObject.SetActive(true);
+        }
+        else if (powerup == "FarShot")
+        {
+            ifFarShot = true;
+            p.playerUI.farShotPowerup.gameObject.SetActive(true);
+            p.playerWeapons.bulletDestroyTime = 1.4f;
+        }
+        else if (powerup == "TripleShot")
+        {
+            ifTripleShot = true;
+            p.playerUI.tripleShotPowerup.gameObject.SetActive(true);
+        }
+        else if (powerup == "RapidShot")
+        {
+            ifRapidShot = true;
+            p.playerUI.rapidShotPowerup.gameObject.SetActive(true);
+        }
+        else if (powerup == "RetroThruster")
+        {
+            ifRetroThruster = true;
+            p.playerUI.retroThrusterPowerup.gameObject.SetActive(true);
+        }
+        else if (powerup == "ShieldRefill")
+        {
+            p.shields = 80;
+        }
+        else if (powerup == "ExtraLife")
+        {
+            GrantExtraLife();
+        }
+        else if (powerup == "AllObtained")
+        {
+            float randomiser = Random.Range(0f, 1f);
+            // 5% chance of extra life
+            if (randomiser < 0.05f) {
+                GrantExtraLife();
+                Debug.Log("All powerups obtained: Give Extra Life");
+            }
+            // 10% chance of 2000 credits
+            if (randomiser < 0.15f) {
+                p.ScorePoints(2000);
+                Debug.Log("All powerups obtained: Give 2000c");
+            }
+            // 40% chance of shield refill. If respawning to full shields already, or above 60 shields, skips to last prize
+            else if (randomiser < 0.55f && p.shields <= 60f && p.colliderEnabled) {
+                GivePowerup("ShieldRefill");
+                Debug.Log("All powerups obtained: Give shield refill");
+            }
+            // 45% chance of 500 credits (85% if respawning or has above 60 shields)
+            else {
+                p.ScorePoints(500);
+                Debug.Log("All powerups obtained: Give 500c");
+            }
+        }
+        else
+        {
+            Debug.Log("Invalid powerup requested in PlayerPowerups");
+        }
+    }
+
+    public void GrantExtraLife()
+    {
+        p.lives++;
+        p.audioShipImpact.clip = p.lifeGained;
+        p.audioShipImpact.Play();
+        p.playerUI.UpdatePointDisplays();
+    }
+    public void CheatGiveCredits()
+    {
+        p.credits += 10000;
+        p.bonus = 0;
+        p.playerUI.UpdatePointDisplays();
     }
 }

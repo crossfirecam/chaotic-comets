@@ -24,7 +24,7 @@ public class PlayerMain : MonoBehaviour {
 
     // General purpose variables
     internal Rigidbody2D rb;
-    internal SpriteRenderer sprite;
+    public SpriteRenderer sprite;
     internal GameManager gM;
     public bool helpMenuMode = false;
     public int playerNumber;
@@ -49,7 +49,6 @@ public class PlayerMain : MonoBehaviour {
     void Start () {
         gM = GameObject.FindObjectOfType<GameManager>();
         rb = gameObject.GetComponent<Rigidbody2D>();
-        sprite = gameObject.GetComponent<SpriteRenderer>();
         playerInput.InputChoice();
         playerMisc.OtherStartFunctions();
     }
@@ -65,7 +64,7 @@ public class PlayerMain : MonoBehaviour {
     }
 
     // Receives points scored from latest asteroid hit, UFO hit, or canister reward
-    internal void ScorePoints(int pointsToAdd) {
+    public void ScorePoints(int pointsToAdd) {
         credits += pointsToAdd;
         playerUI.UpdatePointDisplays();
     }
@@ -80,7 +79,7 @@ public class PlayerMain : MonoBehaviour {
 
             if (colliderEnabled && Time.time > nextDamagePossible) {
                 nextDamagePossible = Time.time + 0.15f;
-                if (col.gameObject.tag == "asteroid") { col.gameObject.SendMessage("AsteroidWasHit"); }
+                if (col.gameObject.tag == "asteroid") { col.gameObject.GetComponent<AsteroidBehaviour>().AsteroidWasHit(); }
                 // If ship rams hard enough, deal more damage
                 if (col.relativeVelocity.magnitude > damageThreshold) {
                     audioShipImpact.clip = bigAsteroidHit;
@@ -114,14 +113,14 @@ public class PlayerMain : MonoBehaviour {
             }
             audioShipImpact.Play();
         }
-        if (triggerObject.gameObject.tag == "powerup") {
+        if (triggerObject.gameObject.tag == "powerup" && colliderEnabled) {
             Destroy(triggerObject.transform.parent.gameObject);
             playerPowerups.GivePowerup();
         }
     }
 
 
-    void CheckSounds(int intent) {
+    public void CheckSounds(int intent) {
         if (intent == 1) {
             if (audioShipThrust.isPlaying) {
                 audioThrusterPlaying = true;
@@ -147,9 +146,5 @@ public class PlayerMain : MonoBehaviour {
                 playerAbility.teleportOut.GetComponent<AudioSource>().UnPause();
             }
         }
-    }
-
-    public void CheatGiveCredits() {
-        credits += 10000;
     }
 }

@@ -26,7 +26,7 @@ public class UfoAllTypes : MonoBehaviour
     public AudioSource audioAlienImpact, audioAlienHum;
     public AudioClip audioClipShieldReflect, audioClipTakenDamage;
     public float alienHealth, alienMaxHealth;
-    private float pointsToScore = 100, teleportKillPoints = 500;
+    private int pointsToScore = 100, teleportKillPoints = 500;
     public GameObject forceField;
 
     // Other variables
@@ -61,6 +61,7 @@ public class UfoAllTypes : MonoBehaviour
     {
         // Stabilising 3D model
         transform.rotation = Quaternion.Euler(-50, 0, 0);
+
         // Weapon systems. If it is time to shoot, there is a player to shoot at...
         if (Time.time > lastTimeShot + shootingDelay && playerFound)
         {
@@ -82,7 +83,7 @@ public class UfoAllTypes : MonoBehaviour
     }
 
     // If the UFO is not dying, then start the teleport sequence at the end of a level
-    private void TeleportStart()
+    public void TeleportStart()
     {
         if (!deathStarted)
         {
@@ -168,8 +169,8 @@ public class UfoAllTypes : MonoBehaviour
                 // Send points to the player who shot, if alien has not taken fatal damage
                 if (alienHealth > -10f)
                 {
-                    if (playerBullet.CompareTag("bullet")) { playerShip1.SendMessage("ScorePoints", pointsToScore); }
-                    if (playerBullet.CompareTag("bullet2")) { playerShip2.SendMessage("ScorePoints", pointsToScore); }
+                    if (playerBullet.CompareTag("bullet")) { playerShip1.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
+                    if (playerBullet.CompareTag("bullet2")) { playerShip2.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
                     audioAlienImpact.clip = audioClipTakenDamage;
                     audioAlienImpact.Play();
                     DetermineIfDead();
@@ -178,11 +179,10 @@ public class UfoAllTypes : MonoBehaviour
             // If UFO IS retreating, don't deal damage. Instead, reflect bullet
             else
             {
-                Debug.Log("Bullet relected from UFO shield");
                 Vector2 force = gameObject.transform.position - playerBullet.transform.position;
                 int magnitude = 1000;
                 playerBullet.gameObject.GetComponent<Rigidbody2D>().AddForce(-force * magnitude);
-                playerBullet.SendMessage("UfoReflectedBullet");
+                playerBullet.GetComponent<BulletBehaviour>().UfoReflectedBullet();
                 audioAlienImpact.clip = audioClipShieldReflect;
                 audioAlienImpact.Play();
             }
@@ -239,13 +239,13 @@ public class UfoAllTypes : MonoBehaviour
     }
 
     // If a player the UFO is following has died, reset variables. So it chases after another player
-    void PlayerDied()
+    public void PlayerDied()
     {
         playerFound = false;
         player = null;
     }
 
-    void CheckSounds(int intent)
+    public void CheckSounds(int intent)
     {
         if (intent == 1)
         {

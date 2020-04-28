@@ -80,7 +80,7 @@ public class PlayerMisc : MonoBehaviour
         if (p.lives == 0)
         {
             p.playerSpawnDeath.PretendShipDoesntExist();
-            p.gM.SendMessage("PlayerDied", p.playerNumber);
+            p.gM.GetComponent<GameManager>().PlayerDied(p.playerNumber);
         }
         // If a player has died, but brought to life by another player, they'll have >1 life and 0 shields. Give revived player 80 shields.
         else if (p.lives > 0 && p.shields == 0)

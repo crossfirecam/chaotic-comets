@@ -57,5 +57,6 @@ public class BulletBehaviour : MonoBehaviour {
 
     public void UfoReflectedBullet() {
         ifBulletReflected = true;
+        Debug.Log("Bullet relected from UFO shield");
     }
 }

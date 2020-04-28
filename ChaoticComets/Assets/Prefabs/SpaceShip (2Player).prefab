@@ -307,6 +307,7 @@ MonoBehaviour:
   lives: 3
   shields: 80
   power: 80
+  sprite: {fileID: 212779256893596260}
   helpMenuMode: 0
   playerNumber: 2
   canister: {fileID: 0}

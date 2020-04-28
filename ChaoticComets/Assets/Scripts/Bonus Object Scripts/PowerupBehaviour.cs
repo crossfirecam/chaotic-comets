@@ -41,6 +41,7 @@ public class PowerupBehaviour : MonoBehaviour {
     // Destroy canister when shot by players
     void OnTriggerEnter2D(Collider2D triggerObject) {
         if (triggerObject.gameObject.tag == "bullet" || triggerObject.gameObject.tag == "bullet2") {
+            gameObject.GetComponent<CircleCollider2D>().enabled = false;
             gM.AlienAndPowerupLogic("powerupRespawn");
             triggerObject.enabled = false;
             Destroy(triggerObject.GetComponentInChildren<ParticleSystem>());

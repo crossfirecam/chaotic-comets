@@ -35,24 +35,24 @@ public class PlayerSpawnDeath : MonoBehaviour
         p.audioShipImpact.clip = p.deathSound;
         p.sprite.enabled = false;
         p.colliderEnabled = false;
-        p.gM.SendMessage("PlayerLostLife", p.playerNumber);
+        p.gM.PlayerLostLife(p.playerNumber);
         if (p.lives < 1)
         {
-            p.gM.SendMessage("PlayerDied", p.playerNumber);
+            p.gM.PlayerDied(p.playerNumber);
         }
         else { p.playerUI.prevshields = 80; Invoke("RespawnShip", 3f); }
     }
 
-    void ShipIsRecovering()
+    public void ShipIsRecovering()
     {
         if (p.shields < 80 && p.shields > 0)
         {
-            p.gM.SendMessage("ShowRechargeText");
+            p.gM.ShowRechargeText();
             StartCoroutine("RecoveringTimer");
         }
     }
 
-    void RespawnShip()
+    public void RespawnShip()
     {
         if (p.lives > 0 && p.gM.asteroidCount != 0)
         {

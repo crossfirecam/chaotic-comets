@@ -33,7 +33,7 @@ public class AsteroidBehaviour : MonoBehaviour {
         playerShip1 = GameObject.FindWithTag("Player");
         playerShip2 = GameObject.FindWithTag("Player 2");
         gM = GameObject.FindObjectOfType<GameManager>();
-	   }
+       }
 
     float MaxBackThrust() { return Random.Range(-maxThrust, -100); }
     float MaxForwardThrust() { return Random.Range(100, maxThrust); }
@@ -56,12 +56,12 @@ public class AsteroidBehaviour : MonoBehaviour {
             Destroy(otherObject.gameObject, 5f);
             AsteroidWasHit();
             // Send points to player who shot
-            if (otherObject.CompareTag("bullet")) { playerShip1.SendMessage("ScorePoints", points); }
-            if (otherObject.CompareTag("bullet2")) { playerShip2.SendMessage("ScorePoints", points); }
+            if (otherObject.CompareTag("bullet")) { playerShip1.GetComponent<PlayerMain>().ScorePoints(points); }
+            if (otherObject.CompareTag("bullet2")) { playerShip2.GetComponent<PlayerMain>().ScorePoints(points); }
         }
     }
 
-    void AsteroidWasHit() {
+    public void AsteroidWasHit() {
         if (!beenHit) {
             beenHit = true;
             // Explosion effect

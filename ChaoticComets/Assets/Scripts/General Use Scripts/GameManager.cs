@@ -57,10 +57,15 @@ public class GameManager : MonoBehaviour {
                 Saving_PlayerManager data = Saving_SaveManager.LoadData();
                 levelNo = data.level;
                 // Tell ships to 'play dead' (disable sprite & colliders) if previous shop says they're dead
-                if (BetweenScenesScript.player1TempLives == 0) {
-                    playerShip1.SendMessage("PretendShipDoesntExist"); }
-                if (BetweenScenesScript.player2TempLives == 0 && BetweenScenesScript.PlayerCount == 2) {
-                    playerShip2.SendMessage("PretendShipDoesntExist"); }
+                if (BetweenScenesScript.player1TempLives == 0)
+                {
+                    playerShip1.playerSpawnDeath.PretendShipDoesntExist();
+                }
+                if (BetweenScenesScript.player2TempLives == 0 && BetweenScenesScript.PlayerCount == 2)
+                {
+                    playerShip2.playerSpawnDeath.PretendShipDoesntExist();
+                
+                }
             }
             StartCoroutine(FadeBlack("from"));
             Invoke("StartNewLevel", 0f);
@@ -151,6 +156,7 @@ public class GameManager : MonoBehaviour {
 
     // If a player dies, set the value for their death. If both are dead, game is over
     public void PlayerDied(int playerThatDied) {
+        Debug.Log("Player " + playerThatDied + " has died.");
         if (playerThatDied == 1) { player1dead = true; }
         else if (playerThatDied == 2) { player2dead = true; }
         if (player1dead && player2dead) {
@@ -164,7 +170,7 @@ public class GameManager : MonoBehaviour {
         else if (playerNumber == 2) { player2TEMPDEAD = true; }
         GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
         foreach (GameObject ufo in listOfUfos) {
-            ufo.SendMessage("PlayerDied");
+            ufo.GetComponent<UfoAllTypes>().PlayerDied();
         }
     }
 
@@ -205,12 +211,15 @@ public class GameManager : MonoBehaviour {
     public void PauseGame(int intent) {
         if (intent == 0) { // Pause game
             Cursor.visible = true;
-            if (!player1dead) { playerShip1.SendMessage("CheckSounds", 1); }
-            if (!player2dead) { playerShip2.SendMessage("CheckSounds", 1); }
+            if (!player1dead) { playerShip1.CheckSounds(1); }
+            if (!player2dead) { playerShip2.CheckSounds(1); }
 
             musicLoop.Pause();
-            GameObject[] listOfObjects = GameObject.FindGameObjectsWithTag("ufo");
-            foreach (GameObject gameObj in listOfObjects) { gameObj.SendMessage("CheckSounds", 1); }
+
+            GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
+            foreach (GameObject ufo in listOfUfos) {
+                ufo.GetComponent<UfoAllTypes>().CheckSounds(1);
+            }
 
             gamePausePanel.SetActive(true);
             buttonWhenPaused.Select();
@@ -219,12 +228,21 @@ public class GameManager : MonoBehaviour {
         }
         else if (intent == 1) { // Resume game
             Cursor.visible = false;
-            if (!player1dead) { playerShip1.SendMessage("CheckSounds", 2); playerShip1.playerInput.SendMessage("InputChoice"); }
-            if (!player2dead) { playerShip2.SendMessage("CheckSounds", 2); playerShip2.playerInput.SendMessage("InputChoice"); }
+            if (!player1dead) {
+                playerShip1.CheckSounds(2);
+                playerShip1.playerInput.InputChoice();
+            }
+            if (!player2dead) {
+                playerShip1.CheckSounds(2);
+                playerShip2.playerInput.InputChoice();
+            }
 
             if (BetweenScenesScript.MusicVolume > 0f && !helpMenuMode) { musicLoop.Play(); }
-            GameObject[] listOfObjects = GameObject.FindGameObjectsWithTag("ufo");
-            foreach (GameObject gameObj in listOfObjects) { gameObj.SendMessage("CheckSounds", 2); }
+
+            GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
+            foreach (GameObject ufo in listOfUfos) {
+                ufo.GetComponent<UfoAllTypes>().CheckSounds(2);
+            }
 
             gamePausePanel.SetActive(false);
             buttonWhenLeavingPauseBugFix.Select();
@@ -248,8 +266,8 @@ public class GameManager : MonoBehaviour {
         asteroidCount = 0;
         for (int i = 0; i < levelNo + 1; i++) { SpawnProp("asteroid"); }
         // Player Respawn
-        if (!player1dead) { playerShip1.SendMessage("RespawnShip"); }
-        if (!player2dead) { playerShip2.SendMessage("RespawnShip"); }
+        if (!player1dead) { playerShip1.playerSpawnDeath.RespawnShip(); }
+        if (!player2dead) { playerShip2.playerSpawnDeath.RespawnShip(); }
 
         // Set a cap on how many UFOs or canisters can spawn
         if (levelNo == 1) { propCap = 2; }
@@ -264,16 +282,16 @@ public class GameManager : MonoBehaviour {
     // At the end of a level activate level transition dialog, set the UFO to disappear, and if a player is still alive, respawn them
     public void EndLevelFanFare() {
         if (!player1dead || !player2dead) {
-            GameObject[] listOfObjects = GameObject.FindGameObjectsWithTag("ufo");
-            foreach (GameObject gameObj in listOfObjects) { gameObj.SendMessage("TeleportStart"); }
+            GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
+            foreach (GameObject ufo in listOfUfos) { ufo.GetComponent<UfoAllTypes>().TeleportStart(); }
             Invoke("EndLevelFanFare2", 2.5f);
         }
     }
     private void EndLevelFanFare2() {
         gameLevelPanel.SetActive(true);
         // Player Shield Recovery
-        if (!player1dead) { playerShip1.SendMessage("ShipIsRecovering"); }
-        if (!player2dead) { playerShip2.SendMessage("ShipIsRecovering"); }
+        if (!player1dead) { playerShip1.playerSpawnDeath.ShipIsRecovering(); }
+        if (!player2dead) { playerShip2.playerSpawnDeath.ShipIsRecovering(); }
         StartCoroutine(FadeBlack("to"));
         Invoke("BringUpShop", 3f);
     }
@@ -303,8 +321,8 @@ public class GameManager : MonoBehaviour {
         buttonWhenGameOver.Select();
 
         musicLoop.Pause();
-        GameObject[] listOfObjects = GameObject.FindGameObjectsWithTag("ufo");
-        foreach (GameObject gameObj in listOfObjects) { gameObj.SendMessage("CheckSounds", 1); }
+        GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
+        foreach (GameObject ufo in listOfUfos) { ufo.GetComponent<UfoAllTypes>().CheckSounds(1); }
 
         Time.timeScale = 0;
     }
@@ -347,7 +365,7 @@ public class GameManager : MonoBehaviour {
             asteroidCount += 1;
             if (instantkillAsteroids) {
                 GameObject childAsteroid = newAsteroid.transform.GetChild(0).gameObject;
-                childAsteroid.SendMessage("DebugMode");
+                childAsteroid.GetComponent<AsteroidBehaviour>().DebugMode();
             }
         }
     }
