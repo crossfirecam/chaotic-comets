@@ -65,7 +65,7 @@ public class PowerupBehaviour : MonoBehaviour {
     }
     float MaxBackThrust() { return Random.Range(-maxThrust, -200); }
     float MaxForwardThrust() { return Random.Range(200, maxThrust); }
-	
+    
     // Called from Start(). Sets off an expiry animation after a random time
     void StartExpiry() {
         StartCoroutine("PowerupExpiry");

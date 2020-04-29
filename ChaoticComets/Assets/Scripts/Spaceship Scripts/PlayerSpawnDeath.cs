@@ -14,6 +14,7 @@ public class PlayerSpawnDeath : MonoBehaviour
     {
         if (p.playerPowerups.ifInsuranceActive)
         {
+            p.playerPowerups.RemovePowerup(PlayerPowerups.Powerups.Insurance);
             p.playerUI.insurancePowerup.gameObject.SetActive(false); p.playerPowerups.ifInsuranceActive = false;
         }
         else
@@ -21,21 +22,21 @@ public class PlayerSpawnDeath : MonoBehaviour
             // If difficulty is easy, do not remove retro thruster
             if (BetweenScenesScript.Difficulty != 0)
             {
-                p.playerUI.retroThrusterPowerup.gameObject.SetActive(false); p.playerPowerups.ifRetroThruster = false;
+                p.playerPowerups.RemovePowerup(PlayerPowerups.Powerups.RetroThruster);
             }
-            p.playerUI.rapidShotPowerup.gameObject.SetActive(false); p.playerPowerups.ifRapidShot = false;
-            p.playerUI.tripleShotPowerup.gameObject.SetActive(false); p.playerPowerups.ifTripleShot = false;
-            p.playerUI.farShotPowerup.gameObject.SetActive(false); p.playerPowerups.ifFarShot = false;
-            p.playerWeapons.bulletDestroyTime = 0.8f; // Reset bullet destroy time to not be 'far shot'
+            p.playerPowerups.RemovePowerup(PlayerPowerups.Powerups.RapidShot);
+            p.playerPowerups.RemovePowerup(PlayerPowerups.Powerups.TripleShot);
+            p.playerPowerups.RemovePowerup(PlayerPowerups.Powerups.FarShot);
         }
         p.shields = 0;
-        p.lives--; p.playerUI.livesText.text = "Lives: " + p.lives;
+        p.lives--; p.playerUI.livesText.text = $"Lives: {p.lives}";
         GameObject newExplosion = Instantiate(p.deathExplosion, transform.position, transform.rotation);
         Destroy(newExplosion, 2f);
         p.audioShipImpact.clip = p.deathSound;
-        p.sprite.enabled = false;
-        p.colliderEnabled = false;
+        PretendShipDoesntExist();
         p.gM.PlayerLostLife(p.playerNumber);
+
+        // If player out of lives, then tell GM the player is dead. Else, respawn them in 3 seconds.
         if (p.lives < 1)
         {
             p.gM.PlayerDied(p.playerNumber);
@@ -63,6 +64,8 @@ public class PlayerSpawnDeath : MonoBehaviour
             }
             p.sprite.enabled = true;
             p.colliderEnabled = false;
+            p.capsCollider.enabled = true;
+
             p.rb.velocity = Vector2.zero;
 
             // If at least one player is dead, place the other in the center of the screen
@@ -133,5 +136,6 @@ public class PlayerSpawnDeath : MonoBehaviour
     {
         p.sprite.enabled = false;
         p.colliderEnabled = false;
+        p.capsCollider.enabled = false;
     }
 }

@@ -10,6 +10,7 @@ public class PlayerWeapons : MonoBehaviour
     public GameObject bullet;
     public float bulletForce;
     internal float bulletDestroyTime = 0.8f;
+    internal static readonly float bulletTimeIfNormal = 0.8f, bulletTimeIfFar = 1.4f;
     private GameObject mainCannon, tripleCannon1, tripleCannon2;
 
     // Upgradable Weapon Stats

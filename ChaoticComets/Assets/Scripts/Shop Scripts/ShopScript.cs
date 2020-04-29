@@ -55,7 +55,7 @@ public class ShopScript : MonoBehaviour {
         if (data.player1powerups[3] == 1) { p1RapidShotPowerup.gameObject.SetActive(true); }
         if (data.player1powerups[4] == 1) { p1TripleShotPowerup.gameObject.SetActive(true); }
         if (data.playerCount == 1) {
-            readyPromptText.text = "Press 'Ready' to\nContinue to Level " + (data.level + 1).ToString() + "...";
+            readyPromptText.text = $"Press 'Ready' to\nContinue to Level {(data.level + 1).ToString()}...";
             p2IsReady = true;
             Player1OnlyGUI();
         }
@@ -69,7 +69,7 @@ public class ShopScript : MonoBehaviour {
             if (data.player2powerups[2] == 1) { p2RetroThrusterPowerup.gameObject.SetActive(true); }
             if (data.player2powerups[3] == 1) { p2RapidShotPowerup.gameObject.SetActive(true); }
             if (data.player2powerups[4] == 1) { p2TripleShotPowerup.gameObject.SetActive(true); }
-            readyPromptText.text = "Both players 'Ready' to\nContinue to Level " + (data.level + 1).ToString() + "...";
+            readyPromptText.text = $"Both players 'Ready' to\nContinue to Level {(data.level + 1).ToString()}...";
         }
 
         SetActiveEventSystems(1);
@@ -208,7 +208,7 @@ public class ShopScript : MonoBehaviour {
                 if (BetweenScenesScript.player1TempCredits >= price) {
                     BetweenScenesScript.UpgradesP1[whichUpgrade] += 1;
                     BetweenScenesScript.player1TempCredits -= price;
-                    Debug.Log("Upgrades: " + string.Join(",", BetweenScenesScript.UpgradesP1) + " Credits left: " + BetweenScenesScript.player1TempCredits);
+                    Debug.Log($"Upgrades: {string.Join(",", BetweenScenesScript.UpgradesP1)} Credits left: {BetweenScenesScript.player1TempCredits}");
                 }
                 else {
                     Debug.Log("Upgrade failed, not enough credits");
@@ -225,7 +225,7 @@ public class ShopScript : MonoBehaviour {
                 if (BetweenScenesScript.player2TempCredits >= price) {
                     BetweenScenesScript.UpgradesP2[whichUpgrade] += 1;
                     BetweenScenesScript.player2TempCredits -= price;
-                    Debug.Log("Upgrades: " + string.Join(",", BetweenScenesScript.UpgradesP2) + " Credits left: " + BetweenScenesScript.player2TempCredits);
+                    Debug.Log($"Upgrades: {string.Join(",", BetweenScenesScript.UpgradesP2)} Credits left: {BetweenScenesScript.player2TempCredits}");
                 }
                 else {
                     Debug.Log("Upgrade failed, not enough credits");
@@ -372,7 +372,7 @@ public class ShopScript : MonoBehaviour {
                 if (!gameObj.transform.name.EndsWith("Transfer")) {
                     tempUpgradeNumLength = BetweenScenesScript.UpgradesP1[i].ToString().Length - 1;
                     upgradeTier = BetweenScenesScript.UpgradesP1[i].ToString().Insert(tempUpgradeNumLength, ".");
-                    gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Upgrade: " + priceP1.ToString() + "c)";
+                    gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Upgrade: {priceP1.ToString()}c)";
                     if (BetweenScenesScript.UpgradesP1[i] == upgradeCap) {
                         gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Maximum upgrade)";
                     }
@@ -390,7 +390,7 @@ public class ShopScript : MonoBehaviour {
                 if (!gameObj.transform.name.EndsWith("Transfer")) {
                     tempUpgradeNumLength = BetweenScenesScript.UpgradesP2[i].ToString().Length - 1;
                     upgradeTier = BetweenScenesScript.UpgradesP2[i].ToString().Insert(tempUpgradeNumLength, ".");
-                    gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Upgrade: " + priceP2.ToString() + "c)";
+                    gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Upgrade: {priceP2.ToString()}c)";
                     if (BetweenScenesScript.UpgradesP2[i] == upgradeCap) {
                         gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Maximum upgrade)";
                     }

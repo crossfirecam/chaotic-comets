@@ -46,15 +46,11 @@ public class PlayerMisc : MonoBehaviour
             p.lives = BetweenScenesScript.player1TempLives;
             p.shields = data.player1health;
             p.bonus = data.player1bonus;
-            if (data.player1powerups[0] == 1) { p.playerPowerups.ifInsuranceActive = true; p.playerUI.insurancePowerup.gameObject.SetActive(true); }
-            if (data.player1powerups[1] == 1)
-            {
-                p.playerPowerups.ifFarShot = true; p.playerUI.farShotPowerup.gameObject.SetActive(true);
-                p.playerWeapons.bulletDestroyTime = 1.4f;
-            }
-            if (data.player1powerups[2] == 1) { p.playerPowerups.ifRetroThruster = true; p.playerUI.retroThrusterPowerup.gameObject.SetActive(true); }
-            if (data.player1powerups[3] == 1) { p.playerPowerups.ifRapidShot = true; p.playerUI.rapidShotPowerup.gameObject.SetActive(true); }
-            if (data.player1powerups[4] == 1) { p.playerPowerups.ifTripleShot = true; p.playerUI.tripleShotPowerup.gameObject.SetActive(true); }
+            if (data.player1powerups[0] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance); }
+            if (data.player1powerups[1] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot); }
+            if (data.player1powerups[2] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster); }
+            if (data.player1powerups[3] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot); }
+            if (data.player1powerups[4] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot); }
         }
         else
         { // (playerNumber == 2)
@@ -62,15 +58,11 @@ public class PlayerMisc : MonoBehaviour
             p.lives = BetweenScenesScript.player2TempLives;
             p.shields = data.player2health;
             p.bonus = data.player2bonus;
-            if (data.player2powerups[0] == 1) { p.playerPowerups.ifInsuranceActive = true; p.playerUI.insurancePowerup.gameObject.SetActive(true); }
-            if (data.player2powerups[1] == 1)
-            {
-                p.playerPowerups.ifFarShot = true; p.playerUI.farShotPowerup.gameObject.SetActive(true);
-                p.playerWeapons.bulletDestroyTime = 1.4f;
-            }
-            if (data.player2powerups[2] == 1) { p.playerPowerups.ifRetroThruster = true; p.playerUI.retroThrusterPowerup.gameObject.SetActive(true); }
-            if (data.player2powerups[3] == 1) { p.playerPowerups.ifRapidShot = true; p.playerUI.rapidShotPowerup.gameObject.SetActive(true); }
-            if (data.player2powerups[4] == 1) { p.playerPowerups.ifTripleShot = true; p.playerUI.tripleShotPowerup.gameObject.SetActive(true); }
+            if (data.player2powerups[0] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance); }
+            if (data.player2powerups[1] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot); }
+            if (data.player2powerups[2] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster); }
+            if (data.player2powerups[3] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot); }
+            if (data.player2powerups[4] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot); }
         }
     }
 

@@ -139,13 +139,13 @@ public class GameManager : MonoBehaviour {
         if ((reason == "initialAlienSetup" || reason == "alienRespawn") && ufoAmountSpawned < propCap) {
             if (levelNo > lastLevelWithoutEnemies) { // Alien will not appear until a certain level
                 ufoAmountSpawned += 1;
-                Debug.Log("Next UFO will spawn in: " + randomTime + ". Only " + (propCap - ufoAmountSpawned) + " more can spawn.");
+                Debug.Log($"Next UFO will spawn in: {randomTime}. Only {propCap - ufoAmountSpawned} more can spawn.");
                 Invoke("RespawnAlien", randomTime);
             }
         }
         else if ((reason == "initialPowerupSetup" || reason == "powerupRespawn") && canisterAmountSpawned < propCap) {
             canisterAmountSpawned += 1;
-            Debug.Log("Next canister will spawn in: " + randomTime + ". Only " + (propCap - canisterAmountSpawned) + " more can spawn.");
+            Debug.Log($"Next canister will spawn in: {randomTime}. Only {propCap - canisterAmountSpawned} more can spawn.");
             Invoke("RespawnCanister", randomTime);
         }
     }

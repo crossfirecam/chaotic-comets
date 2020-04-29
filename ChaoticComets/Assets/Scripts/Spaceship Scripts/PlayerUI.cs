@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,11 +15,6 @@ public class PlayerUI : MonoBehaviour
     public Text scoreText, livesText;
     internal float prevshields;
 
-    public void UpdatePowerups()
-    {
-
-    }
-
     public void UpdateBars()
     {
         shieldBar.fillAmount = p.shields / 80;
@@ -27,13 +23,14 @@ public class PlayerUI : MonoBehaviour
 
     public void UpdatePointDisplays()
     {
-        scoreText.text = "Credits:\n" + p.credits;
-        livesText.text = "Lives: " + p.lives;
         // If credits are higher than bonus threshold, and bonus is not set to 0 (credits cheated in), then grant a life
         if (p.credits > p.bonus && p.bonus != 0)
         {
             p.bonus += bonusInterval;
             p.playerPowerups.GrantExtraLife();
         }
+
+        scoreText.text = "Credits:\n" + p.credits;
+        livesText.text = "Lives: " + p.lives;
     }
 }

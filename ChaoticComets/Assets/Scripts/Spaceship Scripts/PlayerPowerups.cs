@@ -9,58 +9,65 @@ public class PlayerPowerups : MonoBehaviour
     // Powerup booleans
     public bool ifInsuranceActive, ifFarShot, ifRetroThruster, ifRapidShot, ifTripleShot;
     private bool powerupUndecided;
+    private int powerRandomiser;
 
     internal void GivePowerup()
     {
+        int loopFailsafe = 0;
         powerupUndecided = true;
         while (powerupUndecided)
         {
             // If all powerups have been collected, then give a random reward of credits or shield refill
             if (ifInsuranceActive && ifFarShot && ifTripleShot && ifRapidShot && ifRetroThruster)
             {
-                PowerupDecided(); GivePowerup("AllObtained");
+                PowerupDecided(); FindWhatToGivePlayer();
             }
             // If not all have been collected, then run a randomiser and pick a powerup
+            // All powerups are 15% chance, shield top-up is 15%, and extra life is 5%
             else
             {
-                int randomiser = Random.Range(0, 100);
-                Debug.Log(randomiser);
-                if (randomiser < 5)
-                { // Award extra life, 1 in 24 chance
-                    PowerupDecided(); GivePowerup("ExtraLife");
+                powerRandomiser = Random.Range(0, 20);
+                Debug.Log(powerRandomiser);
+                if (RandCheck(0, 3) && !ifFarShot)
+                { // Give far shot powerup, 15% chance
+                    PowerupDecided(); ApplyPowerup(Powerups.FarShot);
                 }
-                else if (randomiser < 20 && !ifFarShot)
-                { // Give far shot powerup
-                    PowerupDecided(); GivePowerup("FarShot");
+                else if (RandCheck(3, 6) && !ifTripleShot)
+                { // Give triple shot powerup, 15% chance
+                    PowerupDecided(); ApplyPowerup(Powerups.TripleShot);
                 }
-                else if (randomiser < 35 && !ifTripleShot)
-                { // Give triple shot powerup
-                    PowerupDecided(); GivePowerup("TripleShot");
+                else if (RandCheck(6, 9) && !ifRapidShot)
+                { // Give rapid shot powerup, 15% chance
+                    PowerupDecided(); ApplyPowerup(Powerups.RapidShot);
                 }
-                else if (randomiser < 50 && !ifRapidShot)
-                { // Give rapid shot powerup
-                    PowerupDecided(); GivePowerup("RapidShot");
+                else if (RandCheck(9, 12) && !ifRetroThruster)
+                { // Give retro thruster powerup, 15% chance
+                    PowerupDecided(); ApplyPowerup(Powerups.RetroThruster);
                 }
-                else if (randomiser < 65 && !ifRetroThruster)
-                { // Give retro thruster powerup
-                    PowerupDecided(); GivePowerup("RetroThruster");
+                else if (RandCheck(12, 15) && !ifInsuranceActive && AtLeastOneOtherPowerup())
+                { // Give insurance powerup, 15% chance, needs another powerup active
+                    PowerupDecided(); ApplyPowerup(Powerups.Insurance);
                 }
-                else if (randomiser < 80 && !ifInsuranceActive && AtLeastOneOtherPowerup())
-                { // Give insurance powerup
-                    PowerupDecided(); GivePowerup("Insurance");
-                }
-                // Give shield top-up if randomiser = 80 to 100, and shields are less than 60
-                else if (p.shields <= 60f && p.colliderEnabled)
+                // Give shield top-up, 15% chance, needs shields to be less than 60
+                else if (RandCheck(15, 19) && p.shields <= 60f && p.colliderEnabled)
                 {
-                    PowerupDecided(); GivePowerup("ShieldRefill");
+                    PowerupDecided(); ApplyPowerup(Powerups.ShieldRefill);
+                }
+                else if (powerRandomiser == 19)
+                { // Award extra life, 5% chance
+                    PowerupDecided(); ApplyPowerup(Powerups.ExtraLife);
                 }
                 // If shield regen is selected but shields are fine or ship is respawning, loop back and select another powerup
-                // This while loop will not get stuck, because even if the loop somehow gets in an invalid position, an extra life will be granted eventually
             }
+            if (loopFailsafe > 20)
+            {
+                Debug.LogError($"Powerup selection has failed. Randomiser number is {powerRandomiser}");
+                break;
+            }
+            Debug.Log("LoopNo: " + loopFailsafe);
+            loopFailsafe++;
         }
         Destroy(p.canister);
-        p.audioShipImpact.clip = p.powerupReceived;
-        p.audioShipImpact.Play();
     }
     private void PowerupDecided()
     {
@@ -70,12 +77,12 @@ public class PlayerPowerups : MonoBehaviour
 
     // Basically only gives insurance powerup once at least one other powerup is received
     // Does this by determining if at least one of the others is received,
-    // Then if Easy mode is selected, check that retro thrusters isn't the only one equipped (pointless to insure it)
     // If not at least one powerup has been received yet, tell GivePowerup() to select another powerup
     private bool AtLeastOneOtherPowerup()
     {
         if (ifFarShot || ifTripleShot || ifRapidShot || ifRetroThruster)
         {
+            // If Easy mode is selected, check that retro thrusters isn't the only one equipped (pointless to insure it)
             if (BetweenScenesScript.Difficulty == 0 && ifRetroThruster && !ifFarShot && !ifTripleShot && !ifRapidShot)
             {
                 return false;
@@ -88,84 +95,153 @@ public class PlayerPowerups : MonoBehaviour
         }
     }
 
-    public void GivePowerup(string powerup)
+    public enum Powerups { Insurance, FarShot, TripleShot, RapidShot, RetroThruster, ShieldRefill, ExtraLife, MediumPrize, SmallPrize };
+
+    public void ApplyPowerup(Powerups powerup)
     {
-        Debug.Log(powerup + " given to player " + p.playerNumber);
-        if (powerup == "Insurance")
+        Debug.Log($"{powerup} given to player {p.playerNumber}");
+        p.audioShipImpact.clip = p.powerupReceived;
+        switch (powerup)
         {
-            ifInsuranceActive = true;
-            p.playerUI.insurancePowerup.gameObject.SetActive(true);
+            case Powerups.Insurance:
+                ifInsuranceActive = true;
+                p.playerUI.insurancePowerup.gameObject.SetActive(true);
+                break;
+            case Powerups.FarShot:
+                ifFarShot = true;
+                p.playerUI.farShotPowerup.gameObject.SetActive(true);
+                p.playerWeapons.bulletDestroyTime = PlayerWeapons.bulletTimeIfFar;
+                break;
+            case Powerups.TripleShot:
+                ifTripleShot = true;
+                p.playerUI.tripleShotPowerup.gameObject.SetActive(true);
+                break;
+            case Powerups.RapidShot:
+                ifRapidShot = true;
+                p.playerUI.rapidShotPowerup.gameObject.SetActive(true);
+                break;
+            case Powerups.RetroThruster:
+                ifRetroThruster = true;
+                p.playerUI.retroThrusterPowerup.gameObject.SetActive(true);
+                break;
+            case Powerups.ShieldRefill:
+                p.shields = 80;
+                break;
+            
+            case Powerups.ExtraLife:
+                p.ScorePoints(10000);
+                break;
+            case Powerups.MediumPrize:
+                p.ScorePoints(2500);
+                break;
+            case Powerups.SmallPrize:
+                p.ScorePoints(1000);
+                break;
+            default:
+                Debug.Log("Invalid powerup requested in PlayerPowerups");
+                break;
+
         }
-        else if (powerup == "FarShot")
+        // When the ship is given an extra life, it plays the sound effect itself. Other powerup, play the sound.
+        if (powerup != Powerups.ExtraLife)
         {
-            ifFarShot = true;
-            p.playerUI.farShotPowerup.gameObject.SetActive(true);
-            p.playerWeapons.bulletDestroyTime = 1.4f;
-        }
-        else if (powerup == "TripleShot")
-        {
-            ifTripleShot = true;
-            p.playerUI.tripleShotPowerup.gameObject.SetActive(true);
-        }
-        else if (powerup == "RapidShot")
-        {
-            ifRapidShot = true;
-            p.playerUI.rapidShotPowerup.gameObject.SetActive(true);
-        }
-        else if (powerup == "RetroThruster")
-        {
-            ifRetroThruster = true;
-            p.playerUI.retroThrusterPowerup.gameObject.SetActive(true);
-        }
-        else if (powerup == "ShieldRefill")
-        {
-            p.shields = 80;
-        }
-        else if (powerup == "ExtraLife")
-        {
-            GrantExtraLife();
-        }
-        else if (powerup == "AllObtained")
-        {
-            float randomiser = Random.Range(0f, 1f);
-            // 5% chance of extra life
-            if (randomiser < 0.05f) {
-                GrantExtraLife();
-                Debug.Log("All powerups obtained: Give Extra Life");
-            }
-            // 10% chance of 2000 credits
-            if (randomiser < 0.15f) {
-                p.ScorePoints(2000);
-                Debug.Log("All powerups obtained: Give 2000c");
-            }
-            // 40% chance of shield refill. If respawning to full shields already, or above 60 shields, skips to last prize
-            else if (randomiser < 0.55f && p.shields <= 60f && p.colliderEnabled) {
-                GivePowerup("ShieldRefill");
-                Debug.Log("All powerups obtained: Give shield refill");
-            }
-            // 45% chance of 500 credits (85% if respawning or has above 60 shields)
-            else {
-                p.ScorePoints(500);
-                Debug.Log("All powerups obtained: Give 500c");
-            }
-        }
-        else
-        {
-            Debug.Log("Invalid powerup requested in PlayerPowerups");
+            p.audioShipImpact.Play();
         }
     }
 
     public void GrantExtraLife()
     {
+        Debug.Log("Ok");
         p.lives++;
         p.audioShipImpact.clip = p.lifeGained;
         p.audioShipImpact.Play();
-        p.playerUI.UpdatePointDisplays();
     }
-    public void CheatGiveCredits()
+
+    public void FindWhatToGivePlayer()
     {
-        p.credits += 10000;
-        p.bonus = 0;
-        p.playerUI.UpdatePointDisplays();
+        powerRandomiser = Random.Range(0, 20);
+        // 10% chance of 10,000 credits (and therefore an extra life)
+        if (RandCheck(0, 2))
+        {
+            ApplyPowerup(Powerups.ExtraLife);
+            Debug.Log("All powerups obtained: Give 10000c (Extra Life)");
+        }
+        // 10% chance of 2500 credits
+        else if (RandCheck(2,4))
+        {
+            ApplyPowerup(Powerups.MediumPrize);
+            Debug.Log("All powerups obtained: Give 2500c");
+        }
+        // 40% chance of shield refill. If respawning to full shields already, or above 60 shields, skips to last prize
+        else if (RandCheck(4, 12) && p.shields <= 60f && p.colliderEnabled)
+        {
+            ApplyPowerup(Powerups.ShieldRefill);
+            Debug.Log("All powerups obtained: Give shield refill");
+        }
+        // 40% chance of 1000 credits (80% if respawning or has above 60 shields)
+        else
+        {
+            ApplyPowerup(Powerups.SmallPrize);
+            Debug.Log("All powerups obtained: Give 1000c");
+        }
+    }
+
+    // This function only exists because Enum values can't be used with Unity's button OnClick
+    public void CheatGivePowerup(string powerup)
+    {
+
+        Powerups powerupToTry;
+        if (powerup == "Random")
+        {
+            GivePowerup();
+        }
+        else if (Powerups.TryParse(powerup, out powerupToTry))
+        {
+            ApplyPowerup(powerupToTry);
+        }
+        else
+        {
+            Debug.Log("Unity Button attempted to spawn an invalid powerup.");
+        }
+    }
+    private bool RandCheck(int min, int max)
+    {
+        return (powerRandomiser >= min && powerRandomiser < max);
+    }
+    public void RemovePowerup(Powerups powerup)
+    {
+        switch (powerup)
+        {
+            case Powerups.Insurance:
+                ifInsuranceActive = false;
+                p.playerUI.insurancePowerup.gameObject.SetActive(false);
+                break;
+            case Powerups.FarShot:
+                ifFarShot = false;
+                p.playerUI.farShotPowerup.gameObject.SetActive(false);
+                p.playerWeapons.bulletDestroyTime = PlayerWeapons.bulletTimeIfNormal;
+                break;
+            case Powerups.TripleShot:
+                ifTripleShot = false;
+                p.playerUI.tripleShotPowerup.gameObject.SetActive(false);
+                break;
+            case Powerups.RapidShot:
+                ifRapidShot = false;
+                p.playerUI.rapidShotPowerup.gameObject.SetActive(false);
+                break;
+            case Powerups.RetroThruster:
+                ifRetroThruster = false;
+                p.playerUI.retroThrusterPowerup.gameObject.SetActive(false);
+                break;
+            default:
+                Debug.Log("Invalid powerup requested in PlayerPowerups");
+                break;
+
+        }
+        // When the ship is given an extra life, it plays the sound effect itself. Other powerup, play the sound.
+        if (powerup != Powerups.ExtraLife)
+        {
+            p.audioShipImpact.Play();
+        }
     }
 }

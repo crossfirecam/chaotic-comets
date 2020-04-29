@@ -9735,6 +9735,7 @@ MonoBehaviour:
   shields: 80
   power: 80
   sprite: {fileID: 212575828220606586}
+  capsCollider: {fileID: 70447958271372078}
   helpMenuMode: 0
   playerNumber: 1
   canister: {fileID: 0}

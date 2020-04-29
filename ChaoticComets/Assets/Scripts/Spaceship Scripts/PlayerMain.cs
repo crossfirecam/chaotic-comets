@@ -25,6 +25,7 @@ public class PlayerMain : MonoBehaviour {
     // General purpose variables
     internal Rigidbody2D rb;
     public SpriteRenderer sprite;
+    public CapsuleCollider2D capsCollider;
     internal GameManager gM;
     public bool helpMenuMode = false;
     public int playerNumber;
@@ -113,7 +114,7 @@ public class PlayerMain : MonoBehaviour {
             }
             audioShipImpact.Play();
         }
-        if (triggerObject.gameObject.tag == "powerup" && colliderEnabled) {
+        if (triggerObject.gameObject.tag == "powerup" && sprite.enabled) {
             Destroy(triggerObject.transform.parent.gameObject);
             playerPowerups.GivePowerup();
         }
