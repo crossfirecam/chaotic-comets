@@ -10,14 +10,14 @@ public class PlayerMovement : MonoBehaviour
     public void ShipMovement()
     {
         // Rotate the ship
-        if (p.playerInput.turnInput != 0 && p.sprite.enabled)
+        if (p.playerInput.turnInput != 0 && p.spritePlayer.enabled)
         {
             transform.Rotate(Vector3.forward * p.playerInput.turnInput * Time.deltaTime * p.playerInput.turnThrust);
         }
 
         // Active thrusting (forward or braking thrust)
         // Apply force on Y axis of spaceship, multiply by thrust
-        if (p.playerInput.thrustInput != 0 && p.sprite.enabled && p.playerInput.isNotTeleporting)
+        if (p.playerInput.thrustInput != 0 && p.spritePlayer.enabled && p.playerInput.isNotTeleporting)
         {
             if (!p.audioShipThrust.isPlaying) { p.audioShipThrust.Play(); }
             if (!p.playerInput.thruster1.isPlaying) { p.playerInput.thruster1.Play(); }
@@ -28,18 +28,18 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (BetweenScenesScript.Difficulty != 2)
                 {
-                    p.rb.drag = p.rb.velocity.magnitude / p.playerInput.brakingPower;
+                    p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / p.playerInput.brakingPower;
                 }
                 else
                 {
-                    p.rb.drag = p.rb.velocity.magnitude / p.playerInput.brakingPower / 2;
+                    p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / p.playerInput.brakingPower / 2;
                 }
             }
             // If thrust is more than 0, then ship is moving forward.
             else
             {
-                p.rb.AddRelativeForce(Vector2.up * -p.playerInput.thrustInput * Time.deltaTime * p.playerInput.thrust);
-                p.rb.drag = p.rb.velocity.magnitude / 10f;
+                p.rbPlayer.AddRelativeForce(Vector2.up * -p.playerInput.thrustInput * Time.deltaTime * p.playerInput.thrust);
+                p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 10f;
             }
         }
         // Passive Drag (no thruster controls pressed)
@@ -53,14 +53,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (BetweenScenesScript.Difficulty != 2)
                 {
-                    p.rb.drag = p.rb.velocity.magnitude / 0.2f;
+                    p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 0.2f;
                 }
                 else
                 {
-                    p.rb.drag = p.rb.velocity.magnitude / 2f;
+                    p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 2f;
                 }
             }
-            else { p.rb.drag = p.rb.velocity.magnitude / 8f; }
+            else { p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 8f; }
         }
     }
 

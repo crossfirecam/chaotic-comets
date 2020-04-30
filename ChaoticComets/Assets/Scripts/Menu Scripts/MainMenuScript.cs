@@ -27,7 +27,7 @@ public class MainMenuScript : MonoBehaviour {
     private readonly string diffTitle0 = "Select difficulty", diffTitle1 = "Select difficulty\n(both players)";
     private readonly string diffText0 = "Go back to main menu.";
     private readonly string diffText1 = "Ship is always equipped with Auto-Brake and comes to a near-complete stop. No manual braking required.";
-    private readonly string diffText2 = "Ship is able to brake. Standard gameplay. Try other difficulties to change ship's handling.";
+    private readonly string diffText2 = "Standard gameplay. Try other difficulties to change ship's handling.";
     private readonly string diffText3 = "Ship's manual brake and Auto-Brake are less effective. A real test of maneuverability.";
 
     // Controller selection screen
@@ -106,13 +106,13 @@ public class MainMenuScript : MonoBehaviour {
     public void ShowSavePrompt() {
         Saving_PlayerManager data = Saving_SaveManager.LoadData();
         string tempSavePlayerCount = data.playerCount.ToString() + " Player";
-        if (data.playerCount == 2) { tempSavePlayerCount = tempSavePlayerCount + "s"; }
+        if (data.playerCount == 2) { tempSavePlayerCount += "s"; }
         string tempSaveDifficulty = data.difficulty.ToString();
         if (tempSaveDifficulty == "0") { tempSaveDifficulty = "Easy"; }
         if (tempSaveDifficulty == "1") { tempSaveDifficulty = "Normal"; }
         if (tempSaveDifficulty == "2") { tempSaveDifficulty = "Hard"; }
-        string tempSaveLevel = "Level " + (data.level + 1).ToString();
-        saveDescriptionText.text = tempSavePlayerCount + ",\n" + tempSaveDifficulty + ", " + tempSaveLevel;
+        string tempSaveLevel = $"Level {(data.level + 1).ToString()}";
+        saveDescriptionText.text = $"{tempSavePlayerCount},\n{tempSaveDifficulty}, {tempSaveLevel}";
         mainMenuPanel.SetActive(false);
         saveOptionDialog.SetActive(true);
         saveFirstButton.Select();

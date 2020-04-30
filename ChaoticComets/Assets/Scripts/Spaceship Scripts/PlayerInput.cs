@@ -18,18 +18,18 @@ public class PlayerInput : MonoBehaviour {
     internal void GetInputs()
     {
         // Get axis-based inputs
-        thrustInput = -Input.GetAxis("Thrust" + p.inputNameInsert);
-        turnInput = -Input.GetAxis("Rotate Ship" + p.inputNameInsert);
+        thrustInput = -Input.GetAxis($"Thrust{p.inputNameInsert}");
+        turnInput = -Input.GetAxis($"Rotate Ship{p.inputNameInsert}");
 
         // Get button-based inputs
         // If fire button is pressed, and ship is not teleporting, not dead, and able to fire, then fire
-        if (Input.GetButton("Primary Fire" + p.inputNameInsert)
+        if (Input.GetButton($"Primary Fire{p.inputNameInsert}")
             && isNotTeleporting && p.shields != 0 && Time.time > p.playerWeapons.nextFire)
         {
             p.playerWeapons.FiringLogic();
         }
         // If power button is pressed, and ship has full power with colliders enabled, and level has no asteroids, then use power
-        if (Input.GetButtonDown("Power" + p.inputNameInsert) && p.gM.asteroidCount != 0)
+        if (Input.GetButtonDown($"Power{p.inputNameInsert}") && p.gM.asteroidCount != 0)
         {
             if (p.colliderEnabled && p.power == 80)
             {
@@ -62,7 +62,7 @@ public class PlayerInput : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Invalid player/controller configuration.");
+            Debug.LogError("Invalid player/controller configuration.");
         }
     }
 }

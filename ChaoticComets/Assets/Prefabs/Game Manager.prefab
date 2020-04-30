@@ -45,27 +45,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instantkillAsteroids: 0
-  asteroidCount: 0
-  levelNo: 0
-  lastLevelWithoutEnemies: 1
+  playerShip1: {fileID: 0}
+  playerShip2: {fileID: 0}
   player1dead: 0
   player2dead: 1
   player1TEMPDEAD: 0
   player2TEMPDEAD: 0
-  largeAsteroid: {fileID: 1158260402081020, guid: 7e00352104cdbc04aa6bef0c7b13737e,
+  largeAsteroidProp: {fileID: 1158260402081020, guid: 7e00352104cdbc04aa6bef0c7b13737e,
     type: 3}
-  alienShip: {fileID: 1001724363263860, guid: 418ffa82d403da44ca30571610216d37, type: 3}
-  canister: {fileID: 1020648608047988, guid: 3a71328051a9a8d45bdefa3880e48d38, type: 3}
-  playerShip1: {fileID: 0}
-  playerShip2: {fileID: 0}
+  alienShipProp: {fileID: 1001724363263860, guid: 418ffa82d403da44ca30571610216d37,
+    type: 3}
+  canisterProp: {fileID: 1020648608047988, guid: 3a71328051a9a8d45bdefa3880e48d38,
+    type: 3}
+  asteroidCount: 0
+  levelNo: 0
   fadeBlack: {fileID: 0}
   player2GUI: {fileID: 0}
   gameOverPanel: {fileID: 0}
   gamePausePanel: {fileID: 0}
   gameLevelPanel: {fileID: 0}
   gameLevelShieldRechargeText: {fileID: 0}
-  swapP1text: {fileID: 0}
-  swapP2text: {fileID: 0}
+  swapP1Text: {fileID: 0}
+  swapP2Text: {fileID: 0}
   buttonWhenPaused: {fileID: 0}
   buttonWhenGameOver: {fileID: 0}
   buttonWhenLeavingPauseBugFix: {fileID: 0}
@@ -88,7 +89,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 82e27c3d2b904244eb71b0b4b1bf8cf5, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.054
+  m_Volume: 0.17
   m_Pitch: 1
   Loop: 0
   Mute: 0

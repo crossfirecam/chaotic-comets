@@ -12,20 +12,21 @@ public class PlayerWeapons : MonoBehaviour
     internal float bulletDestroyTime = 0.8f;
     internal static readonly float bulletTimeIfNormal = 0.8f, bulletTimeIfFar = 1.4f;
     private GameObject mainCannon, tripleCannon1, tripleCannon2;
+    public float rapidFireBetweenBullets = 0.1f;
 
     // Upgradable Weapon Stats
-    internal float fireRateRapid = .9f;
-    internal float fireRateTriple = .6f;
-    internal float fireRateNormal = .4f;
+    public float fireRateRapid = 1.0f;
+    public float fireRateTriple = 0.7f;
+    public float fireRateNormal = 0.45f;
 
     // Determines timing of weapon firing
-    internal float nextFire = 0.0F;
+    internal float nextFire = 0.0f;
 
     private void Start()
     {
-        mainCannon = gameObject.transform.Find("P" + p.playerNumber + "-MainCannon").gameObject;
-        tripleCannon1 = gameObject.transform.Find("P" + p.playerNumber + "-TripleCannon1").gameObject;
-        tripleCannon2 = gameObject.transform.Find("P" + p.playerNumber + "-TripleCannon2").gameObject;
+        mainCannon = gameObject.transform.Find($"P{p.playerNumber}-MainCannon").gameObject;
+        tripleCannon1 = gameObject.transform.Find($"P{p.playerNumber}-TripleCannon1").gameObject;
+        tripleCannon2 = gameObject.transform.Find($"P{p.playerNumber}-TripleCannon2").gameObject;
     }
 
     // If rapid shot or triple shot, shoot uniquely. If not, shoot typical projectile
@@ -78,7 +79,7 @@ public class PlayerWeapons : MonoBehaviour
                 rapidShotArray3[i] = Instantiate(bullet, tripleCannon2.transform.position, tripleCannon2.transform.rotation);
                 rapidShotArray3[i].GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
                 rapidShotArray3[i].GetComponent<BulletBehaviour>().DestroyBullet(bulletDestroyTime);
-                yield return new WaitForSeconds(0.08f);
+                yield return new WaitForSeconds(rapidFireBetweenBullets);
             }
         }
         else
@@ -88,7 +89,7 @@ public class PlayerWeapons : MonoBehaviour
                 rapidShotArray[i] = Instantiate(bullet, mainCannon.transform.position, mainCannon.transform.rotation);
                 rapidShotArray[i].GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
                 rapidShotArray[i].GetComponent<BulletBehaviour>().DestroyBullet(bulletDestroyTime);
-                yield return new WaitForSeconds(0.08f);
+                yield return new WaitForSeconds(rapidFireBetweenBullets);
             }
         }
     }

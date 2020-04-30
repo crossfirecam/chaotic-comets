@@ -12,7 +12,7 @@ public class PowerupBehaviour : MonoBehaviour {
 
     // Movement, physics variables
     public float maxThrust, maxSpin;
-    private Rigidbody2D rb;
+    private Rigidbody2D rbCanister;
 
     // Audio
     public AudioSource audioPowerupExpire;
@@ -23,7 +23,7 @@ public class PowerupBehaviour : MonoBehaviour {
     // Set object variables, determine random expiry time, and give random movement. If spawned at end of level, destroy canister
     void Start () {
         gM = GameObject.FindObjectOfType<GameManager>();
-        rb = gameObject.GetComponent<Rigidbody2D>();
+        rbCanister = gameObject.GetComponent<Rigidbody2D>();
         if (!gM.player1dead) { player1 = GameObject.FindGameObjectWithTag("Player"); }
         if (!gM.player2dead) { player2 = GameObject.FindGameObjectWithTag("Player 2"); }
         rend = GetComponent<Renderer>();
@@ -42,7 +42,7 @@ public class PowerupBehaviour : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D triggerObject) {
         if (triggerObject.gameObject.tag == "bullet" || triggerObject.gameObject.tag == "bullet2") {
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
-            gM.AlienAndPowerupLogic("powerupRespawn");
+            gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
             triggerObject.enabled = false;
             Destroy(triggerObject.GetComponentInChildren<ParticleSystem>());
             Destroy(triggerObject.gameObject, 5f);
@@ -60,8 +60,8 @@ public class PowerupBehaviour : MonoBehaviour {
         Vector2 thrust = new Vector2(Random.Range(MaxBackThrust(), MaxForwardThrust()),
             Random.Range(MaxBackThrust(), MaxForwardThrust()));
         float spin = Random.Range(-maxSpin, maxSpin);
-        rb.AddForce(thrust);
-        rb.AddTorque(spin);
+        rbCanister.AddForce(thrust);
+        rbCanister.AddTorque(spin);
     }
     float MaxBackThrust() { return Random.Range(-maxThrust, -200); }
     float MaxForwardThrust() { return Random.Range(200, maxThrust); }
@@ -79,7 +79,7 @@ public class PowerupBehaviour : MonoBehaviour {
             }
             yield return new WaitForSeconds(0.8f);
         }
-        gM.AlienAndPowerupLogic("powerupRespawn");
+        gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
         Destroy(gameObject);
     }
 

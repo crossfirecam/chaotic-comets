@@ -8,24 +8,14 @@ using UnityEngine;
 
 public class PlayerMain : MonoBehaviour {
 
-    // Player Scripts
-    [SerializeField] internal PlayerInput playerInput = default;
-    [SerializeField] internal PlayerMovement playerMovement = default;
-    [SerializeField] internal PlayerPowerups playerPowerups = default;
-    [SerializeField] internal PlayerWeapons playerWeapons = default;
-    [SerializeField] internal PlayerMisc playerMisc = default;
-    [SerializeField] internal PlayerAbility playerAbility = default;
-    [SerializeField] internal PlayerSpawnDeath playerSpawnDeath = default;
-    [SerializeField] internal PlayerUI playerUI = default;
-
     // Player Statistics
     public int credits, bonus, lives;
     public float shields, power;
 
     // General purpose variables
-    internal Rigidbody2D rb;
-    public SpriteRenderer sprite;
-    public CapsuleCollider2D capsCollider;
+    internal Rigidbody2D rbPlayer;
+    internal SpriteRenderer spritePlayer;
+    internal CapsuleCollider2D capsCollider;
     internal GameManager gM;
     public bool helpMenuMode = false;
     public int playerNumber;
@@ -33,23 +23,31 @@ public class PlayerMain : MonoBehaviour {
     public GameObject canister;
     private float nextDamagePossible = 0.0F;
 
-    // Ship sounds, impacts, death, respawning
-    public bool colliderEnabled;
-    public float damageThreshold;
-    public AudioSource audioShipImpact, audioShipThrust;
-    private bool audioThrusterPlaying = false, audioTeleportInPlaying = false, audioTeleportOutPlaying = false;
-    public AudioClip smallAsteroidHit, bigAsteroidHit, deathSound, lifeGained, powerupReceived;
+    // Ship impacts, death, respawning
+    internal bool colliderEnabled;
+    internal float damageThreshold = 6f;
     public GameObject deathExplosion;
     public Color normalColor, invulnColor;
 
-    // Upgrade Systems
-    public float upgradeSpeed, upgradeBrake, upgradeFireRate, upgradeShotSpeed;
+    // Sound Systems
+    public AudioSource audioShipThrust, audioShipSFX; // Thrust: passive thruster noise, SFX: powerup, extra life, impact noises
+    public AudioClip smallAsteroidHit, bigAsteroidHit, deathSound;
+    private bool audioThrusterPlaying = false, audioTeleportInPlaying = false, audioTeleportOutPlaying = false;
+
+    // Player Scripts
+    internal PlayerInput playerInput = default;
+    internal PlayerMovement playerMovement = default;
+    internal PlayerPowerups playerPowerups = default;
+    internal PlayerWeapons playerWeapons = default;
+    internal PlayerMisc playerMisc = default;
+    internal PlayerAbility playerAbility = default;
+    internal PlayerSpawnDeath playerSpawnDeath = default;
+    internal PlayerUI playerUI = default;
 
     // ----------
-    
+
     void Start () {
-        gM = GameObject.FindObjectOfType<GameManager>();
-        rb = gameObject.GetComponent<Rigidbody2D>();
+        GetComponents();
         playerInput.InputChoice();
         playerMisc.OtherStartFunctions();
     }
@@ -83,17 +81,19 @@ public class PlayerMain : MonoBehaviour {
                 if (col.gameObject.tag == "asteroid") { col.gameObject.GetComponent<AsteroidBehaviour>().AsteroidWasHit(); }
                 // If ship rams hard enough, deal more damage
                 if (col.relativeVelocity.magnitude > damageThreshold) {
-                    audioShipImpact.clip = bigAsteroidHit;
+                    audioShipSFX.clip = bigAsteroidHit;
                     shields = shields - 30f;
                 }
                 else {
-                    audioShipImpact.clip = smallAsteroidHit;
+                    audioShipSFX.clip = smallAsteroidHit;
                     shields = shields - 20f;
                 }
-                if (shields <= 0) {
+                if (shields <= 0)
+                {
+                    audioShipSFX.clip = deathSound;
                     playerSpawnDeath.ShipIsDead();
                 }
-                audioShipImpact.Play();
+                audioShipSFX.Play();
             }
         }
     }
@@ -104,7 +104,6 @@ public class PlayerMain : MonoBehaviour {
             Destroy(triggerObject.GetComponentInChildren<ParticleSystem>());
             nextDamagePossible = Time.time + 0.15f;
             shields = shields - 10f;
-            audioShipImpact.clip = smallAsteroidHit;
             triggerObject.GetComponent<SpriteRenderer>().enabled = false;
             triggerObject.GetComponent<CircleCollider2D>().enabled = false;
             Destroy(triggerObject.gameObject, 5f);
@@ -112,9 +111,10 @@ public class PlayerMain : MonoBehaviour {
             {
                 playerSpawnDeath.ShipIsDead();
             }
-            audioShipImpact.Play();
+            audioShipSFX.clip = smallAsteroidHit;
+            audioShipSFX.Play();
         }
-        if (triggerObject.gameObject.tag == "powerup" && sprite.enabled) {
+        if (triggerObject.gameObject.tag == "powerup" && spritePlayer.enabled) {
             Destroy(triggerObject.transform.parent.gameObject);
             playerPowerups.GivePowerup();
         }
@@ -147,5 +147,21 @@ public class PlayerMain : MonoBehaviour {
                 playerAbility.teleportOut.GetComponent<AudioSource>().UnPause();
             }
         }
+    }
+
+    private void GetComponents()
+    {
+        gM = GameObject.FindObjectOfType<GameManager>();
+        rbPlayer = gameObject.GetComponent<Rigidbody2D>();
+        capsCollider = gameObject.GetComponent<CapsuleCollider2D>();
+        spritePlayer = gameObject.GetComponent<SpriteRenderer>();
+        playerInput = gameObject.GetComponent<PlayerInput>();
+        playerMovement = gameObject.GetComponent<PlayerMovement>();
+        playerPowerups = gameObject.GetComponent<PlayerPowerups>();
+        playerWeapons = gameObject.GetComponent<PlayerWeapons>();
+        playerMisc = gameObject.GetComponent<PlayerMisc>();
+        playerAbility = gameObject.GetComponent<PlayerAbility>();
+        playerSpawnDeath = gameObject.GetComponent<PlayerSpawnDeath>();
+        playerUI = gameObject.GetComponent<PlayerUI>();
     }
 }

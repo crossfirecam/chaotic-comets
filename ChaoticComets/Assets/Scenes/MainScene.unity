@@ -7926,11 +7926,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
-      propertyPath: powerup
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
       propertyPath: playerShip1
       value: 
       objectReference: {fileID: 1146411255}
@@ -7939,6 +7934,11 @@ PrefabInstance:
       propertyPath: playerShip2
       value: 
       objectReference: {fileID: 147570585}
+    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
+        type: 3}
+      propertyPath: fadeBlack
+      value: 
+      objectReference: {fileID: 1315207910}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: player2GUI
@@ -7966,12 +7966,12 @@ PrefabInstance:
       objectReference: {fileID: 958112309}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
-      propertyPath: swapP1text
+      propertyPath: swapP1Text
       value: 
       objectReference: {fileID: 1256562613}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
-      propertyPath: swapP2text
+      propertyPath: swapP2Text
       value: 
       objectReference: {fileID: 1464008852}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
@@ -7989,31 +7989,6 @@ PrefabInstance:
       propertyPath: buttonWhenLeavingPauseBugFix
       value: 
       objectReference: {fileID: 1619635423}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: instantkillAsteroids
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: fadeBlack
-      value: 
-      objectReference: {fileID: 1315207910}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: levelToStartEnemies
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: lastLevelWithoutEnemies
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7573104357208989260, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0.17
-      objectReference: {fileID: 0}
     - target: {fileID: 7573104357208989298, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: m_Name

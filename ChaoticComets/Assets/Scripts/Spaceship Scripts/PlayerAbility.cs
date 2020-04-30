@@ -14,8 +14,8 @@ public class PlayerAbility : MonoBehaviour
 
     private void Start()
     {
-        teleportIn = gameObject.transform.Find("P" + p.playerNumber + "-TeleportParticlesIn").gameObject;
-        teleportOut = gameObject.transform.Find("P" + p.playerNumber + "-TeleportParticlesOut").gameObject;
+        teleportIn = gameObject.transform.Find($"P{p.playerNumber}-TeleportParticlesIn").gameObject;
+        teleportOut = gameObject.transform.Find($"P{p.playerNumber}-TeleportParticlesOut").gameObject;
     }
     private void Hyperspace()
     {
@@ -30,7 +30,7 @@ public class PlayerAbility : MonoBehaviour
             newPosition = new Vector2(Random.Range(-7.4f, -2.6f), Random.Range(-4.0f, 1.2f));
         }
         transform.position = newPosition;
-        p.rb.velocity = Vector2.zero;
+        p.rbPlayer.velocity = Vector2.zero;
         teleportIn.SetActive(false);
         p.playerMisc.StartCoroutine("FadeShip", "In");
         teleportOut.SetActive(true);

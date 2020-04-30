@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /*
  * This class acts as a general template for all enemy types to use. Different enemies have different FixedUpdates.
  */
-public class UfoAllTypes : MonoBehaviour
+public partial class UfoAllTypes : MonoBehaviour
 {
     internal GameManager gM;
 
@@ -17,24 +17,29 @@ public class UfoAllTypes : MonoBehaviour
     public float alienSpeed;
 
     // Weapon system variables
-    public float shootingDelay; // In seconds
-    public float bulletSpeed;
-    public float lastTimeShot = 0f;
+    public float shootingDelay = 1.5f; // Seconds between bullets fired
+    public float bulletSpeed = 250; // How fast the bullet fires
+    public float lastTimeShot = 0f; // Keeps track of when UFO last fired a bullet
 
     // Defence system variables
     // private float difficultyIncrease = 0.95f; TODO add this functionality later
-    public AudioSource audioAlienImpact, audioAlienHum;
-    public AudioClip audioClipShieldReflect, audioClipTakenDamage;
     public float alienHealth, alienMaxHealth;
     private int pointsToScore = 100, teleportKillPoints = 500;
     public GameObject forceField;
 
+    // Targetting system variables
+    public GameObject playerShip1, playerShip2;
+    internal Transform player; // Currently tracked player
+    internal bool playerFound = false;
+
+    // Sound variables
+    public AudioSource audioAlienHum, audioAlienSfx; // Hum: passive UFO noise, SFX: impacts/shield noises
+    public AudioClip audClipAliexSfxShieldReflect, audClipAlienSfxTakenDamage;
+
     // Other variables
-    internal Transform player;
     public GameObject bullet;
     public GameObject deathExplosion, playerBulletExplosion, teleportEffect;
-    public GameObject playerShip1, playerShip2;
-    internal bool playerFound = false, deathStarted = false, ufoTeleporting = false, ufoRetreating = false, audioAlienHumPlaying;
+    internal bool deathStarted = false, ufoTeleporting = false, ufoRetreating = false;
 
     // ----------
 
@@ -43,7 +48,9 @@ public class UfoAllTypes : MonoBehaviour
         gM = GameObject.FindObjectOfType<GameManager>();
         rb = GameObject.FindObjectOfType<Rigidbody2D>();
 
-        lastTimeShot = Time.time + 1.5f; // UFO will not shoot for the first 1.5 seconds
+        // UFO will not shoot for the first 1.5 seconds
+        lastTimeShot = Time.time + 1.5f;
+
         playerShip1 = GameObject.FindGameObjectWithTag("Player");
         if (BetweenScenesScript.PlayerCount == 2)
         {
@@ -82,71 +89,6 @@ public class UfoAllTypes : MonoBehaviour
         CheckScreenWrap();
     }
 
-    // If the UFO is not dying, then start the teleport sequence at the end of a level
-    public void TeleportStart()
-    {
-        if (!deathStarted)
-        {
-            forceField.SetActive(false);
-            ufoRetreating = false;
-            ufoTeleporting = true;
-            teleportEffect.SetActive(true);
-            Renderer[] listOfUFOparts = GetComponentsInChildren<Renderer>();
-            foreach (Renderer rend in listOfUFOparts)
-            {
-                StartCoroutine(FadeOut(rend));
-            }
-            Invoke("TeleportEnd", 2f);
-        }
-    }
-
-    // Fade the ship's material color as it teleports
-    private IEnumerator FadeOut(Renderer ufoPart)
-    {
-        Material partMaterial = ufoPart.material;
-        Color origColor = partMaterial.color;
-        float speedOfFade = 0.5f;
-        float alpha = 1f;
-
-        while (alpha > 0f)
-        {
-            if (deathStarted) { break; }
-            alpha -= speedOfFade * Time.deltaTime;
-            partMaterial.color = new Color(origColor.r, origColor.g, origColor.b, alpha);
-            yield return null;
-        }
-        // If during the while loop, death is started - then UFO will have a unique death animation
-        if (deathStarted)
-        {
-            ufoTeleporting = false;
-            teleportEffect.SetActive(false);
-            speedOfFade = 2f;
-            while (alpha < 1f)
-            {
-                alpha += speedOfFade * Time.deltaTime;
-                partMaterial.color = new Color(origColor.r, origColor.g, origColor.b, alpha);
-                yield return null;
-            }
-        }
-    }
-
-    // Destroy gameobject
-    private void TeleportEnd()
-    {
-        if (!deathStarted)
-        {
-            gM.AlienAndPowerupLogic("alienRespawn");
-            Destroy(gameObject);
-        }
-    }
-
-    internal void AlienRetreat()
-    {
-        alienSpeed = alienSpeed * 4f;
-        ufoRetreating = true;
-        forceField.SetActive(true);
-        Invoke("TeleportStart", 3f);
-    }
 
     void OnTriggerEnter2D(Collider2D playerBullet)
     {
@@ -163,7 +105,7 @@ public class UfoAllTypes : MonoBehaviour
                 Destroy(playerBullet.GetComponentInChildren<ParticleSystem>());
                 Destroy(playerBullet.gameObject, 5f);
 
-                alienHealth = alienHealth - 10f;
+                alienHealth -= 10f;
                 // If UFO is teleporting, has 0 health or less, then grant more points for an escape kill
                 if (ufoTeleporting && alienHealth <= 0f) { pointsToScore = teleportKillPoints; }
                 // Send points to the player who shot, if alien has not taken fatal damage
@@ -171,8 +113,8 @@ public class UfoAllTypes : MonoBehaviour
                 {
                     if (playerBullet.CompareTag("bullet")) { playerShip1.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
                     if (playerBullet.CompareTag("bullet2")) { playerShip2.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
-                    audioAlienImpact.clip = audioClipTakenDamage;
-                    audioAlienImpact.Play();
+                    audioAlienSfx.clip = audClipAlienSfxTakenDamage;
+                    audioAlienSfx.Play();
                     DetermineIfDead();
                 }
             }
@@ -183,8 +125,8 @@ public class UfoAllTypes : MonoBehaviour
                 int magnitude = 1000;
                 playerBullet.gameObject.GetComponent<Rigidbody2D>().AddForce(-force * magnitude);
                 playerBullet.GetComponent<BulletBehaviour>().UfoReflectedBullet();
-                audioAlienImpact.clip = audioClipShieldReflect;
-                audioAlienImpact.Play();
+                audioAlienSfx.clip = audClipAliexSfxShieldReflect;
+                audioAlienSfx.Play();
             }
         }
     }
@@ -234,7 +176,7 @@ public class UfoAllTypes : MonoBehaviour
         if (shootingDelay < 1.3f) { shootingDelay = 1.3f; }
         if (alienSpeed > 1.6f) { alienSpeed = 1.6f; }
         if (alienMaxHealth > 90f) { alienMaxHealth = 90f; }*/
-        gM.AlienAndPowerupLogic("alienRespawn");
+        gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.AlienRespawn);
         Destroy(gameObject);
     }
 
@@ -245,28 +187,22 @@ public class UfoAllTypes : MonoBehaviour
         player = null;
     }
 
-    public void CheckSounds(int intent)
+    // Play/pause UFO hum depending on game's pause state
+    public void CheckAlienSounds(int intent)
     {
-        if (intent == 1)
+        if (intent == 1 && audioAlienHum.isPlaying)
         {
-            if (audioAlienHum.isPlaying)
-            {
-                audioAlienHumPlaying = true;
-                audioAlienHum.Pause();
-            }
+            audioAlienHum.Pause();
         }
-        else if (intent == 2)
+        else if (intent == 2 && !audioAlienHum.isPlaying)
         {
-            if (audioAlienHumPlaying)
-            {
-                audioAlienHum.UnPause();
-            }
+            audioAlienHum.UnPause();
         }
     }
 
+    // Screen Wrapping. UFO does not screen wrap when in the first 3 seconds of spawning onto level
     void CheckScreenWrap()
     {
-        // Screen Wrapping. UFO does not screen wrap when in the first 3 seconds of spawning onto level
         if (Time.time > 3)
         {
             Vector2 newPosition = transform.position;

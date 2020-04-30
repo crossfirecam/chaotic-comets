@@ -9721,41 +9721,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea9b55d7acf00da4fa2e3be7a890ac85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 1146411258}
-  playerMovement: {fileID: 1146411262}
-  playerPowerups: {fileID: 1146411264}
-  playerWeapons: {fileID: 1146411263}
-  playerMisc: {fileID: 1146411265}
-  playerAbility: {fileID: 1146411267}
-  playerSpawnDeath: {fileID: 1146411266}
-  playerUI: {fileID: 412295513}
   credits: 0
   bonus: 0
   lives: 3
   shields: 80
   power: 80
-  sprite: {fileID: 212575828220606586}
-  capsCollider: {fileID: 70447958271372078}
   helpMenuMode: 0
   playerNumber: 1
   canister: {fileID: 0}
-  colliderEnabled: 1
-  damageThreshold: 6
-  audioShipImpact: {fileID: 82105594093363858}
-  audioShipThrust: {fileID: 1330089242}
-  smallAsteroidHit: {fileID: 8300000, guid: b703f0737972b2f4ea62c807d220bddb, type: 3}
-  bigAsteroidHit: {fileID: 8300000, guid: e334323a8010b3c469e1aa2764b752d2, type: 3}
-  deathSound: {fileID: 8300000, guid: 6731b733bf83e1945990cfe50c818b33, type: 3}
-  lifeGained: {fileID: 8300000, guid: fe84933f992b9f44381269ba3b35e727, type: 3}
-  powerupReceived: {fileID: 8300000, guid: 75b84dc0924413a408b882acec78ff15, type: 3}
   deathExplosion: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
     type: 3}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   invulnColor: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0.48235294}
-  upgradeSpeed: 0
-  upgradeBrake: 0
-  upgradeFireRate: 0
-  upgradeShotSpeed: 0
+  audioShipThrust: {fileID: 1330089242}
+  audioShipSFX: {fileID: 82105594093363858}
+  smallAsteroidHit: {fileID: 8300000, guid: b703f0737972b2f4ea62c807d220bddb, type: 3}
+  bigAsteroidHit: {fileID: 8300000, guid: e334323a8010b3c469e1aa2764b752d2, type: 3}
+  deathSound: {fileID: 8300000, guid: 6731b733bf83e1945990cfe50c818b33, type: 3}
+  playerInput: {fileID: 0}
+  playerMovement: {fileID: 0}
+  playerPowerups: {fileID: 0}
+  playerWeapons: {fileID: 0}
+  playerMisc: {fileID: 0}
+  playerAbility: {fileID: 0}
+  playerSpawnDeath: {fileID: 0}
+  playerUI: {fileID: 0}
 --- !u!70 &70447958271372078
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -9929,11 +9919,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p: {fileID: 114782296946591882}
-  ifInsuranceActive: 0
-  ifFarShot: 0
-  ifRetroThruster: 0
-  ifRapidShot: 0
-  ifTripleShot: 0
+  lifeGained: {fileID: 8300000, guid: fe84933f992b9f44381269ba3b35e727, type: 3}
+  powerupReceived: {fileID: 8300000, guid: 75b84dc0924413a408b882acec78ff15, type: 3}
 --- !u!114 &1146411265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9947,6 +9934,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p: {fileID: 114782296946591882}
+  upgradeSpeed: 0
+  upgradeBrake: 0
+  upgradeFireRate: 0
+  upgradeShotSpeed: 0
 --- !u!114 &1146411266
 MonoBehaviour:
   m_ObjectHideFlags: 0

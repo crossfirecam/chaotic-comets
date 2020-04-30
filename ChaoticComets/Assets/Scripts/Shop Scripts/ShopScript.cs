@@ -184,7 +184,7 @@ public class ShopScript : MonoBehaviour {
     }
 
     public void GoBackToGame() {
-        readyPromptText.text = "Prepare for Level " + (data.level + 1).ToString() + "!";
+        readyPromptText.text = $"Prepare for Level {(data.level + 1).ToString()}!";
         StartCoroutine(FadeBlack("to"));
         Invoke("LoadMainGame", 1f);
     }
@@ -374,7 +374,7 @@ public class ShopScript : MonoBehaviour {
                     upgradeTier = BetweenScenesScript.UpgradesP1[i].ToString().Insert(tempUpgradeNumLength, ".");
                     gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Upgrade: {priceP1.ToString()}c)";
                     if (BetweenScenesScript.UpgradesP1[i] == upgradeCap) {
-                        gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Maximum upgrade)";
+                        gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Maximum upgrade)";
                     }
                 }
                 else {
@@ -392,7 +392,7 @@ public class ShopScript : MonoBehaviour {
                     upgradeTier = BetweenScenesScript.UpgradesP2[i].ToString().Insert(tempUpgradeNumLength, ".");
                     gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Upgrade: {priceP2.ToString()}c)";
                     if (BetweenScenesScript.UpgradesP2[i] == upgradeCap) {
-                        gameObj.GetComponentInChildren<Text>().text = "Current: x" + upgradeTier + "\n(Maximum upgrade)";
+                        gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Maximum upgrade)";
                     }
                 }
                 else {

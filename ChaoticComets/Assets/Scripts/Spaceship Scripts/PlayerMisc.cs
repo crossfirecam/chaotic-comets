@@ -10,6 +10,9 @@ public class PlayerMisc : MonoBehaviour
 {
     [SerializeField] PlayerMain p = default;
 
+    // Upgrade Systems
+    public float upgradeSpeed, upgradeBrake, upgradeFireRate, upgradeShotSpeed;
+
     internal void OtherStartFunctions()
     {
         // If the difficulty is 9 (indicating player is in help menu) then ignore all start functions. Else, go ahead.
@@ -46,11 +49,11 @@ public class PlayerMisc : MonoBehaviour
             p.lives = BetweenScenesScript.player1TempLives;
             p.shields = data.player1health;
             p.bonus = data.player1bonus;
-            if (data.player1powerups[0] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance); }
-            if (data.player1powerups[1] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot); }
-            if (data.player1powerups[2] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster); }
-            if (data.player1powerups[3] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot); }
-            if (data.player1powerups[4] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot); }
+            if (data.player1powerups[0] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
+            if (data.player1powerups[1] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
+            if (data.player1powerups[2] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster, false); }
+            if (data.player1powerups[3] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
+            if (data.player1powerups[4] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
         }
         else
         { // (playerNumber == 2)
@@ -58,11 +61,11 @@ public class PlayerMisc : MonoBehaviour
             p.lives = BetweenScenesScript.player2TempLives;
             p.shields = data.player2health;
             p.bonus = data.player2bonus;
-            if (data.player2powerups[0] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance); }
-            if (data.player2powerups[1] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot); }
-            if (data.player2powerups[2] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster); }
-            if (data.player2powerups[3] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot); }
-            if (data.player2powerups[4] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot); }
+            if (data.player2powerups[0] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
+            if (data.player2powerups[1] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
+            if (data.player2powerups[2] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster, false); }
+            if (data.player2powerups[3] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
+            if (data.player2powerups[4] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
         }
     }
 
@@ -85,24 +88,22 @@ public class PlayerMisc : MonoBehaviour
     {
         // Set the current upgrade level for Player object depending on which player they are.
         var playerToUpgrade = new List<int[]> { BetweenScenesScript.UpgradesP1, BetweenScenesScript.UpgradesP2 };
-        p.upgradeSpeed = playerToUpgrade[p.playerNumber - 1][0] / 10f;
-        p.upgradeBrake = playerToUpgrade[p.playerNumber - 1][1] / 10f;
-        p.upgradeFireRate = playerToUpgrade[p.playerNumber - 1][2] / 10f;
-        p.upgradeShotSpeed = playerToUpgrade[p.playerNumber - 1][3] / 10f;
+        upgradeSpeed = playerToUpgrade[p.playerNumber - 1][0] / 10f;
+        upgradeBrake = playerToUpgrade[p.playerNumber - 1][1] / 10f;
+        upgradeFireRate = playerToUpgrade[p.playerNumber - 1][2] / 10f;
+        upgradeShotSpeed = playerToUpgrade[p.playerNumber - 1][3] / 10f;
 
         // Bullet force and fire rate are affected by multipliers purchased from the shop
-        p.playerWeapons.bulletForce *= p.upgradeShotSpeed;
-        p.playerWeapons.fireRateNormal /= p.upgradeFireRate;
-        p.playerWeapons.fireRateRapid /= p.upgradeFireRate;
-        p.playerWeapons.fireRateTriple /= p.upgradeFireRate;
+        p.playerWeapons.bulletForce *= upgradeShotSpeed;
+        p.playerWeapons.fireRateNormal /= upgradeFireRate;
+        p.playerWeapons.fireRateRapid /= upgradeFireRate;
+        p.playerWeapons.fireRateTriple /= upgradeFireRate;
 
         // Thrust and brake efficiency are affected by multipliers purchased from the shop
-        p.playerInput.thrust *= p.upgradeSpeed;
-        p.playerInput.brakingPower /= p.upgradeBrake;
+        p.playerInput.thrust *= upgradeSpeed;
+        p.playerInput.brakingPower /= upgradeBrake;
 
-        // Set text for credits & lives (TODO move)
-        p.playerUI.scoreText.text = "Credits:\n" + p.credits;
-        p.playerUI.livesText.text = "Lives: " + p.lives;
+        p.playerUI.UpdatePointDisplays();
     }
 
     private IEnumerator FadeShip(string inOrOut)

@@ -4868,11 +4868,11 @@ MonoBehaviour:
   shootingDelay: 1.5
   bulletSpeed: 250
   lastTimeShot: 0
-  audioAlienImpact: {fileID: 82704775472134234}
   audioAlienHum: {fileID: 4333384977540276942}
-  audioClipShieldReflect: {fileID: 8300000, guid: 52a8e7e6dd767e34db82d86a8b696c4b,
+  audioAlienSfx: {fileID: 82704775472134234}
+  audClipAliexSfxShieldReflect: {fileID: 8300000, guid: 52a8e7e6dd767e34db82d86a8b696c4b,
     type: 3}
-  audioClipTakenDamage: {fileID: 8300000, guid: f65bcfa392c1eca4b87b049c8555bf6f,
+  audClipAlienSfxTakenDamage: {fileID: 8300000, guid: f65bcfa392c1eca4b87b049c8555bf6f,
     type: 3}
   alienHealth: 60
   alienMaxHealth: 60

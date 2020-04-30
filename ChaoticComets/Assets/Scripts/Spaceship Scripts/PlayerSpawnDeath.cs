@@ -32,7 +32,6 @@ public class PlayerSpawnDeath : MonoBehaviour
         p.lives--; p.playerUI.livesText.text = $"Lives: {p.lives}";
         GameObject newExplosion = Instantiate(p.deathExplosion, transform.position, transform.rotation);
         Destroy(newExplosion, 2f);
-        p.audioShipImpact.clip = p.deathSound;
         PretendShipDoesntExist();
         p.gM.PlayerLostLife(p.playerNumber);
 
@@ -62,11 +61,11 @@ public class PlayerSpawnDeath : MonoBehaviour
             {
                 p.playerPowerups.ifRetroThruster = true; p.playerUI.retroThrusterPowerup.gameObject.SetActive(true);
             }
-            p.sprite.enabled = true;
+            p.spritePlayer.enabled = true;
             p.colliderEnabled = false;
             p.capsCollider.enabled = true;
 
-            p.rb.velocity = Vector2.zero;
+            p.rbPlayer.velocity = Vector2.zero;
 
             // If at least one player is dead, place the other in the center of the screen
             if (p.gM.player1dead || p.gM.player2dead)
@@ -89,7 +88,7 @@ public class PlayerSpawnDeath : MonoBehaviour
                 p.gM.player2TEMPDEAD = false;
             }
 
-            p.sprite.color = p.invulnColor;
+            p.spritePlayer.color = p.invulnColor;
             StartCoroutine("InvulnTimer");
         }
     }
@@ -107,7 +106,7 @@ public class PlayerSpawnDeath : MonoBehaviour
             yield return new WaitForSeconds(3f / p.playerUI.prevshields);
         }
         p.playerUI.powerBar.sprite = p.playerUI.powerWhenReady; // Set power bar to have text informing power can be used
-        p.sprite.color = p.normalColor;
+        p.spritePlayer.color = p.normalColor;
         p.colliderEnabled = true;
         p.playerUI.prevshields = 0;
     }
@@ -134,7 +133,7 @@ public class PlayerSpawnDeath : MonoBehaviour
 
     public void PretendShipDoesntExist()
     {
-        p.sprite.enabled = false;
+        p.spritePlayer.enabled = false;
         p.colliderEnabled = false;
         p.capsCollider.enabled = false;
     }
