@@ -4863,28 +4863,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a328f21d0e83c541a4e250cf46ef322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ufoFol: {fileID: 5831206378268521376}
   direction: {x: 0, y: 0}
   alienSpeed: 1.3
   shootingDelay: 1.5
   bulletSpeed: 250
   lastTimeShot: 0
+  alienHealth: 60
+  alienMaxHealth: 60
+  forceField: {fileID: 190270562}
+  playerShip1: {fileID: 0}
+  playerShip2: {fileID: 0}
   audioAlienHum: {fileID: 4333384977540276942}
   audioAlienSfx: {fileID: 82704775472134234}
   audClipAliexSfxShieldReflect: {fileID: 8300000, guid: 52a8e7e6dd767e34db82d86a8b696c4b,
     type: 3}
   audClipAlienSfxTakenDamage: {fileID: 8300000, guid: f65bcfa392c1eca4b87b049c8555bf6f,
     type: 3}
-  alienHealth: 60
-  alienMaxHealth: 60
-  forceField: {fileID: 190270562}
   bullet: {fileID: 1554380111730868, guid: fb20848a3f3691643a2041318c3bb054, type: 3}
   deathExplosion: {fileID: 1000011128802252, guid: 29a9bec1f13fa1146afffc6beb59d029,
     type: 3}
   playerBulletExplosion: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
     type: 3}
   teleportEffect: {fileID: 3142331801263296304}
-  playerShip1: {fileID: 0}
-  playerShip2: {fileID: 0}
 --- !u!114 &5831206378268521376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4898,6 +4899,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   u: {fileID: 114425370994053920}
+  playerCrossedScreen: 0
+  movingThruX: 0
+  movingThruY: 0
 --- !u!58 &58430078344468964
 CircleCollider2D:
   m_ObjectHideFlags: 0

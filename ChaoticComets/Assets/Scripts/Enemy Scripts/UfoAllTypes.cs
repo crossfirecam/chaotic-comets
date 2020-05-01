@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public partial class UfoAllTypes : MonoBehaviour
 {
     internal GameManager gM;
+    public UfoFollowerType ufoFol;
 
     // Movement, physics variables
     internal Rigidbody2D rb;
@@ -70,7 +71,7 @@ public partial class UfoAllTypes : MonoBehaviour
         transform.rotation = Quaternion.Euler(-50, 0, 0);
 
         // Weapon systems. If it is time to shoot, there is a player to shoot at...
-        if (Time.time > lastTimeShot + shootingDelay && playerFound)
+        /*if (Time.time > lastTimeShot + shootingDelay && playerFound)
         {
             // and the UFO is not dying, teleporting, or retreating, then shoot
             if (!deathStarted && !ufoTeleporting && !ufoRetreating)
@@ -85,7 +86,8 @@ public partial class UfoAllTypes : MonoBehaviour
 
                 lastTimeShot = Time.time;
             }
-        }
+        }*/
+
         CheckScreenWrap();
     }
 
@@ -206,10 +208,10 @@ public partial class UfoAllTypes : MonoBehaviour
         if (Time.time > 3)
         {
             Vector2 newPosition = transform.position;
-            if (transform.position.y > gM.screenTop) { newPosition.y = gM.screenBottom; }
-            if (transform.position.y < gM.screenBottom) { newPosition.y = gM.screenTop; }
-            if (transform.position.x > gM.screenRight) { newPosition.x = gM.screenLeft; }
-            if (transform.position.x < gM.screenLeft) { newPosition.x = gM.screenRight; }
+            if (transform.position.y > gM.screenTop) { newPosition.y = gM.screenBottom; ufoFol.movingThruY = false; }
+            if (transform.position.y < gM.screenBottom) { newPosition.y = gM.screenTop; ufoFol.movingThruY = false; }
+            if (transform.position.x > gM.screenRight) { newPosition.x = gM.screenLeft; ufoFol.movingThruX = false; }
+            if (transform.position.x < gM.screenLeft) { newPosition.x = gM.screenRight; ufoFol.movingThruX = false; }
             transform.position = newPosition;
         }
     }

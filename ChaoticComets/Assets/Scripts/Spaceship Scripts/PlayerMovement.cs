@@ -72,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         if (transform.position.y < p.gM.screenBottom) { newPosition.y = p.gM.screenTop; }
         if (transform.position.x > p.gM.screenRight) { newPosition.x = p.gM.screenLeft; }
         if (transform.position.x < p.gM.screenLeft) { newPosition.x = p.gM.screenRight; }
+
         transform.position = newPosition;
     }
 }

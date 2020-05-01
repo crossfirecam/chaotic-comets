@@ -9,7 +9,9 @@ using UnityEngine;
 public class UfoFollowerType : MonoBehaviour
 {
     [SerializeField] internal UfoAllTypes u = default;
-
+    public bool playerCrossedScreen;
+    float timer = 0;
+    public bool movingThruX = false, movingThruY = false;
     void FixedUpdate()
     {
         if (!u.ufoTeleporting && !u.deathStarted)
@@ -47,22 +49,65 @@ public class UfoFollowerType : MonoBehaviour
             // If a player IS found, then...
             else
             {
+                timer += Time.deltaTime;
                 // If UFO has more than 10 health, continue chasing player
                 if (u.alienHealth > 10f)
                 {
-                    u.direction = (u.player.position - transform.position).normalized;
+                    if (IsPlayerTooClose())
+                    {
+                        u.direction = (u.player.position + transform.position);
+                    }
+                    else
+                    {
+                        u.direction = (u.player.position - transform.position);
+
+                        if (IsPlayerTooFarX() == true && timer > 4.0f)
+                        {
+                            timer = 0f;
+                            movingThruX = true;
+                            Debug.Log("Too far X");
+                        }
+                        if (IsPlayerTooFarY() == true && timer > 4.0f)
+                        {
+                            timer = 0f;
+                            movingThruY = true;
+                            Debug.Log("Too far Y");
+                        }
+                        if (movingThruX)
+                        {
+                            u.direction = (u.player.position + transform.position);
+                        }
+                        else if (movingThruY)
+                        {
+                            u.direction = (u.player.position + transform.position);
+                        }
+                    }
                 }
                 // If alien has less than 10 health, it will run away in a single direction and attempt to teleport
                 else
                 {
                     if (!u.ufoRetreating)
                     {
-                        u.direction = (u.player.position + transform.position).normalized;
+                        u.direction = (u.player.position + transform.position);
                         u.AlienRetreat();
                     }
                 }
+                u.direction = u.direction.normalized;
                 u.rb.MovePosition(u.rb.position + u.direction * u.alienSpeed * Time.fixedDeltaTime);
             }
         }
+    }
+
+    private bool IsPlayerTooClose()
+    {
+        return Vector2.Distance(u.player.position, transform.position) < 3f;
+    }
+    private bool IsPlayerTooFarX()
+    {
+        return Mathf.Abs(u.player.position.x - transform.position.x) > 14f;
+    }
+    private bool IsPlayerTooFarY()
+    {
+        return Mathf.Abs(u.player.position.y - transform.position.y) > 10f;
     }
 }

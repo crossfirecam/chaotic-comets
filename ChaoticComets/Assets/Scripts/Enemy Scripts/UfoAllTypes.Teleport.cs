@@ -6,7 +6,7 @@ public partial class UfoAllTypes : MonoBehaviour
 {
     internal void AlienRetreat()
     {
-        alienSpeed = alienSpeed * 4f;
+        alienSpeed = alienSpeed * 3f;
         ufoRetreating = true;
         forceField.SetActive(true);
         Invoke("TeleportStart", 3f);
