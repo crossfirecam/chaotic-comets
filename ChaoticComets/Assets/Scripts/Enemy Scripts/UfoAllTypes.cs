@@ -10,12 +10,13 @@ using UnityEngine.UI;
 public partial class UfoAllTypes : MonoBehaviour
 {
     internal GameManager gM;
-    public UfoFollowerType ufoFol;
+    public UfoFollowerType ufoFollower;
 
     // Movement, physics variables
     internal Rigidbody2D rb;
     public Vector2 direction;
-    public float alienSpeed;
+    public float alienSpeedBase;
+    internal float alienSpeedCurrent;
 
     // Weapon system variables
     public float shootingDelay = 1.5f; // Seconds between bullets fired
@@ -31,7 +32,7 @@ public partial class UfoAllTypes : MonoBehaviour
     // Targetting system variables
     public GameObject playerShip1, playerShip2;
     internal Transform player; // Currently tracked player
-    internal bool playerFound = false;
+    internal bool playerFound = false, playerTooFar = false;
 
     // Sound variables
     public AudioSource audioAlienHum, audioAlienSfx; // Hum: passive UFO noise, SFX: impacts/shield noises
@@ -49,8 +50,7 @@ public partial class UfoAllTypes : MonoBehaviour
         gM = GameObject.FindObjectOfType<GameManager>();
         rb = GameObject.FindObjectOfType<Rigidbody2D>();
 
-        // UFO will not shoot for the first 1.5 seconds
-        lastTimeShot = Time.time + 1.5f;
+        alienSpeedCurrent = alienSpeedBase;
 
         playerShip1 = GameObject.FindGameObjectWithTag("Player");
         if (BetweenScenesScript.PlayerCount == 2)
@@ -67,26 +67,17 @@ public partial class UfoAllTypes : MonoBehaviour
 
     void Update()
     {
-        // Stabilising 3D model
-        transform.rotation = Quaternion.Euler(-50, 0, 0);
-
-        // Weapon systems. If it is time to shoot, there is a player to shoot at...
-        /*if (Time.time > lastTimeShot + shootingDelay && playerFound)
+        // Weapon systems. If criteria are met, then shoot depending on enemy type
+        if (ShipAbleToShoot())
         {
-            // and the UFO is not dying, teleporting, or retreating, then shoot
-            if (!deathStarted && !ufoTeleporting && !ufoRetreating)
+            if (!ufoFollower.Equals(null))
             {
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-                Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-
-                Vector3 bulletPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - 4);
-                GameObject newBullet = Instantiate(bullet, bulletPosition, q);
-                newBullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, bulletSpeed));
-                Destroy(newBullet, 2f);
-
-                lastTimeShot = Time.time;
+                ufoFollower.WeaponLogicFollower();
             }
-        }*/
+        }
+
+        // Stabilise 3D model
+        transform.rotation = Quaternion.Euler(-50, 0, 0);
 
         CheckScreenWrap();
     }
@@ -94,7 +85,7 @@ public partial class UfoAllTypes : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D playerBullet)
     {
-        if (playerBullet.gameObject.tag == "bullet" || playerBullet.gameObject.tag == "bullet2")
+        if (playerBullet.gameObject.CompareTag("bullet") || playerBullet.gameObject.CompareTag("bullet2"))
         {
             // If UFO is not retreating, deal damage and score credits
             if (!ufoRetreating)
@@ -135,6 +126,7 @@ public partial class UfoAllTypes : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         Vector2 force = gameObject.transform.position - collision.transform.position;
         int magnitude = 0;
         // Asteroid and player collisions do not cause damage to UFO
@@ -199,20 +191,6 @@ public partial class UfoAllTypes : MonoBehaviour
         else if (intent == 2 && !audioAlienHum.isPlaying)
         {
             audioAlienHum.UnPause();
-        }
-    }
-
-    // Screen Wrapping. UFO does not screen wrap when in the first 3 seconds of spawning onto level
-    void CheckScreenWrap()
-    {
-        if (Time.time > 3)
-        {
-            Vector2 newPosition = transform.position;
-            if (transform.position.y > gM.screenTop) { newPosition.y = gM.screenBottom; ufoFol.movingThruY = false; }
-            if (transform.position.y < gM.screenBottom) { newPosition.y = gM.screenTop; ufoFol.movingThruY = false; }
-            if (transform.position.x > gM.screenRight) { newPosition.x = gM.screenLeft; ufoFol.movingThruX = false; }
-            if (transform.position.x < gM.screenLeft) { newPosition.x = gM.screenRight; ufoFol.movingThruX = false; }
-            transform.position = newPosition;
         }
     }
 }
