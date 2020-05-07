@@ -53,8 +53,8 @@ public partial class GameManager : MonoBehaviour
         if (intent == 0)
         { // Pause game
             Cursor.visible = true;
-            if (!player1dead) { playerShip1.CheckSounds(1); }
-            if (!player2dead) { playerShip2.CheckSounds(1); }
+            if (!player1dead) { playerShip1.plrUiSound.CheckSounds(1); }
+            if (!player2dead) { playerShip2.plrUiSound.CheckSounds(1); }
 
             musicLoop.Pause();
 
@@ -74,13 +74,13 @@ public partial class GameManager : MonoBehaviour
             Cursor.visible = false;
             if (!player1dead)
             {
-                playerShip1.CheckSounds(2);
-                playerShip1.playerInput.InputChoice();
+                playerShip1.plrUiSound.CheckSounds(2);
+                playerShip1.plrInput.InputChoice();
             }
             if (!player2dead)
             {
-                playerShip1.CheckSounds(2);
-                playerShip2.playerInput.InputChoice();
+                playerShip1.plrUiSound.CheckSounds(2);
+                playerShip2.plrInput.InputChoice();
             }
 
             if (BetweenScenesScript.MusicVolume > 0f && !helpMenuMode) { musicLoop.Play(); }

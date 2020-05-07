@@ -98,29 +98,29 @@ public class PlayerPowerups : MonoBehaviour
     public void ApplyPowerup(Powerups powerup, bool playSound = true)
     {
         Debug.Log($"{powerup} given to player {p.playerNumber}");
-        p.audioShipSFX.clip = powerupReceived;
+        p.plrUiSound.audioShipSFX.clip = powerupReceived;
         switch (powerup)
         {
             case Powerups.Insurance:
                 ifInsuranceActive = true;
-                p.playerUI.insurancePowerup.gameObject.SetActive(true);
+                p.plrUiSound.insurancePowerup.gameObject.SetActive(true);
                 break;
             case Powerups.FarShot:
                 ifFarShot = true;
-                p.playerUI.farShotPowerup.gameObject.SetActive(true);
-                p.playerWeapons.bulletDestroyTime = PlayerWeapons.bulletTimeIfFar;
+                p.plrUiSound.farShotPowerup.gameObject.SetActive(true);
+                p.plrWeapons.bulletDestroyTime = PlayerWeapons.bulletTimeIfFar;
                 break;
             case Powerups.TripleShot:
                 ifTripleShot = true;
-                p.playerUI.tripleShotPowerup.gameObject.SetActive(true);
+                p.plrUiSound.tripleShotPowerup.gameObject.SetActive(true);
                 break;
             case Powerups.RapidShot:
                 ifRapidShot = true;
-                p.playerUI.rapidShotPowerup.gameObject.SetActive(true);
+                p.plrUiSound.rapidShotPowerup.gameObject.SetActive(true);
                 break;
             case Powerups.RetroThruster:
                 ifRetroThruster = true;
-                p.playerUI.retroThrusterPowerup.gameObject.SetActive(true);
+                p.plrUiSound.retroThrusterPowerup.gameObject.SetActive(true);
                 break;
             case Powerups.ShieldRefill:
                 p.shields = 80;
@@ -143,15 +143,15 @@ public class PlayerPowerups : MonoBehaviour
         // When the ship is given an extra life, it plays the sound effect itself. Other powerup, play the sound.
         if (powerup != Powerups.ExtraLife && playSound)
         {
-            p.audioShipSFX.Play();
+            p.plrUiSound.audioShipSFX.Play();
         }
     }
 
     public void GrantExtraLife()
     {
         p.lives++;
-        p.audioShipSFX.clip = lifeGained;
-        p.audioShipSFX.Play();
+        p.plrUiSound.audioShipSFX.clip = lifeGained;
+        p.plrUiSound.audioShipSFX.Play();
     }
 
     public void FindWhatToGivePlayer()
@@ -184,12 +184,11 @@ public class PlayerPowerups : MonoBehaviour
     public void CheatGivePowerup(string powerup)
     {
 
-        Powerups powerupToTry;
         if (powerup == "Random")
         {
             GivePowerup();
         }
-        else if (Powerups.TryParse(powerup, out powerupToTry))
+        else if (Powerups.TryParse(powerup, out Powerups powerupToTry))
         {
             ApplyPowerup(powerupToTry);
         }
@@ -208,24 +207,24 @@ public class PlayerPowerups : MonoBehaviour
         {
             case Powerups.Insurance:
                 ifInsuranceActive = false;
-                p.playerUI.insurancePowerup.gameObject.SetActive(false);
+                p.plrUiSound.insurancePowerup.gameObject.SetActive(false);
                 break;
             case Powerups.FarShot:
                 ifFarShot = false;
-                p.playerUI.farShotPowerup.gameObject.SetActive(false);
-                p.playerWeapons.bulletDestroyTime = PlayerWeapons.bulletTimeIfNormal;
+                p.plrUiSound.farShotPowerup.gameObject.SetActive(false);
+                p.plrWeapons.bulletDestroyTime = PlayerWeapons.bulletTimeIfNormal;
                 break;
             case Powerups.TripleShot:
                 ifTripleShot = false;
-                p.playerUI.tripleShotPowerup.gameObject.SetActive(false);
+                p.plrUiSound.tripleShotPowerup.gameObject.SetActive(false);
                 break;
             case Powerups.RapidShot:
                 ifRapidShot = false;
-                p.playerUI.rapidShotPowerup.gameObject.SetActive(false);
+                p.plrUiSound.rapidShotPowerup.gameObject.SetActive(false);
                 break;
             case Powerups.RetroThruster:
                 ifRetroThruster = false;
-                p.playerUI.retroThrusterPowerup.gameObject.SetActive(false);
+                p.plrUiSound.retroThrusterPowerup.gameObject.SetActive(false);
                 break;
             default:
                 Debug.Log("Invalid powerup requested in PlayerPowerups");
@@ -235,7 +234,7 @@ public class PlayerPowerups : MonoBehaviour
         // When the ship is given an extra life, it plays the sound effect itself. Other powerup, play the sound.
         if (powerup != Powerups.ExtraLife)
         {
-            p.audioShipSFX.Play();
+            p.plrUiSound.audioShipSFX.Play();
         }
     }
 }

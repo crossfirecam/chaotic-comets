@@ -8,9 +8,10 @@ public class PlayerWeapons : MonoBehaviour
 
     // Weapon Systems
     public GameObject bullet;
-    public float bulletForce;
-    internal float bulletDestroyTime = 0.8f;
-    internal static readonly float bulletTimeIfNormal = 0.8f, bulletTimeIfFar = 1.4f;
+    public float bulletForce = 400f;
+    internal float bulletRange = 320f;
+    internal float bulletDestroyTime;
+    internal static float bulletTimeIfNormal, bulletTimeIfFar;
     private GameObject mainCannon, tripleCannon1, tripleCannon2;
     public float rapidFireBetweenBullets = 0.1f;
 
@@ -27,17 +28,20 @@ public class PlayerWeapons : MonoBehaviour
         mainCannon = gameObject.transform.Find($"P{p.playerNumber}-MainCannon").gameObject;
         tripleCannon1 = gameObject.transform.Find($"P{p.playerNumber}-TripleCannon1").gameObject;
         tripleCannon2 = gameObject.transform.Find($"P{p.playerNumber}-TripleCannon2").gameObject;
+        bulletTimeIfNormal = bulletRange / bulletForce;
+        bulletTimeIfFar = bulletTimeIfNormal * 1.75f;
+        bulletDestroyTime = bulletTimeIfNormal;
     }
 
     // If rapid shot or triple shot, shoot uniquely. If not, shoot typical projectile
     internal void FiringLogic()
     {
-        if (p.playerPowerups.ifRapidShot)
+        if (p.plrPowerups.ifRapidShot)
         {
             nextFire = Time.time + fireRateRapid;
             StartCoroutine(RapidShot());
         }
-        else if (p.playerPowerups.ifTripleShot)
+        else if (p.plrPowerups.ifTripleShot)
         {
             nextFire = Time.time + fireRateTriple;
             GameObject newBullet = Instantiate(bullet, mainCannon.transform.position, mainCannon.transform.rotation);
@@ -64,7 +68,7 @@ public class PlayerWeapons : MonoBehaviour
         GameObject[] rapidShotArray = new GameObject[10];
         GameObject[] rapidShotArray2 = new GameObject[10];
         GameObject[] rapidShotArray3 = new GameObject[10];
-        if (p.playerPowerups.ifTripleShot)
+        if (p.plrPowerups.ifTripleShot)
         {
             for (int i = 0; i < 2; i++)
             {

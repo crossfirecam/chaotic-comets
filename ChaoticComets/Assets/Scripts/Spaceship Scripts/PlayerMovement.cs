@@ -10,35 +10,35 @@ public class PlayerMovement : MonoBehaviour
     public void ShipMovement()
     {
         // Rotate the ship
-        if (p.playerInput.turnInput != 0 && p.spritePlayer.enabled)
+        if (p.plrInput.turnInput != 0 && p.spritePlayer.enabled)
         {
-            transform.Rotate(Vector3.forward * p.playerInput.turnInput * Time.deltaTime * p.playerInput.turnThrust);
+            transform.Rotate(Vector3.forward * p.plrInput.turnInput * Time.deltaTime * p.plrInput.turnThrust);
         }
 
         // Active thrusting (forward or braking thrust)
         // Apply force on Y axis of spaceship, multiply by thrust
-        if (p.playerInput.thrustInput != 0 && p.spritePlayer.enabled && p.playerInput.isNotTeleporting)
+        if (p.plrInput.thrustInput != 0 && p.spritePlayer.enabled && p.plrInput.isNotTeleporting)
         {
-            if (!p.audioShipThrust.isPlaying) { p.audioShipThrust.Play(); }
-            if (!p.playerInput.thruster1.isPlaying) { p.playerInput.thruster1.Play(); }
-            if (!p.playerInput.thruster2.isPlaying) { p.playerInput.thruster2.Play(); }
+            if (!p.plrUiSound.audioShipThrust.isPlaying) { p.plrUiSound.audioShipThrust.Play(); }
+            if (!p.plrInput.thruster1.isPlaying) { p.plrInput.thruster1.Play(); }
+            if (!p.plrInput.thruster2.isPlaying) { p.plrInput.thruster2.Play(); }
 
             // If thrust is less than 0, then ship is braking. On hard difficulty, brake is less powerful.
-            if (p.playerInput.thrustInput > 0)
+            if (p.plrInput.thrustInput > 0)
             {
                 if (BetweenScenesScript.Difficulty != 2)
                 {
-                    p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / p.playerInput.brakingPower;
+                    p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / p.plrInput.brakingPower;
                 }
                 else
                 {
-                    p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / p.playerInput.brakingPower / 2;
+                    p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / p.plrInput.brakingPower / 2;
                 }
             }
             // If thrust is more than 0, then ship is moving forward.
             else
             {
-                p.rbPlayer.AddRelativeForce(Vector2.up * -p.playerInput.thrustInput * Time.deltaTime * p.playerInput.thrust);
+                p.rbPlayer.AddRelativeForce(Vector2.up * -p.plrInput.thrustInput * Time.deltaTime * p.plrInput.thrust);
                 p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 10f;
             }
         }
@@ -46,10 +46,10 @@ public class PlayerMovement : MonoBehaviour
         // Apply passive drag depending on if retro thrusters are equipped or not
         else
         {
-            if (p.audioShipThrust.isPlaying) { p.audioShipThrust.Stop(); }
-            if (p.playerInput.thruster1.isPlaying) { p.playerInput.thruster1.Stop(); }
-            if (p.playerInput.thruster2.isPlaying) { p.playerInput.thruster2.Stop(); }
-            if (p.playerPowerups.ifRetroThruster)
+            if (p.plrUiSound.audioShipThrust.isPlaying) { p.plrUiSound.audioShipThrust.Stop(); }
+            if (p.plrInput.thruster1.isPlaying) { p.plrInput.thruster1.Stop(); }
+            if (p.plrInput.thruster2.isPlaying) { p.plrInput.thruster2.Stop(); }
+            if (p.plrPowerups.ifRetroThruster)
             {
                 if (BetweenScenesScript.Difficulty != 2)
                 {

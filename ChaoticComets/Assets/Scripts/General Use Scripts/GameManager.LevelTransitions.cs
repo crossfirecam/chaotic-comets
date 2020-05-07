@@ -14,8 +14,8 @@ public partial class GameManager : MonoBehaviour
         asteroidCount = 0;
         for (int i = 0; i < levelNo + 1; i++) { SpawnProp("asteroid"); }
         // Player Respawn
-        if (!player1dead) { playerShip1.playerSpawnDeath.RespawnShip(); }
-        if (!player2dead) { playerShip2.playerSpawnDeath.RespawnShip(); }
+        if (!player1dead) { playerShip1.plrSpawnDeath.RespawnShip(); }
+        if (!player2dead) { playerShip2.plrSpawnDeath.RespawnShip(); }
 
         // Set a cap on how many UFOs or canisters can spawn
         if (levelNo == 1) { propCap = 2; }
@@ -41,8 +41,8 @@ public partial class GameManager : MonoBehaviour
     {
         gameLevelPanel.SetActive(true);
         // Player Shield Recovery
-        if (!player1dead) { playerShip1.playerSpawnDeath.ShipIsRecovering(); }
-        if (!player2dead) { playerShip2.playerSpawnDeath.ShipIsRecovering(); }
+        if (!player1dead) { playerShip1.plrSpawnDeath.ShipIsRecovering(); }
+        if (!player2dead) { playerShip2.plrSpawnDeath.ShipIsRecovering(); }
         StartCoroutine(FadeBlack("to"));
         Invoke("BringUpShop", 3f);
     }

@@ -29,48 +29,43 @@ public class PlayerMain : MonoBehaviour {
     public GameObject deathExplosion;
     public Color normalColor, invulnColor;
 
-    // Sound Systems
-    public AudioSource audioShipThrust, audioShipSFX; // Thrust: passive thruster noise, SFX: powerup, extra life, impact noises
-    public AudioClip smallAsteroidHit, bigAsteroidHit, deathSound;
-    private bool audioThrusterPlaying = false, audioTeleportInPlaying = false, audioTeleportOutPlaying = false;
-
     // Player Scripts
-    internal PlayerInput playerInput = default;
-    internal PlayerMovement playerMovement = default;
-    internal PlayerPowerups playerPowerups = default;
-    internal PlayerWeapons playerWeapons = default;
-    internal PlayerMisc playerMisc = default;
-    internal PlayerAbility playerAbility = default;
-    internal PlayerSpawnDeath playerSpawnDeath = default;
-    internal PlayerUI playerUI = default;
+    internal PlayerInput plrInput = default;
+    internal PlayerMovement plrMovement = default;
+    internal PlayerPowerups plrPowerups = default;
+    internal PlayerWeapons plrWeapons = default;
+    internal PlayerMisc plrMisc = default;
+    internal PlayerAbility plrAbility = default;
+    internal PlayerSpawnDeath plrSpawnDeath = default;
+    internal PlayerUiSounds plrUiSound = default;
 
     // ----------
 
     void Start () {
         GetComponents();
-        playerInput.InputChoice();
-        playerMisc.OtherStartFunctions();
+        plrInput.InputChoice();
+        plrMisc.OtherStartFunctions();
     }
     
     // If game is not paused, then run per-frame updates
     void Update () {
         if (!gM.gamePausePanel.activeInHierarchy) {
-            playerInput.GetInputs();
-            playerMovement.ShipMovement();
-            playerMovement.CheckScreenWrap();
-            playerUI.UpdateBars();
+            plrInput.GetInputs();
+            plrMovement.ShipMovement();
+            plrMovement.CheckScreenWrap();
+            plrUiSound.UpdateBars();
         }
     }
 
     // Receives points scored from latest asteroid hit, UFO hit, or canister reward
     public void ScorePoints(int pointsToAdd) {
         credits += pointsToAdd;
-        playerUI.UpdatePointDisplays();
+        plrUiSound.UpdatePointDisplays();
     }
 
     // When ship collides with asteroid or ufo colliders
     void OnCollisionEnter2D(Collision2D col) {
-        if (col.gameObject.tag == "asteroid" || col.gameObject.tag == "ufo") {
+        if (col.gameObject.CompareTag("asteroid") || col.gameObject.CompareTag("ufo")) {
             // Slightly push spaceship away from collided object, whether invulnerable or not. UFO pushback stacks with this
             Vector2 force = gameObject.transform.position - col.transform.position;
             int magnitude = 80;
@@ -78,74 +73,45 @@ public class PlayerMain : MonoBehaviour {
 
             if (colliderEnabled && Time.time > nextDamagePossible) {
                 nextDamagePossible = Time.time + 0.15f;
-                if (col.gameObject.tag == "asteroid") { col.gameObject.GetComponent<AsteroidBehaviour>().AsteroidWasHit(); }
+                if (col.gameObject.CompareTag("asteroid")) { col.gameObject.GetComponent<AsteroidBehaviour>().AsteroidWasHit(); }
                 // If ship rams hard enough, deal more damage
                 if (col.relativeVelocity.magnitude > damageThreshold) {
-                    audioShipSFX.clip = bigAsteroidHit;
-                    shields = shields - 30f;
+                    plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactHard;
+                    shields -= 30f;
                 }
                 else {
-                    audioShipSFX.clip = smallAsteroidHit;
-                    shields = shields - 20f;
+                    plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactSoft;
+                    shields -= 20f;
                 }
                 if (shields <= 0)
                 {
-                    audioShipSFX.clip = deathSound;
-                    playerSpawnDeath.ShipIsDead();
+                    plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxDeath;
+                    plrSpawnDeath.ShipIsDead();
                 }
-                audioShipSFX.Play();
+                plrUiSound.audioShipSFX.Play();
             }
         }
     }
 
     // When ship collides with alien bullet or powerup triggers
     void OnTriggerEnter2D(Collider2D triggerObject) {
-        if (triggerObject.gameObject.tag == "bullet3" && colliderEnabled && Time.time > nextDamagePossible) {
+        if (triggerObject.gameObject.CompareTag("bullet3") && colliderEnabled && Time.time > nextDamagePossible) {
             Destroy(triggerObject.GetComponentInChildren<ParticleSystem>());
             nextDamagePossible = Time.time + 0.15f;
-            shields = shields - 10f;
+            shields -= 10f;
             triggerObject.GetComponent<SpriteRenderer>().enabled = false;
             triggerObject.GetComponent<CircleCollider2D>().enabled = false;
             Destroy(triggerObject.gameObject, 5f);
             if (shields <= 0)
             {
-                playerSpawnDeath.ShipIsDead();
+                plrSpawnDeath.ShipIsDead();
             }
-            audioShipSFX.clip = smallAsteroidHit;
-            audioShipSFX.Play();
+            plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactSoft;
+            plrUiSound.audioShipSFX.Play();
         }
-        if (triggerObject.gameObject.tag == "powerup" && spritePlayer.enabled) {
+        if (triggerObject.gameObject.CompareTag("powerup") && spritePlayer.enabled) {
             Destroy(triggerObject.transform.parent.gameObject);
-            playerPowerups.GivePowerup();
-        }
-    }
-
-
-    public void CheckSounds(int intent) {
-        if (intent == 1) {
-            if (audioShipThrust.isPlaying) {
-                audioThrusterPlaying = true;
-                audioShipThrust.Pause();
-            }
-            if (playerAbility.teleportIn.GetComponent<AudioSource>().isPlaying) {
-                audioTeleportInPlaying = true;
-                playerAbility.teleportIn.GetComponent<AudioSource>().Pause();
-            }
-            if (playerAbility.teleportOut.GetComponent<AudioSource>().isPlaying) {
-                audioTeleportOutPlaying = true;
-                playerAbility.teleportOut.GetComponent<AudioSource>().Pause();
-            }
-        }
-        else if (intent == 2) {
-            if (audioThrusterPlaying) {
-                audioShipThrust.UnPause();
-            }
-            if (audioTeleportInPlaying) {
-                playerAbility.teleportIn.GetComponent<AudioSource>().UnPause();
-            }
-            if (audioTeleportOutPlaying) {
-                playerAbility.teleportOut.GetComponent<AudioSource>().UnPause();
-            }
+            plrPowerups.GivePowerup();
         }
     }
 
@@ -155,13 +121,13 @@ public class PlayerMain : MonoBehaviour {
         rbPlayer = gameObject.GetComponent<Rigidbody2D>();
         capsCollider = gameObject.GetComponent<CapsuleCollider2D>();
         spritePlayer = gameObject.GetComponent<SpriteRenderer>();
-        playerInput = gameObject.GetComponent<PlayerInput>();
-        playerMovement = gameObject.GetComponent<PlayerMovement>();
-        playerPowerups = gameObject.GetComponent<PlayerPowerups>();
-        playerWeapons = gameObject.GetComponent<PlayerWeapons>();
-        playerMisc = gameObject.GetComponent<PlayerMisc>();
-        playerAbility = gameObject.GetComponent<PlayerAbility>();
-        playerSpawnDeath = gameObject.GetComponent<PlayerSpawnDeath>();
-        playerUI = gameObject.GetComponent<PlayerUI>();
+        plrInput = gameObject.GetComponent<PlayerInput>();
+        plrMovement = gameObject.GetComponent<PlayerMovement>();
+        plrPowerups = gameObject.GetComponent<PlayerPowerups>();
+        plrWeapons = gameObject.GetComponent<PlayerWeapons>();
+        plrMisc = gameObject.GetComponent<PlayerMisc>();
+        plrAbility = gameObject.GetComponent<PlayerAbility>();
+        plrSpawnDeath = gameObject.GetComponent<PlayerSpawnDeath>();
+        plrUiSound = gameObject.GetComponent<PlayerUiSounds>();
     }
 }

@@ -10,7 +10,6 @@ using TMPro;
 public class MainMenuScript : MonoBehaviour {
 
     // UI objects
-    private readonly float verticalMenuMovement;
     public Text difficultyTitleText, difficultyText, buttonCon1Text, buttonCon2Text, buttonCon3Text;
     public GameObject saveOptionDialog, difficultyDialog, mainMenuPanel, controlOptionDialog, optionsDialog;
     public Button diffBackButton, diffEasyButton, diffNormalButton, diffHardButton;
@@ -111,7 +110,7 @@ public class MainMenuScript : MonoBehaviour {
         if (tempSaveDifficulty == "0") { tempSaveDifficulty = "Easy"; }
         if (tempSaveDifficulty == "1") { tempSaveDifficulty = "Normal"; }
         if (tempSaveDifficulty == "2") { tempSaveDifficulty = "Hard"; }
-        string tempSaveLevel = $"Level {(data.level + 1).ToString()}";
+        string tempSaveLevel = $"Level {data.level + 1}";
         saveDescriptionText.text = $"{tempSavePlayerCount},\n{tempSaveDifficulty}, {tempSaveLevel}";
         mainMenuPanel.SetActive(false);
         saveOptionDialog.SetActive(true);

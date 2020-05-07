@@ -26,7 +26,8 @@ public partial class UfoAllTypes : MonoBehaviour
     // Defence system variables
     // private float difficultyIncrease = 0.95f; TODO add this functionality later
     public float alienHealth, alienMaxHealth;
-    private int pointsToScore = 100, teleportKillPoints = 500;
+    private int pointsToScore = 100;
+    private readonly int teleportKillPoints = 500;
     public GameObject forceField;
 
     // Targetting system variables
@@ -130,9 +131,9 @@ public partial class UfoAllTypes : MonoBehaviour
         Vector2 force = gameObject.transform.position - collision.transform.position;
         int magnitude = 0;
         // Asteroid and player collisions do not cause damage to UFO
-        if (collision.gameObject.tag == "asteroid") { magnitude = 300; }
-        else if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Player 2") { magnitude = 100; }
-        if (ufoRetreating) { magnitude = magnitude / 3; }
+        if (collision.gameObject.CompareTag("asteroid")) { magnitude = 300; }
+        else if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Player 2")) { magnitude = 100; }
+        if (ufoRetreating) { magnitude /= 3; }
         collision.gameObject.GetComponent<Rigidbody2D>().AddForce(-force * magnitude);
     }
 

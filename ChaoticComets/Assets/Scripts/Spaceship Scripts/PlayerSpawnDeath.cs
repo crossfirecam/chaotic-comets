@@ -12,24 +12,24 @@ public class PlayerSpawnDeath : MonoBehaviour
 
     internal void ShipIsDead()
     {
-        if (p.playerPowerups.ifInsuranceActive)
+        if (p.plrPowerups.ifInsuranceActive)
         {
-            p.playerPowerups.RemovePowerup(PlayerPowerups.Powerups.Insurance);
-            p.playerUI.insurancePowerup.gameObject.SetActive(false); p.playerPowerups.ifInsuranceActive = false;
+            p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.Insurance);
+            p.plrUiSound.insurancePowerup.gameObject.SetActive(false); p.plrPowerups.ifInsuranceActive = false;
         }
         else
         {
             // If difficulty is easy, do not remove retro thruster
             if (BetweenScenesScript.Difficulty != 0)
             {
-                p.playerPowerups.RemovePowerup(PlayerPowerups.Powerups.RetroThruster);
+                p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.RetroThruster);
             }
-            p.playerPowerups.RemovePowerup(PlayerPowerups.Powerups.RapidShot);
-            p.playerPowerups.RemovePowerup(PlayerPowerups.Powerups.TripleShot);
-            p.playerPowerups.RemovePowerup(PlayerPowerups.Powerups.FarShot);
+            p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.RapidShot);
+            p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.TripleShot);
+            p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.FarShot);
         }
         p.shields = 0;
-        p.lives--; p.playerUI.livesText.text = $"Lives: {p.lives}";
+        p.lives--; p.plrUiSound.livesText.text = $"Lives: {p.lives}";
         GameObject newExplosion = Instantiate(p.deathExplosion, transform.position, transform.rotation);
         Destroy(newExplosion, 2f);
         PretendShipDoesntExist();
@@ -40,7 +40,7 @@ public class PlayerSpawnDeath : MonoBehaviour
         {
             p.gM.PlayerDied(p.playerNumber);
         }
-        else { p.playerUI.prevshields = 80; Invoke("RespawnShip", 3f); }
+        else { p.plrUiSound.prevshields = 80; Invoke("RespawnShip", 3f); }
     }
 
     public void ShipIsRecovering()
@@ -59,7 +59,7 @@ public class PlayerSpawnDeath : MonoBehaviour
             // If difficulty is Easy, equip Retro Thruster every respawn
             if (BetweenScenesScript.Difficulty == 0)
             {
-                p.playerPowerups.ifRetroThruster = true; p.playerUI.retroThrusterPowerup.gameObject.SetActive(true);
+                p.plrPowerups.ifRetroThruster = true; p.plrUiSound.retroThrusterPowerup.gameObject.SetActive(true);
             }
             p.spritePlayer.enabled = true;
             p.colliderEnabled = false;
@@ -97,18 +97,18 @@ public class PlayerSpawnDeath : MonoBehaviour
     private IEnumerator InvulnTimer()
     {
         // Or, if ship is respawning at start of a level, set the previousShields level to current shield level instead
-        if (p.playerUI.prevshields != 80) { p.playerUI.prevshields = p.shields; }
+        if (p.plrUiSound.prevshields != 80) { p.plrUiSound.prevshields = p.shields; }
         p.shields = 0;
-        p.playerUI.powerBar.sprite = p.playerUI.powerWhenCharging; // Set power bar to have no text
-        for (int shieldsTick = 0; shieldsTick <= p.playerUI.prevshields; shieldsTick++)
+        p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenCharging; // Set power bar to have no text
+        for (int shieldsTick = 0; shieldsTick <= p.plrUiSound.prevshields; shieldsTick++)
         {
             p.shields = shieldsTick;
-            yield return new WaitForSeconds(3f / p.playerUI.prevshields);
+            yield return new WaitForSeconds(3f / p.plrUiSound.prevshields);
         }
-        p.playerUI.powerBar.sprite = p.playerUI.powerWhenReady; // Set power bar to have text informing power can be used
+        p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenReady; // Set power bar to have text informing power can be used
         p.spritePlayer.color = p.normalColor;
         p.colliderEnabled = true;
-        p.playerUI.prevshields = 0;
+        p.plrUiSound.prevshields = 0;
     }
 
     // When level transition happens, take a moment to recharge shields by 20, or if above 60 heal up to 80.

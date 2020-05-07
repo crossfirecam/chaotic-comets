@@ -45,11 +45,11 @@ public partial class GameManager : MonoBehaviour {
                 // Tell ships to 'play dead' (disable sprite & colliders) if previous shop says they're dead
                 if (BetweenScenesScript.player1TempLives == 0)
                 {
-                    playerShip1.playerSpawnDeath.PretendShipDoesntExist();
+                    playerShip1.plrSpawnDeath.PretendShipDoesntExist();
                 }
                 if (BetweenScenesScript.player2TempLives == 0 && BetweenScenesScript.PlayerCount == 2)
                 {
-                    playerShip2.playerSpawnDeath.PretendShipDoesntExist();
+                    playerShip2.plrSpawnDeath.PretendShipDoesntExist();
                 
                 }
             }

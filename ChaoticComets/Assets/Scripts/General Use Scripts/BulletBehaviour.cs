@@ -31,23 +31,27 @@ public class BulletBehaviour : MonoBehaviour {
 
     // PlayerMain tells bullet to be destroyed at a certain time
     public void DestroyBullet(float destroyTime) {
-        if (ifBulletReflected) {
-            DestroyBullet(0.5f);
-            ifBulletReflected = false;
-        }
-        else {
-            Invoke("StopAnimation", destroyTime - animationStopTime);
-        }
+        Invoke("StopAnimation", destroyTime - animationStopTime);
     }
 
     // Animation is stopped a fraction of a second before, allows bullet to fizzle out
     private void StopAnimation() {
-        if (gameObject.GetComponentInChildren<ParticleSystem>() != null) {
-            if (gameObject.GetComponentInChildren<ParticleSystem>().isPlaying) {
-                gameObject.GetComponentInChildren<ParticleSystem>().Stop();
-            }
+        if (ifBulletReflected)
+        {
+            DestroyBullet(0.5f);
+            ifBulletReflected = false;
         }
-        Invoke("RemoveBullet", animationStopTime);
+        else
+        {
+            if (gameObject.GetComponentInChildren<ParticleSystem>() != null)
+            {
+                if (gameObject.GetComponentInChildren<ParticleSystem>().isPlaying)
+                {
+                    gameObject.GetComponentInChildren<ParticleSystem>().Stop();
+                }
+            }
+            Invoke("RemoveBullet", animationStopTime);
+        }
     }
 
     // Bullet is removed

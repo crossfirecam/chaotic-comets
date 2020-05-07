@@ -24,19 +24,19 @@ public class PlayerInput : MonoBehaviour {
         // Get button-based inputs
         // If fire button is pressed, and ship is not teleporting, not dead, and able to fire, then fire
         if (Input.GetButton($"Primary Fire{p.inputNameInsert}")
-            && isNotTeleporting && p.shields != 0 && Time.time > p.playerWeapons.nextFire)
+            && isNotTeleporting && p.shields != 0 && Time.time > p.plrWeapons.nextFire)
         {
-            p.playerWeapons.FiringLogic();
+            p.plrWeapons.FiringLogic();
         }
         // If power button is pressed, and ship has full power with colliders enabled, and level has no asteroids, then use power
         if (Input.GetButtonDown($"Power{p.inputNameInsert}") && p.gM.asteroidCount != 0)
         {
             if (p.colliderEnabled && p.power == 80)
             {
-                p.playerUI.powerBar.sprite = p.playerUI.powerWhenCharging;
-                p.playerAbility.teleportIn.SetActive(true);
-                p.playerMisc.StartCoroutine("FadeShip", "Out");
-                p.playerAbility.Invoke("Hyperspace", 2f);
+                p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenCharging;
+                p.plrAbility.teleportIn.SetActive(true);
+                p.plrMisc.StartCoroutine("FadeShip", "Out");
+                p.plrAbility.Invoke("Hyperspace", 2f);
             }
         }
     }

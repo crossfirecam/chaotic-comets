@@ -9532,13 +9532,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1041848531370438}
-  m_LocalRotation: {x: 0, y: 0, z: 0.17364816, w: 0.9848078}
+  m_LocalRotation: {x: 0, y: 0, z: 0.10452846, w: 0.9945219}
   m_LocalPosition: {x: 0.0000000010348029, y: 0.69200003, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4077047160054620}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 20}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 12}
 --- !u!212 &212116949272085510
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9625,9 +9625,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1260381270780048}
-  m_LocalRotation: {x: 0, y: 0, z: -0.0018238482, w: 0.99999833}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.85}
   m_Children:
   - {fileID: 4548557134825742}
   - {fileID: 4755833646674510}
@@ -9637,7 +9637,7 @@ Transform:
   - {fileID: 4538967215236579315}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.209}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &212575828220606586
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9733,19 +9733,6 @@ MonoBehaviour:
     type: 3}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   invulnColor: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0.48235294}
-  audioShipThrust: {fileID: 1330089242}
-  audioShipSFX: {fileID: 82105594093363858}
-  smallAsteroidHit: {fileID: 8300000, guid: b703f0737972b2f4ea62c807d220bddb, type: 3}
-  bigAsteroidHit: {fileID: 8300000, guid: e334323a8010b3c469e1aa2764b752d2, type: 3}
-  deathSound: {fileID: 8300000, guid: 6731b733bf83e1945990cfe50c818b33, type: 3}
-  playerInput: {fileID: 0}
-  playerMovement: {fileID: 0}
-  playerPowerups: {fileID: 0}
-  playerWeapons: {fileID: 0}
-  playerMisc: {fileID: 0}
-  playerAbility: {fileID: 0}
-  playerSpawnDeath: {fileID: 0}
-  playerUI: {fileID: 0}
 --- !u!70 &70447958271372078
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -9872,7 +9859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p: {fileID: 114782296946591882}
-  thrust: 200
+  thrust: 300
   turnThrust: 200
   thrustInput: 0
   turnInput: 0
@@ -9906,6 +9893,10 @@ MonoBehaviour:
   p: {fileID: 114782296946591882}
   bullet: {fileID: 1298484566697936, guid: 9c85a0c3106c44c46847d29b3c795192, type: 3}
   bulletForce: 400
+  rapidFireBetweenBullets: 0.1
+  fireRateRapid: 1
+  fireRateTriple: 0.7
+  fireRateNormal: 0.45
 --- !u!114 &1146411264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9988,6 +9979,13 @@ MonoBehaviour:
   powerWhenReady: {fileID: 21300000, guid: 48f01af672a74e44b8c7e2f7d19e8b43, type: 3}
   scoreText: {fileID: 0}
   livesText: {fileID: 0}
+  audioShipThrust: {fileID: 1330089242}
+  audioShipSFX: {fileID: 82105594093363858}
+  audClipPlrSfxImpactSoft: {fileID: 8300000, guid: b703f0737972b2f4ea62c807d220bddb,
+    type: 3}
+  audClipPlrSfxImpactHard: {fileID: 8300000, guid: e334323a8010b3c469e1aa2764b752d2,
+    type: 3}
+  audClipPlrSfxDeath: {fileID: 8300000, guid: 6731b733bf83e1945990cfe50c818b33, type: 3}
 --- !u!1 &1310557644853208
 GameObject:
   m_ObjectHideFlags: 0
@@ -10012,13 +10010,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1310557644853208}
-  m_LocalRotation: {x: 0, y: 0, z: -0.17364825, w: 0.9848078}
+  m_LocalRotation: {x: 0, y: 0, z: -0.10452837, w: 0.9945219}
   m_LocalPosition: {x: 7.761022e-10, y: 0.6920001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4077047160054620}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -12}
 --- !u!212 &212921184802470394
 SpriteRenderer:
   m_ObjectHideFlags: 0

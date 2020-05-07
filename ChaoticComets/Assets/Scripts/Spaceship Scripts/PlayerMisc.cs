@@ -49,11 +49,11 @@ public class PlayerMisc : MonoBehaviour
             p.lives = BetweenScenesScript.player1TempLives;
             p.shields = data.player1health;
             p.bonus = data.player1bonus;
-            if (data.player1powerups[0] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
-            if (data.player1powerups[1] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
-            if (data.player1powerups[2] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster, false); }
-            if (data.player1powerups[3] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
-            if (data.player1powerups[4] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
+            if (data.player1powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
+            if (data.player1powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
+            if (data.player1powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster, false); }
+            if (data.player1powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
+            if (data.player1powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
         }
         else
         { // (playerNumber == 2)
@@ -61,11 +61,11 @@ public class PlayerMisc : MonoBehaviour
             p.lives = BetweenScenesScript.player2TempLives;
             p.shields = data.player2health;
             p.bonus = data.player2bonus;
-            if (data.player2powerups[0] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
-            if (data.player2powerups[1] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
-            if (data.player2powerups[2] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster, false); }
-            if (data.player2powerups[3] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
-            if (data.player2powerups[4] == 1) { p.playerPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
+            if (data.player2powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
+            if (data.player2powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
+            if (data.player2powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster, false); }
+            if (data.player2powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
+            if (data.player2powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
         }
     }
 
@@ -74,13 +74,13 @@ public class PlayerMisc : MonoBehaviour
         // If one player is dead... disable their sprite/colliders, then tell GameManager the player is dead.
         if (p.lives == 0)
         {
-            p.playerSpawnDeath.PretendShipDoesntExist();
+            p.plrSpawnDeath.PretendShipDoesntExist();
             p.gM.GetComponent<GameManager>().PlayerDied(p.playerNumber);
         }
         // If a player has died, but brought to life by another player, they'll have >1 life and 0 shields. Give revived player 80 shields.
         else if (p.lives > 0 && p.shields == 0)
         {
-            p.playerUI.prevshields = 80;
+            p.plrUiSound.prevshields = 80;
         }
     }
 
@@ -94,16 +94,16 @@ public class PlayerMisc : MonoBehaviour
         upgradeShotSpeed = playerToUpgrade[p.playerNumber - 1][3] / 10f;
 
         // Bullet force and fire rate are affected by multipliers purchased from the shop
-        p.playerWeapons.bulletForce *= upgradeShotSpeed;
-        p.playerWeapons.fireRateNormal /= upgradeFireRate;
-        p.playerWeapons.fireRateRapid /= upgradeFireRate;
-        p.playerWeapons.fireRateTriple /= upgradeFireRate;
+        p.plrWeapons.bulletForce *= upgradeShotSpeed;
+        p.plrWeapons.fireRateNormal /= upgradeFireRate;
+        p.plrWeapons.fireRateRapid /= upgradeFireRate;
+        p.plrWeapons.fireRateTriple /= upgradeFireRate;
 
         // Thrust and brake efficiency are affected by multipliers purchased from the shop
-        p.playerInput.thrust *= upgradeSpeed;
-        p.playerInput.brakingPower /= upgradeBrake;
+        p.plrInput.thrust *= upgradeSpeed;
+        p.plrInput.brakingPower /= upgradeBrake;
 
-        p.playerUI.UpdatePointDisplays();
+        p.plrUiSound.UpdatePointDisplays();
     }
 
     private IEnumerator FadeShip(string inOrOut)
@@ -111,7 +111,7 @@ public class PlayerMisc : MonoBehaviour
         if (inOrOut == "Out")
         {
             p.colliderEnabled = false;
-            p.playerInput.isNotTeleporting = false;
+            p.plrInput.isNotTeleporting = false;
             for (float fadeTick = 1f; fadeTick >= 0f; fadeTick -= 0.1f)
             {
                 gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, fadeTick);
@@ -121,7 +121,7 @@ public class PlayerMisc : MonoBehaviour
         }
         else
         {
-            p.playerInput.isNotTeleporting = true;
+            p.plrInput.isNotTeleporting = true;
             for (float fadeTick = 0f; fadeTick <= 1f; fadeTick += 0.1f)
             {
                 gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, fadeTick);

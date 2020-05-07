@@ -7,7 +7,6 @@ public class PowerupBehaviour : MonoBehaviour {
     // General purpose variables
     private GameManager gM;
     private Renderer rend;
-    private GameObject player1, player2;
     public GameObject explosion;
 
     // Movement, physics variables
@@ -24,8 +23,6 @@ public class PowerupBehaviour : MonoBehaviour {
     void Start () {
         gM = GameObject.FindObjectOfType<GameManager>();
         rbCanister = gameObject.GetComponent<Rigidbody2D>();
-        if (!gM.player1dead) { player1 = GameObject.FindGameObjectWithTag("Player"); }
-        if (!gM.player2dead) { player2 = GameObject.FindGameObjectWithTag("Player 2"); }
         rend = GetComponent<Renderer>();
         float timeUntilExpiry = Random.Range(10f, 24f);
         Invoke("StartExpiry", timeUntilExpiry);
@@ -40,7 +37,7 @@ public class PowerupBehaviour : MonoBehaviour {
 
     // Destroy canister when shot by players
     void OnTriggerEnter2D(Collider2D triggerObject) {
-        if (triggerObject.gameObject.tag == "bullet" || triggerObject.gameObject.tag == "bullet2") {
+        if (triggerObject.gameObject.CompareTag("bullet") || triggerObject.gameObject.CompareTag("bullet2")) {
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
             gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
             triggerObject.enabled = false;

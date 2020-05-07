@@ -1,33 +1,32 @@
+Bonus Object Sounds
+CaniSpawn - 8BIT_RETRO_Powerup_Spawn_Appear_Fading_mono
+CaniDespawning - 8BIT_RETRO_Powerup_Spawn_Appear_Fading_mono_EDIT
+CaniDestroyed - 8BIT_RETRO_Powerup_Spawn_Flash_Aggressive_mono
+CaniCollected - UI_Beep_Double_Alternative_stereo
+
+Enemy Sounds
+UfoBlaster - BLASTER_Slow_Bright_stereo
+UfoImpact - IMPACT_Bullet_Metal_15_mono
+UfoScanning - SPACECRAFT_Cartoon_01_Sweeping_Wind_Blink_Tone_loop_mono
+UfoShieldReflect - MAGIC_SPELL_Spawn_mono
+
+Multiple Uses
+AbilityTeleport - SPACE_WARP_Quick_Charge_Jump_Away_01_mono
+WeaponEnergyBlast - EXPLOSION_Short_Weak_Foof_stereo
+
 Player Sounds
-8BIT_RETRO_Coin_Collect_Two_Note_Deep_Twinkle_mono - Life collected
-BLASTER_Rapid_Charge_Pitch_Down_Brighter_stereo - Player 1 shoot
-BLASTER_Rapid_Charge_Pitch_Down_Brighter_stereo B - Player 2 shoot
-EXPLOSION_Long_Pitched_Impact_with_Smooth_Tail_stereo - Player death
-IMPACT_Metal_Scrap_Deep_Pipe_stereo - Player takes big damage
-IMPACT_Metal_Soft_Plate_01_mono - Player takes small damage
-THRUSTER_Deep_Hot_Constant_loop_mono - Player thrusters
+PlrBlaster1 - BLASTER_Rapid_Charge_Pitch_Down_Brighter_stereo
+PlrBlaster2 - BLASTER_Rapid_Charge_Pitch_Down_Brighter_stereo B
+PlrDeathExplosionEXPLOSION_Long_Pitched_Impact_with_Smooth_Tail_stereo
+PlrExtraLife - 8BIT_RETRO_Coin_Collect_Two_Note_Deep_Twinkle_mono
+PlrImpactHard - IMPACT_Metal_Scrap_Deep_Pipe_stereo
+PlrImpactSoft - IMPACT_Metal_Soft_Plate_01_mono
+PlrRetroThrusters - EXPLOSION_Short_Smooth_Brighter_Kickback_mono
+PlrThrusters - THRUSTER_Deep_Hot_Constant_loop_mono
 
-Canister Sounds
-8BIT_RETRO_Powerup_Spawn_Appear_Fading_mono - Canister spawns
-8BIT_RETRO_Powerup_Spawn_Appear_Fading_mono_EDIT - Canister despawns
-8BIT_RETRO_Powerup_Spawn_Flash_Aggressive_mono - Canister destroyed
-UI_Beep_Double_Alternative_stereo - Powerup received
-
-UFO sounds
-BLASTER_Slow_Bright_stereo - UFO shoot
-IMPACT_Bullet_Metal_15_mono - UFO takes hit
-MAGIC_SPELL_Spawn_mono - UFO reflects projectile
-SPACECRAFT_Cartoon_01_Sweeping_Wind_Blink_Tone_loop_mono - UFO alive
-SPACECRAFT_Glitch_04_Random_Compute_Noise_loop_mono - UFO dying
-
-Multiple Source Sounds
-EXPLOSION_Short_Weak_Foof_stereo - Asteroid / UFO damage
-SPACE_WARP_Quick_Charge_Jump_Away_01_mono - UFO / Player teleports
-
-Other Sounds
-Space Station SLOW LOOP - Main menu music track
-Lunar Ambience LOOP - Game music track
-Deep Space Ambience LOOP - Shop music track
-PUZZLE_Success_Beep_Three_Note_Climb_Delay_stereo - Level end
-MUSIC_EFFECT_Solo_EPiano_Negative_02_stereo - Game Over
-MAGIC_SPELL_Dark_Pulse_Echo_stereo - UNUSED
+Music
+JingleGameOver - MUSIC_EFFECT_Solo_EPiano_Negative_02_stereo
+JingleLevelPassed - PUZZLE_Success_Beep_Three_Note_Climb_Delay_stereo
+MusicGameplay - Lunar Ambience LOOP
+MusicMainMenu - Space Station SLOW LOOP
+MusicShop - Deep Space Ambience LOOP

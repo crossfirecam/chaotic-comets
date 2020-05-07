@@ -6,6 +6,7 @@ public partial class UfoAllTypes : MonoBehaviour
 {
     internal float timer = 0;
     private bool screenWrappedRecently = false;
+    private bool movingRandomly = false;
 
     void FixedUpdate()
     {
@@ -43,6 +44,7 @@ public partial class UfoAllTypes : MonoBehaviour
 
     internal void FindPlayer()
     {
+        // Choose a player to target
         float randomFloat = Random.Range(0.0f, 1f);
         if (randomFloat >= 0.5f && !gM.player1dead && !gM.player1TEMPDEAD)
         {
@@ -54,23 +56,38 @@ public partial class UfoAllTypes : MonoBehaviour
             player = GameObject.FindWithTag("Player 2").transform;
             direction = (player.position - transform.position);
         }
+
+        // Once player is found, don't shoot for 1 second, and disable random movement
+        // If no player is found, then tell UFO to enable random movement
         if (player != null)
         {
-            lastTimeShot = Time.time + 1f; // Once player is found, don't shoot for 1 second
+            lastTimeShot = Time.time + 1f;
             playerFound = true;
+            movingRandomly = false;
         }
+        else
+        {
+            if (!movingRandomly)
+            {
+                direction = Random.insideUnitCircle;
+                movingRandomly = true;
+            }
+        }
+
+        // Fringe case - one player alive, they die, a bullet hits almost dead UFO, and it wouldn't activate shields
         if (alienHealth <= 10f && !ufoRetreating)
-        { // Fringe case - one player alive, they die, a bullet hits almost dead UFO, and it wouldn't activate shields
+        { 
             AlienRetreat();
         }
         if (direction == Vector2.zero)
         {
             Debug.Log("UFO spawned when both players are dead. Randomise direction.");
-            direction = Random.insideUnitCircle.normalized;
+            direction = Random.insideUnitCircle;
         }
 
-        // Continue moving in same direction for this frame, if both players are dead
-        rb.MovePosition(rb.position + direction * alienSpeedCurrent * Time.fixedDeltaTime);
+        direction = direction.normalized;
+        // If both players are dead, continue moving in same direction for this frame at double speed
+        rb.MovePosition(rb.position + direction * (alienSpeedCurrent * 2) * Time.fixedDeltaTime);
     }
 
     internal bool IsPlayerTooClose()

@@ -20,7 +20,7 @@ public class PlayerAbility : MonoBehaviour
     private void Hyperspace()
     {
         // Initiate local newPosition, and pick new position depending on what screen the player is using (game or help screen)
-        Vector2 newPosition = new Vector2(0, 0);
+        Vector2 newPosition;
         if (!p.helpMenuMode)
         {
             newPosition = new Vector2(Random.Range(-9f, 9f), Random.Range(-5f, 5f));
@@ -32,7 +32,7 @@ public class PlayerAbility : MonoBehaviour
         transform.position = newPosition;
         p.rbPlayer.velocity = Vector2.zero;
         teleportIn.SetActive(false);
-        p.playerMisc.StartCoroutine("FadeShip", "In");
+        p.plrMisc.StartCoroutine("FadeShip", "In");
         teleportOut.SetActive(true);
         StartCoroutine("PowerTimer", "Hyperspace");
     }
@@ -50,7 +50,7 @@ public class PlayerAbility : MonoBehaviour
             }
             teleportOut.SetActive(false);
             p.power = 80f;
-            p.playerUI.powerBar.sprite = p.playerUI.powerWhenReady;
+            p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenReady;
             StopCoroutine("PowerTimer");
         }
     }

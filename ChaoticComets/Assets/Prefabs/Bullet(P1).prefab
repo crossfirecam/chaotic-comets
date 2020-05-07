@@ -50,6 +50,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -61,6 +62,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -135,6 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gM: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f, type: 3}
   ifBulletNotAlien: 1
+  ifBulletReflected: 0
 --- !u!82 &82557692610479534
 AudioSource:
   m_ObjectHideFlags: 0
@@ -257,13 +260,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7562610566565277562}
-  m_LocalRotation: {x: -0.76961166, y: 0.6385121, z: -0.00036031322, w: -0.00043429286}
+  m_LocalRotation: {x: -0.7660445, y: 0.64278764, z: 0.00000014344452, w: -0.00000012036423}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.070968986, y: 0.070968986, z: 0.23685896}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.23685896}
   m_Children: []
   m_Father: {fileID: 4376342663711250}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.065000005, y: 180.00002, z: -100.63801}
+  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: -100}
 --- !u!198 &2605494711245192866
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4937,6 +4940,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4949,6 +4953,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
