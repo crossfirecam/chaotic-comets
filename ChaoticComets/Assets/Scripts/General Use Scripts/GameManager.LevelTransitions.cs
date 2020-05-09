@@ -7,7 +7,10 @@ using UnityEngine.UI;
 public partial class GameManager : MonoBehaviour
 {
     // When a level starts, perform starting operations
+
+#pragma warning disable IDE0051 // StartNewLevel isn't directly called, used by an Invoke
     void StartNewLevel()
+#pragma warning restore IDE0051
     {
         levelNo++;
         // Asteroid number depends on level number. Iterated in SpawnProp()

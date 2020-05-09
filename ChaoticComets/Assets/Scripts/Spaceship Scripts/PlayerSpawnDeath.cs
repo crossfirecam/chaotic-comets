@@ -59,10 +59,10 @@ public class PlayerSpawnDeath : MonoBehaviour
             // If difficulty is Easy, equip Retro Thruster every respawn
             if (BetweenScenesScript.Difficulty == 0)
             {
-                p.plrPowerups.ifRetroThruster = true; p.plrUiSound.retroThrusterPowerup.gameObject.SetActive(true);
+                p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster, false);
             }
-            p.spritePlayer.enabled = true;
-            p.colliderEnabled = false;
+            p.modelPlayer.SetActive(true);
+            p.collisionsCanDamage = false;
             p.capsCollider.enabled = true;
 
             p.rbPlayer.velocity = Vector2.zero;
@@ -87,8 +87,7 @@ public class PlayerSpawnDeath : MonoBehaviour
             {
                 p.gM.player2TEMPDEAD = false;
             }
-
-            p.spritePlayer.color = p.invulnColor;
+            ShipIsNowTransparent(true);
             StartCoroutine("InvulnTimer");
         }
     }
@@ -106,8 +105,8 @@ public class PlayerSpawnDeath : MonoBehaviour
             yield return new WaitForSeconds(3f / p.plrUiSound.prevshields);
         }
         p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenReady; // Set power bar to have text informing power can be used
-        p.spritePlayer.color = p.normalColor;
-        p.colliderEnabled = true;
+        ShipIsNowTransparent(false);
+        p.collisionsCanDamage = true;
         p.plrUiSound.prevshields = 0;
     }
 
@@ -133,8 +132,23 @@ public class PlayerSpawnDeath : MonoBehaviour
 
     public void PretendShipDoesntExist()
     {
-        p.spritePlayer.enabled = false;
-        p.colliderEnabled = false;
+        p.modelPlayer.SetActive(false);
+        p.collisionsCanDamage = false;
         p.capsCollider.enabled = false;
+    }
+
+    private void ShipIsNowTransparent(bool transpOrSolid)
+    {
+        Renderer[] listOfShipParts = GetComponentsInChildren<Renderer>();
+        float alpha;
+        if (transpOrSolid) { alpha = .5f; }
+        else { alpha = 1f; }
+
+        foreach (Renderer shipPart in listOfShipParts)
+        {
+            Material partMaterial = shipPart.material;
+            Color origColor = partMaterial.color;
+            partMaterial.color = new Color(origColor.r, origColor.g, origColor.b, alpha);
+        }
     }
 }

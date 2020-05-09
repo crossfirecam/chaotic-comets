@@ -14,7 +14,7 @@ public class PlayerMain : MonoBehaviour {
 
     // General purpose variables
     internal Rigidbody2D rbPlayer;
-    internal SpriteRenderer spritePlayer;
+    public GameObject modelPlayer;
     internal CapsuleCollider2D capsCollider;
     internal GameManager gM;
     public bool helpMenuMode = false;
@@ -24,10 +24,9 @@ public class PlayerMain : MonoBehaviour {
     private float nextDamagePossible = 0.0F;
 
     // Ship impacts, death, respawning
-    internal bool colliderEnabled;
-    internal float damageThreshold = 6f;
+    internal bool collisionsCanDamage;
+    internal float highDamageThreshold = 6f;
     public GameObject deathExplosion;
-    public Color normalColor, invulnColor;
 
     // Player Scripts
     internal PlayerInput plrInput = default;
@@ -71,11 +70,11 @@ public class PlayerMain : MonoBehaviour {
             int magnitude = 80;
             gameObject.GetComponent<Rigidbody2D>().AddForce(force * magnitude);
 
-            if (colliderEnabled && Time.time > nextDamagePossible) {
+            if (collisionsCanDamage && Time.time > nextDamagePossible) {
                 nextDamagePossible = Time.time + 0.15f;
                 if (col.gameObject.CompareTag("asteroid")) { col.gameObject.GetComponent<AsteroidBehaviour>().AsteroidWasHit(); }
                 // If ship rams hard enough, deal more damage
-                if (col.relativeVelocity.magnitude > damageThreshold) {
+                if (col.relativeVelocity.magnitude > highDamageThreshold) {
                     plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactHard;
                     shields -= 30f;
                 }
@@ -95,7 +94,7 @@ public class PlayerMain : MonoBehaviour {
 
     // When ship collides with alien bullet or powerup triggers
     void OnTriggerEnter2D(Collider2D triggerObject) {
-        if (triggerObject.gameObject.CompareTag("bullet3") && colliderEnabled && Time.time > nextDamagePossible) {
+        if (triggerObject.gameObject.CompareTag("bullet3") && collisionsCanDamage && Time.time > nextDamagePossible) {
             Destroy(triggerObject.GetComponentInChildren<ParticleSystem>());
             nextDamagePossible = Time.time + 0.15f;
             shields -= 10f;
@@ -109,7 +108,7 @@ public class PlayerMain : MonoBehaviour {
             plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactSoft;
             plrUiSound.audioShipSFX.Play();
         }
-        if (triggerObject.gameObject.CompareTag("powerup") && spritePlayer.enabled) {
+        if (triggerObject.gameObject.CompareTag("powerup") && modelPlayer.activeInHierarchy) {
             Destroy(triggerObject.transform.parent.gameObject);
             plrPowerups.GivePowerup();
         }
@@ -120,7 +119,6 @@ public class PlayerMain : MonoBehaviour {
         gM = GameObject.FindObjectOfType<GameManager>();
         rbPlayer = gameObject.GetComponent<Rigidbody2D>();
         capsCollider = gameObject.GetComponent<CapsuleCollider2D>();
-        spritePlayer = gameObject.GetComponent<SpriteRenderer>();
         plrInput = gameObject.GetComponent<PlayerInput>();
         plrMovement = gameObject.GetComponent<PlayerMovement>();
         plrPowerups = gameObject.GetComponent<PlayerPowerups>();

@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1622538094009692569}
   m_LocalRotation: {x: -0.76961166, y: 0.6385121, z: -0.00036031322, w: -0.00043429286}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.070968986, y: 0.070968986, z: 0.23685896}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.24}
   m_Children: []
   m_Father: {fileID: 9113086293988037873}
   m_RootOrder: 0
@@ -3762,9 +3762,9 @@ ParticleSystem:
       properties: 0
       emitProbability: 1
   LightsModule:
-    enabled: 0
-    ratio: 0
-    light: {fileID: 0}
+    enabled: 1
+    ratio: 1
+    light: {fileID: 108000013609061350, guid: fa35d75604d172d48b7a6b62a07c7dbf, type: 3}
     randomDistribution: 1
     color: 1
     range: 1
@@ -3825,7 +3825,7 @@ ParticleSystem:
     intensityCurve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4705,6 +4705,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4717,6 +4718,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -4802,6 +4804,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4813,6 +4816,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -4887,6 +4891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gM: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f, type: 3}
   ifBulletNotAlien: 1
+  ifBulletReflected: 0
 --- !u!82 &9174657322050886477
 AudioSource:
   m_ObjectHideFlags: 0

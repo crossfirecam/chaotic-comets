@@ -17,7 +17,9 @@ public class PlayerAbility : MonoBehaviour
         teleportIn = gameObject.transform.Find($"P{p.playerNumber}-TeleportParticlesIn").gameObject;
         teleportOut = gameObject.transform.Find($"P{p.playerNumber}-TeleportParticlesOut").gameObject;
     }
+#pragma warning disable IDE0051 // HyperSpace isn't directly called, used by an Invoke
     private void Hyperspace()
+#pragma warning restore IDE0051
     {
         // Initiate local newPosition, and pick new position depending on what screen the player is using (game or help screen)
         Vector2 newPosition;

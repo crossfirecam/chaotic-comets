@@ -106,11 +106,13 @@ public class PlayerMisc : MonoBehaviour
         p.plrUiSound.UpdatePointDisplays();
     }
 
+#pragma warning disable IDE0051 // FadeShip isn't directly called, used by a StartCoroutine
     private IEnumerator FadeShip(string inOrOut)
+#pragma warning restore IDE0051
     {
         if (inOrOut == "Out")
         {
-            p.colliderEnabled = false;
+            p.collisionsCanDamage = false;
             p.plrInput.isNotTeleporting = false;
             for (float fadeTick = 1f; fadeTick >= 0f; fadeTick -= 0.1f)
             {
@@ -128,7 +130,7 @@ public class PlayerMisc : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-            p.colliderEnabled = true;
+            p.collisionsCanDamage = true;
         }
     }
 }

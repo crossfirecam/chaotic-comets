@@ -49,7 +49,7 @@ public class PlayerPowerups : MonoBehaviour
                 { // Give insurance powerup, 15% chance, needs another powerup active
                     PowerupDecided(); ApplyPowerup(Powerups.Insurance);
                 }
-                else if (RandCheck(15, 19) && p.shields <= 60f && p.colliderEnabled)
+                else if (RandCheck(15, 19) && p.shields <= 60f && p.collisionsCanDamage)
                 { // Give shield top-up, 15% chance, needs shields to be less than 60 and ship's collider to be active
                     PowerupDecided(); ApplyPowerup(Powerups.ShieldRefill);
                 }
@@ -169,7 +169,7 @@ public class PlayerPowerups : MonoBehaviour
             ApplyPowerup(Powerups.MediumPrize);
         }
         // 40% chance of shield refill. If respawning to full shields already, or above 60 shields, skips to last prize
-        else if (RandCheck(4, 12) && p.shields <= 60f && p.colliderEnabled)
+        else if (RandCheck(4, 12) && p.shields <= 60f && p.collisionsCanDamage)
         {
             ApplyPowerup(Powerups.ShieldRefill);
         }

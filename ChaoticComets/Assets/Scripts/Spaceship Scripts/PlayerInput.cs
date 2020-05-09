@@ -31,7 +31,7 @@ public class PlayerInput : MonoBehaviour {
         // If power button is pressed, and ship has full power with colliders enabled, and level has no asteroids, then use power
         if (Input.GetButtonDown($"Power{p.inputNameInsert}") && p.gM.asteroidCount != 0)
         {
-            if (p.colliderEnabled && p.power == 80)
+            if (p.collisionsCanDamage && p.power == 80)
             {
                 p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenCharging;
                 p.plrAbility.teleportIn.SetActive(true);

@@ -10,14 +10,14 @@ public class PlayerMovement : MonoBehaviour
     public void ShipMovement()
     {
         // Rotate the ship
-        if (p.plrInput.turnInput != 0 && p.spritePlayer.enabled)
+        if (p.plrInput.turnInput != 0 && p.modelPlayer.activeInHierarchy)
         {
             transform.Rotate(Vector3.forward * p.plrInput.turnInput * Time.deltaTime * p.plrInput.turnThrust);
         }
 
         // Active thrusting (forward or braking thrust)
         // Apply force on Y axis of spaceship, multiply by thrust
-        if (p.plrInput.thrustInput != 0 && p.spritePlayer.enabled && p.plrInput.isNotTeleporting)
+        if (p.plrInput.thrustInput != 0 && p.modelPlayer.activeInHierarchy && p.plrInput.isNotTeleporting)
         {
             if (!p.plrUiSound.audioShipThrust.isPlaying) { p.plrUiSound.audioShipThrust.Play(); }
             if (!p.plrInput.thruster1.isPlaying) { p.plrInput.thruster1.Play(); }

@@ -262,7 +262,7 @@ Transform:
   m_GameObject: {fileID: 1816110528187659930}
   m_LocalRotation: {x: -0.7603314, y: 0.6382479, z: 0.06075771, w: 0.104135774}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.04, y: 0.04, z: 0.23685996}
+  m_LocalScale: {x: 0.06, y: 0.06, z: 0.23}
   m_Children: []
   m_Father: {fileID: 4620213789545930}
   m_RootOrder: 0
@@ -3997,9 +3997,9 @@ ParticleSystem:
       properties: 0
       emitProbability: 1
   LightsModule:
-    enabled: 0
-    ratio: 0
-    light: {fileID: 0}
+    enabled: 1
+    ratio: 1
+    light: {fileID: 108000013609061350, guid: fa35d75604d172d48b7a6b62a07c7dbf, type: 3}
     randomDistribution: 1
     color: 1
     range: 1
@@ -4060,7 +4060,7 @@ ParticleSystem:
     intensityCurve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
