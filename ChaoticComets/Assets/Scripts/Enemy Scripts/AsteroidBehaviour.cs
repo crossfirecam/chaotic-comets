@@ -6,45 +6,38 @@ public class AsteroidBehaviour : MonoBehaviour {
 
     // General purpose variables
     public bool debugMode = false;
-    public GameManager gM;
+    private GameManager gM;
     public int points;
     private bool beenHit = false;
 
     // Movement, physics variables
     public float maxThrust, maxSpin;
-    public Rigidbody2D rb;
+    private Rigidbody2D rbAsteroid;
     public int asteroidSize; // 3 = Large, 2 = Medium, 1 = Small
 
     // GameObject variables
     public GameObject asteroidMedium, asteroidSmall;
-    public GameObject playerShip1, playerShip2;
     public GameObject explosion;
+    private GameObject playerShip1, playerShip2;
 
     // ----------
 
-    void Start () {
-        // Add random spin and thrust at the beginning
-        Vector2 thrust = new Vector2(Random.Range(MaxBackThrust(), MaxForwardThrust()),
-            Random.Range(MaxBackThrust(), MaxForwardThrust()));
-        float spin = Random.Range(-maxSpin, maxSpin);
-        rb.AddForce(thrust);
-        rb.AddTorque(spin);
+    void Start ()
+    {
+        GetComponents();
+        GiveRandomMovement();
+    }
 
-        playerShip1 = GameObject.FindWithTag("Player");
-        playerShip2 = GameObject.FindWithTag("Player 2");
-        gM = GameObject.FindObjectOfType<GameManager>();
-       }
-
-    float MaxBackThrust() { return Random.Range(-maxThrust, -100); }
-    float MaxForwardThrust() { return Random.Range(100, maxThrust); }
+    // Give random movement to newly spawned asteroids. Thanks to metalted and GlassesGuy on Unity forum (https://answers.unity.com/questions/1646067/)
+    private void GiveRandomMovement()
+    {
+        UsefulFunctions.FindThrust(rbAsteroid, maxThrust);
+        UsefulFunctions.FindTorque(rbAsteroid, maxSpin);
+    }
     
-    void Update () {
-        if (asteroidSize == -1) {
-            float chanceOfExpiring = Random.Range(0f, 100f);
-            if (chanceOfExpiring < 0.5f) {
-            }
-        }
-        CheckScreenWrap();
+    void Update ()
+    {
+        gM.CheckScreenWrap(transform, 0.5f);
     }
 
     void OnTriggerEnter2D(Collider2D otherObject) {
@@ -102,13 +95,11 @@ public class AsteroidBehaviour : MonoBehaviour {
         debugMode = true;
     }
 
-    // Screen Wrapping
-    public void CheckScreenWrap() {
-        Vector2 newPosition = transform.position;
-        if (transform.position.y > gM.screenTop) { newPosition.y = gM.screenBottom + 0.5f; }
-        if (transform.position.y < gM.screenBottom) { newPosition.y = gM.screenTop - 0.5f; }
-        if (transform.position.x > gM.screenRight) { newPosition.x = gM.screenLeft + 0.5f; }
-        if (transform.position.x < gM.screenLeft) { newPosition.x = gM.screenRight - 0.5f; }
-        transform.position = newPosition;
+    private void GetComponents()
+    {
+        rbAsteroid = GetComponent<Rigidbody2D>();
+        playerShip1 = GameObject.FindWithTag("Player");
+        playerShip2 = GameObject.FindWithTag("Player 2");
+        gM = GameObject.FindObjectOfType<GameManager>();
     }
 }

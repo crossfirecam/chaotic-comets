@@ -12,21 +12,9 @@ public class BulletBehaviour : MonoBehaviour {
 
     // ----------
     
-        void Update () {
-        Vector2 newPosition = transform.position;
-        if (transform.position.y > gM.screenTop) {
-            newPosition.y = gM.screenBottom;
-        }
-        if (transform.position.y < gM.screenBottom) {
-            newPosition.y = gM.screenTop;
-        }
-        if (transform.position.x > gM.screenRight) {
-            newPosition.x = gM.screenLeft;
-        }
-        if (transform.position.x < gM.screenLeft) {
-            newPosition.x = gM.screenRight;
-        }
-        transform.position = newPosition;
+    void Update ()
+    {
+        gM.CheckScreenWrap(transform, 0f);
     }
 
     // PlayerMain tells bullet to be destroyed at a certain time

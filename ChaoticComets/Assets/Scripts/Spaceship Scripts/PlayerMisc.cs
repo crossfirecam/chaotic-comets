@@ -71,7 +71,7 @@ public class PlayerMisc : MonoBehaviour
 
     private void HandlePlayerLifeStates()
     {
-        // If one player is dead... disable their sprite/colliders, then tell GameManager the player is dead.
+        // If one player is dead... disable their model/colliders, then tell GameManager the player is dead.
         if (p.lives == 0)
         {
             p.plrSpawnDeath.PretendShipDoesntExist();
@@ -110,26 +110,36 @@ public class PlayerMisc : MonoBehaviour
     private IEnumerator FadeShip(string inOrOut)
 #pragma warning restore IDE0051
     {
+        Renderer[] listOfShipParts = GetComponentsInChildren<Renderer>();
         if (inOrOut == "Out")
         {
             p.collisionsCanDamage = false;
             p.plrInput.isNotTeleporting = false;
-            for (float fadeTick = 1f; fadeTick >= 0f; fadeTick -= 0.1f)
+
+            for (float fadeTick = 1f; fadeTick >= -0.1f; fadeTick -= 0.1f)
             {
-                gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, fadeTick);
+                foreach (Renderer shipPart in listOfShipParts)
+                {
+                    Material partMaterial = shipPart.material;
+                    Color origColor = partMaterial.color;
+                    partMaterial.color = new Color(origColor.r, origColor.g, origColor.b, fadeTick);
+                }
                 yield return new WaitForSeconds(0.1f);
             }
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0f);
         }
         else
         {
             p.plrInput.isNotTeleporting = true;
             for (float fadeTick = 0f; fadeTick <= 1f; fadeTick += 0.1f)
             {
-                gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, fadeTick);
+                foreach (Renderer shipPart in listOfShipParts)
+                {
+                    Material partMaterial = shipPart.material;
+                    Color origColor = partMaterial.color;
+                    partMaterial.color = new Color(origColor.r, origColor.g, origColor.b, fadeTick);
+                }
                 yield return new WaitForSeconds(0.1f);
             }
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
             p.collisionsCanDamage = true;
         }
     }

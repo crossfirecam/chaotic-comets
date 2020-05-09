@@ -12,9 +12,9 @@ public class UfoFollowerType : MonoBehaviour
 
     internal void ChaseLogicFollower()
     {
-        if (u.IsPlayerTooClose())
+        if (u.IsPlayerTooClose(2f))
         {
-            u.direction = (u.player.position + transform.position);
+            u.direction = Vector2.zero;
         }
         else
         {

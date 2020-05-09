@@ -51,7 +51,7 @@ public class PlayerMain : MonoBehaviour {
         if (!gM.gamePausePanel.activeInHierarchy) {
             plrInput.GetInputs();
             plrMovement.ShipMovement();
-            plrMovement.CheckScreenWrap();
+            gM.CheckScreenWrap(transform, 0f);
             plrUiSound.UpdateBars();
         }
     }
@@ -98,7 +98,6 @@ public class PlayerMain : MonoBehaviour {
             Destroy(triggerObject.GetComponentInChildren<ParticleSystem>());
             nextDamagePossible = Time.time + 0.15f;
             shields -= 10f;
-            triggerObject.GetComponent<SpriteRenderer>().enabled = false;
             triggerObject.GetComponent<CircleCollider2D>().enabled = false;
             Destroy(triggerObject.gameObject, 5f);
             if (shields <= 0)

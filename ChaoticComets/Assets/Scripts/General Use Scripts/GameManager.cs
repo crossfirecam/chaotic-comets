@@ -26,7 +26,7 @@ public partial class GameManager : MonoBehaviour {
     public bool helpMenuMode = false; // Not in control help screen by default
     public AudioSource musicLoop;
     private float fadingAlpha = 0f;
-    
+
     void Start() {
         Cursor.visible = false;
         // If in normal gameplay, set player ships to become active and start gameplay
@@ -42,7 +42,7 @@ public partial class GameManager : MonoBehaviour {
             if (BetweenScenesScript.ResumingFromSave) { // If resuming from save file, read from save file first
                 Saving_PlayerManager data = Saving_SaveManager.LoadData();
                 levelNo = data.level;
-                // Tell ships to 'play dead' (disable sprite & colliders) if previous shop says they're dead
+                // Tell ships to 'play dead' (disable model & colliders) if previous shop says they're dead
                 if (BetweenScenesScript.player1TempLives == 0)
                 {
                     playerShip1.plrSpawnDeath.PretendShipDoesntExist();
@@ -84,5 +84,16 @@ public partial class GameManager : MonoBehaviour {
                 PauseGame(0);
             }
         }
+    }
+
+    // Screen Wrapping
+    public void CheckScreenWrap(Transform current, float offset)
+    {
+        Vector2 newPosition = current.position;
+        if (current.position.y > screenTop) { newPosition.y = screenBottom + offset; }
+        if (current.position.y < screenBottom) { newPosition.y = screenTop - offset; }
+        if (current.position.x > screenRight) { newPosition.x = screenLeft + offset; }
+        if (current.position.x < screenLeft) { newPosition.x = screenRight - offset; }
+        current.position = newPosition;
     }
 }

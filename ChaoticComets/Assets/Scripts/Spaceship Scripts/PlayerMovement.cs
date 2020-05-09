@@ -63,16 +63,4 @@ public class PlayerMovement : MonoBehaviour
             else { p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 8f; }
         }
     }
-
-    // Screen Wrapping
-    public void CheckScreenWrap()
-    {
-        Vector2 newPosition = transform.position;
-        if (transform.position.y > p.gM.screenTop) { newPosition.y = p.gM.screenBottom; }
-        if (transform.position.y < p.gM.screenBottom) { newPosition.y = p.gM.screenTop; }
-        if (transform.position.x > p.gM.screenRight) { newPosition.x = p.gM.screenLeft; }
-        if (transform.position.x < p.gM.screenLeft) { newPosition.x = p.gM.screenRight; }
-
-        transform.position = newPosition;
-    }
 }

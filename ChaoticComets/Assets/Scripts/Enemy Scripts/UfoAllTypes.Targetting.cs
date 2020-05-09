@@ -5,7 +5,6 @@ using UnityEngine;
 public partial class UfoAllTypes : MonoBehaviour
 {
     internal float timer = 0;
-    private bool screenWrappedRecently = false;
     private bool movingRandomly = false;
 
     void FixedUpdate()
@@ -90,9 +89,9 @@ public partial class UfoAllTypes : MonoBehaviour
         rb.MovePosition(rb.position + direction * (alienSpeedCurrent * 2) * Time.fixedDeltaTime);
     }
 
-    internal bool IsPlayerTooClose()
+    internal bool IsPlayerTooClose(float threshold)
     {
-        return Vector2.Distance(player.position, transform.position) < 2f;
+        return Vector2.Distance(player.position, transform.position) < threshold;
     }
     internal bool IsPlayerTooFarX()
     {
@@ -109,19 +108,14 @@ public partial class UfoAllTypes : MonoBehaviour
     {
         if (timer > 3f)
         {
-            Vector2 newPosition = transform.position;
-            if (transform.position.y > gM.screenTop) { newPosition.y = gM.screenBottom; screenWrappedRecently = true; }
-            if (transform.position.y < gM.screenBottom) { newPosition.y = gM.screenTop; screenWrappedRecently = true; }
-            if (transform.position.x > gM.screenRight) { newPosition.x = gM.screenLeft; screenWrappedRecently = true; }
-            if (transform.position.x < gM.screenLeft) { newPosition.x = gM.screenRight; screenWrappedRecently = true; }
-            transform.position = newPosition;
+            Vector3 savedPosition = transform.position;
+            gM.CheckScreenWrap(transform, 0f);
 
             // If UFO screenwraps, tell UFO to face the player again so it can accelerate toward them once popping out the other side
             // This isn't to happen while UFO is retreating, or else it gets stuck on the edges of the screen
-            if (screenWrappedRecently)
+            if (savedPosition != transform.position)
             {
                 timer = 0;
-                screenWrappedRecently = false;
                 if (!ufoRetreating)
                 {
                     direction = (player.position - transform.position);

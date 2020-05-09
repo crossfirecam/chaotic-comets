@@ -5,12 +5,12 @@ using UnityEngine;
 public class PowerupBehaviour : MonoBehaviour {
     
     // General purpose variables
-    private GameManager gM;
+    public GameManager gM;
     private Renderer rend;
     public GameObject explosion;
 
     // Movement, physics variables
-    public float maxThrust, maxSpin;
+    private float maxThrust = 250, maxSpin = 60;
     private Rigidbody2D rbCanister;
 
     // Audio
@@ -20,19 +20,22 @@ public class PowerupBehaviour : MonoBehaviour {
     // ----------
 
     // Set object variables, determine random expiry time, and give random movement. If spawned at end of level, destroy canister
-    void Start () {
-        gM = GameObject.FindObjectOfType<GameManager>();
-        rbCanister = gameObject.GetComponent<Rigidbody2D>();
+    void Start ()
+    {
+        gM = FindObjectOfType<GameManager>();
+        rbCanister = GetComponent<Rigidbody2D>();
         rend = GetComponent<Renderer>();
+        GiveRandomMovement();
+
         float timeUntilExpiry = Random.Range(10f, 24f);
         Invoke("StartExpiry", timeUntilExpiry);
-        GiveRandomMovement();
+
         if (gM.CheckIfEndOfLevel()) { Debug.Log("Canister attempted to spawn during level transition"); Destroy(gameObject); }
     }
 
     // Every frame, check if canister needs to loop screen
     void Update() {
-        CheckScreenWrap();
+        gM.CheckScreenWrap(transform, 0.5f);
     }
 
     // Destroy canister when shot by players
@@ -45,7 +48,7 @@ public class PowerupBehaviour : MonoBehaviour {
             Destroy(triggerObject.gameObject, 5f);
             GameObject newExplosion = Instantiate(explosion, transform.position, transform.rotation);
             Destroy(newExplosion, 2f);
-            Destroy(gameObject);
+            Destroy(transform.parent.gameObject);
         }
     }
 
@@ -53,16 +56,11 @@ public class PowerupBehaviour : MonoBehaviour {
     public void GiveRandomMovement() {
         audioPowerupExpire.clip = appearSound;
         audioPowerupExpire.Play();
-        // Add random spin and thrust
-        Vector2 thrust = new Vector2(Random.Range(MaxBackThrust(), MaxForwardThrust()),
-            Random.Range(MaxBackThrust(), MaxForwardThrust()));
-        float spin = Random.Range(-maxSpin, maxSpin);
-        rbCanister.AddForce(thrust);
-        rbCanister.AddTorque(spin);
+
+        UsefulFunctions.FindThrust(rbCanister, maxThrust);
+        UsefulFunctions.FindTorque(rbCanister, maxSpin);
     }
-    float MaxBackThrust() { return Random.Range(-maxThrust, -200); }
-    float MaxForwardThrust() { return Random.Range(200, maxThrust); }
-    
+
     // Called from Start(). Sets off an expiry animation after a random time
     void StartExpiry() {
         StartCoroutine("PowerupExpiry");
@@ -77,16 +75,6 @@ public class PowerupBehaviour : MonoBehaviour {
             yield return new WaitForSeconds(0.8f);
         }
         gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
-        Destroy(gameObject);
-    }
-
-    // Screen Wrapping
-    public void CheckScreenWrap() {
-        Vector2 newPosition = transform.position;
-        if (transform.position.y > gM.screenTop) { newPosition.y = gM.screenBottom + 0.5f; }
-        if (transform.position.y < gM.screenBottom) { newPosition.y = gM.screenTop - 0.5f; }
-        if (transform.position.x > gM.screenRight) { newPosition.x = gM.screenLeft + 0.5f; }
-        if (transform.position.x < gM.screenLeft) { newPosition.x = gM.screenRight - 0.5f; }
-        transform.position = newPosition;
+        Destroy(transform.parent.gameObject);
     }
 }
