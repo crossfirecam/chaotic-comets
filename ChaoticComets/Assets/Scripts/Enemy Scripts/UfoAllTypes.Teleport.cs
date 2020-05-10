@@ -60,7 +60,6 @@ public partial class UfoAllTypes : MonoBehaviour
         }
     }
 
-    // Destroy gameobject
     private void TeleportEnd()
     {
         if (!deathStarted)
@@ -68,5 +67,55 @@ public partial class UfoAllTypes : MonoBehaviour
             gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.AlienRespawn);
             Destroy(gameObject);
         }
+    }
+
+    // Flicking shields on and off over 0.3 seconds
+    private void FlickShieldOn()
+    {
+        forceField.SetActive(true);
+        audioAlienSfx.clip = audClipAliexSfxShieldReflect;
+        audioAlienSfx.pitch = 0.7f;
+        audioAlienSfx.Play();
+        if (!ufoRetreating) { StartCoroutine(ShieldFadesOn()); Invoke("FlickShieldOff", 0.3f); }
+    }
+
+    private void FlickShieldOff()
+    {
+        audioAlienSfx.pitch = 1f;
+        forceField.SetActive(false);
+    }
+
+    // Shield fading in/out. If interrupted by the UFO retreating, the fading will skip to max shield transparency
+    private IEnumerator ShieldFadesOn()
+    {
+        Material shieldMaterial = forceField.GetComponent<Renderer>().material;
+        Color origColor = shieldMaterial.color;
+        float speedOfFade = 3f;
+        float alpha = 0f;
+
+        while (alpha < 0.6f)
+        {
+            if (ufoRetreating) { break; }
+            alpha += speedOfFade * Time.deltaTime;
+            shieldMaterial.color = new Color(origColor.r, origColor.g, origColor.b, alpha);
+            yield return null;
+        }
+        StartCoroutine(ShieldFadesOff());
+    }
+    private IEnumerator ShieldFadesOff()
+    {
+        Material shieldMaterial = forceField.GetComponent<Renderer>().material;
+        Color origColor = shieldMaterial.color;
+        float speedOfFade = 3f;
+        float alpha = 0.6f;
+
+        while (alpha > 0f)
+        {
+            if (ufoRetreating) { break; }
+            alpha -= speedOfFade * Time.deltaTime;
+            shieldMaterial.color = new Color(origColor.r, origColor.g, origColor.b, alpha);
+            yield return null;
+        }
+        shieldMaterial.color = new Color(origColor.r, origColor.g, origColor.b, 0.5f); // Set to default
     }
 }

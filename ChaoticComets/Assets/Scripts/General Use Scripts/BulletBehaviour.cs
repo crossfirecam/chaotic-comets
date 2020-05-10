@@ -18,15 +18,13 @@ public class BulletBehaviour : MonoBehaviour {
     }
 
     // PlayerMain tells bullet to be destroyed at a certain time
-    public void DestroyBullet(float destroyTime) {
+    public void FizzleOutBullet(float destroyTime) {
         Invoke("StopAnimation", destroyTime - animationStopTime);
     }
-
-    // Animation is stopped a fraction of a second before, allows bullet to fizzle out
     private void StopAnimation() {
         if (ifBulletReflected)
         {
-            DestroyBullet(0.5f);
+            FizzleOutBullet(0.5f);
             ifBulletReflected = false;
         }
         else
@@ -42,8 +40,18 @@ public class BulletBehaviour : MonoBehaviour {
         }
     }
 
+    // Bullet is called to be instantly removed, delay in actual removal so sound can play
+    public void DestroyBullet()
+    {
+        Destroy(gameObject.GetComponentInChildren<ParticleSystem>());
+        gameObject.GetComponent<Collider2D>().enabled = false;
+        Invoke("RemoveBullet", 2f);
+
+    }
+
     // Bullet is removed
-    private void RemoveBullet() {
+    private void RemoveBullet()
+    {
         Destroy(gameObject);
     }
 

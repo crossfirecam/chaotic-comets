@@ -46,20 +46,20 @@ public class PlayerWeapons : MonoBehaviour
             nextFire = Time.time + fireRateTriple;
             GameObject newBullet = Instantiate(bullet, mainCannon.transform.position, mainCannon.transform.rotation);
             newBullet.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
-            newBullet.GetComponent<BulletBehaviour>().DestroyBullet(bulletDestroyTime);
+            newBullet.GetComponent<BulletBehaviour>().FizzleOutBullet(bulletDestroyTime);
             GameObject newBullet2 = Instantiate(bullet, tripleCannon1.transform.position, tripleCannon1.transform.rotation);
             newBullet2.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
-            newBullet2.GetComponent<BulletBehaviour>().DestroyBullet(bulletDestroyTime);
+            newBullet2.GetComponent<BulletBehaviour>().FizzleOutBullet(bulletDestroyTime);
             GameObject newBullet3 = Instantiate(bullet, tripleCannon2.transform.position, tripleCannon2.transform.rotation);
             newBullet3.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
-            newBullet3.GetComponent<BulletBehaviour>().DestroyBullet(bulletDestroyTime);
+            newBullet3.GetComponent<BulletBehaviour>().FizzleOutBullet(bulletDestroyTime);
         }
         else
         {
             nextFire = Time.time + fireRateNormal;
             GameObject newBullet = Instantiate(bullet, mainCannon.transform.position, mainCannon.transform.rotation);
             newBullet.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
-            newBullet.GetComponent<BulletBehaviour>().DestroyBullet(bulletDestroyTime);
+            newBullet.GetComponent<BulletBehaviour>().FizzleOutBullet(bulletDestroyTime);
         }
     }
 
@@ -74,15 +74,15 @@ public class PlayerWeapons : MonoBehaviour
             {
                 rapidShotArray[i] = Instantiate(bullet, mainCannon.transform.position, mainCannon.transform.rotation);
                 rapidShotArray[i].GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
-                rapidShotArray[i].GetComponent<BulletBehaviour>().DestroyBullet(bulletDestroyTime);
+                rapidShotArray[i].GetComponent<BulletBehaviour>().FizzleOutBullet(bulletDestroyTime);
 
                 rapidShotArray2[i] = Instantiate(bullet, tripleCannon1.transform.position, tripleCannon1.transform.rotation);
                 rapidShotArray2[i].GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
-                rapidShotArray2[i].GetComponent<BulletBehaviour>().DestroyBullet(bulletDestroyTime);
+                rapidShotArray2[i].GetComponent<BulletBehaviour>().FizzleOutBullet(bulletDestroyTime);
 
                 rapidShotArray3[i] = Instantiate(bullet, tripleCannon2.transform.position, tripleCannon2.transform.rotation);
                 rapidShotArray3[i].GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
-                rapidShotArray3[i].GetComponent<BulletBehaviour>().DestroyBullet(bulletDestroyTime);
+                rapidShotArray3[i].GetComponent<BulletBehaviour>().FizzleOutBullet(bulletDestroyTime);
                 yield return new WaitForSeconds(rapidFireBetweenBullets);
             }
         }
@@ -92,7 +92,7 @@ public class PlayerWeapons : MonoBehaviour
             {
                 rapidShotArray[i] = Instantiate(bullet, mainCannon.transform.position, mainCannon.transform.rotation);
                 rapidShotArray[i].GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
-                rapidShotArray[i].GetComponent<BulletBehaviour>().DestroyBullet(bulletDestroyTime);
+                rapidShotArray[i].GetComponent<BulletBehaviour>().FizzleOutBullet(bulletDestroyTime);
                 yield return new WaitForSeconds(rapidFireBetweenBullets);
             }
         }

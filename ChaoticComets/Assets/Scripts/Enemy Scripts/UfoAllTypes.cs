@@ -88,32 +88,8 @@ public partial class UfoAllTypes : MonoBehaviour
     {
         if (playerBullet.gameObject.CompareTag("bullet") || playerBullet.gameObject.CompareTag("bullet2"))
         {
-            // If UFO is not retreating, deal damage and score credits
-            if (!ufoRetreating)
-            {
-                // Explosion
-                GameObject newExplosion = Instantiate(playerBulletExplosion, transform.position, transform.rotation);
-                Destroy(newExplosion, 2f);
-                // Bullet invisible, allows sound to continue playing
-                playerBullet.enabled = false;
-                Destroy(playerBullet.GetComponentInChildren<ParticleSystem>());
-                Destroy(playerBullet.gameObject, 5f);
-
-                alienHealth -= 10f;
-                // If UFO is teleporting, has 0 health or less, then grant more points for an escape kill
-                if (ufoTeleporting && alienHealth <= 0f) { pointsToScore = teleportKillPoints; }
-                // Send points to the player who shot, if alien has not taken fatal damage
-                if (alienHealth > -10f)
-                {
-                    if (playerBullet.CompareTag("bullet")) { playerShip1.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
-                    if (playerBullet.CompareTag("bullet2")) { playerShip2.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
-                    audioAlienSfx.clip = audClipAlienSfxTakenDamage;
-                    audioAlienSfx.Play();
-                    DetermineIfDead();
-                }
-            }
-            // If UFO IS retreating, don't deal damage. Instead, reflect bullet
-            else
+            // If UFO has shields up, don't deal damage. Instead, reflect bullet
+            if (forceField.activeInHierarchy)
             {
                 Vector2 force = gameObject.transform.position - playerBullet.transform.position;
                 int magnitude = 1000;
@@ -121,6 +97,30 @@ public partial class UfoAllTypes : MonoBehaviour
                 playerBullet.GetComponent<BulletBehaviour>().UfoReflectedBullet();
                 audioAlienSfx.clip = audClipAliexSfxShieldReflect;
                 audioAlienSfx.Play();
+            }
+            // If UFO is not retreating, deal damage and score credits
+            else if (!ufoRetreating)
+            {
+                alienHealth -= 10f;
+                playerBullet.gameObject.GetComponent<BulletBehaviour>().DestroyBullet();
+
+                // If UFO is teleporting & has 10 health or less, then grant more points for an escape kill
+                if (ufoTeleporting && alienHealth <= 10f)
+                {
+                    pointsToScore = teleportKillPoints;
+                    DetermineIfDead();
+                }
+
+                if (alienHealth >= 0f)
+                {
+                    GameObject newExplosion = Instantiate(playerBulletExplosion, transform.position, transform.rotation);
+                    Destroy(newExplosion, 2f);
+                    audioAlienSfx.clip = audClipAlienSfxTakenDamage;
+                    audioAlienSfx.pitch = 1f;
+                    audioAlienSfx.Play();
+                    if (playerBullet.CompareTag("bullet")) { playerShip1.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
+                    if (playerBullet.CompareTag("bullet2")) { playerShip2.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
+                }
             }
         }
     }
@@ -130,9 +130,18 @@ public partial class UfoAllTypes : MonoBehaviour
 
         Vector2 force = gameObject.transform.position - collision.transform.position;
         int magnitude = 0;
+
         // Asteroid and player collisions do not cause damage to UFO
-        if (collision.gameObject.CompareTag("asteroid")) { magnitude = 300; }
-        else if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Player 2")) { magnitude = 100; }
+        if (collision.gameObject.CompareTag("asteroid"))
+        {
+            magnitude = 200;
+            if (alienHealth > 0) { FlickShieldOn(); }
+        }
+        else if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Player 2"))
+        {
+            magnitude = 100;
+            if (alienHealth > 0) { FlickShieldOn(); }
+        }
         if (ufoRetreating) { magnitude /= 3; }
         collision.gameObject.GetComponent<Rigidbody2D>().AddForce(-force * magnitude);
     }

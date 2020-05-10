@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shield-White
+  m_Name: Shield (UFO-Follower)
   m_Shader: {fileID: 4800000, guid: 4e047165b41bf8049a9ad4b77f2ed319, type: 3}
   m_ShaderKeywords: _ALPHABLEND_ON
   m_LightmapFlags: 4
