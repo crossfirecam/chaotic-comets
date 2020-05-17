@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class UfoAllTypes : MonoBehaviour
+public abstract partial class Ufo : MonoBehaviour
 {
     internal void AlienRetreat()
     {

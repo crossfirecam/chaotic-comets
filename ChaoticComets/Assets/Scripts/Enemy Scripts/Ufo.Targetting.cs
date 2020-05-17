@@ -2,44 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class UfoAllTypes : MonoBehaviour
+public abstract partial class Ufo : MonoBehaviour
 {
     internal float timer = 0;
     private bool movingRandomly = false;
-
-    void FixedUpdate()
-    {
-        timer += Time.fixedDeltaTime;
-        if (!ufoTeleporting && !deathStarted)
-        {
-            if (!playerFound)
-            {
-                FindPlayer();
-            }
-            else
-            {
-                // If UFO has more than 10 health, continue chasing player
-                if (alienHealth > 10f)
-                {
-                    if (!ufoFollower.Equals(null))
-                    {
-                        ufoFollower.ChaseLogicFollower();
-                    }
-                }
-                // If alien has less than 10 health, it will run away in a single direction and attempt to teleport
-                else
-                {
-                    if (!ufoRetreating)
-                    {
-                        direction = player.position - transform.position; // Direction is reversed in AlienRetreat();
-                        AlienRetreat();
-                    }
-                }
-                direction = direction.normalized;
-                rb.MovePosition(rb.position + direction * alienSpeedCurrent * Time.fixedDeltaTime);
-            }
-        }
-    }
 
     internal void FindPlayer()
     {
@@ -104,7 +70,7 @@ public partial class UfoAllTypes : MonoBehaviour
 
 
     // Screen Wrapping. UFO does not screen wrap when in the first 3 seconds of spawning onto level, or crossing a border
-    void CheckScreenWrap()
+    internal void CheckScreenWrap()
     {
         if (timer > 3f)
         {
@@ -126,10 +92,17 @@ public partial class UfoAllTypes : MonoBehaviour
     }
 
     // Returns if the UFO is able to shoot, based on criteria
-    private bool ShipAbleToShoot()
+    internal bool ShipAbleToShoot()
     {
         return Time.time > lastTimeShot + shootingDelay             // UFO has not shot too recently
             && playerFound && !playerTooFar                         // UFO has found a player, and they're not far away
             && !deathStarted && !ufoTeleporting && !ufoRetreating;  // UFO is not dying, teleporting, or retreating
+    }
+
+    // If a player the UFO is following has died, reset variables. So it chases after another player
+    public void PlayerDied()
+    {
+        playerFound = false;
+        player = null;
     }
 }

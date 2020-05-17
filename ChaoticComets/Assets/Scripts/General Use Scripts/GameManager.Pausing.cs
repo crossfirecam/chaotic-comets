@@ -61,7 +61,7 @@ public partial class GameManager : MonoBehaviour
             GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
             foreach (GameObject ufo in listOfUfos)
             {
-                ufo.GetComponent<UfoAllTypes>().CheckAlienSounds(1);
+                ufo.GetComponent<Ufo>().CheckAlienSounds(1);
             }
 
             gamePausePanel.SetActive(true);
@@ -88,7 +88,7 @@ public partial class GameManager : MonoBehaviour
             GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
             foreach (GameObject ufo in listOfUfos)
             {
-                ufo.GetComponent<UfoAllTypes>().CheckAlienSounds(2);
+                ufo.GetComponent<Ufo>().CheckAlienSounds(2);
             }
 
             gamePausePanel.SetActive(false);

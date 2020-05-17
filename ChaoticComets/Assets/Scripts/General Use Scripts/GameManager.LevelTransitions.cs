@@ -36,7 +36,7 @@ public partial class GameManager : MonoBehaviour
         if (!player1dead || !player2dead)
         {
             GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
-            foreach (GameObject ufo in listOfUfos) { ufo.GetComponent<UfoAllTypes>().TeleportStart(); }
+            foreach (GameObject ufo in listOfUfos) { ufo.GetComponent<Ufo>().TeleportStart(); }
             Invoke("EndLevelFanFare2", 2.5f);
         }
     }
@@ -79,7 +79,7 @@ public partial class GameManager : MonoBehaviour
 
         musicLoop.Pause();
         GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
-        foreach (GameObject ufo in listOfUfos) { ufo.GetComponent<UfoAllTypes>().CheckAlienSounds(1); }
+        foreach (GameObject ufo in listOfUfos) { ufo.GetComponent<Ufo>().CheckAlienSounds(1); }
 
         Time.timeScale = 0;
     }

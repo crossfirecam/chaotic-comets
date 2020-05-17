@@ -11,7 +11,7 @@ public partial class GameManager : MonoBehaviour
     public bool player1dead = false, player2dead = true; // Only one player by default
     [HideInInspector] public bool player1TEMPDEAD = false, player2TEMPDEAD = false; // Only used to alert UFO that player is temporarily inactive
 
-    public GameObject largeAsteroidProp, alienShipProp, canisterProp;
+    public GameObject largeAsteroidProp, ufoFollowerProp, ufoPasserProp, canisterProp;
     private float ufoAmountSpawned, canisterAmountSpawned, propCap; // Variables used to track how many props have, and can spawn.
 
     public enum PropSpawnReason { AlienFirst, CanisterFirst, AlienRespawn, CanisterRespawn };
@@ -88,10 +88,15 @@ public partial class GameManager : MonoBehaviour
         { // Spawn on the bottom
             spawnPosition = new Vector2(Random.Range(-12f, 12f), screenBottom - 1.5f);
         }
-        if (type == "ufo")
+        if (type == "ufo-follower")
         {
-            GameObject newAlien = Instantiate(alienShipProp);
-            newAlien.transform.position = spawnPosition;
+            GameObject newFollower = Instantiate(ufoFollowerProp);
+            newFollower.transform.position = spawnPosition;
+        }
+        if (type == "ufo-passer")
+        {
+            GameObject newPasser = Instantiate(ufoPasserProp);
+            newPasser.transform.position = spawnPosition;
         }
         else if (type == "canister")
         {
@@ -144,7 +149,7 @@ public partial class GameManager : MonoBehaviour
         GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
         foreach (GameObject ufo in listOfUfos)
         {
-            ufo.GetComponent<UfoAllTypes>().PlayerDied();
+            ufo.GetComponent<Ufo>().PlayerDied();
         }
     }
 }

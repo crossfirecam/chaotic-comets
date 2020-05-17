@@ -53,8 +53,8 @@ MonoBehaviour:
   player2TEMPDEAD: 0
   largeAsteroidProp: {fileID: 1158260402081020, guid: 7e00352104cdbc04aa6bef0c7b13737e,
     type: 3}
-  alienShipProp: {fileID: 1001724363263860, guid: 418ffa82d403da44ca30571610216d37,
-    type: 3}
+  ufoFollowerProp: {fileID: 0}
+  ufoPasserProp: {fileID: 0}
   canisterProp: {fileID: 1020648608047988, guid: 3a71328051a9a8d45bdefa3880e48d38,
     type: 3}
   asteroidCount: 0

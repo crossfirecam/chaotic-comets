@@ -1,0 +1,81 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+
+/*
+ * This class acts as a general template for all enemy types to use. Different enemies have different FixedUpdates.
+ */
+public abstract partial class Ufo : MonoBehaviour
+{
+    internal GameManager gM;
+
+    // Movement, physics variables
+    internal Rigidbody2D rb;
+    public Vector2 direction;
+    public float alienSpeedBase;
+    internal float alienSpeedCurrent;
+
+    // Weapon system variables
+    public float shootingDelay = 1.5f; // Seconds between bullets fired
+    public float bulletSpeed = 250; // How fast the bullet fires
+    internal float lastTimeShot = 0f; // Keeps track of when UFO last fired a bullet
+
+    // Defence system variables
+    // private float difficultyIncrease = 0.95f; TODO add this functionality later
+    public float alienHealth, alienMaxHealth;
+    private int pointsToScore = 100;
+    private readonly int teleportKillPoints = 500;
+    public GameObject forceField;
+
+    // Targetting system variables
+    public GameObject playerShip1, playerShip2;
+    internal Transform player; // Currently tracked player
+    internal bool playerFound = false, playerTooFar = false;
+
+    // Sound variables
+    public AudioSource audioAlienHum, audioAlienSfx; // Hum: passive UFO noise, SFX: impacts/shield noises
+    public AudioClip audClipAliexSfxShieldReflect, audClipAlienSfxTakenDamage;
+
+    // Other variables
+    public GameObject bullet;
+    public GameObject deathExplosion, playerBulletExplosion, teleportEffect;
+    internal bool deathStarted = false, ufoTeleporting = false, ufoRetreating = false;
+
+    // ----------
+
+    // All UFO type enemies start by finding players, setting speed, etc
+    void Start()
+    {
+        gM = GameObject.FindObjectOfType<GameManager>();
+        rb = GameObject.FindObjectOfType<Rigidbody2D>();
+
+        alienSpeedCurrent = alienSpeedBase;
+
+        playerShip1 = GameObject.FindGameObjectWithTag("Player");
+        if (BetweenScenesScript.PlayerCount == 2)
+        {
+            playerShip2 = GameObject.FindGameObjectWithTag("Player 2");
+        }
+        // If alien ship is called during level transition, it destroys itself
+        if (gM.CheckIfEndOfLevel() && !ufoTeleporting) {
+            Debug.Log("UFO attempted to spawn during level transition");
+            Destroy(gameObject);
+        }
+
+    }
+
+    // Play/pause UFO hum depending on game's pause state
+    public void CheckAlienSounds(int intent)
+    {
+        if (intent == 1 && audioAlienHum.isPlaying)
+        {
+            audioAlienHum.Pause();
+        }
+        else if (intent == 2 && !audioAlienHum.isPlaying)
+        {
+            audioAlienHum.UnPause();
+        }
+    }
+}

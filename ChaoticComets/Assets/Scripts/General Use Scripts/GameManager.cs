@@ -61,7 +61,7 @@ public partial class GameManager : MonoBehaviour {
     void Update() {
         // Rotate the UFO for help screen purposes
         if (helpMenuMode) {
-            alienShipProp.transform.rotation = Quaternion.Euler(-50, 0, 0);
+            ufoFollowerProp.transform.rotation = Quaternion.Euler(-50, 0, 0);
         }
 
         // Each frame, check if pause menu is open, and what button is highlighted.
