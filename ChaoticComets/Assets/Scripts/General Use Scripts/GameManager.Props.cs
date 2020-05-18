@@ -12,7 +12,7 @@ public partial class GameManager : MonoBehaviour
     [HideInInspector] public bool player1TEMPDEAD = false, player2TEMPDEAD = false; // Only used to alert UFO that player is temporarily inactive
 
     public GameObject largeAsteroidProp, ufoFollowerProp, ufoPasserProp, canisterProp;
-    private float ufoAmountSpawned, canisterAmountSpawned, propCap; // Variables used to track how many props have, and can spawn.
+    private float ufoAmountSpawned, canisterAmountSpawned, ufoCap, canisterCap = 1; // Variables used to track how many props have, and can spawn.
 
     public enum PropSpawnReason { AlienFirst, CanisterFirst, AlienRespawn, CanisterRespawn };
     public void AlienAndPowerupLogic(PropSpawnReason reason)
@@ -25,7 +25,7 @@ public partial class GameManager : MonoBehaviour
         float[] alienFirstTimeArray = { 10f, 15f };
         float[] alienSubsequentArray = { 15f, 30f };
         float[] canisterFirstTimeArray = { 8f, 16f };
-        float[] canisterSubsequentArray = { 20f, 40f };
+        float[] canisterSubsequentArray = { 12f, 24f };
         float[] chosenArray = { }; // Left blank to be filled by one of the above
         float minTime; float maxTime;
 
@@ -46,32 +46,43 @@ public partial class GameManager : MonoBehaviour
 
         float randomTime = Random.Range(minTime, maxTime);
 
-        if ((reason == PropSpawnReason.AlienFirst || reason == PropSpawnReason.AlienRespawn) && ufoAmountSpawned < propCap)
+        if ((reason == PropSpawnReason.AlienFirst || reason == PropSpawnReason.AlienRespawn) && ufoAmountSpawned < ufoCap)
         {
             if (levelNo > lastLevelWithoutEnemies)
             { // Alien will not appear until a certain level
                 ufoAmountSpawned += 1;
-                Debug.Log($"Next UFO will spawn in: {randomTime}. Only {propCap - ufoAmountSpawned} more can spawn.");
+                Debug.Log($"Next UFO will spawn in: {randomTime}. Only {ufoCap - ufoAmountSpawned} more can spawn.");
                 Invoke("RespawnAlien", randomTime);
             }
         }
-        else if ((reason == PropSpawnReason.CanisterFirst || reason == PropSpawnReason.CanisterRespawn) && canisterAmountSpawned < propCap)
+        else if ((reason == PropSpawnReason.CanisterFirst || reason == PropSpawnReason.CanisterRespawn) && canisterAmountSpawned < canisterCap)
         {
             canisterAmountSpawned += 1;
-            Debug.Log($"Next canister will spawn in: {randomTime}. Only {propCap - canisterAmountSpawned} more can spawn.");
+            Debug.Log($"Next canister will spawn in: {randomTime}. Only {canisterCap - canisterAmountSpawned} more can spawn.");
             Invoke("RespawnCanister", randomTime);
         }
     }
 
     // When alien or powerup is required, call SpawnProp
-    public void RespawnAlien() { SpawnProp("ufo"); }
+    public void RespawnAlien() {
+        float randomiser = Random.Range(0f, 2f);
+        if (randomiser < 1f)
+        {
+            SpawnProp(PropType.UfoFollower);
+        }
+        else if (randomiser < 2f)
+        {
+            SpawnProp(PropType.UfoPasser);
+        }
+    }
 
-    public void RespawnCanister() { SpawnProp("canister"); }
+    public void RespawnCanister() { SpawnProp(PropType.Canister); }
 
-    public void SpawnProp(string type)
+    public enum PropType { Asteroid, Canister, UfoFollower, UfoPasser };
+    public void SpawnProp(PropType type)
     {
         float originChoice = Random.Range(0f, 4f);
-        if (type == "ufo-passer")
+        if (type == PropType.UfoPasser)
         {
             originChoice = 0.5f;
         }
@@ -92,22 +103,22 @@ public partial class GameManager : MonoBehaviour
         { // Spawn on the bottom
             spawnPosition = new Vector2(Random.Range(-12f, 12f), screenBottom - 1.5f);
         }
-        if (type == "ufo-follower")
+        if (type == PropType.UfoFollower)
         {
             GameObject newFollower = Instantiate(ufoFollowerProp);
             newFollower.transform.position = spawnPosition;
         }
-        if (type == "ufo-passer")
+        if (type == PropType.UfoPasser)
         {
             GameObject newPasser = Instantiate(ufoPasserProp);
             newPasser.transform.position = spawnPosition;
         }
-        else if (type == "canister")
+        else if (type == PropType.Canister)
         {
             GameObject newCanister = Instantiate(canisterProp);
             newCanister.transform.position = spawnPosition;
         }
-        else if (type == "asteroid")
+        else if (type == PropType.Asteroid)
         {
             GameObject newAsteroid = Instantiate(largeAsteroidProp, spawnPosition, Quaternion.identity);
             asteroidCount += 1;
@@ -154,6 +165,26 @@ public partial class GameManager : MonoBehaviour
         foreach (GameObject ufo in listOfUfos)
         {
             ufo.GetComponent<Ufo>().PlayerDied();
+        }
+    }
+
+    public void SpawnPropFromCheat(string prop)
+    {
+        if (prop == "asteroid")
+        {
+            SpawnProp(PropType.Asteroid);
+        }
+        else if (prop == "canister")
+        {
+            SpawnProp(PropType.Canister);
+        }
+        else if (prop == "ufo-follower")
+        {
+            SpawnProp(PropType.UfoFollower);
+        }
+        else if (prop == "ufo-passer")
+        {
+            SpawnProp(PropType.UfoPasser);
         }
     }
 }

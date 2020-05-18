@@ -27,6 +27,7 @@ public class PlayerMain : MonoBehaviour {
     internal bool collisionsCanDamage;
     internal float highDamageThreshold = 6f;
     public GameObject deathExplosion;
+    private readonly float minTimeBetweenDamage = 0.15f;
 
     // Player Scripts
     internal PlayerInput plrInput = default;
@@ -51,7 +52,7 @@ public class PlayerMain : MonoBehaviour {
         if (!gM.gamePausePanel.activeInHierarchy) {
             plrInput.GetInputs();
             plrMovement.ShipMovement();
-            gM.CheckScreenWrap(transform, 0f);
+            gM.CheckScreenWrap(transform);
             plrUiSound.UpdateBars();
         }
     }
@@ -71,7 +72,7 @@ public class PlayerMain : MonoBehaviour {
             gameObject.GetComponent<Rigidbody2D>().AddForce(force * magnitude);
 
             if (collisionsCanDamage && Time.time > nextDamagePossible) {
-                nextDamagePossible = Time.time + 0.15f;
+                nextDamagePossible = Time.time + minTimeBetweenDamage;
                 if (col.gameObject.CompareTag("asteroid")) { col.gameObject.GetComponent<AsteroidBehaviour>().AsteroidWasHit(); }
                 // If ship rams hard enough, deal more damage
                 if (col.relativeVelocity.magnitude > highDamageThreshold) {
@@ -94,18 +95,24 @@ public class PlayerMain : MonoBehaviour {
 
     // When ship collides with alien bullet or powerup triggers
     void OnTriggerEnter2D(Collider2D triggerObject) {
-        if (triggerObject.gameObject.CompareTag("bullet3") && collisionsCanDamage && Time.time > nextDamagePossible) {
-            Destroy(triggerObject.GetComponentInChildren<ParticleSystem>());
-            nextDamagePossible = Time.time + 0.15f;
-            shields -= 10f;
-            triggerObject.GetComponent<CircleCollider2D>().enabled = false;
-            Destroy(triggerObject.gameObject, 5f);
-            if (shields <= 0)
-            {
-                plrSpawnDeath.ShipIsDead();
+        if (triggerObject.gameObject.CompareTag("bullet3") || triggerObject.gameObject.CompareTag("bullet4"))
+        {
+            if (collisionsCanDamage && Time.time > nextDamagePossible) {
+                Destroy(triggerObject.GetComponentInChildren<ParticleSystem>());
+                triggerObject.GetComponent<CircleCollider2D>().enabled = false;
+                Destroy(triggerObject.gameObject, 5f);
+
+                if (triggerObject.gameObject.CompareTag("bullet3")) { shields -= 10f; }
+                else { shields -= 20f; }
+                nextDamagePossible = Time.time + minTimeBetweenDamage;
+
+                if (shields <= 0)
+                {
+                    plrSpawnDeath.ShipIsDead();
+                }
+                plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactSoft;
+                plrUiSound.audioShipSFX.Play();
             }
-            plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactSoft;
-            plrUiSound.audioShipSFX.Play();
         }
         if (triggerObject.gameObject.CompareTag("powerup") && modelPlayer.activeInHierarchy) {
             Destroy(triggerObject.transform.parent.gameObject);

@@ -8,23 +8,33 @@ public partial class GameManager : MonoBehaviour
 {
     // When a level starts, perform starting operations
 
-#pragma warning disable IDE0051 // StartNewLevel isn't directly called, used by an Invoke
-    void StartNewLevel()
-#pragma warning restore IDE0051
+    private IEnumerator StartNewLevel()
     {
         levelNo++;
         // Asteroid number depends on level number. Iterated in SpawnProp()
         asteroidCount = 0;
-        for (int i = 0; i < levelNo + 1; i++) { SpawnProp("asteroid"); }
+        for (int i = 0; i < levelNo + 1; i++) { SpawnProp(PropType.Asteroid); }
+        yield return new WaitForSeconds(0.1f);
         // Player Respawn
         if (!player1dead) { playerShip1.plrSpawnDeath.RespawnShip(); }
         if (!player2dead) { playerShip2.plrSpawnDeath.RespawnShip(); }
 
-        // Set a cap on how many UFOs or canisters can spawn
-        if (levelNo == 1) { propCap = 2; }
-        else if (levelNo < 3) { propCap = 3; }
-        else if (levelNo < 9) { propCap = 4; }
-        else { propCap = 5; }
+        // Set a cap on how many UFOs can spawn. Double this in two-player. An aside... always one canteen per player per level.
+        if (levelNo == 1) { ufoCap = 0; }
+        else if (levelNo <= 3) { ufoCap = 1; }
+        else if (levelNo <= 7) { ufoCap = 2; }
+        else { ufoCap = 3; }
+
+        // Double the cap if both players are alive
+        if (!player1dead)
+        {
+            if (!player2dead)
+            {
+                canisterCap *= 2;
+                ufoCap *= 2;
+            }
+        }
+
         // Set when the first UFO and canister will spawn
         AlienAndPowerupLogic(PropSpawnReason.AlienFirst);
         AlienAndPowerupLogic(PropSpawnReason.CanisterFirst);

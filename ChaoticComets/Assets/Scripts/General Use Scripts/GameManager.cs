@@ -54,7 +54,7 @@ public partial class GameManager : MonoBehaviour {
                 }
             }
             StartCoroutine(FadeBlack("from"));
-            Invoke("StartNewLevel", 0f);
+            StartCoroutine(StartNewLevel());
         }
     }
 
@@ -87,13 +87,13 @@ public partial class GameManager : MonoBehaviour {
     }
 
     // Screen Wrapping
-    public void CheckScreenWrap(Transform current, float offset)
+    public void CheckScreenWrap(Transform current, float xOldOffset = 0f, float yOldOffset = 0f, float xNewOffset = 0f, float yNewOffset = 0f)
     {
         Vector2 newPosition = current.position;
-        if (current.position.y > screenTop) { newPosition.y = screenBottom + offset; }
-        if (current.position.y < screenBottom) { newPosition.y = screenTop - offset; }
-        if (current.position.x > screenRight) { newPosition.x = screenLeft + offset; }
-        if (current.position.x < screenLeft) { newPosition.x = screenRight - offset; }
+        if (current.position.y > screenTop - yOldOffset) { newPosition.y = screenBottom + yNewOffset; }
+        if (current.position.y < screenBottom + yOldOffset) { newPosition.y = screenTop - yNewOffset; }
+        if (current.position.x > screenRight - xOldOffset) { newPosition.x = screenLeft + xNewOffset; }
+        if (current.position.x < screenLeft + xOldOffset) { newPosition.x = screenRight - xNewOffset; }
         current.position = newPosition;
     }
 }

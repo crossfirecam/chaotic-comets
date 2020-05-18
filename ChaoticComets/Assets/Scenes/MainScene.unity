@@ -2329,7 +2329,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 324522990}
-        m_MethodName: SpawnProp
+        m_MethodName: SpawnPropFromCheat
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4888,7 +4888,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 324522990}
-        m_MethodName: SpawnProp
+        m_MethodName: SpawnPropFromCheat
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5116,7 +5116,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 324522990}
-        m_MethodName: SpawnProp
+        m_MethodName: SpawnPropFromCheat
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8063,7 +8063,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 324522990}
-        m_MethodName: SpawnProp
+        m_MethodName: SpawnPropFromCheat
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8272,18 +8272,6 @@ PrefabInstance:
       propertyPath: buttonWhenLeavingPauseBugFix
       value: 
       objectReference: {fileID: 1619635423}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: ufoFollowerProp
-      value: 
-      objectReference: {fileID: 1001724363263860, guid: 418ffa82d403da44ca30571610216d37,
-        type: 3}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: ufoPasserProp
-      value: 
-      objectReference: {fileID: 1001724363263860, guid: 28fece484b566b348969c75145fb66e2,
-        type: 3}
     - target: {fileID: 7573104357208989298, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: m_Name

@@ -13,6 +13,7 @@ TagManager:
   - asteroidParent
   - ufo
   - ufofadingpart
+  - bullet4
   layers:
   - Default
   - TransparentFX

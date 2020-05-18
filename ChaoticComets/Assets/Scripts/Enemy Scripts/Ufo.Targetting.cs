@@ -23,21 +23,23 @@ public abstract partial class Ufo : MonoBehaviour
     // Screen Wrapping. UFO does not screen wrap when in the first 3 seconds of spawning onto level, or crossing a border
     internal void CheckUfoScreenWrap(bool doesDespawnAtEdge = false)
     {
-        if (timer > 3f)
+        if (timer > 2f)
         {
             Vector3 savedPosition = transform.position;
-            gM.CheckScreenWrap(transform, 0f);
+            gM.CheckScreenWrap(transform);
 
-            // If UFO screenwraps, tell UFO to face the player again so it can accelerate toward them once popping out the other side
-            // This isn't to happen while UFO is retreating, or else it gets stuck on the edges of the screen
             if (savedPosition != transform.position)
             {
-                timer = 0;
+                if (!doesDespawnAtEdge) { timer = 0; }
+
+                // If UFO is Passer, kill the UFO when it reaches the edge, unless retreating
                 if (doesDespawnAtEdge && savedPosition.x > gM.screenRight && !ufoRetreating)
                 {
                     DeathRoutine();
                 }
-                if (!ufoRetreating)
+                // If UFO screenwraps, tell UFO to face the player again so it can accelerate toward them once popping out the other side
+                // This isn't to happen while UFO is retreating, or else it gets stuck on the edges of the screen
+                else if (!ufoRetreating)
                 {
                     direction = (player.position - transform.position);
                 }

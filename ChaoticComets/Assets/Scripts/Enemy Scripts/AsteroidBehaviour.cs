@@ -37,7 +37,7 @@ public class AsteroidBehaviour : MonoBehaviour {
     
     void Update ()
     {
-        gM.CheckScreenWrap(transform, 0.5f);
+        gM.CheckScreenWrap(transform, 0f, 0f, 0.5f, 0.5f);
     }
 
     void OnTriggerEnter2D(Collider2D otherObject) {

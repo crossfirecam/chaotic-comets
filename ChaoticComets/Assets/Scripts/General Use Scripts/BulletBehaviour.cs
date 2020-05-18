@@ -14,7 +14,7 @@ public class BulletBehaviour : MonoBehaviour {
     
     void Update ()
     {
-        gM.CheckScreenWrap(transform, 0f);
+        gM.CheckScreenWrap(transform);
     }
 
     // PlayerMain tells bullet to be destroyed at a certain time

@@ -52,12 +52,25 @@ public class UfoPasser : Ufo
         }
     }
 
+    // UFO-Passer will move left to right, deviating with up/down/straight on Y axis
     private void MoveLogicPasser()
     {
-        if (System.Math.Round(timer, 1) % 5f == 0f)
+        if (System.Math.Round(timer, 1) % 2f == 0f)
         {
-            Debug.Log(System.Math.Round(timer, 1));
-            currentDeviation = Random.Range(-1f, 1f);
+            float randomiser = Random.Range(0f, 3f);
+            if (randomiser < 1f)
+            {
+                currentDeviation = Random.Range(-1f, -0.6f);
+            }
+            // To pick the straight path, UFO-Passer must not be within the edges of the screen, or it'll be essentially invisible
+            else if (randomiser < 2f && transform.position.y < gM.screenTop - 0.5f && transform.position.y > gM.screenBottom + 0.5f)
+            {
+                currentDeviation = 0f;
+            }
+            else
+            {
+                currentDeviation = Random.Range(0.6f, 1f);
+            }
         }
         direction = new Vector2(1, currentDeviation);
     }

@@ -10,11 +10,10 @@ public class PowerupBehaviour : MonoBehaviour {
     private Renderer rend;
     public GameObject explosion, expirationPop;
     private float timeUntilWarning;
-    private readonly float timeToDisappear = 4f;
     private readonly float timeBetweenTicks = 0.4f;
 
     // Movement, physics variables
-    private float maxThrust = 250, maxSpin = 60;
+    private readonly float maxThrust = 250, maxSpin = 60;
     private Rigidbody2D rbCanister;
 
     // Audio
@@ -39,7 +38,7 @@ public class PowerupBehaviour : MonoBehaviour {
 
     // Every frame, check if canister needs to loop screen
     void Update() {
-        gM.CheckScreenWrap(transform, 0.5f);
+        gM.CheckScreenWrap(transform, 0f, 0f, 0.5f, 0.5f);
     }
 
     // Destroy canister when shot by players

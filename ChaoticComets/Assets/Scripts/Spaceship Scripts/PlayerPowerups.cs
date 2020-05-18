@@ -28,7 +28,6 @@ public class PlayerPowerups : MonoBehaviour
             else
             {
                 powerRandomiser = Random.Range(0, 20);
-                Debug.Log(powerRandomiser);
                 if (RandCheck(0, 3) && !ifFarShot)
                 { // Give far shot powerup, 15% chance
                     PowerupDecided(); ApplyPowerup(Powerups.FarShot);
@@ -97,8 +96,6 @@ public class PlayerPowerups : MonoBehaviour
 
     public void ApplyPowerup(Powerups powerup, bool playSound = true)
     {
-        Debug.Log($"{powerup} given to player {p.playerNumber}");
-        p.plrUiSound.audioShipSFX.clip = powerupReceived;
         switch (powerup)
         {
             case Powerups.Insurance:
@@ -143,6 +140,8 @@ public class PlayerPowerups : MonoBehaviour
         // When the ship is given an extra life, it plays the sound effect itself. Other powerup, play the sound.
         if (powerup != Powerups.ExtraLife && playSound)
         {
+            Debug.Log($"{powerup} given to player {p.playerNumber}");
+            p.plrUiSound.audioShipSFX.clip = powerupReceived;
             p.plrUiSound.audioShipSFX.Play();
         }
     }
