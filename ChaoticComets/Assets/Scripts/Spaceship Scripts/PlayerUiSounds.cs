@@ -17,7 +17,7 @@ public class PlayerUiSounds : MonoBehaviour
     internal float prevshields;
 
     // Sound Systems
-    public AudioSource audioShipThrust, audioShipSFX; // Thrust: passive thruster noise, SFX: powerup, extra life, impact noises
+    public AudioSource audioShipThrust, audioShipRetroThrust, audioShipSFX; // Thrust: passive thruster noise, SFX: powerup, extra life, impact noises
     public AudioClip audClipPlrSfxImpactSoft, audClipPlrSfxImpactHard, audClipPlrSfxDeath;
     private bool audioThrusterPlaying = false, audioTeleportInPlaying = false, audioTeleportOutPlaying = false;
 

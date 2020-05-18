@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PowerupBehaviour : MonoBehaviour {
@@ -7,7 +8,10 @@ public class PowerupBehaviour : MonoBehaviour {
     // General purpose variables
     public GameManager gM;
     private Renderer rend;
-    public GameObject explosion;
+    public GameObject explosion, expirationPop;
+    private float timeUntilWarning;
+    private readonly float timeToDisappear = 4f;
+    private readonly float timeBetweenTicks = 0.4f;
 
     // Movement, physics variables
     private float maxThrust = 250, maxSpin = 60;
@@ -27,8 +31,8 @@ public class PowerupBehaviour : MonoBehaviour {
         rend = GetComponent<Renderer>();
         GiveRandomMovement();
 
-        float timeUntilExpiry = Random.Range(10f, 24f);
-        Invoke("StartExpiry", timeUntilExpiry);
+        timeUntilWarning = Random.Range(8f, 12f);
+        Invoke("StartExpiry", timeUntilWarning);
 
         if (gM.CheckIfEndOfLevel()) { Debug.Log("Canister attempted to spawn during level transition"); Destroy(gameObject); }
     }
@@ -67,13 +71,21 @@ public class PowerupBehaviour : MonoBehaviour {
     }
     IEnumerator PowerupExpiry() {
         audioPowerupExpire.clip = expireSound;
-        for (float tick = 0f; tick <= 8f; tick++) {
-            if (tick % 2f == 0) { rend.material.SetColor("_Color", Color.yellow); }
-            else { rend.material.SetColor("_Color", Color.white);
-                audioPowerupExpire.Play();
+        audioPowerupExpire.pitch = 0.95f;
+        for (int tick = 0; tick <= 10; tick++) {
+            if (tick % 2 == 0)
+            {
+                rend.material.SetColor("_Color", Color.white);
             }
-            yield return new WaitForSeconds(0.8f);
+            else
+            {
+                audioPowerupExpire.Play();
+                rend.material.SetColor("_Color", Color.yellow);
+            }
+            yield return new WaitForSeconds(timeBetweenTicks);
         }
+        GameObject newPop = Instantiate(expirationPop, transform.position, transform.rotation);
+        Destroy(newPop, 2f);
         gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
         Destroy(transform.parent.gameObject);
     }

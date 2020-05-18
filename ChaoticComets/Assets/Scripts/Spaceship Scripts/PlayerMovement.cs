@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField] PlayerMain p = default;
+    private bool retroThrustEngaged = false;
+    public ParticleSystem thruster1, thruster2, retroThruster1, retroThruster2;
 
     public void ShipMovement()
     {
@@ -19,9 +21,13 @@ public class PlayerMovement : MonoBehaviour
         // Apply force on Y axis of spaceship, multiply by thrust
         if (p.plrInput.thrustInput != 0 && p.modelPlayer.activeInHierarchy && p.plrInput.isNotTeleporting)
         {
+            if (retroThrustEngaged)
+            {
+                retroThrustEngaged = false;
+            }
             if (!p.plrUiSound.audioShipThrust.isPlaying) { p.plrUiSound.audioShipThrust.Play(); }
-            if (!p.plrInput.thruster1.isPlaying) { p.plrInput.thruster1.Play(); }
-            if (!p.plrInput.thruster2.isPlaying) { p.plrInput.thruster2.Play(); }
+            if (!thruster1.isPlaying) { thruster1.Play(); }
+            if (!thruster2.isPlaying) { thruster2.Play(); }
 
             // If thrust is less than 0, then ship is braking. On hard difficulty, brake is less powerful.
             if (p.plrInput.thrustInput > 0)
@@ -33,6 +39,11 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / p.plrInput.brakingPower / 2;
+                }
+                // If ship is slow enough, stop it
+                if (p.rbPlayer.velocity.magnitude < 0.8f)
+                {
+                    p.rbPlayer.velocity = new Vector2(0, 0);
                 }
             }
             // If thrust is more than 0, then ship is moving forward.
@@ -47,10 +58,17 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             if (p.plrUiSound.audioShipThrust.isPlaying) { p.plrUiSound.audioShipThrust.Stop(); }
-            if (p.plrInput.thruster1.isPlaying) { p.plrInput.thruster1.Stop(); }
-            if (p.plrInput.thruster2.isPlaying) { p.plrInput.thruster2.Stop(); }
-            if (p.plrPowerups.ifRetroThruster)
+            if (thruster1.isPlaying) { thruster1.Stop(); }
+            if (thruster2.isPlaying) { thruster2.Stop(); }
+            if (p.plrPowerups.ifRetroThruster && p.rbPlayer.velocity.magnitude != 0)
             {
+                if (!retroThrustEngaged)
+                {
+                    p.plrUiSound.audioShipRetroThrust.Play();
+                    retroThrustEngaged = true;
+                    retroThruster1.Play();
+                    retroThruster2.Play();
+                }
                 if (BetweenScenesScript.Difficulty != 2)
                 {
                     p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 0.2f;
@@ -58,6 +76,11 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 2f;
+                }
+                // If ship is slow enough, stop it
+                if (p.rbPlayer.velocity.magnitude < 0.4f)
+                {
+                    p.rbPlayer.velocity = new Vector2(0,0);
                 }
             }
             else { p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 8f; }

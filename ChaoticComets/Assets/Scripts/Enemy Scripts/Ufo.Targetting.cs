@@ -5,55 +5,6 @@ using UnityEngine;
 public abstract partial class Ufo : MonoBehaviour
 {
     internal float timer = 0;
-    private bool movingRandomly = false;
-
-    internal void FindPlayer()
-    {
-        // Choose a player to target
-        float randomFloat = Random.Range(0.0f, 1f);
-        if (randomFloat >= 0.5f && !gM.player1dead && !gM.player1TEMPDEAD)
-        {
-            player = GameObject.FindWithTag("Player").transform;
-            direction = (player.position - transform.position);
-        }
-        else if (randomFloat <= 0.49f && !gM.player2dead && !gM.player2TEMPDEAD)
-        {
-            player = GameObject.FindWithTag("Player 2").transform;
-            direction = (player.position - transform.position);
-        }
-
-        // Once player is found, don't shoot for 1 second, and disable random movement
-        // If no player is found, then tell UFO to enable random movement
-        if (player != null)
-        {
-            lastTimeShot = Time.time + 1f;
-            playerFound = true;
-            movingRandomly = false;
-        }
-        else
-        {
-            if (!movingRandomly)
-            {
-                direction = Random.insideUnitCircle;
-                movingRandomly = true;
-            }
-        }
-
-        // Fringe case - one player alive, they die, a bullet hits almost dead UFO, and it wouldn't activate shields
-        if (alienHealth <= 10f && !ufoRetreating)
-        { 
-            AlienRetreat();
-        }
-        if (direction == Vector2.zero)
-        {
-            Debug.Log("UFO spawned when both players are dead. Randomise direction.");
-            direction = Random.insideUnitCircle;
-        }
-
-        direction = direction.normalized;
-        // If both players are dead, continue moving in same direction for this frame at double speed
-        rb.MovePosition(rb.position + direction * (alienSpeedCurrent * 2) * Time.fixedDeltaTime);
-    }
 
     internal bool IsPlayerTooClose(float threshold)
     {
@@ -70,7 +21,7 @@ public abstract partial class Ufo : MonoBehaviour
 
 
     // Screen Wrapping. UFO does not screen wrap when in the first 3 seconds of spawning onto level, or crossing a border
-    internal void CheckScreenWrap()
+    internal void CheckUfoScreenWrap(bool doesDespawnAtEdge = false)
     {
         if (timer > 3f)
         {
@@ -82,6 +33,10 @@ public abstract partial class Ufo : MonoBehaviour
             if (savedPosition != transform.position)
             {
                 timer = 0;
+                if (doesDespawnAtEdge && savedPosition.x > gM.screenRight && !ufoRetreating)
+                {
+                    DeathRoutine();
+                }
                 if (!ufoRetreating)
                 {
                     direction = (player.position - transform.position);

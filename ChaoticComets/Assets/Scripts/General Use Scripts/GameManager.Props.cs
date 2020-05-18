@@ -71,6 +71,10 @@ public partial class GameManager : MonoBehaviour
     public void SpawnProp(string type)
     {
         float originChoice = Random.Range(0f, 4f);
+        if (type == "ufo-passer")
+        {
+            originChoice = 0.5f;
+        }
         Vector2 spawnPosition = new Vector2();
         if (originChoice < 1f)
         { // Spawn on the left

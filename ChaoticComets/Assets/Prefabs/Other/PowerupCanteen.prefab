@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 95388110090622880}
   - component: {fileID: 385309270841339153}
   m_Layer: 11
-  m_Name: PowerupCanteen(Anim)
+  m_Name: PowerupCanteen
   m_TagString: powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -245,6 +245,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gM: {fileID: 0}
   explosion: {fileID: 1000011128802252, guid: 3e342c38ab73ab44ebb5703127ec5047, type: 3}
+  expirationPop: {fileID: 1000011128802252, guid: f6a4a7394390216418a69a00926665f4,
+    type: 3}
   audioPowerupExpire: {fileID: 385309270841339153}
   expireSound: {fileID: 8300000, guid: 5bf2db5d171661b48abfc26b3b6894ef, type: 3}
   appearSound: {fileID: 8300000, guid: d1125e87929616844a8b30644fb31945, type: 3}

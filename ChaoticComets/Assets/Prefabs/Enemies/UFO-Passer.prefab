@@ -4827,7 +4827,7 @@ GameObject:
   - component: {fileID: 82704775472134234}
   - component: {fileID: 4333384977540276942}
   m_Layer: 0
-  m_Name: UFO-Passer(Anim)
+  m_Name: UFO-Passer
   m_TagString: ufo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4863,7 +4863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0}
-  alienSpeedBase: 1.3
+  alienSpeedBase: 2.4
   shootingDelay: 1.5
   bulletSpeed: 250
   alienHealth: 80
@@ -4883,6 +4883,7 @@ MonoBehaviour:
   playerBulletExplosion: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
     type: 3}
   teleportEffect: {fileID: 3142331801263296304}
+  currentDeviation: 0
 --- !u!58 &58430078344468964
 CircleCollider2D:
   m_ObjectHideFlags: 0

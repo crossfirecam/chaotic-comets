@@ -12,7 +12,6 @@ public class PlayerInput : MonoBehaviour {
     internal float brakingPower = 2f;
     public float thrustInput, turnInput;
     internal bool isNotTeleporting = true;
-    public ParticleSystem thruster1, thruster2;
 
     // Contains code for receiving inputs from player
     internal void GetInputs()

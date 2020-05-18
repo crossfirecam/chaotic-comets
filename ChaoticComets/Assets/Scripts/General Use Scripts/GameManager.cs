@@ -22,7 +22,7 @@ public partial class GameManager : MonoBehaviour {
     public Button buttonWhenPaused, buttonWhenGameOver, buttonWhenLeavingPauseBugFix;
 
     // Other variables
-    [HideInInspector] public float screenTop = 8.5f, screenBottom = 8.5f, screenLeft = 11f, screenRight = 11f;
+    [HideInInspector] public float screenTop = 8f, screenBottom = 8f, screenLeft = 11f, screenRight = 11f;
     public bool helpMenuMode = false; // Not in control help screen by default
     public AudioSource musicLoop;
     private float fadingAlpha = 0f;
