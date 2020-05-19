@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HelpMenuScript : MonoBehaviour {
+public class HelpMenu : MonoBehaviour {
 
     void Update() {
         if (Input.GetButtonDown("MenuNavCancel") || Input.GetButtonDown("MenuNavSubmit")) {
