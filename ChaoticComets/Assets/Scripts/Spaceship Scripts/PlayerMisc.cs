@@ -15,8 +15,8 @@ public class PlayerMisc : MonoBehaviour
 
     internal void OtherStartFunctions()
     {
-        // If the difficulty is 9 (indicating player is in help menu) then ignore all start functions. Else, go ahead.
-        if (BetweenScenesScript.Difficulty != 9)
+        // If tutorial mode, then ignore all start functions. Else, go ahead.
+        if (!p.gM.tutorialMode)
         {
             // If spaceship object created on first load, set default stats
             // Else, spaceship object was resumed from savefile, ask savefile

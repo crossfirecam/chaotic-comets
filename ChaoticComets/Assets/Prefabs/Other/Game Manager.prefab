@@ -45,39 +45,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instantkillAsteroids: 0
-  playerShip1: {fileID: 0}
-  playerShip2: {fileID: 0}
   player1dead: 0
   player2dead: 1
   player1TEMPDEAD: 0
   player2TEMPDEAD: 0
-  largeAsteroidProp: {fileID: 1158260402081020, guid: 7e00352104cdbc04aa6bef0c7b13737e,
-    type: 3}
-  ufoFollowerProp: {fileID: 1001724363263860, guid: 418ffa82d403da44ca30571610216d37,
-    type: 3}
-  ufoPasserProp: {fileID: 1001724363263860, guid: 28fece484b566b348969c75145fb66e2,
-    type: 3}
-  canisterProp: {fileID: 1020648608047988, guid: 3a71328051a9a8d45bdefa3880e48d38,
-    type: 3}
+  tutorialMode: 0
   asteroidCount: 0
   levelNo: 0
-  fadeBlack: {fileID: 0}
-  player2GUI: {fileID: 0}
-  gameOverPanel: {fileID: 0}
-  gamePausePanel: {fileID: 0}
-  gameLevelPanel: {fileID: 0}
-  gameLevelShieldRechargeText: {fileID: 0}
-  swapP1Text: {fileID: 0}
-  swapP2Text: {fileID: 0}
-  buttonWhenPaused: {fileID: 0}
-  buttonWhenGameOver: {fileID: 0}
-  buttonWhenLeavingPauseBugFix: {fileID: 0}
   screenTop: 8.5
   screenBottom: -8.5
   screenLeft: -11
   screenRight: 11
-  helpMenuMode: 0
-  musicLoop: {fileID: 7573104357208989260}
+  Refs:
+    tutorialManager: {fileID: 0}
+    fadeBlack: {fileID: 0}
+    player2GUI: {fileID: 0}
+    gameOverPanel: {fileID: 0}
+    gamePausePanel: {fileID: 0}
+    gameLevelPanel: {fileID: 0}
+    gameLevelShieldRechargeText: {fileID: 0}
+    swapP1Text: {fileID: 0}
+    swapP2Text: {fileID: 0}
+    buttonWhenPaused: {fileID: 0}
+    buttonWhenGameOver: {fileID: 0}
+    buttonWhenLeavingPauseBugFix: {fileID: 0}
+    playerShip1: {fileID: 0}
+    playerShip2: {fileID: 0}
+    largeAsteroidProp: {fileID: 1158260402081020, guid: 7e00352104cdbc04aa6bef0c7b13737e,
+      type: 3}
+    ufoFollowerProp: {fileID: 1001724363263860, guid: 418ffa82d403da44ca30571610216d37,
+      type: 3}
+    ufoPasserProp: {fileID: 1001724363263860, guid: 28fece484b566b348969c75145fb66e2,
+      type: 3}
+    canisterProp: {fileID: 1020648608047988, guid: 3a71328051a9a8d45bdefa3880e48d38,
+      type: 3}
 --- !u!82 &7573104357208989260
 AudioSource:
   m_ObjectHideFlags: 0

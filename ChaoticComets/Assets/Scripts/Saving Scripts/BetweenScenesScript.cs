@@ -19,6 +19,9 @@ public static class BetweenScenesScript {
     // B: Game is resumed from a found save file
     public static bool ResumingFromSave = false;
 
+    // Tutorial mode on or off
+    public static bool TutorialMode = false;
+
     // Below are integer arrays that will be turned into floats when used in Spaceship gameobjects.
     // This is because iterating on floats causes counting errors eventually with any programming language.
     // 10 = 1.0, or the base of upgrades. They'll be iterated by 1 (converted to 0.1 float) each time an upgrade is performed.

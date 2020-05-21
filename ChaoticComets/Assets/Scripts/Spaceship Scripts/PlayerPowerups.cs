@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class PlayerPowerups : MonoBehaviour
@@ -14,6 +15,12 @@ public class PlayerPowerups : MonoBehaviour
 
     internal void GivePowerup()
     {
+        // If in the tutorial, a collected canister will only ever give the first demo, TripleShot
+        if (p.gM.tutorialMode)
+        {
+            ApplyPowerup(Powerups.TripleShot);
+            return;
+        }
         int loopFailsafe = 0;
         powerupUndecided = true;
         while (powerupUndecided)

@@ -4989,9 +4989,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Controls Test
-
-    (Broken)'
+  m_Text: Tutorial
 --- !u!222 &1190428537
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8623,14 +8621,14 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1993527317}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1485263213}
-        m_MethodName: SetDifficultyAndGoToControls
-        m_Mode: 3
+        m_MethodName: VisitTutorial
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

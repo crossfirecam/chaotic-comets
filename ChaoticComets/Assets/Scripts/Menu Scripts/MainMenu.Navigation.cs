@@ -29,10 +29,11 @@ public partial class MainMenu : MonoBehaviour
     private readonly string diffText3 = "Ship's manual brake and Auto-Brake are less effective. A real test of maneuverability.";
 
     // Controller selection screen
+    private bool controllerP1Found = false, controllerP2Found = false, keyboardFound = true; // Default to both players on keyboard
     public Text buttonCon1Text, buttonCon2Text, buttonCon3Text;
     private readonly string conText1a = "P1 Keyboard", conText2a = "P1 Gamepad"; // One Player selected
     private readonly string conText1b = "P1 Keyboard, P2 Keyboard", conText2b = "P1 Gamepad, P2 Keyboard", conText3b = "P1 Gamepad, P2 Gamepad"; // Two Player selected
-    private readonly string diffSelect0 = "Easy Mode", diffSelect1 = "Normal Mode", diffSelect2 = "Hard Mode", diffSelect9 = "Control Test";
+    private readonly string diffSelect0 = "Easy Mode", diffSelect1 = "Normal Mode", diffSelect2 = "Hard Mode";
 
     // Misc UI objects
     public Button returnToMenuButton, controlFirstButton, saveFirstButton;
@@ -97,8 +98,7 @@ public partial class MainMenu : MonoBehaviour
     {
         if (i != -1)
         { // If difficulty is not already set by the save file, set difficulty from player choice
-            if (i == 9) { BetweenScenesScript.Difficulty = 9; } // ... Or if control test selected, set to 9 for interpretation in ShowControlOptions()
-            else { BetweenScenesScript.Difficulty = i; }
+            BetweenScenesScript.Difficulty = i;
         }
         else
         { // If loaded from a save, difficulty is preset
@@ -113,8 +113,6 @@ public partial class MainMenu : MonoBehaviour
     }
 
     // When difficulty is selected, save to memory. Bring up control selection screen
-    // If i = 9, then this was called from the Control Test button. This value isn't used in gameplay,
-    // instead just to tell the Update loop here if a B press needs to send the user back to main menu instead of difficulty panel.
     public void ShowControlOptions()
     {
         saveOptionDialog.SetActive(false);
@@ -123,7 +121,6 @@ public partial class MainMenu : MonoBehaviour
         if (BetweenScenesScript.Difficulty == 0) { diffSelectedText.text = diffSelect0; }
         if (BetweenScenesScript.Difficulty == 1) { diffSelectedText.text = diffSelect1; }
         if (BetweenScenesScript.Difficulty == 2) { diffSelectedText.text = diffSelect2; }
-        if (BetweenScenesScript.Difficulty == 9) { diffSelectedText.text = diffSelect9; player1pIcon.SetActive(false); BetweenScenesScript.PlayerCount = 2; }
         
         controlOptionDialog.SetActive(true);
         difficultyDialog.SetActive(false);
@@ -207,7 +204,7 @@ public partial class MainMenu : MonoBehaviour
     }
     public void BackToDifficulty()
     {
-        if (BetweenScenesScript.Difficulty == 9 || BetweenScenesScript.ResumingFromSave == true)
+        if (BetweenScenesScript.ResumingFromSave == true)
         {
             BackToMenu();
             BetweenScenesScript.ResumingFromSave = false;
@@ -229,7 +226,6 @@ public partial class MainMenu : MonoBehaviour
         if (Input.GetButtonDown("MenuNavCancel") && difficultyDialog.activeInHierarchy) { BackToMenu(); }
         if (Input.GetButtonDown("MenuNavCancel") && saveOptionDialog.activeInHierarchy) { BackToMenu(); }
         if (Input.GetButtonDown("MenuNavCancel") && optionsDialog.activeInHierarchy) { BackToMenu(); }
-        else if (Input.GetButtonDown("MenuNavCancel") && controlOptionDialog.activeInHierarchy && BetweenScenesScript.Difficulty == 9) { BackToMenu(); }
         else if (Input.GetButtonDown("MenuNavCancel") && controlOptionDialog.activeInHierarchy) { BackToDifficulty(); }
     }
 
@@ -255,7 +251,7 @@ public partial class MainMenu : MonoBehaviour
     }
     public void CheckForControllerOrKeyboard()
     {
-        if (!controllerFound)
+        if (!controllerP1Found)
         {
             if (Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.Joystick1Button2) ||
                 Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Joystick1Button5) ||
@@ -264,20 +260,26 @@ public partial class MainMenu : MonoBehaviour
             {
 
                 Debug.Log("Controller main input detected");
-                controllerFound = true;
-                keyboardFound = false;
+                controllerP1Found = true;
+            }
+        }
+        if (!controllerP2Found)
+        {
+            if (Input.GetKeyDown(KeyCode.Joystick2Button0) || Input.GetKeyDown(KeyCode.Joystick2Button1) || Input.GetKeyDown(KeyCode.Joystick2Button2) ||
+                Input.GetKeyDown(KeyCode.Joystick2Button3) || Input.GetKeyDown(KeyCode.Joystick2Button4) || Input.GetKeyDown(KeyCode.Joystick2Button5) ||
+                Input.GetKeyDown(KeyCode.Joystick2Button6) || Input.GetKeyDown(KeyCode.Joystick2Button7) || Input.GetKeyDown(KeyCode.Joystick2Button8) ||
+                Input.GetKeyDown(KeyCode.Joystick2Button9) || Input.GetAxisRaw("Rotate Ship (P2joy)") != 0 || Input.GetAxisRaw("Thrust (P2joy)") != 0)
+            {
+
+                Debug.Log("Controller main input detected");
+                controllerP2Found = true;
             }
         }
         if (!keyboardFound)
         {
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) ||
-                Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Space) ||
-                Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) ||
-                Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.L))
+            if (Event.current.isKey || Event.current.isMouse)
             {
-
                 Debug.Log("Keyboard main input detected");
-                controllerFound = false;
                 keyboardFound = true;
             }
         }

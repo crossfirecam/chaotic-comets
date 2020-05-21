@@ -12,12 +12,12 @@ public partial class GameManager : MonoBehaviour
         if (BetweenScenesScript.ControlTypeP1 == 0)
         {
             BetweenScenesScript.ControlTypeP1 = 1;
-            swapP1Text.text = "Swap P1 to gamepad controls";
+            Refs.swapP1Text.text = "Swap P1 to gamepad controls";
         }
         else
         {
             BetweenScenesScript.ControlTypeP1 = 0;
-            swapP1Text.text = "Swap P1 to keyboard controls";
+            Refs.swapP1Text.text = "Swap P1 to keyboard controls";
         }
     }
     // If player 2 exists, then swap their controls with this button
@@ -28,12 +28,12 @@ public partial class GameManager : MonoBehaviour
             if (BetweenScenesScript.ControlTypeP2 == 0)
             {
                 BetweenScenesScript.ControlTypeP2 = 1;
-                swapP2Text.text = "Swap P2 to gamepad controls";
+                Refs.swapP2Text.text = "Swap P2 to gamepad controls";
             }
             else
             {
                 BetweenScenesScript.ControlTypeP2 = 0;
-                swapP2Text.text = "Swap P2 to keyboard controls";
+                Refs.swapP2Text.text = "Swap P2 to keyboard controls";
             }
         }
     }
@@ -41,11 +41,11 @@ public partial class GameManager : MonoBehaviour
     // Each time the pause menu is used, change the buttons for controller swapping depending on their state
     public void CheckPlayerControls()
     {
-        if (BetweenScenesScript.ControlTypeP1 == 0) { swapP1Text.text = "Swap P1 to keyboard controls"; }
-        else { swapP1Text.text = "Swap P1 to gamepad controls"; }
-        if (BetweenScenesScript.PlayerCount == 1) { swapP2Text.text = ""; }
-        else if (BetweenScenesScript.ControlTypeP2 == 0) { swapP2Text.text = "Swap P2 to keyboard controls"; }
-        else { swapP2Text.text = "Swap P2 to gamepad controls"; }
+        if (BetweenScenesScript.ControlTypeP1 == 0) { Refs.swapP1Text.text = "Swap P1 to keyboard controls"; }
+        else { Refs.swapP1Text.text = "Swap P1 to gamepad controls"; }
+        if (BetweenScenesScript.PlayerCount == 1) { Refs.swapP2Text.text = ""; }
+        else if (BetweenScenesScript.ControlTypeP2 == 0) { Refs.swapP2Text.text = "Swap P2 to keyboard controls"; }
+        else { Refs.swapP2Text.text = "Swap P2 to gamepad controls"; }
     }
 
     public void PauseGame(int intent)
@@ -53,8 +53,8 @@ public partial class GameManager : MonoBehaviour
         if (intent == 0)
         { // Pause game
             Cursor.visible = true;
-            if (!player1dead) { playerShip1.plrUiSound.CheckSounds(1); }
-            if (!player2dead) { playerShip2.plrUiSound.CheckSounds(1); }
+            if (!player1dead) { Refs.playerShip1.plrUiSound.CheckSounds(1); }
+            if (!player2dead) { Refs.playerShip2.plrUiSound.CheckSounds(1); }
 
             musicLoop.Pause();
 
@@ -64,8 +64,8 @@ public partial class GameManager : MonoBehaviour
                 ufo.GetComponent<Ufo>().CheckAlienSounds(1);
             }
 
-            gamePausePanel.SetActive(true);
-            buttonWhenPaused.Select();
+            Refs.gamePausePanel.SetActive(true);
+            Refs.buttonWhenPaused.Select();
             Time.timeScale = 0;
             CheckPlayerControls();
         }
@@ -74,16 +74,16 @@ public partial class GameManager : MonoBehaviour
             Cursor.visible = false;
             if (!player1dead)
             {
-                playerShip1.plrUiSound.CheckSounds(2);
-                playerShip1.plrInput.InputChoice();
+                Refs.playerShip1.plrUiSound.CheckSounds(2);
+                Refs.playerShip1.plrInput.InputChoice();
             }
             if (!player2dead)
             {
-                playerShip1.plrUiSound.CheckSounds(2);
-                playerShip2.plrInput.InputChoice();
+                Refs.playerShip1.plrUiSound.CheckSounds(2);
+                Refs.playerShip2.plrInput.InputChoice();
             }
 
-            if (BetweenScenesScript.MusicVolume > 0f && !helpMenuMode) { musicLoop.Play(); }
+            if (BetweenScenesScript.MusicVolume > 0f && !tutorialMode) { musicLoop.Play(); }
 
             GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
             foreach (GameObject ufo in listOfUfos)
@@ -91,8 +91,8 @@ public partial class GameManager : MonoBehaviour
                 ufo.GetComponent<Ufo>().CheckAlienSounds(2);
             }
 
-            gamePausePanel.SetActive(false);
-            buttonWhenLeavingPauseBugFix.Select();
+            Refs.gamePausePanel.SetActive(false);
+            Refs.buttonWhenLeavingPauseBugFix.Select();
             Time.timeScale = 1;
         }
     }

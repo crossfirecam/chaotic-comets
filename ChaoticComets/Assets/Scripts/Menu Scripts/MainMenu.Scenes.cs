@@ -36,14 +36,9 @@ public partial class MainMenu : MonoBehaviour
 
     private void LoadScene()
     {
-        // If control panel is called from main menu, then load control test.
         // If control panel is called while resuming a save, then load store before next level
         // Else, load as if a new game was started
-        if (BetweenScenesScript.Difficulty == 9)
-        {
-            SceneManager.LoadScene("ControlsMenu");
-        }
-        else if (BetweenScenesScript.ResumingFromSave == true)
+        if (BetweenScenesScript.ResumingFromSave == true)
         {
             SceneManager.LoadScene("ShopMenu");
         }
@@ -54,6 +49,11 @@ public partial class MainMenu : MonoBehaviour
         }
     }
 
+    public void VisitTutorial()
+    {
+        BetweenScenesScript.TutorialMode = true;
+        SceneManager.LoadScene("MainScene");
+    }
     public void VisitHelp()
     {
         SceneManager.LoadScene("HelpMenu");

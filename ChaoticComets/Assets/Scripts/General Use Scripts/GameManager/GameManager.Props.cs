@@ -4,15 +4,14 @@ using UnityEngine;
 
 public partial class GameManager : MonoBehaviour
 {
+    [Header("Prop Variables")]
     public bool instantkillAsteroids = false;
     private readonly int lastLevelWithoutEnemies = 1;
-
-    public PlayerMain playerShip1, playerShip2;
-    public bool player1dead = false, player2dead = true; // Only one player by default
-    [HideInInspector] public bool player1TEMPDEAD = false, player2TEMPDEAD = false; // Only used to alert UFO that player is temporarily inactive
-
-    public GameObject largeAsteroidProp, ufoFollowerProp, ufoPasserProp, canisterProp;
     private float ufoAmountSpawned, canisterAmountSpawned, ufoCap, canisterCap = 1; // Variables used to track how many props have, and can spawn.
+
+    [Header("Player Status Variables")]
+    [HideInInspector] public bool player1dead = false, player2dead = true; // Only one player by default
+    [HideInInspector] public bool player1TEMPDEAD = false, player2TEMPDEAD = false; // Only used to alert UFO that player is temporarily inactive
 
     public enum PropSpawnReason { AlienFirst, CanisterFirst, AlienRespawn, CanisterRespawn };
     public void AlienAndPowerupLogic(PropSpawnReason reason)
@@ -55,6 +54,11 @@ public partial class GameManager : MonoBehaviour
                 Invoke("RespawnAlien", randomTime);
             }
         }
+        // If in the tutorial, canisters will respawn infinitely until collected
+        else if ((reason == PropSpawnReason.CanisterRespawn) && tutorialMode)
+        {
+            Invoke("RespawnCanister", 1.0f);
+        }
         else if ((reason == PropSpawnReason.CanisterFirst || reason == PropSpawnReason.CanisterRespawn) && canisterAmountSpawned < canisterCap)
         {
             canisterAmountSpawned += 1;
@@ -79,48 +83,55 @@ public partial class GameManager : MonoBehaviour
     public void RespawnCanister() { SpawnProp(PropType.Canister); }
 
     public enum PropType { Asteroid, Canister, UfoFollower, UfoPasser };
-    public void SpawnProp(PropType type)
+    public void SpawnProp(PropType type, Vector2 chosenLocation = new Vector2())
     {
-        float originChoice = Random.Range(0f, 4f);
-        if (type == PropType.UfoPasser)
-        {
-            originChoice = 0.5f;
-        }
         Vector2 spawnPosition = new Vector2();
-        if (originChoice < 1f)
-        { // Spawn on the left
-            spawnPosition = new Vector2(screenLeft - 1.5f, Random.Range(-9f, 9f));
+        if (chosenLocation == new Vector2())
+        {
+            float originChoice = Random.Range(0f, 4f);
+            if (type == PropType.UfoPasser)
+            {
+                originChoice = 0.5f;
+            }
+            if (originChoice < 1f)
+            { // Spawn on the left
+                spawnPosition = new Vector2(screenLeft - 1.5f, Random.Range(-9f, 9f));
+            }
+            else if (originChoice < 2f)
+            { // Spawn on the right
+                spawnPosition = new Vector2(screenRight + 1.5f, Random.Range(-9f, 9f));
+            }
+            else if (originChoice < 3f)
+            { // Spawn on the top
+                spawnPosition = new Vector2(Random.Range(-12f, 12f), screenTop + 1.5f);
+            }
+            else if (originChoice < 4f)
+            { // Spawn on the bottom
+                spawnPosition = new Vector2(Random.Range(-12f, 12f), screenBottom - 1.5f);
+            }
         }
-        else if (originChoice < 2f)
-        { // Spawn on the right
-            spawnPosition = new Vector2(screenRight + 1.5f, Random.Range(-9f, 9f));
-        }
-        else if (originChoice < 3f)
-        { // Spawn on the top
-            spawnPosition = new Vector2(Random.Range(-12f, 12f), screenTop + 1.5f);
-        }
-        else if (originChoice < 4f)
-        { // Spawn on the bottom
-            spawnPosition = new Vector2(Random.Range(-12f, 12f), screenBottom - 1.5f);
+        else
+        {
+            spawnPosition = chosenLocation;
         }
         if (type == PropType.UfoFollower)
         {
-            GameObject newFollower = Instantiate(ufoFollowerProp);
+            GameObject newFollower = Instantiate(Refs.ufoFollowerProp);
             newFollower.transform.position = spawnPosition;
         }
         if (type == PropType.UfoPasser)
         {
-            GameObject newPasser = Instantiate(ufoPasserProp);
+            GameObject newPasser = Instantiate(Refs.ufoPasserProp);
             newPasser.transform.position = spawnPosition;
         }
         else if (type == PropType.Canister)
         {
-            GameObject newCanister = Instantiate(canisterProp);
+            GameObject newCanister = Instantiate(Refs.canisterProp);
             newCanister.transform.position = spawnPosition;
         }
         else if (type == PropType.Asteroid)
         {
-            GameObject newAsteroid = Instantiate(largeAsteroidProp, spawnPosition, Quaternion.identity);
+            GameObject newAsteroid = Instantiate(Refs.largeAsteroidProp, spawnPosition, Quaternion.identity);
             asteroidCount += 1;
             if (instantkillAsteroids)
             {
@@ -130,16 +141,13 @@ public partial class GameManager : MonoBehaviour
         }
     }
 
-    // If in normal gameplay, update asteroids for each one destroyed.
+    // Update asteroids for each one destroyed. If in normal gameplay, end the level at 0 asteroids.
     public void UpdateNumberAsteroids(int change)
     {
-        if (!helpMenuMode)
+        asteroidCount += change;
+        if (asteroidCount == 0 && !tutorialMode)
         {
-            asteroidCount += change;
-            if (asteroidCount == 0)
-            {
-                Invoke("EndLevelFanFare", 2f);
-            }
+            Invoke("EndLevelFanFare", 2f);
         }
     }
 

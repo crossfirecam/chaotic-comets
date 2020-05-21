@@ -56,10 +56,13 @@ public class PlayerWeapons : MonoBehaviour
         }
         else
         {
-            nextFire = Time.time + fireRateNormal;
-            GameObject newBullet = Instantiate(bullet, mainCannon.transform.position, mainCannon.transform.rotation);
-            newBullet.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
-            newBullet.GetComponent<BulletBehaviour>().FizzleOutBullet(bulletDestroyTime);
+            if (p.canShoot)
+            {
+                nextFire = Time.time + fireRateNormal;
+                GameObject newBullet = Instantiate(bullet, mainCannon.transform.position, mainCannon.transform.rotation);
+                newBullet.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
+                newBullet.GetComponent<BulletBehaviour>().FizzleOutBullet(bulletDestroyTime);
+            }
         }
     }
 

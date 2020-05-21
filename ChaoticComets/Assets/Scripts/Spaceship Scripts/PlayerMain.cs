@@ -17,7 +17,6 @@ public class PlayerMain : MonoBehaviour {
     public GameObject modelPlayer;
     internal CapsuleCollider2D capsCollider;
     internal GameManager gM;
-    public bool helpMenuMode = false;
     public int playerNumber;
     internal string inputNameInsert;
     public GameObject canister;
@@ -39,6 +38,8 @@ public class PlayerMain : MonoBehaviour {
     internal PlayerSpawnDeath plrSpawnDeath = default;
     internal PlayerUiSounds plrUiSound = default;
 
+    public bool canShoot = true, canTeleport = true; // Only used to disable ship actions during some tutorial sections
+
     // ----------
 
     void Start () {
@@ -49,7 +50,7 @@ public class PlayerMain : MonoBehaviour {
     
     // If game is not paused, then run per-frame updates
     void Update () {
-        if (!gM.gamePausePanel.activeInHierarchy) {
+        if (!gM.Refs.gamePausePanel.activeInHierarchy) {
             plrInput.GetInputs();
             plrMovement.ShipMovement();
             gM.CheckScreenWrap(transform);
@@ -122,7 +123,7 @@ public class PlayerMain : MonoBehaviour {
 
     private void GetComponents()
     {
-        gM = GameObject.FindObjectOfType<GameManager>();
+        gM = FindObjectOfType<GameManager>();
         rbPlayer = gameObject.GetComponent<Rigidbody2D>();
         capsCollider = gameObject.GetComponent<CapsuleCollider2D>();
         plrInput = gameObject.GetComponent<PlayerInput>();

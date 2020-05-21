@@ -8,35 +8,43 @@ using UnityEngine.EventSystems;
  * This class handles all in-game meta logic, such as level transitions, telling objects when and how to spawn, player management, etc.
  */
 
-public partial class GameManager : MonoBehaviour {
+public partial class GameManager : MonoBehaviour
+{
 
-    // General purpose variables
+    [Header("Tutorial Mode")]
+    public bool tutorialMode = true; // Not in tutorial by default
+
+    [Header("General purpose variables")]
     public int asteroidCount;
     public int levelNo = 0;
-
-    // UI related objects
-    public GameObject fadeBlack, player2GUI;
-    public GameObject gameOverPanel, gamePausePanel, gameLevelPanel;
-    public GameObject gameLevelShieldRechargeText;
-    public Text swapP1Text, swapP2Text;
-    public Button buttonWhenPaused, buttonWhenGameOver, buttonWhenLeavingPauseBugFix;
-
-    // Other variables
     [HideInInspector] public float screenTop = 8f, screenBottom = 8f, screenLeft = 11f, screenRight = 11f;
-    public bool helpMenuMode = false; // Not in control help screen by default
-    public AudioSource musicLoop;
+
+    [Header("Other Variables")]
+    private AudioSource musicLoop;
     private float fadingAlpha = 0f;
+
+    [Header("Inspector References")]
+    public GameManagerHiddenVars Refs;
 
     void Start() {
         Cursor.visible = false;
+        musicLoop = gameObject.GetComponent<AudioSource>();
+        // If in tutorial mode, activate TutorialManager
+        if (BetweenScenesScript.TutorialMode || tutorialMode)
+        {
+            Refs.tutorialManager.SetActive(true);
+            tutorialMode = true;
+        }
         // If in normal gameplay, set player ships to become active and start gameplay
-        if (!helpMenuMode) {
-            if (BetweenScenesScript.MusicVolume > 0f) {
+        else
+        {
+            if (BetweenScenesScript.MusicVolume > 0f)
+            {
                 musicLoop.Play();
             }
             if (BetweenScenesScript.PlayerCount == 2) {
-                player2GUI.SetActive(true);
-                playerShip2.gameObject.SetActive(true);
+                Refs.player2GUI.SetActive(true);
+                Refs.playerShip2.gameObject.SetActive(true);
                 player2dead = false;
             }
             if (BetweenScenesScript.ResumingFromSave) { // If resuming from save file, read from save file first
@@ -45,11 +53,11 @@ public partial class GameManager : MonoBehaviour {
                 // Tell ships to 'play dead' (disable model & colliders) if previous shop says they're dead
                 if (BetweenScenesScript.player1TempLives == 0)
                 {
-                    playerShip1.plrSpawnDeath.PretendShipDoesntExist();
+                    Refs.playerShip1.plrSpawnDeath.PretendShipDoesntExist();
                 }
                 if (BetweenScenesScript.player2TempLives == 0 && BetweenScenesScript.PlayerCount == 2)
                 {
-                    playerShip2.plrSpawnDeath.PretendShipDoesntExist();
+                    Refs.playerShip2.plrSpawnDeath.PretendShipDoesntExist();
                 
                 }
             }
@@ -59,25 +67,20 @@ public partial class GameManager : MonoBehaviour {
     }
 
     void Update() {
-        // Rotate the UFO for help screen purposes
-        if (helpMenuMode) {
-            ufoFollowerProp.transform.rotation = Quaternion.Euler(-50, 0, 0);
-        }
-
         // Each frame, check if pause menu is open, and what button is highlighted.
         // If the mouse is used to click auto highlight away, then drag a highlight back onto a certain button.
-        if (gamePausePanel.activeInHierarchy || gameOverPanel.activeInHierarchy) {
+        if (Refs.gamePausePanel.activeInHierarchy || Refs.gameOverPanel.activeInHierarchy) {
             if (EventSystem.current.currentSelectedGameObject == null || EventSystem.current.currentSelectedGameObject.Equals(null))
             {
                 // If on pause panel, then select the resume button. If on game over panel, select play again button.
-                if (gamePausePanel.activeInHierarchy) { buttonWhenPaused.Select(); }
-                else { buttonWhenGameOver.Select(); }
+                if (Refs.gamePausePanel.activeInHierarchy) { Refs.buttonWhenPaused.Select(); }
+                else { Refs.buttonWhenGameOver.Select(); }
             }
         }
 
         // Check if pause button is pressed, and resume/pause game.
-        if (Input.GetButtonDown("Pause") && !gameOverPanel.activeInHierarchy) {
-            if (gamePausePanel.activeInHierarchy) {
+        if (Input.GetButtonDown("Pause") && !Refs.gameOverPanel.activeInHierarchy) {
+            if (Refs.gamePausePanel.activeInHierarchy) {
                 PauseGame(1);
             }
             else {
@@ -96,4 +99,22 @@ public partial class GameManager : MonoBehaviour {
         if (current.position.x < screenLeft + xOldOffset) { newPosition.x = screenRight - xNewOffset; }
         current.position = newPosition;
     }
+}
+
+[System.Serializable]
+public class GameManagerHiddenVars
+{
+    public GameObject tutorialManager;
+
+    [Header("UI References")]
+    public GameObject fadeBlack, player2GUI;
+    public GameObject gameOverPanel, gamePausePanel, gameLevelPanel;
+    public GameObject gameLevelShieldRechargeText;
+    public Text swapP1Text, swapP2Text;
+    public Button buttonWhenPaused, buttonWhenGameOver, buttonWhenLeavingPauseBugFix;
+
+    [Header("Prop References")]
+    public PlayerMain playerShip1;
+    public PlayerMain playerShip2;
+    public GameObject largeAsteroidProp, ufoFollowerProp, ufoPasserProp, canisterProp;
 }

@@ -9,13 +9,13 @@ public partial class MainMenu : MonoBehaviour
     public AudioMixer mixer;
     public GameObject fadeBlack;
     private float fadingAlpha = 0f;
-    private bool controllerFound = false, keyboardFound = false;
 
     // ----------
 
     private void Start() {
         Cursor.visible = true;
         BetweenScenesScript.ResumingFromSave = false; // Set to false first, in case game is closed while save is being loaded
+        BetweenScenesScript.TutorialMode = false;
         BetweenScenesScript.MusicVolume = PlayerPrefs.GetFloat("Music");
         BetweenScenesScript.SFXVolume = PlayerPrefs.GetFloat("SFX");
         BetweenScenesScript.player1TempCredits = 0; // Reset temporary credit & lives count to 0. These will be set if a store is loaded and progressed past

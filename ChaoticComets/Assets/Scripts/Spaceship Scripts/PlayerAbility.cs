@@ -23,14 +23,8 @@ public class PlayerAbility : MonoBehaviour
     {
         // Initiate local newPosition, and pick new position depending on what screen the player is using (game or help screen)
         Vector2 newPosition;
-        if (!p.helpMenuMode)
-        {
-            newPosition = new Vector2(Random.Range(-9f, 9f), Random.Range(-5f, 5f));
-        }
-        else
-        {
-            newPosition = new Vector2(Random.Range(-7.4f, -2.6f), Random.Range(-4.0f, 1.2f));
-        }
+        newPosition = new Vector2(Random.Range(-7.4f, -2.6f), Random.Range(-4.0f, 1.2f));
+
         transform.position = newPosition;
         p.rbPlayer.velocity = Vector2.zero;
         teleportIn.SetActive(false);

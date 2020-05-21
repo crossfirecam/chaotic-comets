@@ -16,8 +16,8 @@ public partial class GameManager : MonoBehaviour
         for (int i = 0; i < levelNo + 1; i++) { SpawnProp(PropType.Asteroid); }
         yield return new WaitForSeconds(0.1f);
         // Player Respawn
-        if (!player1dead) { playerShip1.plrSpawnDeath.RespawnShip(); }
-        if (!player2dead) { playerShip2.plrSpawnDeath.RespawnShip(); }
+        if (!player1dead) { Refs.playerShip1.plrSpawnDeath.RespawnShip(); }
+        if (!player2dead) { Refs.playerShip2.plrSpawnDeath.RespawnShip(); }
 
         // Set a cap on how many UFOs can spawn. Double this in two-player. An aside... always one canteen per player per level.
         if (levelNo == 1) { ufoCap = 0; }
@@ -52,10 +52,10 @@ public partial class GameManager : MonoBehaviour
     }
     private void EndLevelFanFare2()
     {
-        gameLevelPanel.SetActive(true);
+        Refs.gameLevelPanel.SetActive(true);
         // Player Shield Recovery
-        if (!player1dead) { playerShip1.plrSpawnDeath.ShipIsRecovering(); }
-        if (!player2dead) { playerShip2.plrSpawnDeath.ShipIsRecovering(); }
+        if (!player1dead) { Refs.playerShip1.plrSpawnDeath.ShipIsRecovering(); }
+        if (!player2dead) { Refs.playerShip2.plrSpawnDeath.ShipIsRecovering(); }
         StartCoroutine(FadeBlack("to"));
         Invoke("BringUpShop", 3f);
     }
@@ -64,19 +64,19 @@ public partial class GameManager : MonoBehaviour
     private void BringUpShop()
     {
         BetweenScenesScript.ResumingFromSave = true;
-        Saving_SaveManager.SaveData(this, playerShip1.gameObject, playerShip2.gameObject);
+        Saving_SaveManager.SaveData(this, Refs.playerShip1.gameObject, Refs.playerShip2.gameObject);
         SceneManager.LoadScene("ShopMenu");
     }
 
     // Alien UFO that spawns during the end-level transition will check this, and despawn if level transition is happening
     public bool CheckIfEndOfLevel()
     {
-        if (asteroidCount <= 0) { return true; }
+        if (asteroidCount <= 0 && !tutorialMode) { return true; }
         return false;
     }
 
     // If a ship has less than full shields, show the text say shields are being recharged
-    public void ShowRechargeText() { gameLevelShieldRechargeText.SetActive(true); }
+    public void ShowRechargeText() { Refs.gameLevelShieldRechargeText.SetActive(true); }
 
     // Show game over panel and pause the game when the game is over
     public void GameOver()
@@ -84,8 +84,8 @@ public partial class GameManager : MonoBehaviour
         Cursor.visible = true;
         BetweenScenesScript.ResumingFromSave = false;
         Saving_SaveManager.EraseData();
-        gameOverPanel.SetActive(true);
-        buttonWhenGameOver.Select();
+        Refs.gameOverPanel.SetActive(true);
+        Refs.buttonWhenGameOver.Select();
 
         musicLoop.Pause();
         GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
@@ -103,10 +103,10 @@ public partial class GameManager : MonoBehaviour
 
     private IEnumerator FadeBlack(string ToOrFrom)
     {
-        Image tempFade = fadeBlack.GetComponent<Image>();
+        Image tempFade = Refs.fadeBlack.GetComponent<Image>();
         Color origColor = tempFade.color;
         float speedOfFade = 0.4f;
-        fadeBlack.SetActive(true);
+        Refs.fadeBlack.SetActive(true);
         if (ToOrFrom == "from")
         {
             fadingAlpha = 1f;
@@ -116,7 +116,7 @@ public partial class GameManager : MonoBehaviour
                 tempFade.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);
                 yield return null;
             }
-            fadeBlack.SetActive(false);
+            Refs.fadeBlack.SetActive(false);
         }
         else if (ToOrFrom == "to")
         {
