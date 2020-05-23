@@ -79,6 +79,8 @@ MonoBehaviour:
       type: 3}
     canisterProp: {fileID: 1020648608047988, guid: 3a71328051a9a8d45bdefa3880e48d38,
       type: 3}
+    largeAsteroidSafeProp: {fileID: 1158260402081020, guid: c709e894203e8034ba9c16948a871155,
+      type: 3}
 --- !u!82 &7573104357208989260
 AudioSource:
   m_ObjectHideFlags: 0

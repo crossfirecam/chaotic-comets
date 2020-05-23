@@ -18,9 +18,11 @@ public abstract partial class Ufo : MonoBehaviour
         if (!deathStarted)
         {
             forceField.SetActive(false);
+
             ufoRetreating = false;
             ufoTeleporting = true;
             teleportEffect.SetActive(true);
+
             Renderer[] listOfUFOparts = GetComponentsInChildren<Renderer>();
             foreach (Renderer rend in listOfUFOparts)
             {
@@ -64,7 +66,12 @@ public abstract partial class Ufo : MonoBehaviour
     {
         if (!deathStarted)
         {
-            gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.AlienRespawn);
+            if (!gM.tutorialMode) {
+                gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.AlienRespawn);
+            }
+            else {
+                gM.Refs.tutorialManager.GetComponent<TutorialManager>().ufoGone = true;
+            }
             Destroy(gameObject);
         }
     }

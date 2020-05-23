@@ -29,8 +29,8 @@ public class PlayerUiSounds : MonoBehaviour
 
     public void UpdatePointDisplays()
     {
-        // If credits are higher than bonus threshold, and bonus is not set to 0 (credits cheated in), then grant a life
-        if (p.credits > p.bonus && p.bonus != 0)
+        // If credits are higher than bonus threshold, then grant a life
+        if (p.credits > p.bonus)
         {
             p.bonus += bonusInterval;
             p.plrPowerups.GrantExtraLife();
@@ -38,6 +38,11 @@ public class PlayerUiSounds : MonoBehaviour
 
         scoreText.text = "Credits:\n" + p.credits;
         livesText.text = "Lives: " + p.lives;
+        if (p.gM.tutorialMode)
+        {
+            livesText.text = "Lives: ∞";
+            p.lives = 2; // Ensure player never game-overs in tutorial
+        }
     }
 
     public void CheckSounds(int intent)

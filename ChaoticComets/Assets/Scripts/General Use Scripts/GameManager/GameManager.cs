@@ -117,4 +117,5 @@ public class GameManagerHiddenVars
     public PlayerMain playerShip1;
     public PlayerMain playerShip2;
     public GameObject largeAsteroidProp, ufoFollowerProp, ufoPasserProp, canisterProp;
+    public GameObject largeAsteroidSafeProp;
 }

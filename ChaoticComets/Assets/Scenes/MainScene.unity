@@ -404,7 +404,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Your ship can only take <u>so much damage</u>. <i>Run into the asteroids
-    until shields reach zero</i>. Your bullets are disabled for a short while.
+    until shields reach zero</i>. Ramming harder sustains more damage.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -473,10 +473,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 52247011}
-    characterCount: 133
+    characterCount: 125
     spriteCount: 0
-    spaceCount: 23
-    wordCount: 24
+    spaceCount: 20
+    wordCount: 21
     linkCount: 0
     lineCount: 2
     pageCount: 1
@@ -1795,10 +1795,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Occasionally stray supply <u>canteens</u> can be found. Fly into it.
+  m_text: 'Occasionally stray supply <u>canteens</u> can be found. Fly into it,
 
-    Not
-    too slow now, they quickly <u>disappear</u>.'
+    don''t
+    shoot. Not too slow, they quickly <u>disappear</u>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1867,10 +1867,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 454554878}
-    characterCount: 103
+    characterCount: 112
     spriteCount: 0
-    spaceCount: 16
-    wordCount: 17
+    spaceCount: 17
+    wordCount: 18
     linkCount: 0
     lineCount: 2
     pageCount: 1
@@ -3005,7 +3005,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &599989133
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4580,7 +4580,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &902656198
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4619,10 +4619,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'These craft are tough to take down. Back to canisters though,
+  m_text: 'Now the ship is fighting back. <u>Rapid Shot</u> from canisters is
 
-    <u>Rapid
-    Shot</u> is partiularly good against UFOs.'
+    good
+    against UFOs. <i>Hit the green UFO with all four bullets<i>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4691,10 +4691,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 902656199}
-    characterCount: 106
+    characterCount: 119
     spriteCount: 0
-    spaceCount: 17
-    wordCount: 18
+    spaceCount: 21
+    wordCount: 22
     linkCount: 0
     lineCount: 2
     pageCount: 1
@@ -5710,10 +5710,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Pilots are teleportated back to depot to be re-armed.
+  m_text: 'Pilots are teleportated back to depot to be re-armed. Remaining ships
 
-    Remaining ships
-    are your <u>Lives</u> counter. <i>Press Q to continue.</i>'
+    are
+    your <u>Lives</u> counter. <i>Press Q to continue when recovered</i>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5782,10 +5782,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1072631902}
-    characterCount: 122
+    characterCount: 129
     spriteCount: 0
-    spaceCount: 19
-    wordCount: 20
+    spaceCount: 20
+    wordCount: 21
     linkCount: 0
     lineCount: 2
     pageCount: 1
@@ -6484,10 +6484,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Unfortunately, you''re not here to joyride. Any <u>asteroids</u> need
+  m_text: 'Unfortunately, you''re not here to joyride. All <u>asteroids</u> need
     to be
 
-    cleared pronto. This is a foam one, it won''t damage you.'
+    cleared pronto. This blue one is a training model, it won''t damage
+    you.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6556,10 +6557,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1297908623}
-    characterCount: 124
+    characterCount: 139
     spriteCount: 0
-    spaceCount: 21
-    wordCount: 22
+    spaceCount: 23
+    wordCount: 24
     linkCount: 0
     lineCount: 2
     pageCount: 1
@@ -6723,10 +6724,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Careful, they split into pieces. Clear them all to continue.
+  m_text: 'Careful, they split into pieces. <u>Big</u> > <u>Medium</u> > <u>Small</u>
+    > <u><i>Gone</i></u>.
 
-    <u>Big</u>
-    > <u>Medium</u> > <u>Small</u> > <u><i>Gone</i></u>'
+    Clear them all to continue, or press Q to skip this.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6795,10 +6796,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1350944456}
-    characterCount: 60
+    characterCount: 114
     spriteCount: 0
-    spaceCount: 11
-    wordCount: 9
+    spaceCount: 22
+    wordCount: 20
     linkCount: 0
     lineCount: 2
     pageCount: 1
@@ -7030,10 +7031,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Another one! The <u>green</u> ones have weaker guns, but
+  m_text: 'Another one! The <u>green</u> ones have weaker guns, but give chase.
 
-    actively
-    pursue you. <i>Avoid their shots five times to move on</i>.'
+    Right
+    now this one can''t shoot or take damage. <i>Press Q to move on</i>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7102,10 +7103,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1373444791}
-    characterCount: 111
+    characterCount: 128
     spriteCount: 0
-    spaceCount: 19
-    wordCount: 20
+    spaceCount: 24
+    wordCount: 25
     linkCount: 0
     lineCount: 2
     pageCount: 1
@@ -8161,10 +8162,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Up-close firepower is great, but what if you prefer sharpshooting?
+  m_text: 'Up-close firepower is great, but for long distance weaponry
 
     <u>Far
-    Shot</u> is for you. Try it out. <i>Q again to move on</i>.'
+    Shot</u> is best. Try it out. <i>Q again to move on</i>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8233,10 +8234,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1546492505}
-    characterCount: 119
+    characterCount: 109
     spriteCount: 0
-    spaceCount: 22
-    wordCount: 23
+    spaceCount: 20
+    wordCount: 21
     linkCount: 0
     lineCount: 2
     pageCount: 1
@@ -10100,10 +10101,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'When damaged enough, enemy craft will retreat away.
+  m_text: 'When damaged enough, enemies will retreat. <i>To progress here,
 
-    If you get the
-    opportunity, <i>shoot them while they''re teleporting</i>.'
+    weaken
+    them, pursue them, then shoot them while they''re teleporting</i>.
+
+    Press
+    ''Q'' to skip if you''re having trouble.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10138,7 +10142,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 258
+  m_textAlignment: 1026
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -10148,7 +10152,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 130
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -10172,12 +10176,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1900845108}
-    characterCount: 117
+    characterCount: 173
     spriteCount: 0
-    spaceCount: 17
-    wordCount: 18
+    spaceCount: 26
+    wordCount: 27
     linkCount: 0
-    lineCount: 2
+    lineCount: 3
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -10745,6 +10749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c402554bc9b14e341b6cfb07737d21e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popUpIndex: 11
   player1: {fileID: 1146411255}
   popups:
   - {fileID: 1808252452}
@@ -10766,6 +10771,8 @@ MonoBehaviour:
   - {fileID: 1789261557}
   - {fileID: 1382988973}
   - {fileID: 1633446421}
+  ufoGone: 0
+  ufoFollowerDocile: 0
 --- !u!4 &2046260826
 Transform:
   m_ObjectHideFlags: 0

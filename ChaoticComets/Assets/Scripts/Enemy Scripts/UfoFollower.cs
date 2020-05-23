@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using UnityEditorInternal;
 using UnityEngine;
 
 /*
@@ -9,7 +11,6 @@ using UnityEngine;
 public class UfoFollower : Ufo
 {
     private bool movingRandomly = false;
-
     private void Update()
     {
         // Weapon systems. If criteria are met, then shoot depending on enemy type
@@ -87,17 +88,19 @@ public class UfoFollower : Ufo
 
     internal void WeaponLogicFollower()
     {
+        if (!(gM.tutorialMode && tM.ufoFollowerDocile))
+        {
+            Vector2 towardPlayer = (player.position - transform.position);
+            float angle = Mathf.Atan2(towardPlayer.y, towardPlayer.x) * Mathf.Rad2Deg - 90f;
+            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        Vector2 towardPlayer = (player.position - transform.position);
-        float angle = Mathf.Atan2(towardPlayer.y, towardPlayer.x) * Mathf.Rad2Deg - 90f;
-        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+            Vector3 bulletPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - 4);
+            GameObject newBullet = Instantiate(bullet, bulletPosition, q);
+            newBullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, bulletSpeed));
+            Destroy(newBullet, 2f);
 
-        Vector3 bulletPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - 4);
-        GameObject newBullet = Instantiate(bullet, bulletPosition, q);
-        newBullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, bulletSpeed));
-        Destroy(newBullet, 2f);
-
-        lastTimeShot = Time.time;
+            lastTimeShot = Time.time;
+        }
     }
 
     private void FindPlayerFollower()

@@ -54,7 +54,7 @@ public class PlayerSpawnDeath : MonoBehaviour
 
     public void RespawnShip()
     {
-        if (p.lives > 0 && p.gM.asteroidCount != 0)
+        if (p.lives > 0 && (p.gM.asteroidCount != 0 || p.gM.tutorialMode))
         {
             // If difficulty is Easy, equip Retro Thruster every respawn
             if (BetweenScenesScript.Difficulty == 0)

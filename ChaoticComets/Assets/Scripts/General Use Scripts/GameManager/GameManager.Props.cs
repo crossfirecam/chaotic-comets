@@ -45,7 +45,19 @@ public partial class GameManager : MonoBehaviour
 
         float randomTime = Random.Range(minTime, maxTime);
 
-        if ((reason == PropSpawnReason.AlienFirst || reason == PropSpawnReason.AlienRespawn) && ufoAmountSpawned < ufoCap)
+        // If in the tutorial, canisters and aliens will respawn infinitely until dealt with
+        if (tutorialMode)
+        {
+            if (reason == PropSpawnReason.CanisterRespawn)
+            {
+                Invoke("RespawnCanister", 1.0f);
+            }
+            else if (reason == PropSpawnReason.AlienRespawn)
+            {
+                SpawnProp(PropType.UfoPasser); // Only passer UFOs respawn in Tutorial
+            }
+        }
+        else if ((reason == PropSpawnReason.AlienFirst || reason == PropSpawnReason.AlienRespawn) && ufoAmountSpawned < ufoCap)
         {
             if (levelNo > lastLevelWithoutEnemies)
             { // Alien will not appear until a certain level
@@ -53,11 +65,6 @@ public partial class GameManager : MonoBehaviour
                 Debug.Log($"Next UFO will spawn in: {randomTime}. Only {ufoCap - ufoAmountSpawned} more can spawn.");
                 Invoke("RespawnAlien", randomTime);
             }
-        }
-        // If in the tutorial, canisters will respawn infinitely until collected
-        else if ((reason == PropSpawnReason.CanisterRespawn) && tutorialMode)
-        {
-            Invoke("RespawnCanister", 1.0f);
         }
         else if ((reason == PropSpawnReason.CanisterFirst || reason == PropSpawnReason.CanisterRespawn) && canisterAmountSpawned < canisterCap)
         {
@@ -83,10 +90,10 @@ public partial class GameManager : MonoBehaviour
     public void RespawnCanister() { SpawnProp(PropType.Canister); }
 
     public enum PropType { Asteroid, Canister, UfoFollower, UfoPasser };
-    public void SpawnProp(PropType type, Vector2 chosenLocation = new Vector2())
+    public void SpawnProp(PropType type, Vector2 chosenLocation = default, bool safeVersion = false)
     {
         Vector2 spawnPosition = new Vector2();
-        if (chosenLocation == new Vector2())
+        if (chosenLocation == default)
         {
             float originChoice = Random.Range(0f, 4f);
             if (type == PropType.UfoPasser)
@@ -131,7 +138,14 @@ public partial class GameManager : MonoBehaviour
         }
         else if (type == PropType.Asteroid)
         {
-            GameObject newAsteroid = Instantiate(Refs.largeAsteroidProp, spawnPosition, Quaternion.identity);
+            GameObject newAsteroid;
+            //
+            if (!safeVersion) {
+                newAsteroid = Instantiate(Refs.largeAsteroidProp, spawnPosition, Quaternion.identity);
+            }
+            else {
+                newAsteroid = Instantiate(Refs.largeAsteroidSafeProp, spawnPosition, Quaternion.identity);
+            }
             asteroidCount += 1;
             if (instantkillAsteroids)
             {

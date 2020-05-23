@@ -9,7 +9,7 @@ using UnityEngine.UI;
  */
 public abstract partial class Ufo : MonoBehaviour
 {
-    internal GameManager gM;
+    [SerializeField] internal GameManager gM;
 
     // Movement, physics variables
     internal Rigidbody2D rb;
@@ -42,14 +42,16 @@ public abstract partial class Ufo : MonoBehaviour
     public GameObject bullet;
     public GameObject deathExplosion, playerBulletExplosion, teleportEffect;
     internal bool deathStarted = false, ufoTeleporting = false, ufoRetreating = false;
+    internal TutorialManager tM;
 
     // ----------
 
     // All UFO type enemies start by finding players, setting speed, etc
-    void Start()
+    internal virtual void Start()
     {
-        gM = GameObject.FindObjectOfType<GameManager>();
-        rb = GameObject.FindObjectOfType<Rigidbody2D>();
+        gM = FindObjectOfType<GameManager>();
+        rb = FindObjectOfType<Rigidbody2D>();
+        if (gM.tutorialMode) { tM = gM.Refs.tutorialManager.GetComponent<TutorialManager>(); }
 
         alienSpeedCurrent = alienSpeedBase;
 

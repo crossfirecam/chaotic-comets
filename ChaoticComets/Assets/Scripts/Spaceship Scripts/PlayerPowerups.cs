@@ -144,7 +144,8 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
         }
-        // When the ship is given an extra life, it plays the sound effect itself. Other powerup, play the sound.
+        // When the ship is given an extra life, it plays the sound effect itself.
+        // Other powerup, play the sound - unless credited to player after a shop screen.
         if (powerup != Powerups.ExtraLife && playSound)
         {
             Debug.Log($"{powerup} given to player {p.playerNumber}");
@@ -235,12 +236,7 @@ public class PlayerPowerups : MonoBehaviour
             default:
                 Debug.Log("Invalid powerup requested in PlayerPowerups");
                 break;
-
         }
-        // When the ship is given an extra life, it plays the sound effect itself. Other powerup, play the sound.
-        if (powerup != Powerups.ExtraLife)
-        {
-            p.plrUiSound.audioShipSFX.Play();
-        }
+        Debug.Log($"{powerup} removed from player {p.playerNumber}");
     }
 }

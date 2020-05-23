@@ -9,6 +9,12 @@ public abstract partial class Ufo : MonoBehaviour
     {
         if (playerBullet.gameObject.CompareTag("bullet") || playerBullet.gameObject.CompareTag("bullet2"))
         {
+            if (gM.tutorialMode && tM.ufoFollowerDocile)
+            {
+                FlickShieldOn();
+                ReflectBullet(playerBullet);
+            }
+
             // If UFO has shields up, don't deal damage. Instead, reflect bullet
             if (forceField.activeInHierarchy)
             {
