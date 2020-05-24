@@ -30,3 +30,4 @@ JingleLevelPassed - PUZZLE_Success_Beep_Three_Note_Climb_Delay_stereo
 MusicGameplay - Lunar Ambience LOOP
 MusicMainMenu - Space Station SLOW LOOP
 MusicShop - Deep Space Ambience LOOP
+MusicTutorial - Space Map LOOP

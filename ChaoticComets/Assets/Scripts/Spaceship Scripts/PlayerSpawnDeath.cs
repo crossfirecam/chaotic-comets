@@ -24,14 +24,22 @@ public class PlayerSpawnDeath : MonoBehaviour
             {
                 p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.RetroThruster);
             }
-            p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.RapidShot);
+            // If in tutorial mode, do not remove rapid shot (only section where player can die with a powerup)
+            if (!p.gM.tutorialMode)
+            {
+                p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.RapidShot);
+            }
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.TripleShot);
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.FarShot);
         }
         p.shields = 0;
-        p.lives--; p.plrUiSound.livesText.text = $"Lives: {p.lives}";
+        p.lives--;
+        p.plrUiSound.livesText.text = $"Lives: {p.lives}";
+        p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenCharging;
+
         GameObject newExplosion = Instantiate(p.deathExplosion, transform.position, transform.rotation);
         Destroy(newExplosion, 2f);
+
         PretendShipDoesntExist();
         p.gM.PlayerLostLife(p.playerNumber);
 

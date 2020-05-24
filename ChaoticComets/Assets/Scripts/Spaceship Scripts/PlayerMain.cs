@@ -9,8 +9,8 @@ using UnityEngine;
 public class PlayerMain : MonoBehaviour {
 
     // Player Statistics
-    public int credits, bonus, lives;
-    public float shields, power;
+    public int credits = 0, bonus = 9999, lives = 3;
+    public float shields = 80, power = 80;
 
     // General purpose variables
     internal Rigidbody2D rbPlayer;
@@ -38,7 +38,7 @@ public class PlayerMain : MonoBehaviour {
     internal PlayerSpawnDeath plrSpawnDeath = default;
     internal PlayerUiSounds plrUiSound = default;
 
-    public bool canShoot = true, canTeleport = true; // Only used to disable ship actions during some tutorial sections
+    public bool canShoot = true; // Only used to disable shooting during some tutorial sections
 
     // ----------
 

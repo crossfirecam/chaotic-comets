@@ -29,38 +29,25 @@ public partial class GameManager : MonoBehaviour
     void Start() {
         Cursor.visible = false;
         musicLoop = gameObject.GetComponent<AudioSource>();
-        // If in tutorial mode, activate TutorialManager
+        // If in tutorial mode, activate TutorialManager & tutorial music
         if (BetweenScenesScript.TutorialMode || tutorialMode)
         {
             Refs.tutorialManager.SetActive(true);
             tutorialMode = true;
+            gameObject.GetComponent<AudioSource>().clip = Refs.musicTutorial;
+            gameObject.GetComponent<AudioSource>().volume = 0.35f;
+            PlayMusicIfEnabled();
         }
         // If in normal gameplay, set player ships to become active and start gameplay
         else
         {
-            if (BetweenScenesScript.MusicVolume > 0f)
-            {
-                musicLoop.Play();
-            }
             if (BetweenScenesScript.PlayerCount == 2) {
                 Refs.player2GUI.SetActive(true);
                 Refs.playerShip2.gameObject.SetActive(true);
                 player2dead = false;
             }
-            if (BetweenScenesScript.ResumingFromSave) { // If resuming from save file, read from save file first
-                Saving_PlayerManager data = Saving_SaveManager.LoadData();
-                levelNo = data.level;
-                // Tell ships to 'play dead' (disable model & colliders) if previous shop says they're dead
-                if (BetweenScenesScript.player1TempLives == 0)
-                {
-                    Refs.playerShip1.plrSpawnDeath.PretendShipDoesntExist();
-                }
-                if (BetweenScenesScript.player2TempLives == 0 && BetweenScenesScript.PlayerCount == 2)
-                {
-                    Refs.playerShip2.plrSpawnDeath.PretendShipDoesntExist();
-                
-                }
-            }
+            CheckIfResumingFromSave();
+            PlayMusicIfEnabled();
             StartCoroutine(FadeBlack("from"));
             StartCoroutine(StartNewLevel());
         }
@@ -104,7 +91,9 @@ public partial class GameManager : MonoBehaviour
 [System.Serializable]
 public class GameManagerHiddenVars
 {
+    [Header("Tutorial References")]
     public GameObject tutorialManager;
+    public AudioClip musicTutorial;
 
     [Header("UI References")]
     public GameObject fadeBlack, player2GUI;

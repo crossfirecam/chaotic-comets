@@ -27,10 +27,10 @@ public class PlayerInput : MonoBehaviour {
         {
             p.plrWeapons.FiringLogic();
         }
-        // If power button is pressed, and ship has full power with colliders enabled, and level has no asteroids, then use power
-        if (Input.GetButtonDown($"Power{p.inputNameInsert}") && p.gM.asteroidCount != 0)
+        // If power button is pressed, and ship has full power with colliders enabled, and level has no asteroids, then use power (skip criteria if in tutorial mode)
+        if (Input.GetButtonDown($"Power{p.inputNameInsert}") && ((p.gM.asteroidCount != 0) || p.gM.tutorialMode))
         {
-            if (p.collisionsCanDamage && p.power == 80 && p.canTeleport)
+            if (p.collisionsCanDamage && p.power == 80)
             {
                 p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenCharging;
                 p.plrAbility.teleportIn.SetActive(true);

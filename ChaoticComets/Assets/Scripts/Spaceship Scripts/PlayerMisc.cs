@@ -18,13 +18,8 @@ public class PlayerMisc : MonoBehaviour
         // If tutorial mode, then ignore all start functions. Else, go ahead.
         if (!p.gM.tutorialMode)
         {
-            // If spaceship object created on first load, set default stats
-            // Else, spaceship object was resumed from savefile, ask savefile
-            if (!BetweenScenesScript.ResumingFromSave)
-            {
-                p.credits = 0; p.bonus = 9999; p.lives = 3; p.shields = 80;
-            }
-            else
+            // If spaceship object was resumed from savefile, ask savefile
+            if (BetweenScenesScript.ResumingFromSave)
             {
                 SetStatsForPlayer();
                 HandlePlayerLifeStates();

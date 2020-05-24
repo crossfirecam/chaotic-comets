@@ -54,7 +54,14 @@ public partial class GameManager : MonoBehaviour
             }
             else if (reason == PropSpawnReason.AlienRespawn)
             {
-                SpawnProp(PropType.UfoPasser); // Only passer UFOs respawn in Tutorial
+                if (Refs.tutorialManager.GetComponent<TutorialManager>().popUpIndex == 12)
+                {
+                    SpawnProp(PropType.UfoPasser);
+                }
+                else if (Refs.tutorialManager.GetComponent<TutorialManager>().popUpIndex == 15)
+                {
+                    SpawnProp(PropType.UfoFollower);
+                }
             }
         }
         else if ((reason == PropSpawnReason.AlienFirst || reason == PropSpawnReason.AlienRespawn) && ufoAmountSpawned < ufoCap)
@@ -139,8 +146,8 @@ public partial class GameManager : MonoBehaviour
         else if (type == PropType.Asteroid)
         {
             GameObject newAsteroid;
-            //
-            if (!safeVersion) {
+            if (!safeVersion)
+            {
                 newAsteroid = Instantiate(Refs.largeAsteroidProp, spawnPosition, Quaternion.identity);
             }
             else {

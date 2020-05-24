@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class TutorialManager : MonoBehaviour
 {
-    [SerializeField] private int popUpIndex = 0;
+    public int popUpIndex = 0;
     private GameManager gM;
     public PlayerMain player1;
+    private UfoFollower ufoFollower;
     public GameObject[] popups;
     private bool taskSetupDone = false, ufoHit = false;
     public bool ufoGone = false, ufoFollowerDocile = false;
@@ -16,7 +17,6 @@ public class TutorialManager : MonoBehaviour
     private void Start()
     {
         gM = FindObjectOfType<GameManager>();
-        player1.canTeleport = false;
         player1.power = 0;
         player1.plrUiSound.UpdatePointDisplays();
     }
@@ -87,7 +87,7 @@ public class TutorialManager : MonoBehaviour
                     DestroyAllAsteroids();
                     taskSetupDone = true;
                 }
-                ContinueIf(Input.GetKeyDown(KeyCode.Q) && player1.shields == 80);
+                ContinueIf(player1.shields == 80 && Input.GetKeyDown(KeyCode.Q));
                 break;
 
             case 8: // Canteen
@@ -159,6 +159,7 @@ public class TutorialManager : MonoBehaviour
                 {
                     ufoHit = false; ufoGone = false; ufoFollowerDocile = true;
                     gM.SpawnProp(GameManager.PropType.UfoFollower);
+                    ufoFollower = FindObjectOfType<UfoFollower>();
                     taskSetupDone = true;
                 }
                 ContinueIf(Input.GetKeyDown(KeyCode.Q));
@@ -167,26 +168,42 @@ public class TutorialManager : MonoBehaviour
             case 14: // Powerup RapidShot
                 if (!taskSetupDone)
                 {
-                    ufoFollowerDocile = false;
-                    player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot);
+                    StartCoroutine(ReplaceUfoFollower());
                     taskSetupDone = true;
                 }
-                ContinueIf(Input.GetKeyDown(KeyCode.Q));
+                ContinueIf(ufoFollower.alienHealth < 20);
                 break;
 
             case 15: // Retreat
-
-                ContinueIf(Input.GetKeyDown(KeyCode.Q));
+                if (!ufoFollower)
+                {
+                    StartCoroutine(ReplaceUfoFollower());
+                }
+                ContinueIf(ufoFollower.deathStarted || Input.GetKeyDown(KeyCode.Q)); // Allow skipping
                 break;
 
             case 16: // Powerup Insurance
-
-                ContinueIf(Input.GetKeyDown(KeyCode.Q));
+                if (!taskSetupDone)
+                {
+                    StartCoroutine(SetUpPopup16());
+                    taskSetupDone = true;
+                    player1.collisionsCanDamage = true;
+                }
+                if (player1.plrPowerups.ifInsuranceActive)
+                {
+                    ResetAsteroidsIfZero(false);
+                }
+                ContinueIf(player1.shields == 0);
                 break;
 
             case 17: // Teleport
-
-                ContinueIf(Input.GetKeyDown(KeyCode.Q));
+                if (!taskSetupDone)
+                {
+                    player1.power = 80;
+                    DestroyAllAsteroids();
+                    taskSetupDone = true;
+                }
+                ContinueIf(Input.GetKeyDown(KeyCode.Q) && player1.power == 80);
                 break;
 
             case 18: // End
@@ -196,23 +213,16 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    private void DestroyAllAsteroids()
+    private void ContinueIf(bool continuationCriteria)
     {
-        GameObject[] listOfAsteroids = GameObject.FindGameObjectsWithTag("asteroidParent");
-        foreach (GameObject asteroid in listOfAsteroids)
+        if (continuationCriteria)
         {
-            Destroy(asteroid.gameObject);
+            popUpIndex++;
+            taskSetupDone = false;
         }
-        gM.asteroidCount = 0;
     }
 
-    private void ResetAsteroidsIfZero(bool safeAsteroids)
-    {
-        if (gM.asteroidCount == 0)
-        {
-            CreateAsteroids(3, safeAsteroids);
-        }
-    }
+    // Asteroid methods
     private void CreateAsteroids(int num, bool safeAsteroids)
     {
         for (int i = 0; i < num; i++)
@@ -227,12 +237,49 @@ public class TutorialManager : MonoBehaviour
             }
         }
     }
-    private void ContinueIf(bool continuationCriteria)
+
+    private void ResetAsteroidsIfZero(bool safeAsteroids)
     {
-        if (continuationCriteria)
+        if (gM.asteroidCount == 0)
         {
-            popUpIndex++;
-            taskSetupDone = false;
+            CreateAsteroids(3, safeAsteroids);
         }
+    }
+    private void DestroyAllAsteroids()
+    {
+        GameObject[] listOfAsteroids = GameObject.FindGameObjectsWithTag("asteroidParent");
+        foreach (GameObject asteroid in listOfAsteroids)
+        {
+            Destroy(asteroid.gameObject);
+        }
+        gM.asteroidCount = 0;
+    }
+
+    // Ufo methods
+    private IEnumerator ReplaceUfoFollower()
+    {
+        if (ufoFollower)
+        {
+            ufoFollower.TeleportStart();
+            yield return new WaitForSeconds(3);
+        }
+        gM.SpawnProp(GameManager.PropType.UfoFollower);
+        ufoFollower = FindObjectOfType<UfoFollower>();
+
+        ufoFollowerDocile = false;
+        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot);
+        taskSetupDone = true;
+    }
+
+    // Other
+    private IEnumerator SetUpPopup16()
+    {
+        yield return new WaitForSeconds(3);
+        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance);
+        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot);
+        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot);
+        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot);
+        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster);
+        CreateAsteroids(3, false);
     }
 }
