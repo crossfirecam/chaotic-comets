@@ -6,7 +6,7 @@ public class MyButton : Button {
 
     protected override void Awake() {
         base.Awake();
-        eventSystem = GetComponent<MyEventSystemProvider>().eventSystem;
+        //eventSystem = GetComponent<MyEventSystemProvider>().eventSystem;
     }
 
     public override void OnPointerDown(PointerEventData eventData) {

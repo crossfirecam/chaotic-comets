@@ -6,10 +6,6 @@ public static class BetweenScenesScript {
     public static int PlayerCount = 1; // Defaut value of 1 player for debugging. Alternative is '2'.
     public static int Difficulty = 1; // Default value of Normal difficulty for debugging. Alternatives are '0' Easy, and '2' Hard.
 
-    // Both players start with keyboard by default. '0' = controller, '1' = keyboard
-    public static int ControlTypeP1 = 1;
-    public static int ControlTypeP2 = 1; 
-
     // Default value of volume is full volume. Once Chaotic Comets is run once on a system, PlayerPrefs overwrites this value upon startup.
     public static float MusicVolume = 1.0f;
     public static float SFXVolume = 1.0f;

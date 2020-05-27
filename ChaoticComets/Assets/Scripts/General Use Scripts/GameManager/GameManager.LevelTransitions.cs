@@ -14,7 +14,8 @@ public partial class GameManager : MonoBehaviour
         // Asteroid number depends on level number. Iterated in SpawnProp()
         asteroidCount = 0;
         for (int i = 0; i < levelNo + 1; i++) { SpawnProp(PropType.Asteroid); }
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.01f);
+
         // Player Respawn
         if (!player1dead) { Refs.playerShip1.plrSpawnDeath.RespawnShip(); }
         if (!player2dead) { Refs.playerShip2.plrSpawnDeath.RespawnShip(); }

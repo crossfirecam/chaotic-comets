@@ -28,9 +28,8 @@ public partial class MainMenu : MonoBehaviour
     }
 
     private void Update() {
-        CheckForMenuNavCancel();
+        CheckForBackButton();
         CheckHighlightedButton();
-        CheckForControllerOrKeyboard();
     }
 
     /* ------------------------------------------------------------------------------------------------------------------

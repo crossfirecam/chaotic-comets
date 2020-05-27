@@ -33,7 +33,7 @@ public class PowerupBehaviour : MonoBehaviour {
         timeUntilWarning = Random.Range(8f, 12f);
         Invoke("StartExpiry", timeUntilWarning);
 
-        if (gM.CheckIfEndOfLevel()) { Debug.Log("Canister attempted to spawn during level transition"); Destroy(gameObject); }
+        if (gM.CheckIfEndOfLevel()) { print("Canister attempted to spawn during level transition"); Destroy(gameObject); }
     }
 
     // Every frame, check if canister needs to loop screen

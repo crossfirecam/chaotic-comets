@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Net;
-using UnityEditorInternal;
 using UnityEngine;
 
 /*
@@ -142,7 +141,7 @@ public class UfoFollower : Ufo
         }
         if (direction == Vector2.zero)
         {
-            Debug.Log("UFO spawned when both players are dead. Randomise direction.");
+            print("UFO spawned when both players are dead. Randomise direction.");
             direction = Random.insideUnitCircle;
         }
 

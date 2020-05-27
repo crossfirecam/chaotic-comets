@@ -1,11 +1,15 @@
-﻿using System.Collections;
+﻿using Rewired;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerInput : MonoBehaviour {
 
     [SerializeField] PlayerMain p = default;
+    public int playerId = 0;
+    private Player player;
 
     // Ship movement & teleport variables
     public float thrust, turnThrust;
@@ -13,22 +17,44 @@ public class PlayerInput : MonoBehaviour {
     public float thrustInput, turnInput;
     internal bool isNotTeleporting = true;
 
-    // Contains code for receiving inputs from player
-    internal void GetInputs()
+    private void Awake()
     {
-        // Get axis-based inputs
-        thrustInput = -Input.GetAxis($"Thrust{p.inputNameInsert}");
-        turnInput = -Input.GetAxis($"Rotate Ship{p.inputNameInsert}");
+        player = ReInput.players.GetPlayer(playerId);
+    }
 
-        // Get button-based inputs
-        // If fire button is pressed, and ship is not teleporting, not dead, and able to fire, then fire
-        if (Input.GetButton($"Primary Fire{p.inputNameInsert}")
-            && isNotTeleporting && p.shields != 0 && Time.time > p.plrWeapons.nextFire)
+    // Contains code for receiving inputs from player
+    internal void CheckInputs()
+    {
+        turnInput = -player.GetAxis("Rotate");
+        thrustInput = -player.GetAxis("Move");
+
+        // If fire button is pressed or held, and ship is not teleporting, not dead, and able to fire, then fire
+        if (player.GetButton("Shoot"))
         {
-            p.plrWeapons.FiringLogic();
+            if (isNotTeleporting && p.shields != 0 && Time.time > p.plrWeapons.nextFire)
+            {
+                p.plrWeapons.FiringLogic();
+            }
         }
-        // If power button is pressed, and ship has full power with colliders enabled, and level has no asteroids, then use power (skip criteria if in tutorial mode)
-        if (Input.GetButtonDown($"Power{p.inputNameInsert}") && ((p.gM.asteroidCount != 0) || p.gM.tutorialMode))
+
+        if (player.GetButtonDown("Ability"))
+        {
+            UseAbility();
+        }
+        if (player.GetButtonDown("Pause"))
+        {
+            if (!p.gM.Refs.gamePausePanel.activeInHierarchy)
+                p.gM.PauseGame(0);
+            else
+                p.gM.PauseGame(1);
+        }
+    }
+
+    private void UseAbility()
+    {
+        // If power button is pressed, and level has no asteroids, then proceed (criteria skipped in tutorial mode).
+        // Then check if ship has full power with colliders enabled.
+        if (((p.gM.asteroidCount != 0) || p.gM.tutorialMode))
         {
             if (p.collisionsCanDamage && p.power == 80)
             {
@@ -37,31 +63,6 @@ public class PlayerInput : MonoBehaviour {
                 p.plrMisc.StartCoroutine("FadeShip", "Out");
                 p.plrAbility.Invoke("Hyperspace", 2f);
             }
-        }
-    }
-
-    // Alters inputTypeAdd string, so that only buttons on the selected controller work
-    internal void InputChoice()
-    {
-        if (BetweenScenesScript.ControlTypeP1 == 0 && p.playerNumber == 1)
-        {
-            p.inputNameInsert = " (P1joy)";
-        }
-        else if (BetweenScenesScript.ControlTypeP1 == 1 && p.playerNumber == 1)
-        {
-            p.inputNameInsert = " (P1key)";
-        }
-        else if (BetweenScenesScript.ControlTypeP2 == 0 && p.playerNumber == 2)
-        {
-            p.inputNameInsert = " (P2joy)";
-        }
-        else if (BetweenScenesScript.ControlTypeP2 == 1 && p.playerNumber == 2)
-        {
-            p.inputNameInsert = " (P2key)";
-        }
-        else
-        {
-            Debug.LogError("Invalid player/controller configuration.");
         }
     }
 }

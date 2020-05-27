@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class PlayerPowerups : MonoBehaviour
@@ -140,7 +139,7 @@ public class PlayerPowerups : MonoBehaviour
                 p.ScorePoints(1000);
                 break;
             default:
-                Debug.Log("Invalid powerup requested in PlayerPowerups");
+                print("Invalid powerup requested in PlayerPowerups");
                 break;
 
         }
@@ -148,7 +147,7 @@ public class PlayerPowerups : MonoBehaviour
         // Other powerup, play the sound - unless credited to player after a shop screen.
         if (powerup != Powerups.ExtraLife && playSound)
         {
-            Debug.Log($"{powerup} given to player {p.playerNumber}");
+            print($"{powerup} given to player {p.playerNumber}");
             p.plrUiSound.audioShipSFX.clip = powerupReceived;
             p.plrUiSound.audioShipSFX.Play();
         }
@@ -163,7 +162,7 @@ public class PlayerPowerups : MonoBehaviour
 
     public void FindWhatToGivePlayer()
     {
-        Debug.Log("All powerups obtained");
+        print("All powerups obtained");
         powerRandomiser = Random.Range(0, 20);
         // 10% chance of 10,000 credits (and therefore an extra life)
         if (RandCheck(0, 2))
@@ -201,7 +200,7 @@ public class PlayerPowerups : MonoBehaviour
         }
         else
         {
-            Debug.Log("Unity Button attempted to spawn an invalid powerup.");
+            print("Unity Button attempted to spawn an invalid powerup.");
         }
     }
     private bool RandCheck(int min, int max)
@@ -234,9 +233,9 @@ public class PlayerPowerups : MonoBehaviour
                 p.plrUiSound.retroThrusterPowerup.gameObject.SetActive(false);
                 break;
             default:
-                Debug.Log("Invalid powerup requested in PlayerPowerups");
+                print("Invalid powerup requested in PlayerPowerups");
                 break;
         }
-        Debug.Log($"{powerup} removed from player {p.playerNumber}");
+        print($"{powerup} removed from player {p.playerNumber}");
     }
 }

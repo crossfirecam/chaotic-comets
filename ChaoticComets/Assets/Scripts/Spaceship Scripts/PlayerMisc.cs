@@ -25,7 +25,7 @@ public class PlayerMisc : MonoBehaviour
                 HandlePlayerLifeStates();
 
                 // Report back what was loaded from ships.
-                Debug.Log($"Loaded. Player {p.playerNumber}: {p.shields} shields, {p.credits} credits (shop save amount), " +
+                print($"Loaded. Player {p.playerNumber}: {p.shields} shields, {p.credits} credits (shop save amount), " +
                     $"{BetweenScenesScript.player1TempCredits} credits (right now, after shop), {p.bonus} bonus threshold, {p.lives} lives.");
             }
 

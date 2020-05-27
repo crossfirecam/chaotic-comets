@@ -5,10 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class HelpMenu : MonoBehaviour {
 
-    void Update() {
-        if (Input.GetButtonDown("MenuNavCancel") || Input.GetButtonDown("MenuNavSubmit")) {
-             VisitMain();
-        }
+    private void OnMenuGoBack()
+    {
+        VisitMain();
     }
 
     public void VisitMain() {

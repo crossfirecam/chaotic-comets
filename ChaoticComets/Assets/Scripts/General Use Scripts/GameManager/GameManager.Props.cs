@@ -10,7 +10,8 @@ public partial class GameManager : MonoBehaviour
     private float ufoAmountSpawned, canisterAmountSpawned, ufoCap, canisterCap = 1; // Variables used to track how many props have, and can spawn.
 
     [Header("Player Status Variables")]
-    [HideInInspector] public bool player1dead = false, player2dead = true; // Only one player by default
+    public bool player1dead = false;
+    public bool player2dead = true; // Only one player by default
     [HideInInspector] public bool player1TEMPDEAD = false, player2TEMPDEAD = false; // Only used to alert UFO that player is temporarily inactive
 
     public enum PropSpawnReason { AlienFirst, CanisterFirst, AlienRespawn, CanisterRespawn };
@@ -69,14 +70,14 @@ public partial class GameManager : MonoBehaviour
             if (levelNo > lastLevelWithoutEnemies)
             { // Alien will not appear until a certain level
                 ufoAmountSpawned += 1;
-                Debug.Log($"Next UFO will spawn in: {randomTime}. Only {ufoCap - ufoAmountSpawned} more can spawn.");
+                print($"Next UFO will spawn in: {randomTime}. Only {ufoCap - ufoAmountSpawned} more can spawn.");
                 Invoke("RespawnAlien", randomTime);
             }
         }
         else if ((reason == PropSpawnReason.CanisterFirst || reason == PropSpawnReason.CanisterRespawn) && canisterAmountSpawned < canisterCap)
         {
             canisterAmountSpawned += 1;
-            Debug.Log($"Next canister will spawn in: {randomTime}. Only {canisterCap - canisterAmountSpawned} more can spawn.");
+            print($"Next canister will spawn in: {randomTime}. Only {canisterCap - canisterAmountSpawned} more can spawn.");
             Invoke("RespawnCanister", randomTime);
         }
     }
@@ -176,7 +177,7 @@ public partial class GameManager : MonoBehaviour
     // If a player dies, set the value for their death. If both are dead, game is over
     public void PlayerDied(int playerThatDied)
     {
-        Debug.Log($"Player {playerThatDied} has died.");
+        print($"Player {playerThatDied} has died.");
         if (playerThatDied == 1) { player1dead = true; }
         else if (playerThatDied == 2) { player2dead = true; }
         if (player1dead && player2dead)

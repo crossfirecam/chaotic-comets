@@ -29,4 +29,19 @@ public partial class GameManager : MonoBehaviour
             musicLoop.Play();
         }
     }
+
+    private void OnPause()
+    {
+        if (!Refs.gameOverPanel.activeInHierarchy)
+        {
+            if (Refs.gamePausePanel.activeInHierarchy)
+            {
+                PauseGame(1);
+            }
+            else
+            {
+                PauseGame(0);
+            }
+        }
+    }
 }

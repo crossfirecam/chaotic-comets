@@ -382,6 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p: {fileID: 114949645773383002}
+  playerId: 1
   thrust: 300
   turnThrust: 200
   thrustInput: 0

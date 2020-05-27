@@ -5,31 +5,8 @@ using UnityEngine.SceneManagement;
 
 public partial class MainMenu : MonoBehaviour
 {
-    public void StartGame(int i)
+    public void StartGame()
     {
-        if (BetweenScenesScript.PlayerCount == 1)
-        {
-            if (i == 0) { BetweenScenesScript.ControlTypeP1 = 1; }
-            else { BetweenScenesScript.ControlTypeP1 = 0; }
-        }
-        if (BetweenScenesScript.PlayerCount == 2)
-        {
-            if (i == 0)
-            {
-                BetweenScenesScript.ControlTypeP1 = 1;
-                BetweenScenesScript.ControlTypeP2 = 1;
-            }
-            else if (i == 1)
-            {
-                BetweenScenesScript.ControlTypeP1 = 0;
-                BetweenScenesScript.ControlTypeP2 = 1;
-            }
-            else
-            {
-                BetweenScenesScript.ControlTypeP1 = 0;
-                BetweenScenesScript.ControlTypeP2 = 0;
-            }
-        }
         StartCoroutine(FadeBlack("to"));
         Invoke("LoadScene", 1f);
     }

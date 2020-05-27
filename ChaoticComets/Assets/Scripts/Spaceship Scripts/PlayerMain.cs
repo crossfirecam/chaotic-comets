@@ -18,7 +18,6 @@ public class PlayerMain : MonoBehaviour {
     internal CapsuleCollider2D capsCollider;
     internal GameManager gM;
     public int playerNumber;
-    internal string inputNameInsert;
     public GameObject canister;
     private float nextDamagePossible = 0.0F;
 
@@ -44,14 +43,13 @@ public class PlayerMain : MonoBehaviour {
 
     void Start () {
         GetComponents();
-        plrInput.InputChoice();
         plrMisc.OtherStartFunctions();
     }
     
     // If game is not paused, then run per-frame updates
     void Update () {
         if (!gM.Refs.gamePausePanel.activeInHierarchy) {
-            plrInput.GetInputs();
+            plrInput.CheckInputs();
             plrMovement.ShipMovement();
             gM.CheckScreenWrap(transform);
             plrUiSound.UpdateBars();

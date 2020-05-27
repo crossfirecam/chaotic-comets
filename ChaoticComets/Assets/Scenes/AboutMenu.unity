@@ -1402,6 +1402,7 @@ GameObject:
   - component: {fileID: 2121217274}
   - component: {fileID: 2121217273}
   - component: {fileID: 2121217276}
+  - component: {fileID: 2121217277}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1500,6 +1501,41 @@ MonoBehaviour:
   devText: {fileID: 1787644969}
   devNextButtonText: {fileID: 876395510}
   returnToMenuButton: {fileID: 287317114}
+--- !u!114 &2121217277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121217272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 26f5f4491b616944db1e9b25d9685e5b,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fba6277c-209e-4a00-8946-c2080c13b56c
+    m_ActionName: Menu Controls/MenuGoBack[/XInputControllerWindows/buttonEast]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Menu Controls
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1001 &8198620064037957885
 PrefabInstance:
   m_ObjectHideFlags: 0

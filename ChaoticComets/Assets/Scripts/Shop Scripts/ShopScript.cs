@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Rewired;
+using Rewired.Integration.UnityUI;
 
 public class ShopScript : MonoBehaviour {
 
@@ -13,7 +15,6 @@ public class ShopScript : MonoBehaviour {
     // Pause UI
     public GameObject gamePausePanel;
     public Button buttonWhenPaused, buttonWhenLeavingPauseBugFix;
-    public Text swapP1text, swapP2text;
 
     // Fading & music
     public GameObject fadeBlack, player2GUI;
@@ -29,8 +30,7 @@ public class ShopScript : MonoBehaviour {
 
     // Event System handling
     public EventSystem pauseEventSystem;
-    public EventSystemShop p1JoyEvents, p1KeyEvents, p2JoyEvents, p2KeyEvents;
-    private EventSystem p1SelectedSystem, p2SelectedSystem;
+    public EventSystemShop p1Events, p2Events;
 
     // Readying before level transition
     public Button p1ReadyButton, p2ReadyButton;
@@ -45,6 +45,8 @@ public class ShopScript : MonoBehaviour {
 
         // Nullexception is possible here, but only if shop is loaded without a save file. In typical gameplay it isn't possible
         data = Saving_SaveManager.LoadData();
+
+        p1Events.gameObject.SetActive(true);
         p1ShieldBar.fillAmount = data.player1health / 80;
         BetweenScenesScript.player1TempCredits = data.player1credits;
         BetweenScenesScript.player1TempLives = data.player1lives;
@@ -58,7 +60,9 @@ public class ShopScript : MonoBehaviour {
             p2IsReady = true;
             Player1OnlyGUI();
         }
-        else if (data.playerCount == 2) {
+        else if (data.playerCount == 2)
+        {
+            p2Events.gameObject.SetActive(true);
             player2GUI.SetActive(true);
             p2ShieldBar.fillAmount = data.player2health / 80;
             BetweenScenesScript.player2TempCredits = data.player2credits;
@@ -71,26 +75,24 @@ public class ShopScript : MonoBehaviour {
             readyPromptText.text = $"Both players 'Ready' to\nContinue to Level {data.level + 1}...";
         }
 
-        SetActiveEventSystems(1);
         // If space or K is held during level transition, the player will instantly ready up. This small section of code prevents
         // that by calling the Ready button to activate one frame later.
         StartCoroutine(DelayedReady());
 
         UpdateButtonText();
-        UpdateEventSystemChoices();
         StartCoroutine(FadeBlack("from"));
         Cursor.visible = false;
     }
 
     private IEnumerator DelayedReady() {
-        p1SelectedSystem.SetSelectedGameObject(buttonWhenLeavingPauseBugFix.gameObject);
+        p1Events.SetSelectedGameObject(buttonWhenLeavingPauseBugFix.gameObject);
         if (BetweenScenesScript.PlayerCount == 2) {
-            p2SelectedSystem.SetSelectedGameObject(buttonWhenLeavingPauseBugFix.gameObject);
+            p2Events.SetSelectedGameObject(buttonWhenLeavingPauseBugFix.gameObject);
         }
         yield return new WaitForSeconds(0.2f);
-        p1SelectedSystem.SetSelectedGameObject(p1ReadyButton.gameObject);
+        p1Events.SetSelectedGameObject(p1ReadyButton.gameObject);
         if (BetweenScenesScript.PlayerCount == 2) {
-            p2SelectedSystem.SetSelectedGameObject(p2ReadyButton.gameObject);
+            p2Events.SetSelectedGameObject(p2ReadyButton.gameObject);
         }
     }
 
@@ -107,14 +109,14 @@ public class ShopScript : MonoBehaviour {
         }
         // Each frame, check what button is highlighted. Pull a button back into focus if mouse clicks away from a button.
         // If the mouse is used to click auto highlight away, then drag a highlight back onto a certain button.
-        if (p1SelectedSystem.gameObject.activeInHierarchy) {
-            if (p1SelectedSystem.currentSelectedGameObject == null || p1SelectedSystem.currentSelectedGameObject.Equals(null)) {
-                p1SelectedSystem.SetSelectedGameObject(p1ReadyButton.gameObject);
+        if (p1Events.gameObject.activeInHierarchy) {
+            if (p1Events.currentSelectedGameObject == null || p1Events.currentSelectedGameObject.Equals(null)) {
+                p1Events.SetSelectedGameObject(p1ReadyButton.gameObject);
             }
         }
-        if (BetweenScenesScript.PlayerCount == 2 && p2SelectedSystem.gameObject.activeInHierarchy) {
-            if (p2SelectedSystem.currentSelectedGameObject == null || p2SelectedSystem.currentSelectedGameObject.Equals(null)) {
-                p2SelectedSystem.SetSelectedGameObject(p2ReadyButton.gameObject);
+        if (BetweenScenesScript.PlayerCount == 2 && p2Events.gameObject.activeInHierarchy) {
+            if (p2Events.currentSelectedGameObject == null || p2Events.currentSelectedGameObject.Equals(null)) {
+                p2Events.SetSelectedGameObject(p2ReadyButton.gameObject);
             }
         }
         if (pauseEventSystem.gameObject.activeInHierarchy) {
@@ -125,54 +127,34 @@ public class ShopScript : MonoBehaviour {
     }
 
     // Code for shop's Ready system. If both players are ready, shop closes.
-    public void ReadyUp(int i) {
+    public void ReadyUp(int plrReady) {
         // 
-        Navigation customNav = new Navigation {
-            mode = Navigation.Mode.Explicit };
-        Button[] listOfButtons = GameObject.FindObjectsOfType<Button>();
+        Navigation customNav = new Navigation { mode = Navigation.Mode.Explicit };
+        Button[] listOfButtons = FindObjectsOfType<Button>();
 
-
-        if (!p1IsReady && i == 1) {
-            p1IsReady = true; p1ReadyButton.GetComponentInChildren<Text>().text = "Unready";
-            customNav.selectOnUp = null; p1ReadyButton.GetComponent<Button>().navigation = customNav;
-
-            foreach (Button gameObj in listOfButtons) { // Find all P1 buttons that aren't 'Ready' button, and disable them
-                if (gameObj.transform.name.StartsWith("P1") && !gameObj.transform.name.EndsWith("Ready")) {
-                    gameObj.GetComponent<Button>().interactable = false;
-                }
-            }
+        if (plrReady == 1)
+        {
+            p1IsReady = !p1IsReady;
+            p1ReadyButton.GetComponentInChildren<Text>().text = p1IsReady ? "Unready" : "Ready";
+            customNav.selectOnUp = p1IsReady ? null : p1UpgButton3;
+            p1ReadyButton.GetComponent<Button>().navigation = customNav;
         }
-        else if (p1IsReady && i == 1) {
-            p1IsReady = false; p1ReadyButton.GetComponentInChildren<Text>().text = "Ready";
-            customNav.selectOnUp = p1UpgButton3; p1ReadyButton.GetComponent<Button>().navigation = customNav;
-
-            foreach (Button gameObj in listOfButtons) { // Find all P1 buttons that aren't 'Ready' button, and disable them
-                if (gameObj.transform.name.StartsWith("P1") && !gameObj.transform.name.EndsWith("Ready")) {
-                    gameObj.GetComponent<Button>().interactable = true;
-                }
-            }
+        else
+        {
+            p2IsReady = !p2IsReady;
+            p2ReadyButton.GetComponentInChildren<Text>().text = p2IsReady ? "Unready" : "Ready";
+            customNav.selectOnUp = p2IsReady ? null : p2UpgButton3;
+            p2ReadyButton.GetComponent<Button>().navigation = customNav;
         }
 
-        if (!p2IsReady && i == 2) {
-            p2IsReady = true; p2ReadyButton.GetComponentInChildren<Text>().text = "Unready";
-            customNav.selectOnUp = null; p1ReadyButton.GetComponent<Button>().navigation = customNav;
-
-            foreach (Button gameObj in listOfButtons) { // Find all P1 buttons that aren't 'Ready' button, and disable them
-                if (gameObj.transform.name.StartsWith("P2") && !gameObj.transform.name.EndsWith("Ready")) {
-                    gameObj.GetComponent<Button>().interactable = false;
-                }
+        foreach (Button gameObj in listOfButtons)
+        { // Find all P1 buttons that aren't 'Ready' button, and disable them
+            if (gameObj.transform.name.StartsWith(plrReady == 1 ? "P1" : "P2") && !gameObj.transform.name.EndsWith("Ready"))
+            {
+                gameObj.GetComponent<Button>().interactable = plrReady == 1 ? !p1IsReady : !p2IsReady;
             }
         }
-        else if (p2IsReady && i == 2) {
-            p2IsReady = false; p2ReadyButton.GetComponentInChildren<Text>().text = "Ready";
-            customNav.selectOnUp = p2UpgButton3; p1ReadyButton.GetComponent<Button>().navigation = customNav;  
 
-            foreach (Button gameObj in listOfButtons) { // Find all P1 buttons that aren't 'Ready' button, and disable them
-                if (gameObj.transform.name.StartsWith("P2") && !gameObj.transform.name.EndsWith("Ready")) {
-                    gameObj.GetComponent<Button>().interactable = true;
-                }
-            }
-        }
         if (p1IsReady && p2IsReady) {
             p1ReadyButton.GetComponentInChildren<Text>().text = "";
             p2ReadyButton.GetComponentInChildren<Text>().text = "";
@@ -201,16 +183,16 @@ public class ShopScript : MonoBehaviour {
     * ------------------------------------------------------------------------------------------------------------------ */
 
     public void PerformUpgradeP1(int whichUpgrade) {
-        if (p1SelectedSystem.currentSelectedGameObject.name.StartsWith("P1")) {
+        if (p1Events.currentSelectedGameObject.name.StartsWith("P1")) {
             if (BetweenScenesScript.UpgradesP1[whichUpgrade] < upgradeCap) {
                 int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP1[whichUpgrade] - 10);
                 if (BetweenScenesScript.player1TempCredits >= price) {
                     BetweenScenesScript.UpgradesP1[whichUpgrade] += 1;
                     BetweenScenesScript.player1TempCredits -= price;
-                    Debug.Log($"Upgrades: {string.Join(",", BetweenScenesScript.UpgradesP1)} Credits left: {BetweenScenesScript.player1TempCredits}");
+                    print($"Upgrades: {string.Join(",", BetweenScenesScript.UpgradesP1)} Credits left: {BetweenScenesScript.player1TempCredits}");
                 }
                 else {
-                    Debug.Log("Upgrade failed, not enough credits");
+                    print("Upgrade failed, not enough credits");
                 }
             }
         }
@@ -218,16 +200,16 @@ public class ShopScript : MonoBehaviour {
     }
 
     public void PerformUpgradeP2(int whichUpgrade) {
-        if (p2SelectedSystem.currentSelectedGameObject.name.StartsWith("P2")) {
+        if (p2Events.currentSelectedGameObject.name.StartsWith("P2")) {
             if (BetweenScenesScript.UpgradesP2[whichUpgrade] < upgradeCap) {
                 int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP2[whichUpgrade] - 10);
                 if (BetweenScenesScript.player2TempCredits >= price) {
                     BetweenScenesScript.UpgradesP2[whichUpgrade] += 1;
                     BetweenScenesScript.player2TempCredits -= price;
-                    Debug.Log($"Upgrades: {string.Join(",", BetweenScenesScript.UpgradesP2)} Credits left: {BetweenScenesScript.player2TempCredits}");
+                    print($"Upgrades: {string.Join(",", BetweenScenesScript.UpgradesP2)} Credits left: {BetweenScenesScript.player2TempCredits}");
                 }
                 else {
-                    Debug.Log("Upgrade failed, not enough credits");
+                    print("Upgrade failed, not enough credits");
                 }
             }
         }
@@ -257,51 +239,30 @@ public class ShopScript : MonoBehaviour {
     * Pause screen code
     * ------------------------------------------------------------------------------------------------------------------ */
 
-    // Swap player 1's controls with this button
-    public void SwapP1Controls() {
-        if (BetweenScenesScript.ControlTypeP1 == 0) {
-            BetweenScenesScript.ControlTypeP1 = 1;
-            swapP1text.text = "Swap P1 to gamepad controls";
-        }
-        else {
-            BetweenScenesScript.ControlTypeP1 = 0;
-            swapP1text.text = "Swap P1 to keyboard controls";
-        }
-    }
-    // If player 2 exists, then swap their controls with this button
-    public void SwapP2Controls() {
-        if (BetweenScenesScript.PlayerCount == 2) {
-            if (BetweenScenesScript.ControlTypeP2 == 0) {
-                BetweenScenesScript.ControlTypeP2 = 1;
-                swapP2text.text = "Swap P2 to gamepad controls";
-            }
-            else {
-                BetweenScenesScript.ControlTypeP2 = 0;
-                swapP2text.text = "Swap P2 to keyboard controls";
-            }
-        }
-    }
 
     public void PauseGame(int intent) {
         if (intent == 0) { // Pause game
 
-            // This section is Shop-specific. It deactivates all shop-related Event Systems, and enables pause Event System
-            SetActiveEventSystems(0);
+            p1Events.gameObject.SetActive(false);
+            p2Events.gameObject.SetActive(false);
+            pauseEventSystem.GetComponent<RewiredStandaloneInputModule>().enabled = true;
 
             musicLoop.Pause();
             gamePausePanel.SetActive(true);
             buttonWhenPaused.Select();
             Time.timeScale = 0;
-            CheckPlayerControls();
             Cursor.visible = true;
         }
         else if (intent == 1) { // Resume game
 
             buttonWhenLeavingPauseBugFix.Select(); // Select it with pause event system, not upcoming event systems
+            pauseEventSystem.GetComponent<RewiredStandaloneInputModule>().enabled = false;
+            p1Events.gameObject.SetActive(true);
+            if (player2GUI.activeInHierarchy)
+            {
+                p2Events.gameObject.SetActive(true);
+            }
 
-            // This section is Shop-specific. It deactivates pause Event System, and activates only the Event System that matches the control scheme chosen
-            UpdateEventSystemChoices();
-            SetActiveEventSystems(1);
 
             if (BetweenScenesScript.MusicVolume > 0f) { musicLoop.Play(); }
             gamePausePanel.SetActive(false);
@@ -309,49 +270,10 @@ public class ShopScript : MonoBehaviour {
             Cursor.visible = false;
         }
     }
-    // Each time the pause menu is used, change the buttons for controller swapping depending on their state
-    public void CheckPlayerControls() {
-        if (BetweenScenesScript.ControlTypeP1 == 0) { swapP1text.text = "Swap P1 to keyboard controls"; }
-        else { swapP1text.text = "Swap P1 to gamepad controls"; }
-        if (BetweenScenesScript.PlayerCount == 1) { swapP2text.text = ""; }
-        else if (BetweenScenesScript.ControlTypeP2 == 0) { swapP2text.text = "Swap P2 to keyboard controls"; }
-        else { swapP2text.text = "Swap P2 to gamepad controls"; }
-    }
 
     /* ------------------------------------------------------------------------------------------------------------------
      * Misc code
      * ------------------------------------------------------------------------------------------------------------------ */
-    
-    private void SetActiveEventSystems(int intent) {
-        if (intent == 0) {
-            pauseEventSystem.GetComponent<StandaloneInputModule>().enabled = true;
-            p1JoyEvents.gameObject.SetActive(false);
-            p2JoyEvents.gameObject.SetActive(false);
-            p1KeyEvents.gameObject.SetActive(false);
-            p2KeyEvents.gameObject.SetActive(false);
-        }
-        else if (intent == 1) {
-            pauseEventSystem.GetComponent<StandaloneInputModule>().enabled = false;
-            if (BetweenScenesScript.ControlTypeP1 == 0) {
-                p1JoyEvents.gameObject.SetActive(true);
-                p1SelectedSystem = p1JoyEvents;
-            }
-            else {
-                p1KeyEvents.gameObject.SetActive(true);
-                p1SelectedSystem = p1KeyEvents;
-            }
-            if (BetweenScenesScript.PlayerCount == 2) {
-                if (BetweenScenesScript.ControlTypeP2 == 0) {
-                    p2JoyEvents.gameObject.SetActive(true);
-                    p2SelectedSystem = p2JoyEvents;
-}
-                else {
-                    p2KeyEvents.gameObject.SetActive(true);
-                    p2SelectedSystem = p2KeyEvents;
-                }
-            }
-        }
-    }
 
     // If a button pressed begins with 'P1' or 'P2', and does not end with 'Ready' or 'Transfer', then update the button's text based on BetweenScenesScript variables
     // If button ends with 'Transfer', then change the life transfer button text
@@ -407,26 +329,6 @@ public class ShopScript : MonoBehaviour {
             if (data.playerCount == 2) {
                 p2ScoreText.text = "Credits:\n" + BetweenScenesScript.player2TempCredits;
                 p2LivesText.text = "Lives: " + BetweenScenesScript.player2TempLives;
-            }
-        }
-    }
-
-
-    // Find every button that matches player number, and tell it to update expected event systems
-    private void UpdateEventSystemChoices() {
-        Button[] listOfButtons = GameObject.FindObjectsOfType<Button>();
-        foreach (Button gameObj in listOfButtons) {
-            if (gameObj.transform.name.StartsWith("P1")) {
-                gameObj.GetComponent<MyEventSystemProvider>().DetermineControls();
-            }
-        }
-
-        if (player2GUI.activeInHierarchy) {
-            listOfButtons = GameObject.FindObjectsOfType<Button>();
-            foreach (Button gameObj in listOfButtons) {
-                if (gameObj.transform.name.StartsWith("P2")) {
-                    gameObj.GetComponent<MyEventSystemProvider>().DetermineControls();
-                }
             }
         }
     }

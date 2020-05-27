@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Rewired.Integration.UnityUI;
+using Rewired;
 
 /*
  * This class handles all in-game meta logic, such as level transitions, telling objects when and how to spawn, player management, etc.
@@ -62,16 +64,6 @@ public partial class GameManager : MonoBehaviour
                 // If on pause panel, then select the resume button. If on game over panel, select play again button.
                 if (Refs.gamePausePanel.activeInHierarchy) { Refs.buttonWhenPaused.Select(); }
                 else { Refs.buttonWhenGameOver.Select(); }
-            }
-        }
-
-        // Check if pause button is pressed, and resume/pause game.
-        if (Input.GetButtonDown("Pause") && !Refs.gameOverPanel.activeInHierarchy) {
-            if (Refs.gamePausePanel.activeInHierarchy) {
-                PauseGame(1);
-            }
-            else {
-                PauseGame(0);
             }
         }
     }

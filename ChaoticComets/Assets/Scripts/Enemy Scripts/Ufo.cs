@@ -62,7 +62,7 @@ public abstract partial class Ufo : MonoBehaviour
         }
         // If alien ship is called during level transition, it destroys itself
         if (gM.CheckIfEndOfLevel() && !ufoTeleporting) {
-            Debug.Log("UFO attempted to spawn during level transition");
+            print("UFO attempted to spawn during level transition");
             Destroy(gameObject);
         }
 

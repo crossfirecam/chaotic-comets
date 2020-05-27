@@ -14,6 +14,7 @@ TagManager:
   - ufo
   - ufofadingpart
   - bullet4
+  - rewiredInputManager
   layers:
   - Default
   - TransparentFX
