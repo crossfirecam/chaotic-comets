@@ -4982,7 +4982,7 @@ GameObject:
   - component: {fileID: 82308423895752842}
   m_Layer: 0
   m_Name: PlasmaExplosion (CanisterExpire)
-  m_TagString: Untagged
+  m_TagString: MiscSounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

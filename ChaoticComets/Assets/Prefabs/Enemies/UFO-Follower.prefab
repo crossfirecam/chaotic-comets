@@ -4825,7 +4825,6 @@ GameObject:
   - component: {fileID: 58430078344468964}
   - component: {fileID: 50092750234572272}
   - component: {fileID: 82704775472134234}
-  - component: {fileID: 4333384977540276942}
   m_Layer: 0
   m_Name: UFO-Follower
   m_TagString: ufo
@@ -4847,6 +4846,7 @@ Transform:
   - {fileID: 5798681406426345405}
   - {fileID: 5460637174620012352}
   - {fileID: 190270563}
+  - {fileID: 7950630752044433634}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 359.9}
@@ -4862,6 +4862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0c9906722c2d6469e71bf3fa903df5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gM: {fileID: 0}
   direction: {x: 0, y: 0}
   alienSpeedBase: 1.3
   shootingDelay: 1.5
@@ -4871,7 +4872,7 @@ MonoBehaviour:
   forceField: {fileID: 190270562}
   playerShip1: {fileID: 0}
   playerShip2: {fileID: 0}
-  audioAlienHum: {fileID: 4333384977540276942}
+  audioAlienHum: {fileID: 3400528432045659323}
   audioAlienSfx: {fileID: 82704775472134234}
   audClipAliexSfxShieldReflect: {fileID: 8300000, guid: 52a8e7e6dd767e34db82d86a8b696c4b,
     type: 3}
@@ -5017,13 +5018,44 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &4333384977540276942
+--- !u!1 &1771170884591082433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7950630752044433634}
+  - component: {fileID: 3400528432045659323}
+  m_Layer: 0
+  m_Name: Scanning Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7950630752044433634
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771170884591082433}
+  m_LocalRotation: {x: 0.4226183, y: -0, z: -0, w: 0.9063078}
+  m_LocalPosition: {x: -0.8381917, y: 0.0000002579047, z: 0.49392053}
+  m_LocalScale: {x: 3.8461537, y: 3.8461533, z: 3.8461533}
+  m_Children: []
+  m_Father: {fileID: 4811040311596838}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &3400528432045659323
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001724363263860}
+  m_GameObject: {fileID: 1771170884591082433}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243287936215163392, guid: c45b130275ef2b747be4423907a74a75,

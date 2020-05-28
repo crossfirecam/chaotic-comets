@@ -88,9 +88,8 @@ public partial class GameManager : MonoBehaviour
         Refs.gameOverPanel.SetActive(true);
         Refs.buttonWhenGameOver.Select();
 
-        musicLoop.Pause();
-        GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
-        foreach (GameObject ufo in listOfUfos) { ufo.GetComponent<Ufo>().CheckAlienSounds(1); }
+        musicManager.PauseMusic();
+        musicManager.FindAllSfxAndPlayPause(0);
 
         Time.timeScale = 0;
     }

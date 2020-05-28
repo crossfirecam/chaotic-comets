@@ -390,7 +390,6 @@ GameObject:
   - component: {fileID: 132405648}
   - component: {fileID: 132405647}
   - component: {fileID: 132405646}
-  - component: {fileID: 132405649}
   m_Layer: 5
   m_Name: ResSwapButton
   m_TagString: Untagged
@@ -509,18 +508,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 132405644}
   m_CullTransparentMesh: 0
---- !u!114 &132405649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 132405644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13bde882902159c47804a588f3c5c1b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &146110781
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +599,7 @@ GameObject:
   - component: {fileID: 152333751}
   - component: {fileID: 152333750}
   - component: {fileID: 152333753}
+  - component: {fileID: 152333754}
   m_Layer: 5
   m_Name: Diff-HardButton
   m_TagString: Untagged
@@ -742,6 +730,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13bde882902159c47804a588f3c5c1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &152333754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152333748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1485263213}
+          m_MethodName: OnMenuGoBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &158152306
 GameObject:
   m_ObjectHideFlags: 0
@@ -1475,6 +1491,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367383343}
   m_CullTransparentMesh: 0
+--- !u!1001 &413403098
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23.392815
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.3519297
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.8867188
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601870, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_Name
+      value: MusicManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 376023999fb623c4b8bb77d8bf26210d, type: 3}
 --- !u!1 &499009986
 GameObject:
   m_ObjectHideFlags: 0
@@ -2102,7 +2187,6 @@ GameObject:
   m_Component:
   - component: {fileID: 690606542}
   - component: {fileID: 690606543}
-  - component: {fileID: 690606544}
   - component: {fileID: 690606545}
   m_Layer: 5
   m_Name: SliderMusic
@@ -2183,8 +2267,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 690606544}
-        m_MethodName: ChangeMusic
+      - m_Target: {fileID: 1485263213}
+        m_MethodName: ChangeMusicPassToManager
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2194,20 +2278,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &690606544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690606541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a1a7a7645d04cd41bc25b460b9d6b80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: c45b130275ef2b747be4423907a74a75, type: 2}
-  sfxDemo: {fileID: 0}
 --- !u!114 &690606545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2391,6 +2461,7 @@ GameObject:
   - component: {fileID: 803356179}
   - component: {fileID: 803356178}
   - component: {fileID: 803356177}
+  - component: {fileID: 803356181}
   m_Layer: 5
   m_Name: Save-NewP1GameButton
   m_TagString: Untagged
@@ -2521,6 +2592,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803356175}
   m_CullTransparentMesh: 0
+--- !u!114 &803356181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803356175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1485263213}
+          m_MethodName: OnMenuGoBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &814805135
 GameObject:
   m_ObjectHideFlags: 0
@@ -3135,7 +3234,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1003452686}
   - component: {fileID: 1003452687}
-  - component: {fileID: 1003452688}
   - component: {fileID: 1003452689}
   - component: {fileID: 1003452690}
   m_Layer: 5
@@ -3217,8 +3315,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1003452688}
-        m_MethodName: ChangeSFX
+      - m_Target: {fileID: 1485263213}
+        m_MethodName: ChangeSFXPassToManager
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3228,20 +3326,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1003452688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003452685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a1a7a7645d04cd41bc25b460b9d6b80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: c45b130275ef2b747be4423907a74a75, type: 2}
-  sfxDemo: {fileID: 1003452689}
 --- !u!82 &1003452689
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3514,6 +3598,7 @@ GameObject:
   - component: {fileID: 1137208747}
   - component: {fileID: 1137208746}
   - component: {fileID: 1137208745}
+  - component: {fileID: 1137208749}
   m_Layer: 5
   m_Name: Save-BackButton
   m_TagString: Untagged
@@ -3644,6 +3729,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1137208743}
   m_CullTransparentMesh: 0
+--- !u!114 &1137208749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137208743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1485263213}
+          m_MethodName: OnMenuGoBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1140205248
 GameObject:
   m_ObjectHideFlags: 0
@@ -4175,6 +4288,7 @@ GameObject:
   - component: {fileID: 1253946309}
   - component: {fileID: 1253946308}
   - component: {fileID: 1253946307}
+  - component: {fileID: 1253946311}
   m_Layer: 5
   m_Name: Save-NewP2GameButton
   m_TagString: Untagged
@@ -4305,6 +4419,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253946305}
   m_CullTransparentMesh: 0
+--- !u!114 &1253946311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253946305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1485263213}
+          m_MethodName: OnMenuGoBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1273157035
 GameObject:
   m_ObjectHideFlags: 0
@@ -4318,6 +4460,7 @@ GameObject:
   - component: {fileID: 1273157038}
   - component: {fileID: 1273157037}
   - component: {fileID: 1273157040}
+  - component: {fileID: 1273157041}
   m_Layer: 5
   m_Name: Diff-NormalButton
   m_TagString: Untagged
@@ -4448,6 +4591,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13bde882902159c47804a588f3c5c1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1273157041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273157035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1485263213}
+          m_MethodName: OnMenuGoBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1300149288
 GameObject:
   m_ObjectHideFlags: 0
@@ -5267,9 +5438,8 @@ GameObject:
   - component: {fileID: 1485263211}
   - component: {fileID: 1485263210}
   - component: {fileID: 1485263213}
-  - component: {fileID: 1485263214}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Main Camera & Script
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5375,103 +5545,8 @@ MonoBehaviour:
   player2pIcon: {fileID: 178361149}
   mixer: {fileID: 24100000, guid: c45b130275ef2b747be4423907a74a75, type: 2}
   fadeBlack: {fileID: 1402773993}
---- !u!82 &1485263214
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1485263209}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 7481485653099212530, guid: c45b130275ef2b747be4423907a74a75,
-    type: 2}
-  m_audioClip: {fileID: 8300000, guid: ca1e65d4f856e214a9793f4d8907c16d, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.25
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  musicManagerIfNotFoundInScene: {fileID: 8774387490616601870, guid: 376023999fb623c4b8bb77d8bf26210d,
+    type: 3}
 --- !u!1 &1515436064
 GameObject:
   m_ObjectHideFlags: 0
@@ -5563,6 +5638,7 @@ GameObject:
   - component: {fileID: 1531019594}
   - component: {fileID: 1531019593}
   - component: {fileID: 1531019596}
+  - component: {fileID: 1531019597}
   m_Layer: 5
   m_Name: Diff-BackButton
   m_TagString: Untagged
@@ -5693,6 +5769,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13bde882902159c47804a588f3c5c1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1531019597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531019591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1485263213}
+          m_MethodName: OnMenuGoBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1558276303
 GameObject:
   m_ObjectHideFlags: 0
@@ -5706,6 +5810,7 @@ GameObject:
   - component: {fileID: 1558276305}
   - component: {fileID: 1558276304}
   - component: {fileID: 1558276306}
+  - component: {fileID: 1558276309}
   m_Layer: 5
   m_Name: Save-ResumeButton
   m_TagString: Untagged
@@ -5836,6 +5941,34 @@ RectTransform:
   m_AnchoredPosition: {x: -0.34751, y: 15}
   m_SizeDelta: {x: 180, y: 26}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1558276309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558276303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1485263213}
+          m_MethodName: OnMenuGoBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1586143495
 GameObject:
   m_ObjectHideFlags: 0
@@ -6340,11 +6473,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rewired Input Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 886301060741537438, guid: 664b9294c73a9ec4d88471e43fe26df1,
-        type: 3}
-      propertyPath: m_TagString
-      value: rewiredInputManager
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 664b9294c73a9ec4d88471e43fe26df1, type: 3}
 --- !u!1 &1644112166
@@ -6439,6 +6567,7 @@ GameObject:
   - component: {fileID: 1693011361}
   - component: {fileID: 1693011360}
   - component: {fileID: 1693011363}
+  - component: {fileID: 1693011364}
   m_Layer: 5
   m_Name: Diff-EasyButton
   m_TagString: Untagged
@@ -6569,6 +6698,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13bde882902159c47804a588f3c5c1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1693011364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693011358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1485263213}
+          m_MethodName: OnMenuGoBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1712302390
 GameObject:
   m_ObjectHideFlags: 0

@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 40200586}
   - component: {fileID: 40200585}
   - component: {fileID: 40200588}
+  - component: {fileID: 40200589}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -347,6 +348,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13bde882902159c47804a588f3c5c1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &40200589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40200583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 324522990}
+          m_MethodName: PauseGame
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &52247009
 GameObject:
   m_ObjectHideFlags: 0
@@ -1217,13 +1246,17 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.30000013
       objectReference: {fileID: 0}
+    - target: {fileID: 82308423895752842, guid: 96730f8640590934eacb6f860058e7f9,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 198000010585806678, guid: 96730f8640590934eacb6f860058e7f9,
         type: 3}
       propertyPath: looping
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 82308423895752842, guid: 96730f8640590934eacb6f860058e7f9, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96730f8640590934eacb6f860058e7f9, type: 3}
 --- !u!1 &372029258
 GameObject:
@@ -6345,6 +6378,7 @@ GameObject:
   - component: {fileID: 1351457733}
   - component: {fileID: 1351457732}
   - component: {fileID: 1351457735}
+  - component: {fileID: 1351457736}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -6479,6 +6513,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13bde882902159c47804a588f3c5c1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1351457736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351457730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 324522990}
+          m_MethodName: PauseGame
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1373444789
 GameObject:
   m_ObjectHideFlags: 0
@@ -10827,6 +10889,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P2-Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4598709768930891665, guid: c1a096eb384c2794dae54c304033ff6a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1a096eb384c2794dae54c304033ff6a, type: 3}
 --- !u!1001 &7573104356698526700
@@ -10836,6 +10903,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
+        type: 3}
+      propertyPath: Refs.tutorialManager
+      value: 
+      objectReference: {fileID: 2046260824}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: Refs.fadeBlack
@@ -10868,16 +10940,6 @@ PrefabInstance:
       objectReference: {fileID: 958112309}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
-      propertyPath: Refs.swapP1Text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: Refs.swapP2Text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
       propertyPath: Refs.buttonWhenPaused
       value: 
       objectReference: {fileID: 40200585}
@@ -10903,23 +10965,14 @@ PrefabInstance:
       objectReference: {fileID: 147570585}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
-      propertyPath: Refs.tutorialManager
+      propertyPath: Refs.musicManagerIfNotFoundInScene
       value: 
-      objectReference: {fileID: 2046260824}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
+      objectReference: {fileID: 8774387490616601870, guid: 376023999fb623c4b8bb77d8bf26210d,
         type: 3}
-      propertyPath: tutorialMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: player2dead
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: instantkillAsteroids
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7573104357208989298, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}

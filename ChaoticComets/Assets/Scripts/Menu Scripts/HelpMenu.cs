@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class HelpMenu : MonoBehaviour {
 
-    private void OnMenuGoBack()
+    [SerializeField] private Button leaveHelpButton = default;
+    private void Update()
     {
-        VisitMain();
+        if (EventSystem.current.currentSelectedGameObject == null || EventSystem.current.currentSelectedGameObject.Equals(null))
+        {
+            leaveHelpButton.Select();
+        }
     }
 
     public void VisitMain() {

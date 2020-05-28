@@ -27,7 +27,7 @@ public class PowerupBehaviour : MonoBehaviour {
     {
         gM = FindObjectOfType<GameManager>();
         rbCanister = GetComponent<Rigidbody2D>();
-        rend = GetComponent<Renderer>();
+        rend = GetComponentInChildren<Renderer>();
         GiveRandomMovement();
 
         timeUntilWarning = Random.Range(8f, 12f);
@@ -51,7 +51,7 @@ public class PowerupBehaviour : MonoBehaviour {
             Destroy(triggerObject.gameObject, 5f);
             GameObject newExplosion = Instantiate(explosion, transform.position, transform.rotation);
             Destroy(newExplosion, 2f);
-            Destroy(transform.parent.gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -61,7 +61,7 @@ public class PowerupBehaviour : MonoBehaviour {
         audioPowerupExpire.Play();
 
         UsefulFunctions.FindThrust(rbCanister, maxThrust);
-        UsefulFunctions.FindTorque(rbCanister, maxSpin);
+        UsefulFunctions.FindTorque(rbCanister, maxSpin); // TODO Restore functionality
     }
 
     // Called from Start(). Sets off an expiry animation after a random time
@@ -86,6 +86,6 @@ public class PowerupBehaviour : MonoBehaviour {
         GameObject newPop = Instantiate(expirationPop, transform.position, transform.rotation);
         Destroy(newPop, 2f);
         gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
-        Destroy(transform.parent.gameObject);
+        Destroy(gameObject);
     }
 }

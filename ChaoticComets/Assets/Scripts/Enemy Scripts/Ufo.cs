@@ -68,16 +68,9 @@ public abstract partial class Ufo : MonoBehaviour
 
     }
 
-    // Play/pause UFO hum depending on game's pause state
-    public void CheckAlienSounds(int intent)
+    public GameObject[] ReturnAlienSounds()
     {
-        if (intent == 1 && audioAlienHum.isPlaying)
-        {
-            audioAlienHum.Pause();
-        }
-        else if (intent == 2 && !audioAlienHum.isPlaying)
-        {
-            audioAlienHum.UnPause();
-        }
+        GameObject[] alienSfx = { audioAlienHum.gameObject, audioAlienSfx.gameObject };
+        return alienSfx;
     }
 }

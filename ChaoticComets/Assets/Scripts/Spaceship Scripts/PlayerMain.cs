@@ -114,7 +114,7 @@ public class PlayerMain : MonoBehaviour {
             }
         }
         if (triggerObject.gameObject.CompareTag("powerup") && modelPlayer.activeInHierarchy) {
-            Destroy(triggerObject.transform.parent.gameObject);
+            Destroy(triggerObject.gameObject);
             plrPowerups.GivePowerup();
         }
     }

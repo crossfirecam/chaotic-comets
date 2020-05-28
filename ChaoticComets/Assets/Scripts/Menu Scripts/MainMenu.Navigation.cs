@@ -32,12 +32,6 @@ public partial class MainMenu : MonoBehaviour
     public Button returnToMenuButton, controlFirstButton, saveFirstButton;
     public GameObject buttonCon3, player1pIcon, player2pIcon;
 
-
-    private void CheckForBackButton()
-    {
-        // TODO
-    }
-
     // Check for a save file, and set correct player icon/text
     public void CheckForSaveFile(int i)
     {
@@ -167,7 +161,7 @@ public partial class MainMenu : MonoBehaviour
     /* ------------------------------------------------------------------------------------------------------------------
      * Update per-frame functions
      * ------------------------------------------------------------------------------------------------------------------ */
-    private void OnMenuGoBack()
+    public void OnMenuGoBack()
     {
         if (difficultyDialog.activeInHierarchy) { BackToMenu(); }
         if (saveOptionDialog.activeInHierarchy) { BackToMenu(); }

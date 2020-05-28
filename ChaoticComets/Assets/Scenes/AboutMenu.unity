@@ -121,6 +121,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &105626278 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 886301060741537437, guid: 664b9294c73a9ec4d88471e43fe26df1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1004679708}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581b3e3c96df0ef42aef16b63b27b87f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &273690887
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +146,7 @@ GameObject:
   - component: {fileID: 273690890}
   - component: {fileID: 273690889}
   - component: {fileID: 273690892}
+  - component: {fileID: 273690893}
   m_Layer: 5
   m_Name: DevButton
   m_TagString: Untagged
@@ -264,6 +277,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13bde882902159c47804a588f3c5c1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &273690893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273690887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2121217276}
+          m_MethodName: VisitMain
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &287317112
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +318,7 @@ GameObject:
   - component: {fileID: 287317115}
   - component: {fileID: 287317114}
   - component: {fileID: 287317117}
+  - component: {fileID: 287317118}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -407,6 +449,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13bde882902159c47804a588f3c5c1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &287317118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287317112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2121217276}
+          m_MethodName: VisitMain
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &540225493
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,7 +570,7 @@ GameObject:
   - component: {fileID: 756735808}
   - component: {fileID: 756735807}
   m_Layer: 5
-  m_Name: AboutGameText (1)
+  m_Name: MoreDetailsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -798,6 +868,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 894075490}
   m_CullTransparentMesh: 0
+--- !u!1001 &1004679708
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 886301060741537436, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537436, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537436, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537436, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537436, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537436, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537436, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537436, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537436, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537436, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537436, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537438, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: m_Name
+      value: Rewired Input Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 664b9294c73a9ec4d88471e43fe26df1, type: 3}
 --- !u!1 &1083346711
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,7 +949,7 @@ GameObject:
   - component: {fileID: 1083346714}
   - component: {fileID: 1083346713}
   m_Layer: 5
-  m_Name: AboutGameText
+  m_Name: CreditsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -868,13 +1007,15 @@ MonoBehaviour:
     <u>Thanks
     to these Unity Asset Store products...</u>
 
-    Music from Ultimate Game Music
-    Collection
+    Controller Support from Rewired
+
+    Music
+    from Ultimate Game Music Collection
 
     Sounds from Universal Sound FX
 
-    Particles from Unity Particle
-    Pack
+    Particles
+    from Unity Particle Pack
 
 
     Code attributions are in attributions.txt'
@@ -922,7 +1063,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 296
+  m_firstOverflowCharacterIndex: 327
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -946,12 +1087,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1083346713}
-    characterCount: 337
+    characterCount: 369
     spriteCount: 0
-    spaceCount: 48
-    wordCount: 46
+    spaceCount: 52
+    wordCount: 50
     linkCount: 0
-    lineCount: 12
+    lineCount: 13
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1402,9 +1543,8 @@ GameObject:
   - component: {fileID: 2121217274}
   - component: {fileID: 2121217273}
   - component: {fileID: 2121217276}
-  - component: {fileID: 2121217277}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Main Camera & Script
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1501,41 +1641,6 @@ MonoBehaviour:
   devText: {fileID: 1787644969}
   devNextButtonText: {fileID: 876395510}
   returnToMenuButton: {fileID: 287317114}
---- !u!114 &2121217277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2121217272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 26f5f4491b616944db1e9b25d9685e5b,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: fba6277c-209e-4a00-8946-c2080c13b56c
-    m_ActionName: Menu Controls/MenuGoBack[/XInputControllerWindows/buttonEast]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Menu Controls
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1001 &8198620064037957885
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1543,6 +1648,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5641217591369609459, guid: 9b1026bd5f4c4da448619312ac2ef149,
+        type: 3}
+      propertyPath: rewiredInputManager
+      value: 
+      objectReference: {fileID: 105626278}
     - target: {fileID: 8198620065136976752, guid: 9b1026bd5f4c4da448619312ac2ef149,
         type: 3}
       propertyPath: m_LocalPosition.x

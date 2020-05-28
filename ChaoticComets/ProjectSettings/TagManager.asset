@@ -15,6 +15,7 @@ TagManager:
   - ufofadingpart
   - bullet4
   - rewiredInputManager
+  - MiscSounds
   layers:
   - Default
   - TransparentFX

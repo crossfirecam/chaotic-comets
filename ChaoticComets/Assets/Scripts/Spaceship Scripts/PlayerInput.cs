@@ -15,7 +15,7 @@ public class PlayerInput : MonoBehaviour {
     public float thrust, turnThrust;
     internal float brakingPower = 2f;
     public float thrustInput, turnInput;
-    internal bool isNotTeleporting = true;
+    internal bool canUseButtons = true, isNotTeleporting = true;
 
     private void Awake()
     {
@@ -25,28 +25,28 @@ public class PlayerInput : MonoBehaviour {
     // Contains code for receiving inputs from player
     internal void CheckInputs()
     {
-        turnInput = -player.GetAxis("Rotate");
-        thrustInput = -player.GetAxis("Move");
-
-        // If fire button is pressed or held, and ship is not teleporting, not dead, and able to fire, then fire
-        if (player.GetButton("Shoot"))
+        if (canUseButtons)
         {
-            if (isNotTeleporting && p.shields != 0 && Time.time > p.plrWeapons.nextFire)
+            turnInput = -player.GetAxis("Rotate");
+            thrustInput = -player.GetAxis("Move");
+
+            // If fire button is pressed or held, and ship is not teleporting, not dead, and able to fire, then fire
+            if (player.GetButton("Shoot"))
             {
-                p.plrWeapons.FiringLogic();
+                if (isNotTeleporting && p.shields != 0 && Time.time > p.plrWeapons.nextFire)
+                {
+                    p.plrWeapons.FiringLogic();
+                }
             }
-        }
 
-        if (player.GetButtonDown("Ability"))
-        {
-            UseAbility();
-        }
-        if (player.GetButtonDown("Pause"))
-        {
-            if (!p.gM.Refs.gamePausePanel.activeInHierarchy)
-                p.gM.PauseGame(0);
-            else
-                p.gM.PauseGame(1);
+            if (player.GetButtonDown("Ability"))
+            {
+                UseAbility();
+            }
+            if (player.GetButtonDown("Pause"))
+            {
+                p.gM.OnPause();
+            }
         }
     }
 
@@ -64,5 +64,12 @@ public class PlayerInput : MonoBehaviour {
                 p.plrAbility.Invoke("Hyperspace", 2f);
             }
         }
+    }
+
+    public IEnumerator DelayNewInputs()
+    {
+        canUseButtons = false;
+        yield return new WaitForSeconds(0.2f);
+        canUseButtons = true;
     }
 }

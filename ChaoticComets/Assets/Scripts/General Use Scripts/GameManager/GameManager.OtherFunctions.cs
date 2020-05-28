@@ -24,13 +24,27 @@ public partial class GameManager : MonoBehaviour
     }
     private void PlayMusicIfEnabled()
     {
+        // Change music track
+        musicManager = FindObjectOfType<MusicManager>();
+        if (!musicManager)
+        {
+            Instantiate(Refs.musicManagerIfNotFoundInScene);
+            musicManager = FindObjectOfType<MusicManager>();
+        }
+
+        if (!tutorialMode)
+            musicManager.ChangeMusicTrack(1);
+        else
+            musicManager.ChangeMusicTrack(3);
+
+
         if (BetweenScenesScript.MusicVolume > 0f)
         {
-            musicLoop.Play();
+            musicManager.currentMusicPlayer.Play();
         }
     }
 
-    private void OnPause()
+    public void OnPause()
     {
         if (!Refs.gameOverPanel.activeInHierarchy)
         {

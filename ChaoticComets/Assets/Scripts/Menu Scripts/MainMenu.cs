@@ -9,26 +9,30 @@ public partial class MainMenu : MonoBehaviour
     public AudioMixer mixer;
     public GameObject fadeBlack;
     private float fadingAlpha = 0f;
+    private MusicManager musicManager;
+    public GameObject musicManagerIfNotFoundInScene;
 
     // ----------
 
     private void Start() {
         Cursor.visible = true;
-        BetweenScenesScript.ResumingFromSave = false; // Set to false first, in case game is closed while save is being loaded
-        BetweenScenesScript.TutorialMode = false;
-        BetweenScenesScript.MusicVolume = PlayerPrefs.GetFloat("Music");
-        BetweenScenesScript.SFXVolume = PlayerPrefs.GetFloat("SFX");
-        BetweenScenesScript.player1TempCredits = 0; // Reset temporary credit & lives count to 0. These will be set if a store is loaded and progressed past
-        BetweenScenesScript.player2TempCredits = 0;
-        BetweenScenesScript.player1TempLives = 0;
-        BetweenScenesScript.player2TempLives = 0;
+        ResetBetweenScenesScript();
+
+        musicManager = FindObjectOfType<MusicManager>();
+        if (!musicManager)
+        {
+            Instantiate(musicManagerIfNotFoundInScene);
+            musicManager = FindObjectOfType<MusicManager>();
+        }
+        musicManager.sfxDemo = optionSFXSlider.GetComponent<AudioSource>();
+        musicManager.ChangeMusicTrack(0);
+
         mixer.SetFloat("MusicVolume", Mathf.Log10(BetweenScenesScript.MusicVolume) * 20);
         mixer.SetFloat("SFXVolume", Mathf.Log10(BetweenScenesScript.SFXVolume) * 20);
         StartCoroutine(FadeBlack("from"));
     }
 
     private void Update() {
-        CheckForBackButton();
         CheckHighlightedButton();
     }
 

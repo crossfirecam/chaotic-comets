@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Rewired;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,16 +11,15 @@ public partial class GameManager : MonoBehaviour
         if (intent == 0)
         { // Pause game
             Cursor.visible = true;
-            if (!player1dead) { Refs.playerShip1.plrUiSound.CheckSounds(1); }
-            if (!player2dead) { Refs.playerShip2.plrUiSound.CheckSounds(1); }
-
-            musicLoop.Pause();
-
-            GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
-            foreach (GameObject ufo in listOfUfos)
+            if (musicManager != null)
             {
-                ufo.GetComponent<Ufo>().CheckAlienSounds(1);
+                musicManager.PauseMusic();
+                musicManager.FindAllSfxAndPlayPause(0);
             }
+            if (!player1dead)
+                StartCoroutine(Refs.playerShip1.GetComponent<PlayerInput>().DelayNewInputs());
+            if (!player2dead)
+                StartCoroutine(Refs.playerShip2.GetComponent<PlayerInput>().DelayNewInputs());
 
             Refs.gamePausePanel.SetActive(true);
             Refs.buttonWhenPaused.Select();
@@ -28,21 +28,10 @@ public partial class GameManager : MonoBehaviour
         else if (intent == 1)
         { // Resume game
             Cursor.visible = false;
-            if (!player1dead)
+            if (PlayerPrefs.GetFloat("Music") > 0f && musicManager != null)
             {
-                Refs.playerShip1.plrUiSound.CheckSounds(2);
-            }
-            if (!player2dead)
-            {
-                Refs.playerShip1.plrUiSound.CheckSounds(2);
-            }
-
-            if (BetweenScenesScript.MusicVolume > 0f && !tutorialMode) { musicLoop.Play(); }
-
-            GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
-            foreach (GameObject ufo in listOfUfos)
-            {
-                ufo.GetComponent<Ufo>().CheckAlienSounds(2);
+                musicManager.ResumeMusic();
+                musicManager.FindAllSfxAndPlayPause(1);
             }
 
             Refs.gamePausePanel.SetActive(false);

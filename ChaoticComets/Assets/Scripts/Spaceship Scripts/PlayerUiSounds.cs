@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rewired;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,6 @@ public class PlayerUiSounds : MonoBehaviour
     // Sound Systems
     public AudioSource audioShipThrust, audioShipRetroThrust, audioShipSFX; // Thrust: passive thruster noise, SFX: powerup, extra life, impact noises
     public AudioClip audClipPlrSfxImpactSoft, audClipPlrSfxImpactHard, audClipPlrSfxDeath;
-    private bool audioThrusterPlaying = false, audioTeleportInPlaying = false, audioTeleportOutPlaying = false;
 
     public void UpdateBars()
     {
@@ -45,40 +45,10 @@ public class PlayerUiSounds : MonoBehaviour
         }
     }
 
-    public void CheckSounds(int intent)
+    public GameObject[] ReturnPlayerSounds()
     {
-        if (intent == 1)
-        {
-            if (audioShipThrust.isPlaying)
-            {
-                audioThrusterPlaying = true;
-                audioShipThrust.Pause();
-            }
-            if (p.plrAbility.teleportIn.GetComponent<AudioSource>().isPlaying)
-            {
-                audioTeleportInPlaying = true;
-                p.plrAbility.teleportIn.GetComponent<AudioSource>().Pause();
-            }
-            if (p.plrAbility.teleportOut.GetComponent<AudioSource>().isPlaying)
-            {
-                audioTeleportOutPlaying = true;
-                p.plrAbility.teleportOut.GetComponent<AudioSource>().Pause();
-            }
-        }
-        else if (intent == 2)
-        {
-            if (audioThrusterPlaying)
-            {
-                audioShipThrust.UnPause();
-            }
-            if (audioTeleportInPlaying)
-            {
-                p.plrAbility.teleportIn.GetComponent<AudioSource>().UnPause();
-            }
-            if (audioTeleportOutPlaying)
-            {
-                p.plrAbility.teleportOut.GetComponent<AudioSource>().UnPause();
-            }
-        }
+        GameObject[] playerSfx = { audioShipThrust.gameObject, audioShipSFX.gameObject, audioShipRetroThrust.gameObject,
+            p.plrAbility.teleportIn, p.plrAbility.teleportOut };
+        return playerSfx;
     }
 }

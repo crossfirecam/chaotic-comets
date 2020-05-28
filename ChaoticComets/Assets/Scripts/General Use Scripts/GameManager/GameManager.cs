@@ -20,9 +20,9 @@ public partial class GameManager : MonoBehaviour
     public int asteroidCount;
     public int levelNo = 0;
     [HideInInspector] public float screenTop = 8f, screenBottom = 8f, screenLeft = 11f, screenRight = 11f;
+    public MusicManager musicManager;
 
     [Header("Other Variables")]
-    private AudioSource musicLoop;
     private float fadingAlpha = 0f;
 
     [Header("Inspector References")]
@@ -30,15 +30,11 @@ public partial class GameManager : MonoBehaviour
 
     void Start() {
         Cursor.visible = false;
-        musicLoop = gameObject.GetComponent<AudioSource>();
         // If in tutorial mode, activate TutorialManager & tutorial music
         if (BetweenScenesScript.TutorialMode || tutorialMode)
         {
             Refs.tutorialManager.SetActive(true);
             tutorialMode = true;
-            gameObject.GetComponent<AudioSource>().clip = Refs.musicTutorial;
-            gameObject.GetComponent<AudioSource>().volume = 0.35f;
-            PlayMusicIfEnabled();
         }
         // If in normal gameplay, set player ships to become active and start gameplay
         else
@@ -49,10 +45,10 @@ public partial class GameManager : MonoBehaviour
                 player2dead = false;
             }
             CheckIfResumingFromSave();
-            PlayMusicIfEnabled();
             StartCoroutine(FadeBlack("from"));
             StartCoroutine(StartNewLevel());
         }
+        PlayMusicIfEnabled();
     }
 
     void Update() {
@@ -99,4 +95,7 @@ public class GameManagerHiddenVars
     public PlayerMain playerShip2;
     public GameObject largeAsteroidProp, ufoFollowerProp, ufoPasserProp, canisterProp;
     public GameObject largeAsteroidSafeProp;
+
+    [Header("Other References")]
+    public GameObject musicManagerIfNotFoundInScene;
 }
