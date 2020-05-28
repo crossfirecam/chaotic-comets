@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
         // Rotate the ship
         if (p.plrInput.turnInput != 0 && p.modelPlayer.activeInHierarchy)
         {
-            transform.Rotate(Vector3.forward * p.plrInput.turnInput * Time.deltaTime * p.plrInput.turnThrust);
+            transform.Rotate(Vector3.forward * -p.plrInput.turnInput * Time.deltaTime * p.plrInput.turnThrust);
         }
 
         // Active thrusting (forward or braking thrust)
@@ -30,26 +30,21 @@ public class PlayerMovement : MonoBehaviour
             if (!thruster2.isPlaying) { thruster2.Play(); }
 
             // If thrust is less than 0, then ship is braking. On hard difficulty, brake is less powerful.
-            if (p.plrInput.thrustInput > 0)
+            if (p.plrInput.thrustInput < 0)
             {
                 if (BetweenScenesScript.Difficulty != 2)
-                {
                     p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / p.plrInput.brakingPower;
-                }
                 else
-                {
                     p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / p.plrInput.brakingPower / 2;
-                }
+
                 // If ship is slow enough, stop it
                 if (p.rbPlayer.velocity.magnitude < 0.8f)
-                {
                     p.rbPlayer.velocity = new Vector2(0, 0);
-                }
             }
             // If thrust is more than 0, then ship is moving forward.
             else
             {
-                p.rbPlayer.AddRelativeForce(Vector2.up * -p.plrInput.thrustInput * Time.deltaTime * p.plrInput.thrust);
+                p.rbPlayer.AddRelativeForce(Vector2.up * p.plrInput.thrustInput * Time.deltaTime * p.plrInput.thrust);
                 p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 10f;
             }
         }

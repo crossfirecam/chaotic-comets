@@ -27,8 +27,8 @@ public class PlayerInput : MonoBehaviour {
     {
         if (canUseButtons)
         {
-            turnInput = -player.GetAxis("Rotate");
-            thrustInput = -player.GetAxis("Move");
+            turnInput = player.GetAxis("Rotate");
+            thrustInput = player.GetAxis("Move");
 
             // If fire button is pressed or held, and ship is not teleporting, not dead, and able to fire, then fire
             if (player.GetButton("Shoot"))

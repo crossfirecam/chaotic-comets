@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Rewired;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -14,8 +15,11 @@ public class TutorialManager : MonoBehaviour
     public bool ufoGone = false, ufoFollowerDocile = false;
     private int playerCreditsBefore = 0;
 
+    private Player player;
+
     private void Start()
     {
+        player = ReInput.players.GetPlayer(0);
         gM = FindObjectOfType<GameManager>();
         player1.power = 0;
         player1.plrUiSound.UpdatePointDisplays();
@@ -40,19 +44,19 @@ public class TutorialManager : MonoBehaviour
         switch (popUpIndex)
         {
             case 0: // Rotation
-                ContinueIf(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D));
+                ContinueIf(-player.GetAxis("Rotate") != 0);
                 break;
 
             case 1: // Thrusting
-                ContinueIf(Input.GetKeyDown(KeyCode.W));
+                ContinueIf(player.GetAxis("Move") > 0);
                 break;
 
             case 2: // Braking
-                ContinueIf(Input.GetKeyDown(KeyCode.S));
+                ContinueIf(player.GetAxis("Move") < 0);
                 break;
 
             case 3: // Shooting
-                ContinueIf(Input.GetKeyDown(KeyCode.Space));
+                ContinueIf(player.GetButtonDown("Shoot"));
                 break;
 
             case 4: // Asteroids
@@ -67,7 +71,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 5: // Asteroids 2
-                ContinueIf(gM.asteroidCount == 0 || Input.GetKeyDown(KeyCode.Q));
+                ContinueIf(gM.asteroidCount == 0 || player.GetButtonDown("Ability"));
                 break;
 
             case 6: // Shields
@@ -87,7 +91,7 @@ public class TutorialManager : MonoBehaviour
                     DestroyAllAsteroids();
                     taskSetupDone = true;
                 }
-                ContinueIf(player1.shields == 80 && Input.GetKeyDown(KeyCode.Q));
+                ContinueIf(player1.shields == 80 && player.GetButtonDown("Ability"));
                 break;
 
             case 8: // Canteen
@@ -108,7 +112,7 @@ public class TutorialManager : MonoBehaviour
                     taskSetupDone = true;
                 }
                 ResetAsteroidsIfZero(true);
-                ContinueIf(Input.GetKeyDown(KeyCode.Q));
+                ContinueIf(player.GetButtonDown("Ability"));
                 break;
 
             case 10: // Powerup FarShot
@@ -120,7 +124,7 @@ public class TutorialManager : MonoBehaviour
                     taskSetupDone = true;
                 }
                 ResetAsteroidsIfZero(true);
-                ContinueIf(Input.GetKeyDown(KeyCode.Q));
+                ContinueIf(player.GetButtonDown("Ability"));
                 break;
 
             case 11: // Powerup RetroThruster
@@ -132,7 +136,7 @@ public class TutorialManager : MonoBehaviour
                     taskSetupDone = true;
                 }
                 ResetAsteroidsIfZero(true);
-                ContinueIf(Input.GetKeyDown(KeyCode.Q));
+                ContinueIf(player.GetButtonDown("Ability"));
                 break;
 
             case 12: // UFO Red
@@ -162,7 +166,7 @@ public class TutorialManager : MonoBehaviour
                     ufoFollower = FindObjectOfType<UfoFollower>();
                     taskSetupDone = true;
                 }
-                ContinueIf(Input.GetKeyDown(KeyCode.Q));
+                ContinueIf(player.GetButtonDown("Ability"));
                 break;
 
             case 14: // Powerup RapidShot
@@ -179,7 +183,7 @@ public class TutorialManager : MonoBehaviour
                 {
                     StartCoroutine(ReplaceUfoFollower());
                 }
-                ContinueIf(ufoFollower.deathStarted || Input.GetKeyDown(KeyCode.Q)); // Allow skipping
+                ContinueIf(ufoFollower.deathStarted || player.GetButtonDown("Ability")); // Allow skipping
                 break;
 
             case 16: // Powerup Insurance
@@ -203,7 +207,7 @@ public class TutorialManager : MonoBehaviour
                     DestroyAllAsteroids();
                     taskSetupDone = true;
                 }
-                ContinueIf(Input.GetKeyDown(KeyCode.Q) && player1.power == 80);
+                ContinueIf(player.GetButtonDown("Ability") && player1.shields == 80);
                 break;
 
             case 18: // End
@@ -215,7 +219,7 @@ public class TutorialManager : MonoBehaviour
 
     private void ContinueIf(bool continuationCriteria)
     {
-        if (continuationCriteria)
+        if (continuationCriteria && !gM.Refs.gamePausePanel.activeInHierarchy)
         {
             popUpIndex++;
             taskSetupDone = false;

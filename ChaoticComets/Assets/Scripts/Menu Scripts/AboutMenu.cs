@@ -16,14 +16,15 @@ public class AboutMenu : MonoBehaviour {
     public Image devImage;
     public TextMeshProUGUI devText;
     public Text devNextButtonText;
-    private readonly string devText0 = "This project began in Oct 2018 with a simple experiment of game physics. Much of the material was placeholders.",
-        devText1 = "By the end of Oct 2018, the project was in a playable state. Asteroid physics were finished, a health/power system worked on, and a basic menu system was added.",
-        devText2 = "Early Nov 2018 development led to a multiplayer mode, UFO enemies, and powerups.",
-        devText3 = "All placeholder textures were removed, replaced with 3D assets made from scratch. This was the build used for a public design show in late Nov 2018. It was received well.",
-        devText4 = "In Mar 2019, Chaotic Comets was published online with UI enhancements, added difficulty options, and selecting control type for each player is now much easier.",
-        devText5 = "In May 2019, Chaotic Comets was updated to 1.1 - Ship handling & visual effects were improved, sound effects / music were added, and plenty of bugs were fixed.",
-        devText6 = "In June 2019, Chaotic Comets was updated to 1.2 - UFO's have more interesting mechanics, saving and a shop between levels was introduced, and a lot of testing with how the UI is handled.",
-        devText7 = "Upcoming patches will include more features to enhance gameplay. Thank you for trying out the game!";
+    private readonly string devText0 = "<u>Early October 2018</u>: Chaotic Comet's development began with a simple experiment of game physics. Much of the material was placeholders.",
+        devText1 = "<u>Late October 2018</u>: The project was in a playable state. Asteroid physics, a health/power system, and a basic menu system was added.",
+        devText2 = "<u>Early November 2018</u>: Further development led to a multiplayer mode, UFO enemies, and powerups.",
+        devText3 = "<u>Late November 2018</u>: All placeholder sprites were removed, replaced with 3D assets made from scratch. This was the build used for a public design show. It was received well.",
+        devText4 = "<u>March 2019</u>: Chaotic Comets was revisited to be published online. It came with UI enhancements, difficulty options, and easier controller selection.",
+        devText5 = "<u>May 2019</u>: Chaotic Comets was updated to 1.1. Ship handling & visual effects were improved, sound effects / music were added, and plenty of bugs were fixed.",
+        devText6 = "<u>June 2019</u>: Chaotic Comets was updated to 1.2. UFO's have more interesting mechanics, saving and a shop between levels was introduced, and a lot of testing with how the UI is handled.",
+        devText7 = "<u>June 2020</u>: After a year of on-and-off dev, 1.3 was done. UFO AI improved, interactive tutorial, comprehensive controller support, and a <i>ton</i> of code review & bug fixes.",
+        devText8 = "Upcoming patches will include more features to enhance gameplay. Thank you for trying out the game!";
     public Button returnToMenuButton;
 
     // ----------
@@ -74,11 +75,16 @@ public class AboutMenu : MonoBehaviour {
         else if (stage == 6) {
             devImage.sprite = dev6;
             devText.text = devText6;
-            devNextButtonText.text = "Upcoming features >";
         }
-        else if (stage == 7) {
+        else if (stage == 7)
+        {
             devImage.sprite = devLast;
             devText.text = devText7;
+            devNextButtonText.text = "Upcoming features >";
+        }
+        else if (stage == 8) {
+            devImage.sprite = devLast;
+            devText.text = devText8;
             devNextButtonText.text = "< To start of development";
         }
     }
