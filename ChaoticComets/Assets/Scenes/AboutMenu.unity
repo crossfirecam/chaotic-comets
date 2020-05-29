@@ -171,7 +171,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 194.13, y: -141.3}
+  m_AnchoredPosition: {x: 189, y: -157}
   m_SizeDelta: {x: 341, y: 35.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &273690889
@@ -343,7 +343,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -204, y: -141.30017}
+  m_AnchoredPosition: {x: -204, y: -157.00017}
   m_SizeDelta: {x: 284.26, y: 35.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &287317114
@@ -477,6 +477,81 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!1 &335629336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 335629337}
+  - component: {fileID: 335629339}
+  - component: {fileID: 335629338}
+  m_Layer: 5
+  m_Name: DevImageFrame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &335629337
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335629336}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 894075491}
+  m_Father: {fileID: 1186090398}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 189, y: 64.90001}
+  m_SizeDelta: {x: 410, y: 250}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &335629338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335629336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.26090246, g: 0.26390195, b: 0.38679248, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &335629339
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335629336}
+  m_CullTransparentMesh: 0
 --- !u!1 &540225493
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,8 +667,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 194.13, y: -183.9}
-  m_SizeDelta: {x: 341, y: 49.3}
+  m_AnchoredPosition: {x: 188.99998, y: -199.6}
+  m_SizeDelta: {x: 207.68433, y: 49.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &756735807
 MonoBehaviour:
@@ -614,9 +689,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'More details on version history
+  m_text: 'Check versionhistory.txt
 
-    can be found in versionhistory.txt'
+    for full changelogs.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -685,10 +760,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 3.1420043, z: 0, w: 50.27318}
   m_textInfo:
     textComponent: {fileID: 756735807}
-    characterCount: 66
+    characterCount: 45
     spriteCount: 0
-    spaceCount: 9
-    wordCount: 11
+    spaceCount: 4
+    wordCount: 6
     linkCount: 0
     lineCount: 2
     pageCount: 1
@@ -819,17 +894,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 894075490}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1186090398}
-  m_RootOrder: 3
+  m_Father: {fileID: 335629337}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 194.13, y: 64.90001}
-  m_SizeDelta: {x: 388.3, y: 200.8}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 400, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &894075492
 MonoBehaviour:
@@ -850,7 +925,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c9a817241047ccb4c81629dd257434ab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 516d893e4089f264db853336a09783e2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -971,8 +1046,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -197.9, y: 19}
-  m_SizeDelta: {x: 372.9, y: 191.65}
+  m_AnchoredPosition: {x: -197.9, y: 0.49999}
+  m_SizeDelta: {x: 372.9, y: 279.10004}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1083346713
 MonoBehaviour:
@@ -1061,7 +1136,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 302
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -1150,8 +1225,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -197.9, y: 144}
-  m_SizeDelta: {x: 387.3, y: 85.9}
+  m_AnchoredPosition: {x: -197.9, y: 165}
+  m_SizeDelta: {x: 394.28815, y: 87.44993}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1092795251
 MonoBehaviour:
@@ -1361,7 +1436,7 @@ RectTransform:
   - {fileID: 1092795250}
   - {fileID: 1083346712}
   - {fileID: 1787644968}
-  - {fileID: 894075491}
+  - {fileID: 335629337}
   - {fileID: 273690888}
   - {fileID: 756735806}
   - {fileID: 287317113}
@@ -1407,7 +1482,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 192, y: -84}
+  m_AnchoredPosition: {x: 188.99998, y: -101.15}
   m_SizeDelta: {x: 392.5, y: 75.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1787644969
@@ -1627,14 +1702,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stage: 0
-  dev0: {fileID: 21300000, guid: c9a817241047ccb4c81629dd257434ab, type: 3}
-  dev1: {fileID: 21300000, guid: 75a040d355debc94b8af748a5a17e186, type: 3}
-  dev2: {fileID: 21300000, guid: 891d69c184cf0d949997e6f9e5b1e30b, type: 3}
-  dev3: {fileID: 21300000, guid: a3184304f5b9a2b4f92351e1f517d7c3, type: 3}
-  dev4: {fileID: 21300000, guid: e8db5098c249e2f43936b0819d7d222e, type: 3}
-  dev5: {fileID: 21300000, guid: 9bc849f8e45dfb4439ab6cedc24336ea, type: 3}
-  dev6: {fileID: 21300000, guid: 173070d5dbe28774e81d4f7a031306f2, type: 3}
-  devLast: {fileID: 21300000, guid: d757624ac44bf7e4ca3f9296d30b2f3c, type: 3}
+  devIntro: {fileID: 21300000, guid: 516d893e4089f264db853336a09783e2, type: 3}
+  devPre1: {fileID: 21300000, guid: 941c8ce6e48e62b43aeb807c4a9dbe7e, type: 3}
+  devPre2: {fileID: 21300000, guid: d1c53b6c3dc76874dbbe6e6151a16cb6, type: 3}
+  devPre3: {fileID: 21300000, guid: f9f38e6c7e5e81747b0b4e90f1202d77, type: 3}
+  devPreFinal: {fileID: 21300000, guid: ab9ec57511062854dbe97b4698cfa511, type: 3}
+  dev1_0: {fileID: 21300000, guid: 29eef0ccc64d09a49a821f5c17024c01, type: 3}
+  dev1_1: {fileID: 21300000, guid: 6e23b525142af3a40a1f115a89b51bcb, type: 3}
+  dev1_2: {fileID: 21300000, guid: 299f0f1be3ab7c840906aa0d858c7067, type: 3}
+  dev1_3: {fileID: 21300000, guid: 0c5234ad62020044fbeaf8e9cfcab75b, type: 3}
+  devUpcoming: {fileID: 21300000, guid: cc71d8fd71430cd4ca7cbba88aae26f8, type: 3}
   devImage: {fileID: 894075492}
   devText: {fileID: 1787644969}
   devNextButtonText: {fileID: 876395510}
