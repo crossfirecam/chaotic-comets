@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text;
+using TMPro;
 using UnityEngine;
 
-public class TutorialManager : MonoBehaviour
+public partial class TutorialManager : MonoBehaviour
 {
-    public int popUpIndex = 0;
+    public int popUpIndex = -1;
     private GameManager gM;
     public PlayerMain player1;
     private UfoFollower ufoFollower;
@@ -14,6 +16,8 @@ public class TutorialManager : MonoBehaviour
     private bool taskSetupDone = false, ufoHit = false;
     public bool ufoGone = false, ufoFollowerDocile = false;
     private int playerCreditsBefore = 0;
+    public enum ControlType { KeyboardP1, KeyboardP2, Xbox }
+    public ControlType chosenControlStyle = ControlType.KeyboardP1;
 
     private Player player;
 
@@ -23,267 +27,91 @@ public class TutorialManager : MonoBehaviour
         gM = FindObjectOfType<GameManager>();
         player1.power = 0;
         player1.plrUiSound.UpdatePointDisplays();
+
+        if (popUpIndex == -1) // Set to -1 only when tutorial starts. Does not apply when debugging.
+            DisplayChoiceDialog();
+        else
+        {
+            popups[popUpIndex].SetActive(true);
+            ChangePopupController();
+        }
+
     }
 
     private void Update()
     {
-        DisplayCurrentPopup();
         ProgressCriteria();
     }
 
-    private void DisplayCurrentPopup()
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Popup string editing
+     * ------------------------------------------------------------------------------------------------------------------ */
+
+    // Replace a placeholder value with the corresponding control style's key prompts. Find a better way to do this TODO
+    //                                Rotate                            Thrust       Brake        Ability      Shoot        Pause
+    private string[] replaceOrig = {  "R_Rotate",                       "R_Thrust",  "R_Brake",   "R_Ability", "R_Shoot",   "R_Pause" };
+    private string[] replaceP1Key = { "Press <sprite=1> or <sprite=3>", "sprite=0",  "sprite=2",  "sprite=4",  "sprite=5",  "sprite=12" };
+    private string[] replaceP2Key = { "Press <sprite=7> or <sprite=9>", "sprite=6",  "sprite=8",  "sprite=10", "sprite=11", "sprite=12" };
+    private string[] replaceXbox =  { "Tilt <sprite=13>",               "sprite=14", "sprite=15", "sprite=16", "sprite=17", "sprite=18", };
+    private void ChangePopupController()
     {
-        for (int i = 0; i < popups.Length; i++)
+        string[] replaceChosen = default;
+        switch (chosenControlStyle)
         {
-            popups[i].SetActive(i == popUpIndex);
+            case ControlType.KeyboardP1:
+                replaceChosen = replaceP1Key;
+                break;
+            case ControlType.KeyboardP2:
+                replaceChosen = replaceP2Key;
+                break;
+            case ControlType.Xbox:
+                replaceChosen = replaceXbox;
+                break;
         }
+
+        StringBuilder editedPopup = new StringBuilder();
+        editedPopup.Append(popups[popUpIndex].GetComponent<TextMeshProUGUI>().text);
+
+        for (int i = 0; i < replaceOrig.Length; i++)
+        {
+            editedPopup.Replace(replaceOrig[i], replaceChosen[i]);
+        }
+        popups[popUpIndex].GetComponent<TextMeshProUGUI>().text = editedPopup.ToString();
     }
 
-    private void ProgressCriteria()
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Choice of control scheme
+     * ------------------------------------------------------------------------------------------------------------------ */
+
+    private void DisplayChoiceDialog()
     {
-        switch (popUpIndex)
-        {
-            case 0: // Rotation
-                ContinueIf(-player.GetAxis("Rotate") != 0);
-                break;
-
-            case 1: // Thrusting
-                ContinueIf(player.GetAxis("Move") > 0);
-                break;
-
-            case 2: // Braking
-                ContinueIf(player.GetAxis("Move") < 0);
-                break;
-
-            case 3: // Shooting
-                ContinueIf(player.GetButtonDown("Shoot"));
-                break;
-
-            case 4: // Asteroids
-                
-                if (!taskSetupDone)
-                {
-                    gM.SpawnProp(GameManager.PropType.Asteroid, default, true); // Spawn safe asteroid
-                    player1.collisionsCanDamage = false;
-                    taskSetupDone = true;
-                }
-                ContinueIf(gM.asteroidCount > 1);
-                break;
-
-            case 5: // Asteroids 2
-                ContinueIf(gM.asteroidCount == 0 || player.GetButtonDown("Ability"));
-                break;
-
-            case 6: // Shields
-                if (!taskSetupDone)
-                {
-                    DestroyAllAsteroids();
-                    player1.collisionsCanDamage = true;
-                    taskSetupDone = true;
-                }
-                ResetAsteroidsIfZero(false);
-                ContinueIf(player1.shields == 0);
-                break;
-
-            case 7: // Lives
-                if (!taskSetupDone)
-                {
-                    DestroyAllAsteroids();
-                    taskSetupDone = true;
-                }
-                ContinueIf(player1.shields == 80 && player.GetButtonDown("Ability"));
-                break;
-
-            case 8: // Canteen
-                if (!taskSetupDone)
-                {
-                    gM.SpawnProp(GameManager.PropType.Canister);
-                    taskSetupDone = true;
-                }
-                ContinueIf(player1.plrPowerups.ifTripleShot);
-                break;
-
-            case 9: // Powerup TripleShot
-                if (!taskSetupDone)
-                {
-                    DestroyAllAsteroids();
-                    player1.collisionsCanDamage = false;
-                    player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot); // In case debugging sets popUpIndex to 9
-                    taskSetupDone = true;
-                }
-                ResetAsteroidsIfZero(true);
-                ContinueIf(player.GetButtonDown("Ability"));
-                break;
-
-            case 10: // Powerup FarShot
-                if (!taskSetupDone)
-                {
-                    DestroyAllAsteroids();
-                    player1.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.TripleShot);
-                    player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot);
-                    taskSetupDone = true;
-                }
-                ResetAsteroidsIfZero(true);
-                ContinueIf(player.GetButtonDown("Ability"));
-                break;
-
-            case 11: // Powerup RetroThruster
-                if (!taskSetupDone)
-                {
-                    DestroyAllAsteroids();
-                    player1.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.FarShot);
-                    player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster);
-                    taskSetupDone = true;
-                }
-                ResetAsteroidsIfZero(true);
-                ContinueIf(player.GetButtonDown("Ability"));
-                break;
-
-            case 12: // UFO Red
-                if (!taskSetupDone)
-                {
-                    DestroyAllAsteroids();
-                    player1.collisionsCanDamage = true;
-                    playerCreditsBefore = player1.credits;
-                    player1.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.RetroThruster);
-                    gM.SpawnProp(GameManager.PropType.UfoPasser);
-                    taskSetupDone = true;
-                }
-                if (player1.credits > playerCreditsBefore && !ufoHit)
-                {
-                    ufoHit = true;
-                    UfoPasser currentUfo = FindObjectOfType<UfoPasser>().GetComponent<UfoPasser>();
-                    currentUfo.TeleportStart();
-                }
-                ContinueIf(ufoGone);
-                break;
-
-            case 13: // UFO Green
-                if (!taskSetupDone)
-                {
-                    ufoHit = false; ufoGone = false; ufoFollowerDocile = true;
-                    gM.SpawnProp(GameManager.PropType.UfoFollower);
-                    ufoFollower = FindObjectOfType<UfoFollower>();
-                    taskSetupDone = true;
-                }
-                ContinueIf(player.GetButtonDown("Ability"));
-                break;
-
-            case 14: // Powerup RapidShot
-                if (!taskSetupDone)
-                {
-                    StartCoroutine(ReplaceUfoFollower());
-                    taskSetupDone = true;
-                }
-                ContinueIf(ufoFollower.alienHealth < 20);
-                break;
-
-            case 15: // Retreat
-                if (!ufoFollower)
-                {
-                    StartCoroutine(ReplaceUfoFollower());
-                }
-                ContinueIf(ufoFollower.deathStarted || player.GetButtonDown("Ability")); // Allow skipping
-                break;
-
-            case 16: // Powerup Insurance
-                if (!taskSetupDone)
-                {
-                    StartCoroutine(SetUpPopup16());
-                    taskSetupDone = true;
-                    player1.collisionsCanDamage = true;
-                }
-                if (player1.plrPowerups.ifInsuranceActive)
-                {
-                    ResetAsteroidsIfZero(false);
-                }
-                ContinueIf(player1.shields == 0);
-                break;
-
-            case 17: // Teleport
-                if (!taskSetupDone)
-                {
-                    player1.power = 80;
-                    DestroyAllAsteroids();
-                    taskSetupDone = true;
-                }
-                ContinueIf(player.GetButtonDown("Ability") && player1.shields == 80);
-                break;
-
-            case 18: // End
-
-                break;
-
-        }
+        Cursor.visible = true;
+        Time.timeScale = 0;
+        gM.Refs.tutorialChoicePanel.SetActive(true);
+        gM.Refs.buttonWhenTutorialChoice.Select();
     }
 
-    private void ContinueIf(bool continuationCriteria)
+    public void SetControls(string chosenControl)
     {
-        if (continuationCriteria && !gM.Refs.gamePausePanel.activeInHierarchy)
+        switch (chosenControl)
         {
-            popUpIndex++;
-            taskSetupDone = false;
+            case "KeyboardP1":
+                chosenControlStyle = ControlType.KeyboardP1;
+                break;
+            case "KeyboardP2":
+                chosenControlStyle = ControlType.KeyboardP2;
+                player1.GetComponent<PlayerInput>().SwapToP2InputForTutorial();
+                player = ReInput.players.GetPlayer(1);
+                break;
+            case "Xbox":
+                chosenControlStyle = ControlType.Xbox;
+                break;
         }
-    }
 
-    // Asteroid methods
-    private void CreateAsteroids(int num, bool safeAsteroids)
-    {
-        for (int i = 0; i < num; i++)
-        {
-            if (!safeAsteroids)
-            {
-                gM.SpawnProp(GameManager.PropType.Asteroid);
-            }
-            else
-            {
-                gM.SpawnProp(GameManager.PropType.Asteroid, default, true);
-            }
-        }
-    }
-
-    private void ResetAsteroidsIfZero(bool safeAsteroids)
-    {
-        if (gM.asteroidCount == 0)
-        {
-            CreateAsteroids(3, safeAsteroids);
-        }
-    }
-    private void DestroyAllAsteroids()
-    {
-        GameObject[] listOfAsteroids = GameObject.FindGameObjectsWithTag("asteroidParent");
-        foreach (GameObject asteroid in listOfAsteroids)
-        {
-            Destroy(asteroid.gameObject);
-        }
-        gM.asteroidCount = 0;
-    }
-
-    // Ufo methods
-    private IEnumerator ReplaceUfoFollower()
-    {
-        if (ufoFollower)
-        {
-            ufoFollower.TeleportStart();
-            yield return new WaitForSeconds(3);
-        }
-        gM.SpawnProp(GameManager.PropType.UfoFollower);
-        ufoFollower = FindObjectOfType<UfoFollower>();
-
-        ufoFollowerDocile = false;
-        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot);
-        taskSetupDone = true;
-    }
-
-    // Other
-    private IEnumerator SetUpPopup16()
-    {
-        yield return new WaitForSeconds(3);
-        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance);
-        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot);
-        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot);
-        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot);
-        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster);
-        CreateAsteroids(3, false);
+        gM.Refs.tutorialChoicePanel.SetActive(false);
+        Time.timeScale = 1;
+        popUpIndex++;
+        popups[popUpIndex].SetActive(true);
+        ChangePopupController();
     }
 }

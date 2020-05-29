@@ -34,7 +34,7 @@ public class PlayerSpawnDeath : MonoBehaviour
         }
         p.shields = 0;
         p.lives--;
-        p.plrUiSound.livesText.text = $"Lives: {p.lives}";
+        p.plrUiSound.UpdatePointDisplays();
         p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenCharging;
 
         GameObject newExplosion = Instantiate(p.deathExplosion, transform.position, transform.rotation);

@@ -34,6 +34,7 @@ public partial class GameManager : MonoBehaviour
         if (BetweenScenesScript.TutorialMode || tutorialMode)
         {
             Refs.tutorialManager.SetActive(true);
+            Refs.titleP1.text = "Tutorial";
             tutorialMode = true;
         }
         // If in normal gameplay, set player ships to become active and start gameplay
@@ -54,12 +55,13 @@ public partial class GameManager : MonoBehaviour
     void Update() {
         // Each frame, check if pause menu is open, and what button is highlighted.
         // If the mouse is used to click auto highlight away, then drag a highlight back onto a certain button.
-        if (Refs.gamePausePanel.activeInHierarchy || Refs.gameOverPanel.activeInHierarchy) {
+        if (Refs.gamePausePanel.activeInHierarchy || Refs.gameOverPanel.activeInHierarchy || Refs.tutorialChoicePanel.activeInHierarchy) {
             if (EventSystem.current.currentSelectedGameObject == null || EventSystem.current.currentSelectedGameObject.Equals(null))
             {
                 // If on pause panel, then select the resume button. If on game over panel, select play again button.
                 if (Refs.gamePausePanel.activeInHierarchy) { Refs.buttonWhenPaused.Select(); }
-                else { Refs.buttonWhenGameOver.Select(); }
+                else if (Refs.gameOverPanel.activeInHierarchy) { Refs.buttonWhenGameOver.Select(); }
+                else { Refs.buttonWhenTutorialChoice.Select(); }
             }
         }
     }
@@ -80,21 +82,22 @@ public partial class GameManager : MonoBehaviour
 public class GameManagerHiddenVars
 {
     [Header("Tutorial References")]
-    public GameObject tutorialManager;
     public AudioClip musicTutorial;
+    public GameObject tutorialManager, tutorialChoicePanel;
+    public Text titleP1;
+    public Button buttonWhenTutorialChoice;
+    public GameObject largeAsteroidSafeProp;
 
     [Header("UI References")]
+    public GameObject gameLevelShieldRechargeText;
     public GameObject fadeBlack, player2GUI;
     public GameObject gameOverPanel, gamePausePanel, gameLevelPanel;
-    public GameObject gameLevelShieldRechargeText;
-    public Text swapP1Text, swapP2Text;
     public Button buttonWhenPaused, buttonWhenGameOver, buttonWhenLeavingPauseBugFix;
 
     [Header("Prop References")]
     public PlayerMain playerShip1;
     public PlayerMain playerShip2;
     public GameObject largeAsteroidProp, ufoFollowerProp, ufoPasserProp, canisterProp;
-    public GameObject largeAsteroidSafeProp;
 
     [Header("Other References")]
     public GameObject musicManagerIfNotFoundInScene;

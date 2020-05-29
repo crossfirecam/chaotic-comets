@@ -44,9 +44,10 @@ public partial class GameManager : MonoBehaviour
         }
     }
 
+    // If game over panel, or tutorial control choice panel are up, do not pause, otherwise handle pausing
     public void OnPause()
     {
-        if (!Refs.gameOverPanel.activeInHierarchy)
+        if (!Refs.gameOverPanel.activeInHierarchy && !Refs.tutorialChoicePanel.activeInHierarchy)
         {
             if (Refs.gamePausePanel.activeInHierarchy)
             {

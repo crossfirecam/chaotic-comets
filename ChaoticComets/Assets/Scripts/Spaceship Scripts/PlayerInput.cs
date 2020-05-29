@@ -72,4 +72,10 @@ public class PlayerInput : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
         canUseButtons = true;
     }
+
+    public void SwapToP2InputForTutorial()
+    {
+        playerId = 1;
+        player = ReInput.players.GetPlayer(playerId);
+    }
 }
