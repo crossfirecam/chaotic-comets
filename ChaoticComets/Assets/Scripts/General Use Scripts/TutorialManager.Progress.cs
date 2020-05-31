@@ -248,6 +248,8 @@ public partial class TutorialManager : MonoBehaviour
 
     private IEnumerator SetUpPopup16()
     {
+        if (!ufoFollower.deathStarted)
+            ufoFollower.TeleportStart(); ufoFollowerDocile = true;
         yield return new WaitForSeconds(3);
         player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance);
         player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot);

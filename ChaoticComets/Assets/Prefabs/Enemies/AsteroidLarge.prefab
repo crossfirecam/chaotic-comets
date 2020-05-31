@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4577063123825050}
   - component: {fileID: 95375998442945440}
   m_Layer: 8
-  m_Name: AsteroidLarge(Anim)
+  m_Name: AsteroidLarge
   m_TagString: asteroidParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,8 +147,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugMode: 0
   points: 50
-  maxThrust: 300
-  maxSpin: 120
+  maxThrust: 400
+  maxSpin: 100
   asteroidSize: 3
   asteroidMedium: {fileID: 1735749325752478, guid: fc5e474f76020ec499852bd7c073afa0,
     type: 3}

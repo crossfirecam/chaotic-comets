@@ -48,16 +48,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
-  gM: {fileID: 0}
   points: 50
-  maxThrust: 80
+  maxThrust: 120
   maxSpin: 10
   asteroidSize: 1
   asteroidMedium: {fileID: 1735749325752478, guid: fc5e474f76020ec499852bd7c073afa0,
     type: 3}
   asteroidSmall: {fileID: 1938873912906872}
-  playerShip1: {fileID: 0}
-  playerShip2: {fileID: 0}
   explosion: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9, type: 3}
 --- !u!50 &50859408209450516
 Rigidbody2D:
@@ -154,7 +151,7 @@ GameObject:
   - component: {fileID: 4637548286288912}
   - component: {fileID: 95040560014935642}
   m_Layer: 8
-  m_Name: AsteroidSmall(Anim)
+  m_Name: AsteroidSmall
   m_TagString: asteroidParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

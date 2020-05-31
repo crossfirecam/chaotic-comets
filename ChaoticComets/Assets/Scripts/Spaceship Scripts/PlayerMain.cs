@@ -104,12 +104,13 @@ public class PlayerMain : MonoBehaviour {
                 if (triggerObject.gameObject.CompareTag("bullet3")) { shields -= 10f; }
                 else { shields -= 20f; }
                 nextDamagePossible = Time.time + minTimeBetweenDamage;
+                plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactSoft;
 
                 if (shields <= 0)
                 {
+                    plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxDeath;
                     plrSpawnDeath.ShipIsDead();
                 }
-                plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactSoft;
                 plrUiSound.audioShipSFX.Play();
             }
         }

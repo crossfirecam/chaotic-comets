@@ -4,32 +4,39 @@ using UnityEngine;
 
 public abstract partial class Ufo : MonoBehaviour
 {
+    private int teleBorderOffset = 2;
+    private int teleAttempts = 0;
     internal void AlienRetreat()
     {
         alienSpeedCurrent = alienSpeedBase * -3f; // Reverse direction x3 speed
         ufoRetreating = true;
         forceField.SetActive(true);
-        Invoke("TeleportStart", 3f);
+        Invoke(nameof(TeleportStart), 3f);
     }
 
     // If the UFO is not dying, then start the teleport sequence at the end of a level
     public void TeleportStart()
     {
-        if (!deathStarted)
+        if (UfoIsInVisibleArea())
         {
-            forceField.SetActive(false);
-
-            ufoRetreating = false;
-            ufoTeleporting = true;
-            teleportEffect.SetActive(true);
-
-            Renderer[] listOfUFOparts = GetComponentsInChildren<Renderer>();
-            foreach (Renderer rend in listOfUFOparts)
+            if (!deathStarted)
             {
-                StartCoroutine(FadeOut(rend));
+                forceField.SetActive(false);
+
+                ufoRetreating = false;
+                ufoTeleporting = true;
+                teleportEffect.SetActive(true);
+
+                Renderer[] listOfUFOparts = GetComponentsInChildren<Renderer>();
+                foreach (Renderer rend in listOfUFOparts)
+                {
+                    StartCoroutine(FadeOut(rend));
+                }
+                Invoke("TeleportEnd", 2f);
             }
-            Invoke("TeleportEnd", 2f);
         }
+        else
+            Invoke(nameof(TeleportStart), 1f);
     }
 
     // Fade the ship's material color as it teleports
@@ -124,5 +131,25 @@ public abstract partial class Ufo : MonoBehaviour
             yield return null;
         }
         shieldMaterial.color = new Color(origColor.r, origColor.g, origColor.b, 0.5f); // Set to default
+    }
+
+    // The UFO can only stop retreating if within a certain area of the screen.
+    // If an attempt is made 3 times, the UFO is stuck just on the edge, and will teleport anyway.
+    private bool UfoIsInVisibleArea()
+    {
+        print("Checking if UFO is in visible area. Attempt #" + teleAttempts);
+        if (transform.position.x > gM.screenLeft + teleBorderOffset && transform.position.x < gM.screenRight - teleBorderOffset)
+        {
+            if (transform.position.y > gM.screenBottom + teleBorderOffset && transform.position.y < gM.screenTop - teleBorderOffset)
+            {
+                return true;
+            }
+        }
+        if (teleAttempts > 3)
+        {
+            return true;
+        }
+        teleAttempts++;
+        return false;
     }
 }

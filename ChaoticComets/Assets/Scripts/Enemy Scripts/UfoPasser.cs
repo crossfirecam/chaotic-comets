@@ -10,6 +10,7 @@ using UnityEngine;
 public class UfoPasser : Ufo
 {
     public float currentDeviation;
+    private float offsetStayingOnScreen;
     private void Update()
     {
         // Weapon systems. If criteria are met, then shoot depending on enemy type
@@ -55,24 +56,63 @@ public class UfoPasser : Ufo
     // UFO-Passer will move left to right, deviating with up/down/straight on Y axis
     private void MoveLogicPasser()
     {
-        if (System.Math.Round(timer, 1) % 2f == 0f)
+        if (System.Math.Round(timer, 1) % 1f == 0f)
         {
-            float randomiser = Random.Range(0f, 3f);
-            if (randomiser < 1f)
+            int whileTimer = 0;
+            while(whileTimer < 20)
             {
-                currentDeviation = Random.Range(-1f, -0.6f);
+                whileTimer += 1;
+                float rand = Random.Range(0f, 3f);
+                if (rand < 1f && PasserMovementIsValid(PasserMove.Up))
+                {
+                    currentDeviation = Random.Range(0.6f, 1f);
+                    break;
+                }
+                else if (rand > 1f && rand < 2f && PasserMovementIsValid(PasserMove.Straight))
+                {
+                    currentDeviation = 0f;
+                    break;
+                }
+                else if (rand > 2f && rand < 3f && PasserMovementIsValid(PasserMove.Down))
+                {
+                    currentDeviation = Random.Range(-1f, -0.6f);
+                    break;
+                }
             }
-            // To pick the straight path, UFO-Passer must not be within the edges of the screen, or it'll be essentially invisible
-            else if (randomiser < 2f && transform.position.y < gM.screenTop - 0.5f && transform.position.y > gM.screenBottom + 0.5f)
+            if (whileTimer >= 20)
             {
+                print("UFO Passer exceeded 20 while loops");
                 currentDeviation = 0f;
-            }
-            else
-            {
-                currentDeviation = Random.Range(0.6f, 1f);
             }
         }
         direction = new Vector2(1, currentDeviation);
+    }
+    //
+    private enum PasserMove { Up, Down, Straight };
+    private bool PasserMovementIsValid(PasserMove attemptedMoveType)
+    {
+        switch (attemptedMoveType)
+        {
+            case PasserMove.Up:
+                if (transform.position.y < gM.screenTop - 3f)
+                {
+                    return true;
+                }
+                break;
+            case PasserMove.Straight:
+                if (transform.position.y < gM.screenTop - 0.5f && transform.position.y > gM.screenBottom + 0.5f)
+                {
+                    return true;
+                }
+                break;
+            case PasserMove.Down:
+                if (transform.position.y > gM.screenBottom + 3f)
+                {
+                    return true;
+                }
+                break;
+        }
+        return false;
     }
 
     internal void WeaponLogicPasser()

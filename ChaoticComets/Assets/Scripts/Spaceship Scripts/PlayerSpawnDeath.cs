@@ -110,7 +110,7 @@ public class PlayerSpawnDeath : MonoBehaviour
         for (int shieldsTick = 0; shieldsTick <= p.plrUiSound.prevshields; shieldsTick++)
         {
             p.shields = shieldsTick;
-            yield return new WaitForSeconds(3f / p.plrUiSound.prevshields);
+            yield return new WaitForSeconds(2f / p.plrUiSound.prevshields);
         }
         p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenReady; // Set power bar to have text informing power can be used
         ShipIsNowTransparent(false);
