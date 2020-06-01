@@ -1,106 +1,71 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Rewired;
+using Rewired.Integration.UnityUI;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro;
-using Rewired;
-using Rewired.Integration.UnityUI;
+using UnityEngine.UI;
 
-public class ShopScript : MonoBehaviour {
+public partial class ShopScript : MonoBehaviour {
 
-    private Saving_PlayerManager data;
-
-    // Pause UI
-    public GameObject gamePausePanel;
-    public Button buttonWhenPaused, buttonWhenLeavingPauseBugFix;
-
-    // Fading & music
-    public GameObject fadeBlack, player2GUI;
-    public AudioSource musicLoop;
+    [Header("Shop Variables")]
+    private readonly int baseUpgradePrice = 1000, priceIncreasePerLevel = 2000, upgradeCap = 15;
+    public bool p1IsReady = false, p2IsReady = false;
     private float fadingAlpha = 0f;
 
-    // Player UI
-    public Image p1InsurancePowerup, p1FarShotPowerup, p1RetroThrusterPowerup, p1RapidShotPowerup, p1TripleShotPowerup;
-    public Image p2InsurancePowerup, p2FarShotPowerup, p2RetroThrusterPowerup, p2RapidShotPowerup, p2TripleShotPowerup;
-    public Image p1ShieldBar, p1PowerBar, p2ShieldBar, p2PowerBar;
-    public Text p1ScoreText, p1LivesText, p2ScoreText, p2LivesText;
-    public TextMeshProUGUI readyPromptText;
+    [Header("References")]
+    private Saving_PlayerManager data;
+    private MusicManager musicManager;
+    private Player player1, player2;
+    public ShopManagerHiddenVars ShopRefs;
 
-    // Event System handling
-    public EventSystem pauseEventSystem;
-    public EventSystemShop p1Events, p2Events;
 
-    // Readying before level transition
-    public Button p1ReadyButton, p2ReadyButton;
-    public bool p1IsReady = false, p2IsReady = false;
-
-    // Shop UI
-    public Button p1UpgButton0, p1UpgButton1, p1UpgButton2, p1UpgButton3, p2UpgButton0, p2UpgButton1, p2UpgButton2, p2UpgButton3;
-    private readonly int baseUpgradePrice = 1000, priceIncreasePerLevel = 2000, upgradeCap = 15;
+    private void Awake()
+    {
+        player1 = ReInput.players.GetPlayer(0);
+        player2 = ReInput.players.GetPlayer(BetweenScenesScript.PlayerCount == 2 ? 1 : 0);
+    }
 
     void Start() {
-        if (BetweenScenesScript.MusicVolume > 0f) { musicLoop.Play(); }
-
         // Nullexception is possible here, but only if shop is loaded without a save file. In typical gameplay it isn't possible
         data = Saving_SaveManager.LoadData();
 
-        p1Events.gameObject.SetActive(true);
-        p1ShieldBar.fillAmount = data.player1health / 80;
-        BetweenScenesScript.player1TempCredits = data.player1credits;
-        BetweenScenesScript.player1TempLives = data.player1lives;
-        if (data.player1powerups[0] == 1) { p1InsurancePowerup.gameObject.SetActive(true); }
-        if (data.player1powerups[1] == 1) { p1FarShotPowerup.gameObject.SetActive(true); }
-        if (data.player1powerups[2] == 1) { p1RetroThrusterPowerup.gameObject.SetActive(true); }
-        if (data.player1powerups[3] == 1) { p1RapidShotPowerup.gameObject.SetActive(true); }
-        if (data.player1powerups[4] == 1) { p1TripleShotPowerup.gameObject.SetActive(true); }
+        PrepareP1UI();
+
         if (data.playerCount == 1) {
-            readyPromptText.text = $"Press 'Ready' to\nContinue to Level {data.level + 1}...";
             p2IsReady = true;
             Player1OnlyGUI();
         }
         else if (data.playerCount == 2)
         {
-            p2Events.gameObject.SetActive(true);
-            player2GUI.SetActive(true);
-            p2ShieldBar.fillAmount = data.player2health / 80;
-            BetweenScenesScript.player2TempCredits = data.player2credits;
-            BetweenScenesScript.player2TempLives = data.player2lives;
-            if (data.player2powerups[0] == 1) { p2InsurancePowerup.gameObject.SetActive(true); }
-            if (data.player2powerups[1] == 1) { p2FarShotPowerup.gameObject.SetActive(true); }
-            if (data.player2powerups[2] == 1) { p2RetroThrusterPowerup.gameObject.SetActive(true); }
-            if (data.player2powerups[3] == 1) { p2RapidShotPowerup.gameObject.SetActive(true); }
-            if (data.player2powerups[4] == 1) { p2TripleShotPowerup.gameObject.SetActive(true); }
-            readyPromptText.text = $"Both players 'Ready' to\nContinue to Level {data.level + 1}...";
+            PrepareP2UI();
         }
 
-        // If space or K is held during level transition, the player will instantly ready up. This small section of code prevents
-        // that by calling the Ready button to activate one frame later.
+        // DelayedReady() prevents player that is holding 'Shoot' button from instantly readying up.
         StartCoroutine(DelayedReady());
 
+        PlayMusicIfEnabled();
         UpdateButtonText();
         StartCoroutine(FadeBlack("from"));
         Cursor.visible = false;
     }
 
     private IEnumerator DelayedReady() {
-        p1Events.SetSelectedGameObject(buttonWhenLeavingPauseBugFix.gameObject);
+        ShopRefs.p1Events.SetSelectedGameObject(ShopRefs.buttonWhenLeavingPauseBugFix.gameObject);
         if (BetweenScenesScript.PlayerCount == 2) {
-            p2Events.SetSelectedGameObject(buttonWhenLeavingPauseBugFix.gameObject);
+            ShopRefs.p2Events.SetSelectedGameObject(ShopRefs.buttonWhenLeavingPauseBugFix.gameObject);
         }
         yield return new WaitForSeconds(0.2f);
-        p1Events.SetSelectedGameObject(p1ReadyButton.gameObject);
+        ShopRefs.p1Events.SetSelectedGameObject(ShopRefs.p1ReadyButton.gameObject);
         if (BetweenScenesScript.PlayerCount == 2) {
-            p2Events.SetSelectedGameObject(p2ReadyButton.gameObject);
+            ShopRefs.p2Events.SetSelectedGameObject(ShopRefs.p2ReadyButton.gameObject);
         }
     }
 
     void Update() {
-        // If the pause button is pressed while the game pause panel is active, then return to gameplay.
-        // Else, bring up the pause panel.
-        if (Input.GetButtonDown("Pause")) {
-            if (gamePausePanel.activeInHierarchy) {
+        if (player1.GetButtonDown("Pause") || player2.GetButtonDown("Pause")) {
+            if (ShopRefs.gamePausePanel.activeInHierarchy) {
                 PauseGame(1);
             }
             else {
@@ -109,63 +74,25 @@ public class ShopScript : MonoBehaviour {
         }
         // Each frame, check what button is highlighted. Pull a button back into focus if mouse clicks away from a button.
         // If the mouse is used to click auto highlight away, then drag a highlight back onto a certain button.
-        if (p1Events.gameObject.activeInHierarchy) {
-            if (p1Events.currentSelectedGameObject == null || p1Events.currentSelectedGameObject.Equals(null)) {
-                p1Events.SetSelectedGameObject(p1ReadyButton.gameObject);
+        if (ShopRefs.p1Events.gameObject.activeInHierarchy) {
+            if (ShopRefs.p1Events.currentSelectedGameObject == null || ShopRefs.p1Events.currentSelectedGameObject.Equals(null)) {
+                ShopRefs.p1Events.SetSelectedGameObject(ShopRefs.p1ReadyButton.gameObject);
             }
         }
-        if (BetweenScenesScript.PlayerCount == 2 && p2Events.gameObject.activeInHierarchy) {
-            if (p2Events.currentSelectedGameObject == null || p2Events.currentSelectedGameObject.Equals(null)) {
-                p2Events.SetSelectedGameObject(p2ReadyButton.gameObject);
+        if (BetweenScenesScript.PlayerCount == 2 && ShopRefs.p2Events.gameObject.activeInHierarchy) {
+            if (ShopRefs.p2Events.currentSelectedGameObject == null || ShopRefs.p2Events.currentSelectedGameObject.Equals(null)) {
+                ShopRefs.p2Events.SetSelectedGameObject(ShopRefs.p2ReadyButton.gameObject);
             }
         }
-        if (pauseEventSystem.gameObject.activeInHierarchy) {
-            if (pauseEventSystem.currentSelectedGameObject == null || pauseEventSystem.currentSelectedGameObject.Equals(null)) {
-                pauseEventSystem.SetSelectedGameObject(buttonWhenPaused.gameObject);
+        if (ShopRefs.pauseEventSystem.gameObject.activeInHierarchy) {
+            if (ShopRefs.pauseEventSystem.currentSelectedGameObject == null || ShopRefs.pauseEventSystem.currentSelectedGameObject.Equals(null)) {
+                ShopRefs.pauseEventSystem.SetSelectedGameObject(ShopRefs.buttonWhenPaused.gameObject);
             }
-        }
-    }
-
-    // Code for shop's Ready system. If both players are ready, shop closes.
-    public void ReadyUp(int plrReady) {
-        // 
-        Navigation customNav = new Navigation { mode = Navigation.Mode.Explicit };
-        Button[] listOfButtons = FindObjectsOfType<Button>();
-
-        if (plrReady == 1)
-        {
-            p1IsReady = !p1IsReady;
-            p1ReadyButton.GetComponentInChildren<Text>().text = p1IsReady ? "Unready" : "Ready";
-            customNav.selectOnUp = p1IsReady ? null : p1UpgButton3;
-            p1ReadyButton.GetComponent<Button>().navigation = customNav;
-        }
-        else
-        {
-            p2IsReady = !p2IsReady;
-            p2ReadyButton.GetComponentInChildren<Text>().text = p2IsReady ? "Unready" : "Ready";
-            customNav.selectOnUp = p2IsReady ? null : p2UpgButton3;
-            p2ReadyButton.GetComponent<Button>().navigation = customNav;
-        }
-
-        foreach (Button gameObj in listOfButtons)
-        { // Find all P1 buttons that aren't 'Ready' button, and disable them
-            if (gameObj.transform.name.StartsWith(plrReady == 1 ? "P1" : "P2") && !gameObj.transform.name.EndsWith("Ready"))
-            {
-                gameObj.GetComponent<Button>().interactable = plrReady == 1 ? !p1IsReady : !p2IsReady;
-            }
-        }
-
-        if (p1IsReady && p2IsReady) {
-            p1ReadyButton.GetComponentInChildren<Text>().text = "";
-            p2ReadyButton.GetComponentInChildren<Text>().text = "";
-            p1ReadyButton.GetComponent<Button>().interactable = false;
-            p2ReadyButton.GetComponent<Button>().interactable = false;
-            GoBackToGame();
         }
     }
 
     public void GoBackToGame() {
-        readyPromptText.text = $"Prepare for Level {data.level + 1}!";
+        ShopRefs.readyPromptText.text = $"Prepare for Level {data.level + 1}!";
         StartCoroutine(FadeBlack("to"));
         Invoke("LoadMainGame", 1f);
     }
@@ -176,218 +103,30 @@ public class ShopScript : MonoBehaviour {
         Time.timeScale = 1;
         SceneManager.LoadScene("StartMenu");
     }
+}
 
-    /* ------------------------------------------------------------------------------------------------------------------
-    * Upgrades code.
-    * They must be separate functions due to how Unity handles button press scripting. Only one variable can be passed per button.
-    * ------------------------------------------------------------------------------------------------------------------ */
+[System.Serializable]
+public class ShopManagerHiddenVars
+{
+    [Header("Pause UI References")]
+    public GameObject gamePausePanel;
+    public Button buttonWhenPaused, buttonWhenLeavingPauseBugFix;
 
-    public void PerformUpgradeP1(int whichUpgrade) {
-        if (p1Events.currentSelectedGameObject.name.StartsWith("P1")) {
-            if (BetweenScenesScript.UpgradesP1[whichUpgrade] < upgradeCap) {
-                int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP1[whichUpgrade] - 10);
-                if (BetweenScenesScript.player1TempCredits >= price) {
-                    BetweenScenesScript.UpgradesP1[whichUpgrade] += 1;
-                    BetweenScenesScript.player1TempCredits -= price;
-                    print($"Upgrades: {string.Join(",", BetweenScenesScript.UpgradesP1)} Credits left: {BetweenScenesScript.player1TempCredits}");
-                }
-                else {
-                    print("Upgrade failed, not enough credits");
-                }
-            }
-        }
-        UpdateButtonText();
-    }
+    [Header("Player UI References")]
+    public GameObject[] listOfP1Powerups, listOfP2Powerups;
+    public Image p1ShieldBar, p1PowerBar, p2ShieldBar, p2PowerBar;
+    public Text p1ScoreText, p1LivesText, p2ScoreText, p2LivesText;
 
-    public void PerformUpgradeP2(int whichUpgrade) {
-        if (p2Events.currentSelectedGameObject.name.StartsWith("P2")) {
-            if (BetweenScenesScript.UpgradesP2[whichUpgrade] < upgradeCap) {
-                int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP2[whichUpgrade] - 10);
-                if (BetweenScenesScript.player2TempCredits >= price) {
-                    BetweenScenesScript.UpgradesP2[whichUpgrade] += 1;
-                    BetweenScenesScript.player2TempCredits -= price;
-                    print($"Upgrades: {string.Join(",", BetweenScenesScript.UpgradesP2)} Credits left: {BetweenScenesScript.player2TempCredits}");
-                }
-                else {
-                    print("Upgrade failed, not enough credits");
-                }
-            }
-        }
-        UpdateButtonText();
-    }
+    [Header("Shop UI References")]
+    public TextMeshProUGUI readyPromptText;
+    public Button p1UpgBtnAboveReady, p2UpgBtnAboveReady;
+    public Button p1ReadyButton, p2ReadyButton;
 
-    // Give a life to player number 'i'
-    public void GiveLife(int playerSendingLife) {
-        if (playerSendingLife == 1 && BetweenScenesScript.player1TempLives > 1) {
-            BetweenScenesScript.player1TempLives -= 1;
-            BetweenScenesScript.player2TempLives += 1;
-            if (BetweenScenesScript.player2TempLives == 1) {
-                p2ShieldBar.fillAmount = 1f;
-            }
-        }
-        if (playerSendingLife == 2 && BetweenScenesScript.player2TempLives > 1) {
-            BetweenScenesScript.player2TempLives -= 1;
-            BetweenScenesScript.player1TempLives += 1;
-            if (BetweenScenesScript.player1TempLives == 1) {
-                p1ShieldBar.fillAmount = 1f;
-            }
-        }
-        UpdateButtonText();
-    }
+    [Header("Event System References")]
+    public EventSystem pauseEventSystem;
+    public EventSystemShop p1Events, p2Events;
 
-    /* ------------------------------------------------------------------------------------------------------------------
-    * Pause screen code
-    * ------------------------------------------------------------------------------------------------------------------ */
-
-
-    public void PauseGame(int intent) {
-        if (intent == 0) { // Pause game
-
-            p1Events.gameObject.SetActive(false);
-            p2Events.gameObject.SetActive(false);
-            pauseEventSystem.GetComponent<RewiredStandaloneInputModule>().enabled = true;
-
-            musicLoop.Pause();
-            gamePausePanel.SetActive(true);
-            buttonWhenPaused.Select();
-            Time.timeScale = 0;
-            Cursor.visible = true;
-        }
-        else if (intent == 1) { // Resume game
-
-            buttonWhenLeavingPauseBugFix.Select(); // Select it with pause event system, not upcoming event systems
-            pauseEventSystem.GetComponent<RewiredStandaloneInputModule>().enabled = false;
-            p1Events.gameObject.SetActive(true);
-            if (player2GUI.activeInHierarchy)
-            {
-                p2Events.gameObject.SetActive(true);
-            }
-
-
-            if (BetweenScenesScript.MusicVolume > 0f) { musicLoop.Play(); }
-            gamePausePanel.SetActive(false);
-            Time.timeScale = 1;
-            Cursor.visible = false;
-        }
-    }
-
-    /* ------------------------------------------------------------------------------------------------------------------
-     * Misc code
-     * ------------------------------------------------------------------------------------------------------------------ */
-
-    // If a button pressed begins with 'P1' or 'P2', and does not end with 'Ready' or 'Transfer', then update the button's text based on BetweenScenesScript variables
-    // If button ends with 'Transfer', then change the life transfer button text
-    private void UpdateButtonText() {
-        Button[] listOfButtons = GameObject.FindObjectsOfType<Button>();
-        foreach (Button gameObj in listOfButtons) {
-            string tempName = gameObj.transform.name;
-            tempName = tempName.Substring(tempName.Length - 1, 1);
-            if (int.TryParse(tempName, out int i)) {
-                i = int.Parse(tempName);
-            }
-            int priceP1 = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP1[i] - 10);
-            int priceP2 = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP2[i] - 10);
-            string upgradeTier; int tempUpgradeNumLength;
-
-            if (gameObj.transform.name.StartsWith("P1") && !gameObj.transform.name.EndsWith("Ready")) {
-                if (!gameObj.transform.name.EndsWith("Transfer")) {
-                    tempUpgradeNumLength = BetweenScenesScript.UpgradesP1[i].ToString().Length - 1;
-                    upgradeTier = BetweenScenesScript.UpgradesP1[i].ToString().Insert(tempUpgradeNumLength, ".");
-                    gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Upgrade: {priceP1}c)";
-                    if (BetweenScenesScript.UpgradesP1[i] == upgradeCap) {
-                        gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Maximum upgrade)";
-                    }
-                }
-                else {
-                    if (BetweenScenesScript.PlayerCount == 2) {
-                        if (BetweenScenesScript.player1TempLives > 1) { gameObj.GetComponentInChildren<Text>().text = "Multiple Lives\n(Transfer 1 life to P2)"; }
-                        else if (BetweenScenesScript.player1TempLives == 1) { gameObj.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
-                        else { /*(BetweenScenesScript.player1TempLives < 1)*/ gameObj.GetComponentInChildren<Text>().text = "No Lives";
-                        }
-                    }
-                }
-            }
-            else if (gameObj.transform.name.StartsWith("P2") && !gameObj.transform.name.EndsWith("Ready")) {
-                if (!gameObj.transform.name.EndsWith("Transfer")) {
-                    tempUpgradeNumLength = BetweenScenesScript.UpgradesP2[i].ToString().Length - 1;
-                    upgradeTier = BetweenScenesScript.UpgradesP2[i].ToString().Insert(tempUpgradeNumLength, ".");
-                    gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Upgrade: {priceP2}c)";
-                    if (BetweenScenesScript.UpgradesP2[i] == upgradeCap) {
-                        gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Maximum upgrade)";
-                    }
-                }
-                else {
-                    if (BetweenScenesScript.PlayerCount == 2) {
-                        if (BetweenScenesScript.player2TempLives > 1) { gameObj.GetComponentInChildren<Text>().text = "Multiple Lives\n(Transfer 1 life to P2)"; }
-                        else if (BetweenScenesScript.player2TempLives == 1) { gameObj.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
-                        else { /*(BetweenScenesScript.player2TempLives < 1)*/ gameObj.GetComponentInChildren<Text>().text = "No Lives"; }
-                    }
-                }
-            }
-            p1ScoreText.text = "Credits:\n" + BetweenScenesScript.player1TempCredits;
-            p1LivesText.text = "Lives: " + BetweenScenesScript.player1TempLives;
-            if (data.playerCount == 2) {
-                p2ScoreText.text = "Credits:\n" + BetweenScenesScript.player2TempCredits;
-                p2LivesText.text = "Lives: " + BetweenScenesScript.player2TempLives;
-            }
-        }
-    }
-
-    // If One Player mode is selected, edit where the buttons and text are in the shop.
-    private void Player1OnlyGUI() {
-        Button[] listOfButtons = GameObject.FindObjectsOfType<Button>();
-        foreach (Button gameObj in listOfButtons) {
-            if (gameObj.transform.name.StartsWith("P1")) {
-                float tempYPosition = gameObj.transform.localPosition.y;
-                gameObj.transform.localPosition = new Vector3(430, tempYPosition);
-            }
-            if (gameObj.transform.name.EndsWith("Transfer")) {
-                gameObj.gameObject.SetActive(false);
-            }
-            float tempXPosition = gameObj.transform.localPosition.x;
-            float tempYPosition2 = gameObj.transform.localPosition.y + 30;
-            gameObj.transform.localPosition = new Vector3(tempXPosition, tempYPosition2);
-        }
-        TextMeshProUGUI[] listOfTextBoxes = GameObject.FindObjectsOfType<TextMeshProUGUI>();
-        foreach (TextMeshProUGUI gameObj in listOfTextBoxes) {
-            if (gameObj.transform.name == "P1UpgradesTitle") {
-                gameObj.transform.localPosition = new Vector3(430, 7);
-            }
-            if (gameObj.transform.name == "UpgLifeTransfer") {
-                gameObj.gameObject.SetActive(false);
-            }
-            else if (gameObj.transform.name.StartsWith("Upg")) {
-                float tempYPosition = gameObj.transform.localPosition.y;
-                gameObj.transform.localPosition = new Vector3(-144, tempYPosition);
-                float tempXPosition = gameObj.transform.localPosition.x;
-                float tempYPosition2 = gameObj.transform.localPosition.y + 30;
-                gameObj.transform.localPosition = new Vector3(tempXPosition, tempYPosition2);
-            }
-        }
-    }
-
-    private IEnumerator FadeBlack(string ToOrFrom) {
-        Image tempFade = fadeBlack.GetComponent<Image>();
-        Color origColor = tempFade.color;
-        float speedOfFade = 0.8f;
-        fadeBlack.SetActive(true);
-        if (ToOrFrom == "from") {
-            fadingAlpha = 1f;
-            while (fadingAlpha > 0f) {
-                fadingAlpha -= speedOfFade * Time.deltaTime;
-                tempFade.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);
-                yield return null;
-            }
-            fadeBlack.SetActive(false);
-        }
-        else if (ToOrFrom == "to") {
-            fadingAlpha = 0f;
-            speedOfFade = 1.2f;
-            while (fadingAlpha < 1f) {
-                fadingAlpha += speedOfFade * Time.deltaTime;
-                tempFade.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);
-                yield return null;
-            }
-        }
-    }
+    [Header("Other References")]
+    public GameObject fadeBlack, player2GUI;
+    public GameObject musicManagerIfNotFoundInScene;
 }

@@ -20,7 +20,7 @@ public partial class GameManager : MonoBehaviour
     public int asteroidCount;
     public int levelNo = 0;
     [HideInInspector] public float screenTop = 8f, screenBottom = 8f, screenLeft = 11f, screenRight = 11f;
-    public MusicManager musicManager;
+    private MusicManager musicManager;
 
     [Header("Other Variables")]
     private float fadingAlpha = 0f;

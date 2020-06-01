@@ -73,7 +73,10 @@ public class MusicManager : MonoBehaviour
             foreach (GameObject sfxObject in listOfSfxObjects)
             {
                 if (sfxObject.GetComponent<AudioSource>().isPlaying)
+                {
                     sfxObject.GetComponent<AudioSource>().Pause();
+                    print(sfxObject.transform.name);
+                }
             }
         }
         if (intent == 1) // Resume
