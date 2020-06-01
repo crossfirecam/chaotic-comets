@@ -22,10 +22,11 @@ public class PlayerMovement : MonoBehaviour
         if (p.plrInput.thrustInput != 0 && p.modelPlayer.activeInHierarchy && p.plrInput.isNotTeleporting)
         {
             if (retroThrustEngaged)
-            {
                 retroThrustEngaged = false;
-            }
-            if (!p.plrUiSound.audioShipThrust.isPlaying) { p.plrUiSound.audioShipThrust.Play(); }
+
+            if (!p.plrUiSound.audioShipThrust.isPlaying && DialogsNotOpen())
+                p.plrUiSound.audioShipThrust.Play();
+
             if (!thruster1.isPlaying) { thruster1.Play(); }
             if (!thruster2.isPlaying) { thruster2.Play(); }
 
@@ -57,8 +58,9 @@ public class PlayerMovement : MonoBehaviour
             if (thruster2.isPlaying) { thruster2.Stop(); }
             if (p.plrPowerups.ifRetroThruster && p.rbPlayer.velocity.magnitude != 0)
             {
-                if (!retroThrustEngaged)
+                if (!retroThrustEngaged && p.rbPlayer.velocity.magnitude > 4)
                 {
+                    print(p.rbPlayer.velocity.magnitude);
                     p.plrUiSound.audioShipRetroThrust.Play();
                     retroThrustEngaged = true;
                     retroThruster1.Play();
@@ -80,5 +82,10 @@ public class PlayerMovement : MonoBehaviour
             }
             else { p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 8f; }
         }
+    }
+
+    private bool DialogsNotOpen()
+    {
+        return !p.gM.Refs.gamePausePanel.activeInHierarchy && !p.gM.Refs.tutorialChoicePanel.activeInHierarchy;
     }
 }

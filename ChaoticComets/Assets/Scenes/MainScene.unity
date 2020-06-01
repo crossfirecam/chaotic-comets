@@ -12147,7 +12147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c402554bc9b14e341b6cfb07737d21e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popUpIndex: 15
+  popUpIndex: -1
   player1: {fileID: 1146411255}
   popups:
   - {fileID: 1808252452}
@@ -13024,7 +13024,7 @@ PrefabInstance:
     - target: {fileID: 4598709768930891665, guid: c1a096eb384c2794dae54c304033ff6a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1a096eb384c2794dae54c304033ff6a, type: 3}

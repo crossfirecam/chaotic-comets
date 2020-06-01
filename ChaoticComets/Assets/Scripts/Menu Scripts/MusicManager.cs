@@ -75,7 +75,6 @@ public class MusicManager : MonoBehaviour
                 if (sfxObject.GetComponent<AudioSource>().isPlaying)
                 {
                     sfxObject.GetComponent<AudioSource>().Pause();
-                    print(sfxObject.transform.name);
                 }
             }
         }
