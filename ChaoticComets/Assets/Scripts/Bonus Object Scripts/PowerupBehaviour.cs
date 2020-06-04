@@ -71,7 +71,7 @@ public class PowerupBehaviour : MonoBehaviour {
     IEnumerator PowerupExpiry() {
         audioPowerupExpire.clip = expireSound;
         audioPowerupExpire.pitch = 0.95f;
-        for (int tick = 0; tick <= 10; tick++) {
+        for (int tick = 0; tick <= 6; tick++) {
             if (tick % 2 == 0)
             {
                 rend.material.SetColor("_Color", Color.white);

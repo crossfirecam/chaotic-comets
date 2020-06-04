@@ -67,7 +67,7 @@ public class PlayerMain : MonoBehaviour {
         if (col.gameObject.CompareTag("asteroid") || col.gameObject.CompareTag("ufo")) {
             // Slightly push spaceship away from collided object, whether invulnerable or not. UFO pushback stacks with this
             Vector2 force = gameObject.transform.position - col.transform.position;
-            int magnitude = 80;
+            int magnitude = 40;
             gameObject.GetComponent<Rigidbody2D>().AddForce(force * magnitude);
 
             if (collisionsCanDamage && Time.time > nextDamagePossible) {

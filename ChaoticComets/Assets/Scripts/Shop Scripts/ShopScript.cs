@@ -30,6 +30,8 @@ public partial class ShopScript : MonoBehaviour {
     void Start() {
         // Nullexception is possible here, but only if shop is loaded without a save file. In typical gameplay it isn't possible
         data = Saving_SaveManager.LoadData();
+        BetweenScenesScript.UpgradesP1 = data.player1upgrades;
+        BetweenScenesScript.UpgradesP2 = data.player2upgrades;
 
         PrepareP1UI();
 

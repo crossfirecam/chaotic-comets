@@ -7075,7 +7075,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Version 1.3.devbuild
+  m_text: 'Version 1.3.0
 
     Made by CrossfireCam
 
@@ -7151,7 +7151,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1786706367}
-    characterCount: 78
+    characterCount: 71
     spriteCount: 0
     spaceCount: 7
     wordCount: 11
@@ -8043,8 +8043,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 40.6}
-  m_SizeDelta: {x: 199.65, y: 24.04}
+  m_AnchoredPosition: {x: 0, y: -11.526}
+  m_SizeDelta: {x: 178.42041, y: 135.08755}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2112112673
 MonoBehaviour:
@@ -8078,7 +8078,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Not done yet
+  m_Text: 'Keyboard and Xbox controllers are currently natively supported.
+
+
+    More
+    controller support will come to this screen in future updates.'
 --- !u!222 &2112112674
 CanvasRenderer:
   m_ObjectHideFlags: 0

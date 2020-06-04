@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract partial class Ufo : MonoBehaviour
 {
-    private int teleBorderOffset = 2;
+    private readonly int teleBorderOffset = 2;
     private int teleAttempts = 0;
     internal void AlienRetreat()
     {

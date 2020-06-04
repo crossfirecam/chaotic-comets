@@ -10,7 +10,6 @@ using UnityEngine;
 public class UfoPasser : Ufo
 {
     public float currentDeviation;
-    private float offsetStayingOnScreen;
     private void Update()
     {
         // Weapon systems. If criteria are met, then shoot depending on enemy type

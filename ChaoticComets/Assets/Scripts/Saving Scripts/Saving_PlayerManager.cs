@@ -11,20 +11,16 @@ public class Saving_PlayerManager
     public int playerCount = 1;
     public int difficulty = 0;
     public int level;
-    public float player1health = 0;
-    public float player2health = 0;
-    public int player1credits = 0;
-    public int player2credits = 0;
-    public int player1bonus = 0;
-    public int player2bonus = 0;
-    public int player1lives = 0;
-    public int player2lives = 0;
+    public float player1health = 0, player2health = 0;
+    public int player1credits = 0, player2credits = 0;
+    public int player1bonus = 0, player2bonus = 0;
+    public int player1lives = 0, player2lives = 0;
     // Powerup order: Insurance, Far Shot, Retro Thruster, Rapid Shot, Triple Shot
     public int[] player1powerups = { 0, 0, 0, 0, 0 };
     public int[] player2powerups = { 0, 0, 0, 0, 0 };
     // Upgrade order: Speed, brake efficiency, fire rate, shot speed
-    public float[] player1upgrades = { 0, 0, 0, 0 };
-    public float[] player2upgrades = { 0, 0, 0, 0 };
+    public int[] player1upgrades = { 0, 0, 0, 0 };
+    public int[] player2upgrades = { 0, 0, 0, 0 };
 
     public Saving_PlayerManager(GameManager gM, GameObject player1, GameObject player2) {
         PlayerMain player1GameObject = player1.GetComponent<PlayerMain>();

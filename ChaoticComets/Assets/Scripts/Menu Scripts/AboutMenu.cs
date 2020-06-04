@@ -19,12 +19,12 @@ public class AboutMenu : MonoBehaviour {
     private readonly string devTextIntro = "Chaotic Comets has been in development since late 2018. Press the button below to learn more about the game's history.",
         devTextPre1 = "<u>Early October 2018</u>: Chaotic Comet's development began with a simple experiment of game physics. Much of the material was placeholders.",
         devTextPre2 = "<u>Late October 2018</u>: The project was in a playable state. Asteroid physics, a health/power system, and a basic menu system was added.",
-        devTextPre3 = "<u>Early November 2018</u>: Further development led to a multiplayer mode, UFO enemies, and powerups.",
+        devTextPre3 = "<u>Early November 2018</u>: Further development led to adding UFO enemies and powerups.",
         devTextPreFinal = "<u>Late November 2018</u>: All placeholder sprites were removed, replaced with 3D assets made from scratch. This was the build used for a public design show. It was received well.",
         devText1_0 = "<u>March 2019</u>: Chaotic Comets was revisited to be published online. It came with UI enhancements, difficulty options, and easier controller selection.",
         devText1_1 = "<u>May 2019</u>: Chaotic Comets was updated to 1.1. Ship handling & visual effects were improved, sound effects / music were added, and plenty of bugs were fixed.",
         devText1_2 = "<u>June 2019</u>: Chaotic Comets was updated to 1.2. UFO's have more interesting mechanics, saving and a shop between levels was introduced, and there was a lot of testing done.",
-        devText1_3 = "<u>June 2020</u>: After a year of on-and-off dev, 1.3 was done. Includes improved UFO AI, an interactive tutorial, comprehensive controller support, and a <i>ton</i> of code review & bug fixes.",
+        devText1_3 = "<u>June 2020</u>: After a year of on-and-off dev, 1.3 was done. Includes improved UFO AI, an interactive tutorial, better controller support, and a <i>ton</i> of code review & bug fixes.",
         devTextUpcoming = "Upcoming patches will include more features to enhance gameplay. Thank you for playing the game!";
     public Button returnToMenuButton;
 

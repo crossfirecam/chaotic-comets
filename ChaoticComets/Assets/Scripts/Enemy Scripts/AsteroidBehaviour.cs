@@ -27,8 +27,6 @@ public class AsteroidBehaviour : MonoBehaviour {
         GetComponents();
         GiveRandomMovement();
     }
-
-    // Give random movement to newly spawned asteroids. Thanks to metalted and GlassesGuy on Unity forum (https://answers.unity.com/questions/1646067/)
     private void GiveRandomMovement()
     {
         UsefulFunctions.FindThrust(rbAsteroid, maxThrust);

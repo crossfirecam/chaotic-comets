@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UsefulFunctions : MonoBehaviour
 {
+
+    // Give random thrust to newly spawned props. Thanks to metalted and GlassesGuy on Unity forum (https://answers.unity.com/questions/1646067/)
     public static void FindThrust(Rigidbody2D rb, float maxThrust)
     {
 

@@ -105,7 +105,7 @@ public partial class GameManager : MonoBehaviour
     {
         Image tempFade = Refs.fadeBlack.GetComponent<Image>();
         Color origColor = tempFade.color;
-        float speedOfFade = 0.4f;
+        float speedOfFade = 0.6f;
         Refs.fadeBlack.SetActive(true);
         if (ToOrFrom == "from")
         {

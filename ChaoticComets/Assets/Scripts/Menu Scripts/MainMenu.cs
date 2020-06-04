@@ -43,7 +43,7 @@ public partial class MainMenu : MonoBehaviour
     private IEnumerator FadeBlack(string ToOrFrom) {
         Image tempFade = fadeBlack.GetComponent<Image>();
         Color origColor = tempFade.color;
-        float speedOfFade = 0.8f;
+        float speedOfFade = 1.6f;
         fadeBlack.SetActive(true);
         if (ToOrFrom == "from") {
             fadingAlpha = 1f;
@@ -56,7 +56,6 @@ public partial class MainMenu : MonoBehaviour
         }
         else if (ToOrFrom == "to") {
             fadingAlpha = 0f;
-            speedOfFade = 1.6f;
             while (fadingAlpha < 1f) {
                 fadingAlpha += speedOfFade * Time.deltaTime;
                 tempFade.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);

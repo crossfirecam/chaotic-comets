@@ -56,6 +56,8 @@ public partial class MainMenu : MonoBehaviour
         BetweenScenesScript.player2TempCredits = 0;
         BetweenScenesScript.player1TempLives = 0;
         BetweenScenesScript.player2TempLives = 0;
+        BetweenScenesScript.UpgradesP1 = new int[] { 10, 10, 10, 10 };
+        BetweenScenesScript.UpgradesP2 = new int[] { 10, 10, 10, 10 };
     }
 
     public void ChangeMusicPassToManager(float musVolume)

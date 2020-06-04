@@ -130,7 +130,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
             
             case Powerups.ExtraLife:
-                p.ScorePoints(10000);
+                GrantExtraLife();
                 break;
             case Powerups.MediumPrize:
                 p.ScorePoints(2500);
@@ -158,13 +158,14 @@ public class PlayerPowerups : MonoBehaviour
         p.lives++;
         p.plrUiSound.audioShipSFX.clip = lifeGained;
         p.plrUiSound.audioShipSFX.Play();
+        p.plrUiSound.UpdatePointDisplays();
     }
 
     public void FindWhatToGivePlayer()
     {
         print("All powerups obtained");
         powerRandomiser = Random.Range(0, 20);
-        // 10% chance of 10,000 credits (and therefore an extra life)
+        // 10% chance of extra life
         if (RandCheck(0, 2))
         {
             ApplyPowerup(Powerups.ExtraLife);
