@@ -61,10 +61,12 @@ Sound / UI improvements
 - Shop shows controls in a more visual way.
 - Previously loud noises are reduced in volume. UFO noises pitched down to sound different.
 - About screen updated considerably.
+- Player UI adjusted, powerup icons have added border
 
 Bug fixes from 1.2
 - UFO attempting to retreat now will always retreat in the opposite direction. No more randomly ramming forward into the player.
 - UFO attempting to retreat won't teleport while offscreen anymore. Checks to see if their location is in a certain range, then tries to teleport.
+- Player upgrades aren't transferred from one game to another under certain conditions
 - UFO bullets killing a player now plays the ship explosion sound.
 - Dead spaceships no longer collide with objects.
 - Canteens no longer clip into asteroids.

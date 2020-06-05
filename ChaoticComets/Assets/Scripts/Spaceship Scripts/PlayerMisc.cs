@@ -46,7 +46,7 @@ public class PlayerMisc : MonoBehaviour
             p.bonus = data.player1bonus;
             if (data.player1powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
             if (data.player1powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
-            if (data.player1powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster, false); }
+            if (data.player1powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false); }
             if (data.player1powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
             if (data.player1powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
         }
@@ -58,7 +58,7 @@ public class PlayerMisc : MonoBehaviour
             p.bonus = data.player2bonus;
             if (data.player2powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
             if (data.player2powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
-            if (data.player2powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster, false); }
+            if (data.player2powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false); }
             if (data.player2powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
             if (data.player2powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
         }

@@ -16,6 +16,7 @@ TagManager:
   - bullet4
   - rewiredInputManager
   - MiscSounds
+  - ScoreEntry
   layers:
   - Default
   - TransparentFX

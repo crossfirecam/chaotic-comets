@@ -6,8 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField] PlayerMain p = default;
-    private bool retroThrustEngaged = false;
-    public ParticleSystem thruster1, thruster2, retroThruster1, retroThruster2;
+    private bool autoBrakeEngaged = false;
+    public ParticleSystem thruster1, thruster2, autoBrakeEffect1, autoBrakeEffect2;
 
     public void ShipMovement()
     {
@@ -21,8 +21,8 @@ public class PlayerMovement : MonoBehaviour
         // Apply force on Y axis of spaceship, multiply by thrust
         if (p.plrInput.thrustInput != 0 && p.modelPlayer.activeInHierarchy && p.plrInput.isNotTeleporting)
         {
-            if (retroThrustEngaged)
-                retroThrustEngaged = false;
+            if (autoBrakeEngaged)
+                autoBrakeEngaged = false;
 
             if (!p.plrUiSound.audioShipThrust.isPlaying && DialogsNotOpen())
                 p.plrUiSound.audioShipThrust.Play();
@@ -50,21 +50,21 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         // Passive Drag (no thruster controls pressed)
-        // Apply passive drag depending on if retro thrusters are equipped or not
+        // Apply passive drag depending on if Aut equipped or not
         else
         {
             if (p.plrUiSound.audioShipThrust.isPlaying) { p.plrUiSound.audioShipThrust.Stop(); }
             if (thruster1.isPlaying) { thruster1.Stop(); }
             if (thruster2.isPlaying) { thruster2.Stop(); }
-            if (p.plrPowerups.ifRetroThruster && p.rbPlayer.velocity.magnitude != 0)
+            if (p.plrPowerups.ifAutoBrake && p.rbPlayer.velocity.magnitude != 0)
             {
-                if (!retroThrustEngaged && p.rbPlayer.velocity.magnitude > 4)
+                if (!autoBrakeEngaged && p.rbPlayer.velocity.magnitude > 4)
                 {
                     print(p.rbPlayer.velocity.magnitude);
-                    p.plrUiSound.audioShipRetroThrust.Play();
-                    retroThrustEngaged = true;
-                    retroThruster1.Play();
-                    retroThruster2.Play();
+                    p.plrUiSound.audioShipAutoBrake.Play();
+                    autoBrakeEngaged = true;
+                    autoBrakeEffect1.Play();
+                    autoBrakeEffect2.Play();
                 }
                 if (BetweenScenesScript.Difficulty != 2)
                 {

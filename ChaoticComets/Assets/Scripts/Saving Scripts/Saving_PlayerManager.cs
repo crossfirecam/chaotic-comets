@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class Saving_PlayerManager
 {
     public int playerCount = 1;
@@ -15,7 +15,7 @@ public class Saving_PlayerManager
     public int player1credits = 0, player2credits = 0;
     public int player1bonus = 0, player2bonus = 0;
     public int player1lives = 0, player2lives = 0;
-    // Powerup order: Insurance, Far Shot, Retro Thruster, Rapid Shot, Triple Shot
+    // Powerup order: Insurance, Far Shot, Auto-Brake, Rapid Shot, Triple Shot
     public int[] player1powerups = { 0, 0, 0, 0, 0 };
     public int[] player2powerups = { 0, 0, 0, 0, 0 };
     // Upgrade order: Speed, brake efficiency, fire rate, shot speed
@@ -35,7 +35,7 @@ public class Saving_PlayerManager
         player1lives = player1GameObject.lives;
         if (player1GameObject.plrPowerups.ifInsuranceActive) { player1powerups[0] = 1; }
         if (player1GameObject.plrPowerups.ifFarShot) { player1powerups[1] = 1; }
-        if (player1GameObject.plrPowerups.ifRetroThruster) { player1powerups[2] = 1; }
+        if (player1GameObject.plrPowerups.ifAutoBrake) { player1powerups[2] = 1; }
         if (player1GameObject.plrPowerups.ifRapidShot) { player1powerups[3] = 1; }
         if (player1GameObject.plrPowerups.ifTripleShot) { player1powerups[4] = 1; }
         player1upgrades[0] = BetweenScenesScript.UpgradesP1[0];
@@ -51,7 +51,7 @@ public class Saving_PlayerManager
             player2lives = player2GameObject.lives;
             if (player2GameObject.plrPowerups.ifInsuranceActive) { player2powerups[0] = 1; }
             if (player2GameObject.plrPowerups.ifFarShot) { player2powerups[1] = 1; }
-            if (player2GameObject.plrPowerups.ifRetroThruster) { player2powerups[2] = 1; }
+            if (player2GameObject.plrPowerups.ifAutoBrake) { player2powerups[2] = 1; }
             if (player2GameObject.plrPowerups.ifRapidShot) { player2powerups[3] = 1; }
             if (player2GameObject.plrPowerups.ifTripleShot) { player2powerups[4] = 1; }
             player2upgrades[0] = BetweenScenesScript.UpgradesP2[0];

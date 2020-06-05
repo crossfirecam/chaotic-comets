@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using Rewired;
 
 public partial class MainMenu : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public partial class MainMenu : MonoBehaviour
     private void Start() {
         Cursor.visible = true;
         ResetBetweenScenesScript();
+        ChangeScoreTypeAndPopulate(PlayerPrefs.GetInt("ScorePreference", 0));
 
         musicManager = FindObjectOfType<MusicManager>();
         if (!musicManager)

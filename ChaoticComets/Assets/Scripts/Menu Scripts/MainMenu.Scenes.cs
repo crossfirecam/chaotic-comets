@@ -46,7 +46,7 @@ public partial class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    internal void ResetBetweenScenesScript()
+    private void ResetBetweenScenesScript()
     {
         BetweenScenesScript.ResumingFromSave = false; // Set to false first, in case game is closed while save is being loaded
         BetweenScenesScript.TutorialMode = false;

@@ -86,7 +86,7 @@ public partial class ShopScript : MonoBehaviour {
                 ShopRefs.p2Events.SetSelectedGameObject(ShopRefs.p2ReadyButton.gameObject);
             }
         }
-        if (ShopRefs.pauseEventSystem.gameObject.activeInHierarchy) {
+        if (ShopRefs.pauseEventSystem.gameObject.activeInHierarchy && ShopRefs.gamePausePanel.activeInHierarchy) {
             if (ShopRefs.pauseEventSystem.currentSelectedGameObject == null || ShopRefs.pauseEventSystem.currentSelectedGameObject.Equals(null)) {
                 ShopRefs.pauseEventSystem.SetSelectedGameObject(ShopRefs.buttonWhenPaused.gameObject);
             }

@@ -19,10 +19,10 @@ public class PlayerSpawnDeath : MonoBehaviour
         }
         else
         {
-            // If difficulty is easy, do not remove retro thruster
+            // If difficulty is easy, do not remove Auto-Brake
             if (BetweenScenesScript.Difficulty != 0)
             {
-                p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.RetroThruster);
+                p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.AutoBrake);
             }
             // If in tutorial mode, do not remove rapid shot (only section where player can die with a powerup)
             if (!p.gM.tutorialMode)
@@ -64,10 +64,10 @@ public class PlayerSpawnDeath : MonoBehaviour
     {
         if (p.lives > 0 && (p.gM.asteroidCount != 0 || p.gM.tutorialMode))
         {
-            // If difficulty is Easy, equip Retro Thruster every respawn
+            // If difficulty is Easy, equip Auto-Brake every respawn
             if (BetweenScenesScript.Difficulty == 0)
             {
-                p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster, false);
+                p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false);
             }
             p.modelPlayer.SetActive(true);
             p.collisionsCanDamage = false;

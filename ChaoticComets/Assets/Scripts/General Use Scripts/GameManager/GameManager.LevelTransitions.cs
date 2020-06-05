@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -82,15 +83,25 @@ public partial class GameManager : MonoBehaviour
     // Show game over panel and pause the game when the game is over
     public void GameOver()
     {
+        // Bring cursor back, delete save, and open panel
         Cursor.visible = true;
         BetweenScenesScript.ResumingFromSave = false;
         Saving_SaveManager.EraseData();
         Refs.gameOverPanel.SetActive(true);
         Refs.buttonWhenGameOver.Select();
 
+        // Change layout depending on if a new high score is accomplished
+        bool newScoreAccomplished = false;
+        if (!newScoreAccomplished)
+        {
+            RectTransform gameOverRt = Refs.gameOverPanel.GetComponent<RectTransform>();
+            gameOverRt.sizeDelta = new Vector2 (gameOverRt.sizeDelta.x, 150);
+            gameOverRt.Find("NewScoreParts").gameObject.SetActive(false);
+        }
+
+        // Halt all sounds and game speed
         musicManager.PauseMusic();
         musicManager.FindAllSfxAndPlayPause(0);
-
         Time.timeScale = 0;
     }
 

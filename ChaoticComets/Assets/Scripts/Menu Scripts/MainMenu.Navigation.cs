@@ -29,15 +29,13 @@ public partial class MainMenu : MonoBehaviour
 
 
     // Misc UI objects
-    public Button returnToMenuButton, controlFirstButton, saveFirstButton;
-    public GameObject buttonCon3, player1pIcon, player2pIcon;
+    public Button returnToMenuButton, saveFirstButton;
+    public Transform playerDecorDiffDialog;
 
     // Check for a save file, and set correct player icon/text
     public void CheckForSaveFile(int i)
     {
         BetweenScenesScript.PlayerCount = i;
-        player1pIcon.SetActive(false);
-        player2pIcon.SetActive(false);
 
         // If save found, show save prompt
         // If none found, show difficulty prompt
@@ -63,7 +61,6 @@ public partial class MainMenu : MonoBehaviour
         if (tempSaveDifficulty == "2") { tempSaveDifficulty = "Hard"; }
         string tempSaveLevel = $"Level {data.level + 1}";
         saveDescriptionText.text = $"{tempSavePlayerCount},\n{tempSaveDifficulty}, {tempSaveLevel}";
-        mainMenuPanel.SetActive(false);
         saveOptionDialog.SetActive(true);
         saveFirstButton.Select();
     }
@@ -78,12 +75,24 @@ public partial class MainMenu : MonoBehaviour
     // Display a prompt to select difficulty
     public void ShowDifficulties()
     {
+        // Dismiss save dialog if open
         saveOptionDialog.SetActive(false);
+
+        // Open difficulty dialog, select Normal button by default
         difficultyDialog.SetActive(true);
         diffNormalButton.Select();
-        mainMenuPanel.SetActive(false);
-        if (BetweenScenesScript.PlayerCount == 1) { difficultyTitleText.text = diffTitle0; player1pIcon.SetActive(true); }
-        else if (BetweenScenesScript.PlayerCount == 2) { difficultyTitleText.text = diffTitle1; player2pIcon.SetActive(true); }
+
+        // Depending on player count, change aesthetics
+        if (BetweenScenesScript.PlayerCount == 1) {
+            difficultyTitleText.text = diffTitle0;
+            playerDecorDiffDialog.Find("1P").gameObject.SetActive(true);
+            playerDecorDiffDialog.Find("2P").gameObject.SetActive(false);
+        }
+        else if (BetweenScenesScript.PlayerCount == 2) {
+            difficultyTitleText.text = diffTitle1;
+            playerDecorDiffDialog.Find("1P").gameObject.SetActive(false);
+            playerDecorDiffDialog.Find("2P").gameObject.SetActive(true);
+        }
     }
 
     public void SetDifficultyAndStart(int i)
@@ -152,10 +161,10 @@ public partial class MainMenu : MonoBehaviour
         saveOptionDialog.SetActive(false);
         difficultyDialog.SetActive(false);
         optionsDialog.SetActive(false);
+        resetScoresDialog.SetActive(false);
+
         mainMenuPanel.SetActive(true);
         returnToMenuButton.Select();
-        player1pIcon.SetActive(true);
-        player2pIcon.SetActive(true);
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
@@ -166,6 +175,7 @@ public partial class MainMenu : MonoBehaviour
         if (difficultyDialog.activeInHierarchy) { BackToMenu(); }
         if (saveOptionDialog.activeInHierarchy) { BackToMenu(); }
         if (optionsDialog.activeInHierarchy) { BackToMenu(); }
+        if (resetScoresDialog.activeInHierarchy) { BackToMenu(); }
     }
 
     private void CheckHighlightedButton()
@@ -184,6 +194,7 @@ public partial class MainMenu : MonoBehaviour
             if (difficultyDialog.activeInHierarchy) { diffNormalButton.Select(); }
             else if (saveOptionDialog.activeInHierarchy) { saveFirstButton.Select(); }
             else if (optionsDialog.activeInHierarchy) { btnFullscreenToggle.Select(); }
+            else if (resetScoresDialog.activeInHierarchy) { btnResetNo.Select(); }
             else { returnToMenuButton.Select(); }
         }
     }

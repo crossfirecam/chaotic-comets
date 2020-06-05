@@ -33,6 +33,7 @@ public partial class GameManager : MonoBehaviour
         // If in tutorial mode, activate TutorialManager & tutorial music
         if (BetweenScenesScript.TutorialMode || tutorialMode)
         {
+            StartCoroutine(Refs.playerShip1.GetComponent<PlayerInput>().DelayNewInputs());
             Refs.tutorialManager.SetActive(true);
             Refs.titleP1.text = "Tutorial";
             tutorialMode = true;

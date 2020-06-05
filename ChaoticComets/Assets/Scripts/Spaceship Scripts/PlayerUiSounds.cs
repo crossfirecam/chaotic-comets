@@ -10,7 +10,7 @@ public class PlayerUiSounds : MonoBehaviour
     [SerializeField] PlayerMain p = default;
 
     // UI Systems
-    public Image insurancePowerup, farShotPowerup, tripleShotPowerup, rapidShotPowerup, retroThrusterPowerup;
+    public Image insurancePowerup, farShotPowerup, tripleShotPowerup, rapidShotPowerup, autoBrakePowerup;
     const int bonusInterval = 10000;
     public Image shieldBar, powerBar;
     public Sprite powerWhenCharging, powerWhenReady;
@@ -18,7 +18,7 @@ public class PlayerUiSounds : MonoBehaviour
     internal float prevshields;
 
     // Sound Systems
-    public AudioSource audioShipThrust, audioShipRetroThrust, audioShipSFX; // Thrust: passive thruster noise, SFX: powerup, extra life, impact noises
+    public AudioSource audioShipThrust, audioShipAutoBrake, audioShipSFX; // Thrust: passive thruster noise, SFX: powerup, extra life, impact noises
     public AudioClip audClipPlrSfxImpactSoft, audClipPlrSfxImpactHard, audClipPlrSfxDeath;
 
     public void UpdateBars()
@@ -47,7 +47,7 @@ public class PlayerUiSounds : MonoBehaviour
 
     public GameObject[] ReturnPlayerSounds()
     {
-        GameObject[] playerSfx = { audioShipThrust.gameObject, audioShipSFX.gameObject, audioShipRetroThrust.gameObject,
+        GameObject[] playerSfx = { audioShipThrust.gameObject, audioShipSFX.gameObject, audioShipAutoBrake.gameObject,
             p.plrAbility.teleportIn, p.plrAbility.teleportOut };
         return playerSfx;
     }

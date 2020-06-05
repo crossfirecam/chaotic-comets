@@ -43,6 +43,10 @@ public class AboutMenu : MonoBehaviour {
     public void VisitMain() {
         SceneManager.LoadScene("StartMenu");
     }
+    public void VisitWebsite()
+    {
+        Application.OpenURL("https:/crossfirecam.itch.io/");
+    }
 
     public void NextStageOfDev() {
         if (stage < 9) { stage++; }

@@ -7,7 +7,7 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] PlayerMain p = default;
 
     // Powerup Variables
-    internal bool ifInsuranceActive, ifFarShot, ifRetroThruster, ifRapidShot, ifTripleShot;
+    internal bool ifInsuranceActive, ifFarShot, ifAutoBrake, ifRapidShot, ifTripleShot;
     private bool powerupUndecided;
     private int powerRandomiser;
     public AudioClip lifeGained, powerupReceived;
@@ -25,7 +25,7 @@ public class PlayerPowerups : MonoBehaviour
         while (powerupUndecided)
         {
             // If all powerups have been collected, then give a random reward of credits or shield refill
-            if (ifInsuranceActive && ifFarShot && ifTripleShot && ifRapidShot && ifRetroThruster)
+            if (ifInsuranceActive && ifFarShot && ifTripleShot && ifRapidShot && ifAutoBrake)
             {
                 PowerupDecided(); FindWhatToGivePlayer();
             }
@@ -46,9 +46,9 @@ public class PlayerPowerups : MonoBehaviour
                 { // Give rapid shot powerup, 15% chance
                     PowerupDecided(); ApplyPowerup(Powerups.RapidShot);
                 }
-                else if (RandCheck(9, 12) && !ifRetroThruster)
-                { // Give retro thruster powerup, 15% chance
-                    PowerupDecided(); ApplyPowerup(Powerups.RetroThruster);
+                else if (RandCheck(9, 12) && !ifAutoBrake)
+                { // Give auto brake powerup, 15% chance
+                    PowerupDecided(); ApplyPowerup(Powerups.AutoBrake);
                 }
                 else if (RandCheck(12, 15) && !ifInsuranceActive && AtLeastOneOtherPowerup())
                 { // Give insurance powerup, 15% chance, needs another powerup active
@@ -83,10 +83,10 @@ public class PlayerPowerups : MonoBehaviour
     // If not at least one powerup has been received yet, tell GivePowerup() to select another powerup
     private bool AtLeastOneOtherPowerup()
     {
-        if (ifFarShot || ifTripleShot || ifRapidShot || ifRetroThruster)
+        if (ifFarShot || ifTripleShot || ifRapidShot || ifAutoBrake)
         {
-            // If Easy mode is selected, check that retro thrusters isn't the only one equipped (pointless to insure it)
-            if (BetweenScenesScript.Difficulty == 0 && ifRetroThruster && !ifFarShot && !ifTripleShot && !ifRapidShot)
+            // If Easy mode is selected, check that auto-brake isn't the only one equipped (pointless to insure it)
+            if (BetweenScenesScript.Difficulty == 0 && ifAutoBrake && !ifFarShot && !ifTripleShot && !ifRapidShot)
             {
                 return false;
             }
@@ -98,7 +98,7 @@ public class PlayerPowerups : MonoBehaviour
         }
     }
 
-    public enum Powerups { Insurance, FarShot, TripleShot, RapidShot, RetroThruster, ShieldRefill, ExtraLife, MediumPrize, SmallPrize };
+    public enum Powerups { Insurance, FarShot, TripleShot, RapidShot, AutoBrake, ShieldRefill, ExtraLife, MediumPrize, SmallPrize };
 
     public void ApplyPowerup(Powerups powerup, bool playSound = true)
     {
@@ -121,9 +121,9 @@ public class PlayerPowerups : MonoBehaviour
                 ifRapidShot = true;
                 p.plrUiSound.rapidShotPowerup.gameObject.SetActive(true);
                 break;
-            case Powerups.RetroThruster:
-                ifRetroThruster = true;
-                p.plrUiSound.retroThrusterPowerup.gameObject.SetActive(true);
+            case Powerups.AutoBrake:
+                ifAutoBrake = true;
+                p.plrUiSound.autoBrakePowerup.gameObject.SetActive(true);
                 break;
             case Powerups.ShieldRefill:
                 p.shields = 80;
@@ -229,9 +229,9 @@ public class PlayerPowerups : MonoBehaviour
                 ifRapidShot = false;
                 p.plrUiSound.rapidShotPowerup.gameObject.SetActive(false);
                 break;
-            case Powerups.RetroThruster:
-                ifRetroThruster = false;
-                p.plrUiSound.retroThrusterPowerup.gameObject.SetActive(false);
+            case Powerups.AutoBrake:
+                ifAutoBrake = false;
+                p.plrUiSound.autoBrakePowerup.gameObject.SetActive(false);
                 break;
             default:
                 print("Invalid powerup requested in PlayerPowerups");

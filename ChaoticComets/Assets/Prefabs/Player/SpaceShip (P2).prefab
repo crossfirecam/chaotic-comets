@@ -402,8 +402,8 @@ MonoBehaviour:
   p: {fileID: 114949645773383002}
   thruster1: {fileID: 5511595327363176846}
   thruster2: {fileID: 7311998494404016988}
-  retroThruster1: {fileID: 5913438112685794223}
-  retroThruster2: {fileID: 8424525680141265058}
+  autoBrakeEffect1: {fileID: 5913438112685794223}
+  autoBrakeEffect2: {fileID: 8424525680141265058}
 --- !u!114 &147570589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,7 +498,7 @@ MonoBehaviour:
   farShotPowerup: {fileID: 0}
   tripleShotPowerup: {fileID: 0}
   rapidShotPowerup: {fileID: 0}
-  retroThrusterPowerup: {fileID: 0}
+  autoBrakePowerup: {fileID: 0}
   shieldBar: {fileID: 0}
   powerBar: {fileID: 0}
   powerWhenCharging: {fileID: 21300000, guid: bf888890319664e4db75fce954506aad, type: 3}
@@ -506,7 +506,7 @@ MonoBehaviour:
   scoreText: {fileID: 0}
   livesText: {fileID: 0}
   audioShipThrust: {fileID: 720697552839032201}
-  audioShipRetroThrust: {fileID: 7052089953165043694}
+  audioShipAutoBrake: {fileID: 7052089953165043694}
   audioShipSFX: {fileID: 82309058105656790}
   audClipPlrSfxImpactSoft: {fileID: 8300000, guid: b703f0737972b2f4ea62c807d220bddb,
     type: 3}
@@ -5490,7 +5490,7 @@ GameObject:
   - component: {fileID: 8424525680141265058}
   - component: {fileID: 3084795318126269188}
   m_Layer: 9
-  m_Name: P2-ThrusterParticles-2
+  m_Name: P2-AutoBrakeParticles-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15096,7 +15096,7 @@ GameObject:
   - component: {fileID: 5913438112685794223}
   - component: {fileID: 2467317393891194808}
   m_Layer: 9
-  m_Name: P2-ThrusterParticles-1
+  m_Name: P2-AutoBrakeParticles-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19849,7 +19849,7 @@ GameObject:
   - component: {fileID: 4926159892371851394}
   - component: {fileID: 7052089953165043694}
   m_Layer: 9
-  m_Name: P2-RetroThrusters
+  m_Name: P2-AutoBrake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -93,12 +93,12 @@ public partial class TutorialManager : MonoBehaviour
                 ContinueIf(player.GetButtonDown("Ability"));
                 break;
 
-            case 11: // Powerup RetroThruster
+            case 11: // Powerup Auto-Brake
                 if (!taskSetupDone)
                 {
                     DestroyAllAsteroids();
                     player1.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.FarShot);
-                    player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster);
+                    player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake);
                     taskSetupDone = true;
                 }
                 ResetAsteroidsIfZero(true);
@@ -111,7 +111,7 @@ public partial class TutorialManager : MonoBehaviour
                     DestroyAllAsteroids();
                     player1.collisionsCanDamage = true;
                     playerCreditsBefore = player1.credits;
-                    player1.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.RetroThruster);
+                    player1.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.AutoBrake);
                     gM.SpawnProp(GameManager.PropType.UfoPasser);
                     taskSetupDone = true;
                 }
@@ -255,7 +255,7 @@ public partial class TutorialManager : MonoBehaviour
         player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot);
         player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot);
         player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot);
-        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RetroThruster);
+        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake);
         CreateAsteroids(3, false);
     }
 }
