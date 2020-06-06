@@ -11,7 +11,10 @@ public partial class GameManager : MonoBehaviour
 
     private IEnumerator StartNewLevel()
     {
+        // Increase level count, and erase autosave data
         levelNo++;
+        Saving_SaveManager.EraseData();
+
         // Asteroid number depends on level number. Iterated in SpawnProp()
         asteroidCount = 0;
         for (int i = 0; i < levelNo + 1; i++) { SpawnProp(PropType.Asteroid); }
@@ -28,21 +31,15 @@ public partial class GameManager : MonoBehaviour
         else { ufoCap = 3; }
 
         // Double the cap if both players are alive
-        if (!player1dead)
-        {
-            if (!player2dead)
-            {
-                canisterCap *= 2;
-                ufoCap *= 2;
-            }
-        }
+        if (!player1dead && !player2dead)
+            canisterCap *= 2; ufoCap *= 2;
 
         // Set when the first UFO and canister will spawn
         AlienAndPowerupLogic(PropSpawnReason.AlienFirst);
         AlienAndPowerupLogic(PropSpawnReason.CanisterFirst);
     }
 
-    // At the end of a level activate level transition dialog, set the UFO to disappear, and if a player is still alive, respawn them
+    // At the end of a level activate level transition dialog, set the UFO to disappear, and if a player is still alive, refill their shields
     public void EndLevelFanFare()
     {
         if (!player1dead || !player2dead)
@@ -86,13 +83,20 @@ public partial class GameManager : MonoBehaviour
         // Bring cursor back, delete save, and open panel
         Cursor.visible = true;
         BetweenScenesScript.ResumingFromSave = false;
-        Saving_SaveManager.EraseData();
         Refs.gameOverPanel.SetActive(true);
         Refs.buttonWhenGameOver.Select();
 
-        // Change layout depending on if a new high score is accomplished
-        bool newScoreAccomplished = false;
-        if (!newScoreAccomplished)
+
+        int totalScore = Refs.playerShip1.credits;
+        string mode = "1P";
+        if (BetweenScenesScript.PlayerCount == 2)
+        {
+            totalScore += Refs.playerShip2.credits;
+            mode = "2P";
+        }
+
+        // Shrink layout if a new high score is not accomplished
+        if (!HighScoreHandling.IsThisAHighScore(totalScore, mode))
         {
             RectTransform gameOverRt = Refs.gameOverPanel.GetComponent<RectTransform>();
             gameOverRt.sizeDelta = new Vector2 (gameOverRt.sizeDelta.x, 150);
@@ -109,6 +113,12 @@ public partial class GameManager : MonoBehaviour
     public void PlayAgain()
     {
         SceneManager.LoadScene("MainScene");
+        Time.timeScale = 1;
+    }
+
+    public void ExitGame()
+    {
+        SceneManager.LoadScene("StartMenu");
         Time.timeScale = 1;
     }
 

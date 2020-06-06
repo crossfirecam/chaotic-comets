@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a64b9a0b7529f1408767e5ace0c7f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instantkillAsteroids: 1
+  instantkillAsteroids: 0
   player1dead: 0
   player2dead: 1
   player1TEMPDEAD: 0
@@ -56,16 +56,19 @@ MonoBehaviour:
   screenLeft: -11
   screenRight: 11
   Refs:
-    tutorialManager: {fileID: 0}
     musicTutorial: {fileID: 8300000, guid: 656934a71c7296a4296afca257d5ce9b, type: 3}
+    tutorialManager: {fileID: 0}
+    tutorialChoicePanel: {fileID: 0}
+    titleP1: {fileID: 0}
+    buttonWhenTutorialChoice: {fileID: 0}
+    largeAsteroidSafeProp: {fileID: 1158260402081020, guid: c709e894203e8034ba9c16948a871155,
+      type: 3}
+    gameLevelShieldRechargeText: {fileID: 0}
     fadeBlack: {fileID: 0}
     player2GUI: {fileID: 0}
     gameOverPanel: {fileID: 0}
     gamePausePanel: {fileID: 0}
     gameLevelPanel: {fileID: 0}
-    gameLevelShieldRechargeText: {fileID: 0}
-    swapP1Text: {fileID: 0}
-    swapP2Text: {fileID: 0}
     buttonWhenPaused: {fileID: 0}
     buttonWhenGameOver: {fileID: 0}
     buttonWhenLeavingPauseBugFix: {fileID: 0}
@@ -79,5 +82,5 @@ MonoBehaviour:
       type: 3}
     canisterProp: {fileID: 1020648608047988, guid: 3a71328051a9a8d45bdefa3880e48d38,
       type: 3}
-    largeAsteroidSafeProp: {fileID: 1158260402081020, guid: c709e894203e8034ba9c16948a871155,
+    musicManagerIfNotFoundInScene: {fileID: 8774387490616601870, guid: 376023999fb623c4b8bb77d8bf26210d,
       type: 3}

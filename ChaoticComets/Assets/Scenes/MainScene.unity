@@ -2139,7 +2139,7 @@ RectTransform:
   - {fileID: 1143501453}
   - {fileID: 1129263540}
   m_Father: {fileID: 1442484823}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -2483,7 +2483,7 @@ GameObject:
   - component: {fileID: 459934448}
   - component: {fileID: 459934447}
   m_Layer: 5
-  m_Name: TutorialChoicePanelBG
+  m_Name: TutorialChoicePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6652,7 +6652,7 @@ GameObject:
   - component: {fileID: 1061111380}
   - component: {fileID: 1061111379}
   m_Layer: 5
-  m_Name: PausePanelBG
+  m_Name: PausePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8143,7 +8143,7 @@ RectTransform:
   m_Children:
   - {fileID: 955918546}
   m_Father: {fileID: 1442484823}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8870,7 +8870,7 @@ GameObject:
   - component: {fileID: 1442484825}
   - component: {fileID: 1442484824}
   m_Layer: 5
-  m_Name: PausePanel
+  m_Name: PauseDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8890,6 +8890,7 @@ RectTransform:
   m_Children:
   - {fileID: 1481261223}
   - {fileID: 40200584}
+  - {fileID: 1989055858}
   - {fileID: 1351457731}
   - {fileID: 427970270}
   m_Father: {fileID: 1061111378}
@@ -10745,7 +10746,7 @@ GameObject:
   - component: {fileID: 1741832717}
   - component: {fileID: 1741832716}
   m_Layer: 5
-  m_Name: TutorialChoicePanel
+  m_Name: TutorialChoiceDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12267,6 +12268,86 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1970643347}
   m_CullTransparentMesh: 0
+--- !u!1 &1989055857
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1989055858}
+  - component: {fileID: 1989055860}
+  - component: {fileID: 1989055859}
+  m_Layer: 5
+  m_Name: WarningText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1989055858
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989055857}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1442484823}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -23.131}
+  m_SizeDelta: {x: 244.69525, y: 32.93774}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1989055859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989055857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.6698113, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 12
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 7
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Progress will be lost.
+
+    Finish the level to auto-save.'
+--- !u!222 &1989055860
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989055857}
+  m_CullTransparentMesh: 0
 --- !u!1 &2007306459
 GameObject:
   m_ObjectHideFlags: 0
@@ -13451,6 +13532,26 @@ PrefabInstance:
       objectReference: {fileID: 2046260824}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
+      propertyPath: Refs.tutorialChoicePanel
+      value: 
+      objectReference: {fileID: 459934446}
+    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
+        type: 3}
+      propertyPath: Refs.titleP1
+      value: 
+      objectReference: {fileID: 205647049}
+    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
+        type: 3}
+      propertyPath: Refs.buttonWhenTutorialChoice
+      value: 
+      objectReference: {fileID: 1199954055}
+    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
+        type: 3}
+      propertyPath: Refs.gameLevelShieldRechargeText
+      value: 
+      objectReference: {fileID: 958112309}
+    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
+        type: 3}
       propertyPath: Refs.fadeBlack
       value: 
       objectReference: {fileID: 1315207910}
@@ -13476,11 +13577,6 @@ PrefabInstance:
       objectReference: {fileID: 1428264771}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
-      propertyPath: Refs.gameLevelShieldRechargeText
-      value: 
-      objectReference: {fileID: 958112309}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
       propertyPath: Refs.buttonWhenPaused
       value: 
       objectReference: {fileID: 40200585}
@@ -13504,42 +13600,6 @@ PrefabInstance:
       propertyPath: Refs.playerShip2
       value: 
       objectReference: {fileID: 147570585}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: Refs.musicManagerIfNotFoundInScene
-      value: 
-      objectReference: {fileID: 8774387490616601870, guid: 376023999fb623c4b8bb77d8bf26210d,
-        type: 3}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: instantkillAsteroids
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: Refs.titleP1
-      value: 
-      objectReference: {fileID: 205647049}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: tutorialMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: Refs.tutorialChoicePanel
-      value: 
-      objectReference: {fileID: 459934446}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: player2dead
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
-        type: 3}
-      propertyPath: Refs.buttonWhenTutorialChoice
-      value: 
-      objectReference: {fileID: 1199954055}
     - target: {fileID: 7573104357208989298, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: m_Name

@@ -39,10 +39,4 @@ public partial class GameManager : MonoBehaviour
             Time.timeScale = 1;
         }
     }
-
-    public void ExitGame()
-    {
-        SceneManager.LoadScene("StartMenu");
-        Time.timeScale = 1;
-    }
 }
