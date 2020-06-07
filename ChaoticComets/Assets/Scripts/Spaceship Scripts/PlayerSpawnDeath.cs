@@ -12,23 +12,20 @@ public class PlayerSpawnDeath : MonoBehaviour
 
     internal void ShipIsDead()
     {
+        // If insurance is active, do not remove any powerup except for Insurance
+        // Else, remove all powerups
         if (p.plrPowerups.ifInsuranceActive)
-        {
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.Insurance);
-            p.plrUiSound.insurancePowerup.gameObject.SetActive(false); p.plrPowerups.ifInsuranceActive = false;
-        }
         else
         {
             // If difficulty is easy, do not remove Auto-Brake
             if (BetweenScenesScript.Difficulty != 0)
-            {
                 p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.AutoBrake);
-            }
+
             // If in tutorial mode, do not remove rapid shot (only section where player can die with a powerup)
             if (!p.gM.tutorialMode)
-            {
                 p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.RapidShot);
-            }
+
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.TripleShot);
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.FarShot);
         }
@@ -45,10 +42,9 @@ public class PlayerSpawnDeath : MonoBehaviour
 
         // If player out of lives, then tell GM the player is dead. Else, respawn them in 3 seconds.
         if (p.lives < 1)
-        {
             p.gM.PlayerDied(p.playerNumber);
-        }
-        else { p.plrUiSound.prevshields = 80; Invoke("RespawnShip", 3f); }
+        else
+            p.plrUiSound.prevshields = 80; Invoke("RespawnShip", 3f);
     }
 
     public void ShipIsRecovering()
@@ -66,9 +62,9 @@ public class PlayerSpawnDeath : MonoBehaviour
         {
             // If difficulty is Easy, equip Auto-Brake every respawn
             if (BetweenScenesScript.Difficulty == 0)
-            {
                 p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false);
-            }
+
+            // Player becomes visible, collision damage is disabled until shields recharge, but collider itself is enabled to rebound objects
             p.modelPlayer.SetActive(true);
             p.collisionsCanDamage = false;
             p.capsCollider.enabled = true;
@@ -76,25 +72,21 @@ public class PlayerSpawnDeath : MonoBehaviour
             p.rbPlayer.velocity = Vector2.zero;
 
             // If at least one player is dead, place the other in the center of the screen
-            if (p.gM.player1dead || p.gM.player2dead)
-            {
-                transform.position = new Vector2(0f, 0f);
-            }
             // If both players exist, place them apart
+            if (p.gM.player1dead || p.gM.player2dead)
+                transform.position = new Vector2(0f, 0f);
             else
             {
                 if (p.playerNumber == 1) { transform.position = new Vector2(-3f, 0f); }
                 else { transform.position = new Vector2(3f, 0f); }
             }
+
             // Alert GameManger that their temporary death is over for UFO tracking
             if (p.playerNumber == 1)
-            {
                 p.gM.player1TEMPDEAD = false;
-            }
             else
-            {
                 p.gM.player2TEMPDEAD = false;
-            }
+
             ShipIsNowTransparent(true);
             StartCoroutine("InvulnTimer");
         }

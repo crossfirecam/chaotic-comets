@@ -11,6 +11,7 @@ public partial class GameManager : MonoBehaviour
 
     private IEnumerator StartNewLevel()
     {
+        yield return new WaitForSeconds(0.05f);
         // Increase level count, and erase autosave data
         levelNo++;
         Saving_SaveManager.EraseData();
@@ -80,13 +81,13 @@ public partial class GameManager : MonoBehaviour
     // Show game over panel and pause the game when the game is over
     public void GameOver()
     {
-        // Bring cursor back, delete save, and open panel
+        // Bring cursor back, tell game not to attempt resuming from save if 'Play Again' is picked, and open panel
         Cursor.visible = true;
         BetweenScenesScript.ResumingFromSave = false;
         Refs.gameOverPanel.SetActive(true);
         Refs.buttonWhenGameOver.Select();
 
-
+        // Calculate total score TODO change to include credits spent on upgrades
         int totalScore = Refs.playerShip1.credits;
         string mode = "1P";
         if (BetweenScenesScript.PlayerCount == 2)

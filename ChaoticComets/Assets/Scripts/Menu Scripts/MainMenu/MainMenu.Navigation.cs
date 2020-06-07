@@ -97,12 +97,12 @@ public partial class MainMenu : MonoBehaviour
 
     public void SetDifficultyAndStart(int i)
     {
+        // If difficulty is not already set by the save file, set difficulty from player choice
         if (i != -1)
-        { // If difficulty is not already set by the save file, set difficulty from player choice
             BetweenScenesScript.Difficulty = i;
-        }
+        // If loaded from a save, difficulty is preset
         else
-        { // If loaded from a save, difficulty is preset
+        { 
             BetweenScenesScript.ResumingFromSave = true;
             Saving_PlayerManager data = Saving_SaveManager.LoadData();
             BetweenScenesScript.Difficulty = data.difficulty;
@@ -114,8 +114,6 @@ public partial class MainMenu : MonoBehaviour
     /* ------------------------------------------------------------------------------------------------------------------
      * Options Screen functions
      * ------------------------------------------------------------------------------------------------------------------ */
-
-
     public void ShowOptions()
     {
         mainMenuPanel.SetActive(false);
@@ -153,18 +151,21 @@ public partial class MainMenu : MonoBehaviour
 
 
     /* ------------------------------------------------------------------------------------------------------------------
-     * BackTo functions
-     * Changes UI on main menu as player progresses backward
+     * BackToMenu
+     * Returns to main menu and cancels all other dialogs, if the game is not fading to black
      * ------------------------------------------------------------------------------------------------------------------ */
     public void BackToMenu()
     {
-        saveOptionDialog.SetActive(false);
-        difficultyDialog.SetActive(false);
-        optionsDialog.SetActive(false);
-        resetScoresDialog.SetActive(false);
+        if (!fadeBlack.activeInHierarchy)
+        {
+            saveOptionDialog.SetActive(false);
+            difficultyDialog.SetActive(false);
+            optionsDialog.SetActive(false);
+            resetScoresDialog.SetActive(false);
 
-        mainMenuPanel.SetActive(true);
-        returnToMenuButton.Select();
+            mainMenuPanel.SetActive(true);
+            returnToMenuButton.Select();
+        }
     }
 
     /* ------------------------------------------------------------------------------------------------------------------

@@ -12,19 +12,14 @@ public partial class GameManager : MonoBehaviour
             levelNo = data.level;
             // Tell ships to disable model & colliders, if previous shop says they're dead
             if (BetweenScenesScript.player1TempLives == 0)
-            {
                 Refs.playerShip1.plrSpawnDeath.PretendShipDoesntExist();
-            }
             if (BetweenScenesScript.player2TempLives == 0 && BetweenScenesScript.PlayerCount == 2)
-            {
                 Refs.playerShip2.plrSpawnDeath.PretendShipDoesntExist();
-
-            }
         }
     }
     private void PlayMusicIfEnabled()
     {
-        // Change music track
+        // Check for MusicManager
         musicManager = FindObjectOfType<MusicManager>();
         if (!musicManager)
         {
@@ -32,16 +27,13 @@ public partial class GameManager : MonoBehaviour
             musicManager = FindObjectOfType<MusicManager>();
         }
 
+        // Change music track & play
         if (!tutorialMode)
             musicManager.ChangeMusicTrack(1);
         else
             musicManager.ChangeMusicTrack(3);
-
-
         if (BetweenScenesScript.MusicVolume > 0f)
-        {
             musicManager.currentMusicPlayer.Play();
-        }
     }
 
     // If game over panel, or tutorial control choice panel are up, do not pause, otherwise handle pausing
@@ -50,13 +42,9 @@ public partial class GameManager : MonoBehaviour
         if (!Refs.gameOverPanel.activeInHierarchy && !Refs.tutorialChoicePanel.activeInHierarchy)
         {
             if (Refs.gamePausePanel.activeInHierarchy)
-            {
                 PauseGame(1);
-            }
             else
-            {
                 PauseGame(0);
-            }
         }
     }
 }

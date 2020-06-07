@@ -49,7 +49,7 @@ public partial class TutorialManager : MonoBehaviour
 
     // Replace a placeholder value with the corresponding control style's key prompts. Find a better way to do this TODO
     //                                         Rotate                            Thrust       Brake        Ability      Shoot        Pause
-    private readonly string[] replaceOrig = {  "R_Rotate",                       "R_Thrust",  "R_Brake",   "R_Ability", "R_Shoot",   "R_Pause" };
+    private readonly string[] replaceOrig =  { "R_Rotate",                       "R_Thrust",  "R_Brake",   "R_Ability", "R_Shoot",   "R_Pause" };
     private readonly string[] replaceP1Key = { "Press <sprite=1> or <sprite=3>", "sprite=0",  "sprite=2",  "sprite=4",  "sprite=5",  "sprite=12" };
     private readonly string[] replaceP2Key = { "Press <sprite=7> or <sprite=9>", "sprite=6",  "sprite=8",  "sprite=10", "sprite=11", "sprite=12" };
     private readonly string[] replaceXbox =  { "Tilt <sprite=13>",               "sprite=14", "sprite=15", "sprite=16", "sprite=17", "sprite=18", };
