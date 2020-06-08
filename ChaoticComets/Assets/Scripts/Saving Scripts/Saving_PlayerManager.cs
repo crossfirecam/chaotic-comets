@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
-using System;
-using System.IO;
+﻿using System;
 using UnityEngine;
 
 [Serializable]
@@ -13,6 +9,7 @@ public class Saving_PlayerManager
     public int level;
     public float player1health = 0, player2health = 0;
     public int player1credits = 0, player2credits = 0;
+    public int player1totalCredits = 0, player2totalCredits = 0;
     public int player1bonus = 0, player2bonus = 0;
     public int player1lives = 0, player2lives = 0;
     // Powerup order: Insurance, Far Shot, Auto-Brake, Rapid Shot, Triple Shot
@@ -31,6 +28,7 @@ public class Saving_PlayerManager
         level = gM.levelNo;
         player1health = player1GameObject.shields;
         player1credits = player1GameObject.credits;
+        player1totalCredits = player1GameObject.totalCredits;
         player1bonus = player1GameObject.bonus;
         player1lives = player1GameObject.lives;
         if (player1GameObject.plrPowerups.ifInsuranceActive) { player1powerups[0] = 1; }
@@ -47,6 +45,7 @@ public class Saving_PlayerManager
         if (playerCount == 2) {
             player2health = player2GameObject.shields;
             player2credits = player2GameObject.credits;
+            player1totalCredits = player1GameObject.totalCredits;
             player2bonus = player2GameObject.bonus;
             player2lives = player2GameObject.lives;
             if (player2GameObject.plrPowerups.ifInsuranceActive) { player2powerups[0] = 1; }

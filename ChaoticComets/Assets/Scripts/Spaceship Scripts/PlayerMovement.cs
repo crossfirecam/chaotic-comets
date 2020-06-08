@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -50,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         // Passive Drag (no thruster controls pressed)
-        // Apply passive drag depending on if Aut equipped or not
+        // Apply passive drag depending on if Auto-Brake equipped or not
         else
         {
             if (p.plrUiSound.audioShipThrust.isPlaying) { p.plrUiSound.audioShipThrust.Stop(); }
@@ -60,7 +58,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (!autoBrakeEngaged && p.rbPlayer.velocity.magnitude > 4)
                 {
-                    print(p.rbPlayer.velocity.magnitude);
                     p.plrUiSound.audioShipAutoBrake.Play();
                     autoBrakeEngaged = true;
                     autoBrakeEffect1.Play();

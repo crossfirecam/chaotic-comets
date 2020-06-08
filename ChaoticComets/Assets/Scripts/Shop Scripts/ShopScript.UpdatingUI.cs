@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -116,10 +114,7 @@ public partial class ShopScript : MonoBehaviour
                     {
                         if (BetweenScenesScript.player1TempLives > 1) { gameObj.GetComponentInChildren<Text>().text = "Multiple Lives\n(Transfer 1 life to P2)"; }
                         else if (BetweenScenesScript.player1TempLives == 1) { gameObj.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
-                        else
-                        { /*(BetweenScenesScript.player1TempLives < 1)*/
-                            gameObj.GetComponentInChildren<Text>().text = "No Lives";
-                        }
+                        else { /*(BetweenScenesScript.player1TempLives < 1)*/ gameObj.GetComponentInChildren<Text>().text = "No Lives"; }
                     }
                 }
             }
@@ -147,10 +142,12 @@ public partial class ShopScript : MonoBehaviour
             }
             ShopRefs.p1ScoreText.text = "Credits:\n" + BetweenScenesScript.player1TempCredits;
             ShopRefs.p1LivesText.text = "Lives: " + BetweenScenesScript.player1TempLives;
+            ShopRefs.p1TotalScoreText.text = "Total Score:\n" + data.player1totalCredits;
             if (data.playerCount == 2)
             {
                 ShopRefs.p2ScoreText.text = "Credits:\n" + BetweenScenesScript.player2TempCredits;
                 ShopRefs.p2LivesText.text = "Lives: " + BetweenScenesScript.player2TempLives;
+                ShopRefs.p2TotalScoreText.text = "Total Score:\n" + data.player2totalCredits;
             }
         }
     }

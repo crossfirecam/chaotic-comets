@@ -1,25 +1,26 @@
 Chaotic Comets Version History:
 The top section of this document only details the most important changes. Full changelogs are further down this document.
 
-2020-06-05 Version 1.3 - UFO AI, Tutorial, Gameplay tweaks
+Version 1.3 - UFO AI, Tutorial, Gameplay tweaks (2020 June)
 - New UFO type added, and both type's AI have been improved greatly.
+- High Score board added to main menu. Tracks top 10 scores for each game mode.
 - The game's gotten more difficult. Player ship has reduced base stats. Asteroids travel faster.
 - Interactive Tutorial added. Teaches the player game concepts with keyboard or Xbox controller prompts.
 - Lots of QOL changes, bug fixes, and backend code improvements.
 
-2019-06-07 Version 1.2 - UFO, Store, and Saving
+Version 1.2 - UFO, Store, and Saving (2019 June)
 - UFOs are more interesting to fight. Retreats at low health. Bonus credits for finishing off after they retreat.
 - Asteroids and UFOs now have more kick when they're hit. Avoid bumping into things.
 - Game auto-saves at the end of levels. Data is only removed once a new game is started, or the saved game reaches Game Over.
 - A shop is available between levels. Top speed, brake efficiency, fire rate, and shot speed can be upgraded.
 - Ton of bug fixes & testing.
 
-2019-05-21 Version 1.1 - Particles, Music & Bug Fixes
+Version 1.1 - Particles, Music & Bug Fixes (2019 May)
 - Particle effects added to player thrusters, teleport. Also added to UFO teleport. Bullets are also particles now.
 - Music added. Can be disabled from main menu.
 - UFOs that are not destroyed now teleport away at the end of levels.
 
-2019-03-18 Version 1.0 - Public release of Chaotic Comets
+Version 1.0 - Public release of Chaotic Comets (2019 March)
 - Prior versions of the game were created for a design show in November 2018. This patch brought the game to the wider public and mainly focused on UI changes.
 - Main menu greatly improved. Dialogs pop up that allow for difficulty and control options.
 - All UI elements are compatible with either gamepad or mouse.
@@ -27,7 +28,7 @@ The top section of this document only details the most important changes. Full c
 
 DETAILED CHANGELOGS
 
-### Version 1.3 Detailed Changelog
+### Version 1.3 Detailed Changelog (2020-06-05)
 UFO changes
 - Red UFO added. Flies from left to right, only once, then disappears. Features heavier weaponry.
     - Red UFO deviates in direction up and down as well. Never goes offscreen.
@@ -44,8 +45,11 @@ Player changes
 - Invulnerability time during shield charge-up is reduced.
 
 Gameplay changes
+- High Score system added. Can be filtered by game mode and reset.
 - Control Test section removed. Replaced with an interactive tutorial.
     - Teaches the player most gameplay aspects, with a choice of P1/P2 keyboard or Xbox controller prompts.
+- Shop upgrades are cheaper. (Previous cost + 1000) per level, down from (P cost + 2000).
+- Extra lives come every 5000 points, down from 10,000.
 - Bullet size shrunk by half. Emits light.
 - Player and UFO slightly shrunk.
 - All asteroids are faster.
@@ -64,6 +68,7 @@ Sound / UI improvements
 - Player UI adjusted, powerup icons have added border
 
 Bug fixes from 1.2
+- Player now earns lives based on total credits, instead of current credits that could be spent and not contribute to extra lives.
 - UFO attempting to retreat now will always retreat in the opposite direction. No more randomly ramming forward into the player.
 - UFO attempting to retreat won't teleport while offscreen anymore. Checks to see if their location is in a certain range, then tries to teleport.
 - Player upgrades aren't transferred from one game to another under certain conditions
@@ -74,7 +79,7 @@ Bug fixes from 1.2
 
 
 
-### Version 1.2 Detailed Changelog
+### Version 1.2 Detailed Changelog (2019-06-07)
 UFO changes
 - UFO's base speed and shot speed have increased
 - While shield is up, bullets will reflect off of UFO shields
@@ -112,41 +117,44 @@ Bug fixes from 1.1
 
 
 
-### Version 1.1 Detailed Changelog
+### Version 1.1 Detailed Changelog (2019-05-21)
 Player ship changes:
-- Top speed has been greatly reduced for better handling
-- Teleport ability has visual cues and invulnerability time
-- Thrusters have visual and sound effects
-- Can no longer teleport once all asteroids are destroyed, this prevents early vulnerability on next level
+- Top speed has been greatly reduced for better handling.
+- Teleport ability has visual cues and invulnerability time.
+- Thrusters have visual and sound effects.
+- Can no longer teleport once all asteroids are destroyed, this prevents early vulnerability on next level.
+
 Alien ship changes:
-- UFO no longer spawns during end level transition, and teleports away if not killed at the end of levels
-- UFO cannot grant any more points by the player shooting in its dying state
+- UFO no longer spawns during end level transition, and teleports away if not killed at the end of levels.
+- UFO cannot grant any more points by the player shooting in its dying state.
+
 Other changes:
-- Music added, can be disabled from main menu
-- All bullets are fading particles instead of static sprites
-- Player button controls have been separated. Eg. Shooting is no longer set off by both Space AND controller A button
-- Code optimisation - particularly with less strain being placed on per-frame updates
-- Player UI layout changed
-- Main/Controls/About menu layouts changed
+- Music added, can be disabled from main menu.
+- All bullets are fading particles instead of static sprites.
+- Player button controls have been separated. Eg. Shooting is no longer set off by both Space AND controller A button.
+- Code optimisation - particularly with less strain being placed on per-frame updates.
+- Player UI layout changed.
+- Main/Controls/About menu layouts changed.
 - A note has been added to controls screen. Due to key rollover on some keyboards, players 1 & 2 (both playing on keyboard) cannot shoot, thrust and rotate all at the same time. The default controls were kept the same due to the low chance of that specific scenario happening, and that all other attempts to change the controls felt inconvenient to play with.
 
-Version 1.0 Detailed Changelog
-- Changed Main Menu UI, made keyboard/gamepad selection easier
-- Changed all UI, compatible with both controller and keyboard
-- Difficulty settings added before each game starts. Easy: Auto braking, Normal: Typical braking, Hard: No braking
-- Control test screen changed to be in the center of screen and has a pause menu
-- Tweaks to shot speed, canteen size, and how ability meter is displayed
-- Help/About menu layouts changed
+### Version 1.0 Detailed Changelog (2019-03-18)
+- Changed Main Menu UI, made keyboard/gamepad selection easier.
+- Changed all UI, compatible with both controller and keyboard.
+- Difficulty settings added before each game starts. Easy: Auto braking, Normal: Typical braking, Hard: No braking.
+- Control test screen changed to be in the center of screen and has a pause menu.
+- Tweaks to shot speed, canteen size, and how ability meter is displayed.
+- Help/About menu layouts changed.
 
-PRE-GAMEJOLT VERSIONS
-These builds are not available on GameJolt. Version 1.0 is the foundation for public updates.
+### PRE-GAMEJOLT VERSIONS
+These builds are not available publicly. Version 1.0 is the foundation for public updates.
 
-Early December 2018 v1.1 - Post-Show Online version
-- Native Xbox 360 controller support
-- Spaceship can brake, and Auto-Brake powerup now stops the ship immediately
+Early December 2018 b1.1 - Online Portfolio version
+- Native Xbox 360 controller support.
+- Spaceship can brake, and Auto-Brake powerup now stops the ship immediately.
 - Powerups more common, aliens less common.
 - Shield recharges between levels. Every 10,000 points = extra life.
 
-Late November 2018 v1.0 - Design Show Demo
-- Version of the game demonstrated at a design show
-- 5-level demo
+Late November 2018 b1.0 - Design Show Demo
+- Version of the game demonstrated at a design show.
+- Basic showcase of gameplay loop. 5-level demo.
+- Xbox controller support achieved using third-party rebind software

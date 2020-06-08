@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using UnityEngine;
+﻿using UnityEngine;
 
 /*
  * This class is used for typical UFOs, that chase the player in a straight line and shoot in a straight line

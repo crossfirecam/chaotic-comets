@@ -1,20 +1,27 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public partial class GameManager : MonoBehaviour
 {
-    // When a level starts, perform starting operations
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Start of Level Methods
+     * ------------------------------------------------------------------------------------------------------------------ */
 
+    // When a level starts, perform starting operations
     private IEnumerator StartNewLevel()
     {
         yield return new WaitForSeconds(0.05f);
         // Increase level count, and erase autosave data
         levelNo++;
         Saving_SaveManager.EraseData();
+
+        // Tell ships to disable model & colliders, if previous shop says they're dead
+        if (BetweenScenesScript.player1TempLives == 0)
+            Refs.playerShip1.plrSpawnDeath.PretendShipDoesntExist();
+        if (BetweenScenesScript.player2TempLives == 0 && BetweenScenesScript.PlayerCount == 2)
+            Refs.playerShip2.plrSpawnDeath.PretendShipDoesntExist();
 
         // Asteroid number depends on level number. Iterated in SpawnProp()
         asteroidCount = 0;
@@ -32,13 +39,20 @@ public partial class GameManager : MonoBehaviour
         else { ufoCap = 3; }
 
         // Double the cap if both players are alive
-        if (!player1dead && !player2dead)
-            canisterCap *= 2; ufoCap *= 2;
+        // (!p1dead && !p2dead) didn't work. Have to check the negative of an OR statement...
+        if (!(player1dead || player2dead))
+        {
+            canisterCap *= 2; ufoCap *= 2; print("ok");
+        }
 
         // Set when the first UFO and canister will spawn
         AlienAndPowerupLogic(PropSpawnReason.AlienFirst);
         AlienAndPowerupLogic(PropSpawnReason.CanisterFirst);
     }
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     * End of Level Methods
+     * ------------------------------------------------------------------------------------------------------------------ */
 
     // At the end of a level activate level transition dialog, set the UFO to disappear, and if a player is still alive, refill their shields
     public void EndLevelFanFare()
@@ -78,51 +92,11 @@ public partial class GameManager : MonoBehaviour
     // If a ship has less than full shields, show the text say shields are being recharged
     public void ShowRechargeText() { Refs.gameLevelShieldRechargeText.SetActive(true); }
 
-    // Show game over panel and pause the game when the game is over
-    public void GameOver()
-    {
-        // Bring cursor back, tell game not to attempt resuming from save if 'Play Again' is picked, and open panel
-        Cursor.visible = true;
-        BetweenScenesScript.ResumingFromSave = false;
-        Refs.gameOverPanel.SetActive(true);
-        Refs.buttonWhenGameOver.Select();
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Other Level Transition Methods
+     * ------------------------------------------------------------------------------------------------------------------ */
 
-        // Calculate total score TODO change to include credits spent on upgrades
-        int totalScore = Refs.playerShip1.credits;
-        string mode = "1P";
-        if (BetweenScenesScript.PlayerCount == 2)
-        {
-            totalScore += Refs.playerShip2.credits;
-            mode = "2P";
-        }
-
-        // Shrink layout if a new high score is not accomplished
-        if (!HighScoreHandling.IsThisAHighScore(totalScore, mode))
-        {
-            RectTransform gameOverRt = Refs.gameOverPanel.GetComponent<RectTransform>();
-            gameOverRt.sizeDelta = new Vector2 (gameOverRt.sizeDelta.x, 150);
-            gameOverRt.Find("NewScoreParts").gameObject.SetActive(false);
-        }
-
-        // Halt all sounds and game speed
-        musicManager.PauseMusic();
-        musicManager.FindAllSfxAndPlayPause(0);
-        Time.timeScale = 0;
-    }
-
-    // Reload the scene and restart playback if user decides to play again
-    public void PlayAgain()
-    {
-        SceneManager.LoadScene("MainScene");
-        Time.timeScale = 1;
-    }
-
-    public void ExitGame()
-    {
-        SceneManager.LoadScene("StartMenu");
-        Time.timeScale = 1;
-    }
-
+    // FadeBlack is used to gradually fade the screen to or from black
     private IEnumerator FadeBlack(string ToOrFrom)
     {
         Image tempFade = Refs.fadeBlack.GetComponent<Image>();

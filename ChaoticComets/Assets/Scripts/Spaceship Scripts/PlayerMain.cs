@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /*
  * This class contains all general code for the Player objects, referring to many other scripts for extra functionality.
@@ -9,7 +7,7 @@ using UnityEngine;
 public class PlayerMain : MonoBehaviour {
 
     // Player Statistics
-    public int credits = 0, bonus = 9999, lives = 3;
+    public int credits = 0, totalCredits = 0, bonus = 4999, lives = 3;
     public float shields = 80, power = 80;
 
     // General purpose variables
@@ -59,6 +57,7 @@ public class PlayerMain : MonoBehaviour {
     // Receives points scored from latest asteroid hit, UFO hit, or canister reward
     public void ScorePoints(int pointsToAdd) {
         credits += pointsToAdd;
+        totalCredits += pointsToAdd;
         plrUiSound.UpdatePointDisplays();
     }
 

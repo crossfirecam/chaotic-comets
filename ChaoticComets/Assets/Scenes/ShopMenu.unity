@@ -357,6 +357,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 40039548}
   m_CullTransparentMesh: 0
+--- !u!114 &43536620 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8461449462392028985, guid: 3ed67a39bb1bf9542844702498b29d7c,
+    type: 3}
+  m_PrefabInstance: {fileID: 373878746}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &142419168
 GameObject:
   m_ObjectHideFlags: 0
@@ -3593,6 +3605,18 @@ Transform:
   m_Father: {fileID: 660043389}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &833223148 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7103359985724208430, guid: c1a096eb384c2794dae54c304033ff6a,
+    type: 3}
+  m_PrefabInstance: {fileID: 215033131}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &855438656
 GameObject:
   m_ObjectHideFlags: 0
@@ -6179,7 +6203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Purchase Ship Upgrades Here!
+  m_text: Purchase Permanent Upgrades Here!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6248,7 +6272,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0.30874702}
   m_textInfo:
     textComponent: {fileID: 1554856829}
-    characterCount: 28
+    characterCount: 33
     spriteCount: 0
     spaceCount: 3
     wordCount: 4
@@ -7206,8 +7230,10 @@ MonoBehaviour:
     p2PowerBar: {fileID: 1530400100}
     p1ScoreText: {fileID: 373878749}
     p1LivesText: {fileID: 373878748}
+    p1TotalScoreText: {fileID: 43536620}
     p2ScoreText: {fileID: 208429735}
     p2LivesText: {fileID: 384104623}
+    p2TotalScoreText: {fileID: 833223148}
     readyPromptText: {fileID: 646591905}
     p1UpgBtnAboveReady: {fileID: 981841476}
     p2UpgBtnAboveReady: {fileID: 1385320905}

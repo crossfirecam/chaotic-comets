@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   credits: 0
+  totalCredits: 0
   bonus: 9999
   lives: 3
   shields: 80
@@ -505,6 +506,7 @@ MonoBehaviour:
   powerWhenReady: {fileID: 21300000, guid: 48f01af672a74e44b8c7e2f7d19e8b43, type: 3}
   scoreText: {fileID: 0}
   livesText: {fileID: 0}
+  totalScoreText: {fileID: 0}
   audioShipThrust: {fileID: 720697552839032201}
   audioShipAutoBrake: {fileID: 7052089953165043694}
   audioShipSFX: {fileID: 82309058105656790}

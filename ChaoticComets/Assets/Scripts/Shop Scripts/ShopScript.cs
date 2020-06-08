@@ -1,5 +1,4 @@
 ﻿using Rewired;
-using Rewired.Integration.UnityUI;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -10,7 +9,7 @@ using UnityEngine.UI;
 public partial class ShopScript : MonoBehaviour {
 
     [Header("Shop Variables")]
-    private readonly int baseUpgradePrice = 1000, priceIncreasePerLevel = 2000, upgradeCap = 15;
+    private readonly int baseUpgradePrice = 1000, priceIncreasePerLevel = 1000, upgradeCap = 15;
     public bool p1IsReady = false, p2IsReady = false;
     private float fadingAlpha = 0f;
 
@@ -117,7 +116,7 @@ public class ShopManagerHiddenVars
     [Header("Player UI References")]
     public GameObject[] listOfP1Powerups, listOfP2Powerups;
     public Image p1ShieldBar, p1PowerBar, p2ShieldBar, p2PowerBar;
-    public Text p1ScoreText, p1LivesText, p2ScoreText, p2LivesText;
+    public Text p1ScoreText, p1LivesText, p1TotalScoreText, p2ScoreText, p2LivesText, p2TotalScoreText;
 
     [Header("Shop UI References")]
     public TextMeshProUGUI readyPromptText;

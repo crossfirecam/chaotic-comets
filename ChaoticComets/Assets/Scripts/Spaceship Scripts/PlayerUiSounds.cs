@@ -1,8 +1,4 @@
-﻿using Rewired;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerUiSounds : MonoBehaviour
@@ -11,10 +7,10 @@ public class PlayerUiSounds : MonoBehaviour
 
     // UI Systems
     public Image insurancePowerup, farShotPowerup, tripleShotPowerup, rapidShotPowerup, autoBrakePowerup;
-    const int bonusInterval = 10000;
+    const int bonusInterval = 5000;
     public Image shieldBar, powerBar;
     public Sprite powerWhenCharging, powerWhenReady;
-    public Text scoreText, livesText;
+    public Text scoreText, livesText, totalScoreText;
     internal float prevshields;
 
     // Sound Systems
@@ -29,8 +25,8 @@ public class PlayerUiSounds : MonoBehaviour
 
     public void UpdatePointDisplays()
     {
-        // If credits are higher than bonus threshold, then grant a life
-        if (p.credits > p.bonus)
+        // If total credits are higher than bonus threshold, then grant a life
+        if (p.totalCredits > p.bonus)
         {
             p.bonus += bonusInterval;
             p.plrPowerups.GrantExtraLife();
@@ -38,6 +34,7 @@ public class PlayerUiSounds : MonoBehaviour
 
         scoreText.text = "Credits:\n" + p.credits;
         livesText.text = "Lives: " + p.lives;
+        totalScoreText.text = "Total Score:\n" + p.totalCredits;
         if (p.gM.tutorialMode)
         {
             livesText.text = "Lives: ∞";

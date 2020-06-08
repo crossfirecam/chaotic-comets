@@ -33,7 +33,7 @@ public class PlayerMisc : MonoBehaviour
         }
     }
 
-    // A function desperately in need of compressing. TODO.
+    // A function in need of compressing. TODO.
     // What it does is set the statistics depending on what player called the function.
     private void SetStatsForPlayer()
     {
@@ -41,6 +41,7 @@ public class PlayerMisc : MonoBehaviour
         if (p.playerNumber == 1)
         {
             p.credits = BetweenScenesScript.player1TempCredits;
+            p.totalCredits = data.player1totalCredits;
             p.lives = BetweenScenesScript.player1TempLives;
             p.shields = data.player1health;
             p.bonus = data.player1bonus;
@@ -50,9 +51,10 @@ public class PlayerMisc : MonoBehaviour
             if (data.player1powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
             if (data.player1powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
         }
-        else
-        { // (playerNumber == 2)
+        else if (p.playerNumber == 2)
+        { 
             p.credits = BetweenScenesScript.player2TempCredits;
+            p.totalCredits = data.player2totalCredits;
             p.lives = BetweenScenesScript.player2TempLives;
             p.shields = data.player2health;
             p.bonus = data.player2bonus;

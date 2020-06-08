@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using Rewired.Integration.UnityUI;
-using Rewired;
 
 /*
  * This class handles all in-game meta logic, such as level transitions, telling objects when and how to spawn, player management, etc.
@@ -92,8 +88,8 @@ public class GameManagerHiddenVars
     [Header("UI References")]
     public GameObject gameLevelShieldRechargeText;
     public GameObject fadeBlack, player2GUI;
-    public GameObject gameOverPanel, gamePausePanel, gameLevelPanel;
-    public Button buttonWhenPaused, buttonWhenGameOver, buttonWhenLeavingPauseBugFix;
+    public GameObject gameOverPanel, gameOverPanelAlt, gamePausePanel, gameLevelPanel;
+    public Button buttonWhenPaused, buttonWhenGameOver, buttonWhenGameOverAlt, buttonWhenLeavingPauseBugFix;
 
     [Header("Prop References")]
     public PlayerMain playerShip1;

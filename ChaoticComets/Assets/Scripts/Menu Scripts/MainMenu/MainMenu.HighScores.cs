@@ -1,6 +1,4 @@
-﻿using Rewired;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -23,7 +21,7 @@ public partial class MainMenu : MonoBehaviour
         PlayerPrefs.Save();
         switch (mode)
         {
-            case 0: txtScoresHeader.text = "Top 10 Scores"; break;
+            case 0: txtScoresHeader.text = "Top 10 Scores (Both Modes)"; break;
             case 1: txtScoresHeader.text = "Top 10 Scores (1 Player Mode)"; break;
             case 2: txtScoresHeader.text = "Top 10 Scores (2 Player Mode)"; break;
         }
@@ -44,11 +42,14 @@ public partial class MainMenu : MonoBehaviour
         // Initialise a table of high score entries
         highscoreEntryTransformList = new List<Transform>();
 
-        // If ScorePreference is set to 0 (All Scores), sort the full list of 20 into the best 10, and create the table
+        // If ScorePreference is set to 0 (All Scores), sort the full list into the best 10, and create the table
         if (PlayerPrefs.GetInt("ScorePreference") == 0)
         {
             List<HighscoreEntry> sortedList = highscores.highscoreEntryList.OrderByDescending(hs => hs.score).ToList();
-            sortedList.RemoveRange(10, 10);
+            if(sortedList.Count > 10)
+            {
+                sortedList.RemoveRange(10, sortedList.Count - 10);
+            }
 
             foreach (HighscoreEntry sortedEntry in sortedList)
                 CreateHighScoreEntryTransform(sortedEntry, scoreContainer, highscoreEntryTransformList);
@@ -59,9 +60,9 @@ public partial class MainMenu : MonoBehaviour
         {
             foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
             {
-                if (PlayerPrefs.GetInt("ScorePreference") == 1 && highscoreEntry.mode == "1P")
+                if (PlayerPrefs.GetInt("ScorePreference") == 1 && highscoreEntry.mode.StartsWith("1P"))
                     CreateHighScoreEntryTransform(highscoreEntry, scoreContainer, highscoreEntryTransformList);
-                else if (PlayerPrefs.GetInt("ScorePreference") == 2 && highscoreEntry.mode == "2P")
+                else if (PlayerPrefs.GetInt("ScorePreference") == 2 && highscoreEntry.mode.StartsWith("2P"))
                     CreateHighScoreEntryTransform(highscoreEntry, scoreContainer, highscoreEntryTransformList);
             }
         }
@@ -73,12 +74,11 @@ public partial class MainMenu : MonoBehaviour
         btnResetNo.Select();
     }
 
-    // When Reset button is pressed on main menu, set default score display to All Scores, reset to default, and repopulate the table
+    // When Reset button is pressed on main menu, reset scores to default values, and repopulate the table
     public void ResetPanelYes()
     {
-        PlayerPrefs.SetInt("ScorePreference", 0);
         ResetHighScoreEntries();
-        PopulateHighScoreTable();
+        ChangeScoreTypeAndPopulate(0);
         BackToMenu();
     }
     private void CreateHighScoreEntryTransform(HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)

@@ -67,10 +67,12 @@ MonoBehaviour:
     fadeBlack: {fileID: 0}
     player2GUI: {fileID: 0}
     gameOverPanel: {fileID: 0}
+    gameOverPanelAlt: {fileID: 0}
     gamePausePanel: {fileID: 0}
     gameLevelPanel: {fileID: 0}
     buttonWhenPaused: {fileID: 0}
     buttonWhenGameOver: {fileID: 0}
+    buttonWhenGameOverAlt: {fileID: 0}
     buttonWhenLeavingPauseBugFix: {fileID: 0}
     playerShip1: {fileID: 0}
     playerShip2: {fileID: 0}
