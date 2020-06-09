@@ -24,8 +24,9 @@ public partial class GameManager : MonoBehaviour
     [Header("Inspector References")]
     public GameManagerHiddenVars Refs;
 
-    void Start() {
-        Cursor.visible = false;
+    void Start()
+    {
+
         // If in tutorial mode, activate TutorialManager & tutorial music
         if (BetweenScenesScript.TutorialMode || tutorialMode)
         {
@@ -47,6 +48,7 @@ public partial class GameManager : MonoBehaviour
             StartCoroutine(StartNewLevel());
         }
         PlayMusicIfEnabled();
+        StartCoroutine(UsefulFunctions.CheckForControllerChanges());
     }
 
     void Update() {

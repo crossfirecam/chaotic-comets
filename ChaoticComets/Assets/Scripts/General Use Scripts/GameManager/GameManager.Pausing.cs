@@ -6,7 +6,7 @@ public partial class GameManager : MonoBehaviour
     {
         if (intent == 0) // PAUSE
         {
-            Cursor.visible = true;
+
             if (musicManager != null)
             {
                 musicManager.PauseMusic();
@@ -31,7 +31,7 @@ public partial class GameManager : MonoBehaviour
         }
         else if (intent == 1) // RESUME
         {
-            Cursor.visible = false;
+
             if (PlayerPrefs.GetFloat("Music") > 0f && musicManager != null)
             {
                 musicManager.ResumeMusic();

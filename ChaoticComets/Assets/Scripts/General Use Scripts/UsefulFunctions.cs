@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using Rewired;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class UsefulFunctions : MonoBehaviour
 {
-
     // Give random thrust to newly spawned props. Thanks to metalted and GlassesGuy on Unity forum (https://answers.unity.com/questions/1646067/)
     public static void FindThrust(Rigidbody2D rb, float maxThrust)
     {
@@ -21,6 +23,38 @@ public class UsefulFunctions : MonoBehaviour
     {
         float spin = Random.Range(-maxSpin, maxSpin);
         rb.AddTorque(spin);
+    }
+
+    private static Controller controller;
+    private static GraphicRaycaster mouseInputOnCanvas;
+    private static bool willMouseReturn = true;
+    public static IEnumerator CheckForControllerChanges()
+    {
+        while (true)
+        {
+            CheckLastUsedController();
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
+    }
+
+    public static void SetupControllerCheck()
+    {
+        print("Finding Canvas");
+        mouseInputOnCanvas = FindObjectOfType<Canvas>().GetComponent<GraphicRaycaster>();
+        controller = ReInput.controllers.GetLastActiveController();
+        Cursor.visible = controller.hardwareName == "Mouse";
+    }
+    public static void CheckLastUsedController()
+    {
+        if (mouseInputOnCanvas == null)
+        {
+            SetupControllerCheck();
+        }
+        controller = ReInput.controllers.GetLastActiveController();
+        print(controller.hardwareName);
+        Cursor.visible = controller.hardwareName == "Mouse";
+        mouseInputOnCanvas.enabled = controller.hardwareName == "Mouse";
+
     }
 
 }

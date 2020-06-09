@@ -17,7 +17,6 @@ public partial class GameManager : MonoBehaviour
     public void GameOver()
     {
         // Bring cursor back, tell game not to attempt resuming from save if 'Play Again' is picked, and open panel
-        Cursor.visible = true;
         BetweenScenesScript.ResumingFromSave = false;
         Refs.gameOverPanel.SetActive(true);
         Refs.buttonWhenGameOver.Select();
@@ -26,7 +25,7 @@ public partial class GameManager : MonoBehaviour
         CalculateTotalScore("GameOver");
 
         // Shrink layout if a new high score is not accomplished
-        if (!HighScoreHandling.IsThisAHighScore(totalScore, mode))
+        if (!HighScoreHandling.IsThisAHighScore(totalScore))
         {
             RectTransform gameOverRt = Refs.gameOverPanel.GetComponent<RectTransform>();
             gameOverRt.sizeDelta = new Vector2(gameOverRt.sizeDelta.x, 150);
@@ -60,10 +59,11 @@ public partial class GameManager : MonoBehaviour
     public void ExitGameFromPause()
     {
         CalculateTotalScore("MissionCancel");
-        if (HighScoreHandling.IsThisAHighScore(totalScore, mode))
+        if (HighScoreHandling.IsThisAHighScore(totalScore) && !tutorialMode)
         {
             Refs.gamePausePanel.SetActive(false);
             Refs.gameOverPanelAlt.SetActive(true);
+            Refs.fadeBlack.SetActive(false);
             Refs.buttonWhenGameOverAlt.Select();
             FindFieldAndLoadLastName();
         }
@@ -87,9 +87,9 @@ public partial class GameManager : MonoBehaviour
         }
 
         // Submit high score
-        if (HighScoreHandling.IsThisAHighScore(totalScore, mode))
+        if (HighScoreHandling.IsThisAHighScore(totalScore))
         {
-            HighScoreHandling.AddHighscoreEntry(nameFromField, levelNo, totalScore, mode, BetweenScenesScript.PlayerCount);
+            HighScoreHandling.AddHighscoreEntry(nameFromField, levelNo, totalScore, mode);
 
             // If name is not the default name, then set the preset name for next game in that mode. Reduces annoyance to controller users in particular.
             if (nameFromField == "Anonymous")
@@ -116,7 +116,7 @@ public partial class GameManager : MonoBehaviour
         if (BetweenScenesScript.PlayerCount == 2)
         {
             totalScore += Refs.playerShip2.totalCredits;
-            mode = $"2P({difficulty})";
+            mode = $"2P ({difficulty})";
             Text changeCongratsTextIf2P;
             if (originOfRequest == "GameOver")
             {

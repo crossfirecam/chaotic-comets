@@ -44,7 +44,6 @@ public partial class ShopScript : MonoBehaviour
             ShopRefs.gamePausePanel.SetActive(true);
             ShopRefs.buttonWhenPaused.Select();
             Time.timeScale = 0;
-            Cursor.visible = true;
         }
         else if (intent == 1)
         { // Resume game
@@ -61,7 +60,6 @@ public partial class ShopScript : MonoBehaviour
             }
             ShopRefs.gamePausePanel.SetActive(false);
             Time.timeScale = 1;
-            Cursor.visible = false;
         }
     }
 

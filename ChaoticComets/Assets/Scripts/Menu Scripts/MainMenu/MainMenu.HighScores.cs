@@ -7,7 +7,7 @@ using static HighScoreHandling;
 
 public partial class MainMenu : MonoBehaviour
 {
-    // Guide for High Score table from Code Monkey https://www.youtube.com/watch?v=iAbaqGYdnyI
+    // Basis of this code from Code Monkey https://www.youtube.com/watch?v=iAbaqGYdnyI
 
     public TextMeshProUGUI txtScoresHeader;
     public Transform scoreContainer, scoreTemplate;
@@ -15,6 +15,9 @@ public partial class MainMenu : MonoBehaviour
     public Button btnResetNo;
     private List<Transform> highscoreEntryTransformList;
 
+    /* ------------------------------------------------------------------------------------------------------------------
+     * High Score Table Populating Methods
+     * ------------------------------------------------------------------------------------------------------------------ */
     public void ChangeScoreTypeAndPopulate(int mode)
     {
         PlayerPrefs.SetInt("ScorePreference", mode);
@@ -42,6 +45,7 @@ public partial class MainMenu : MonoBehaviour
         // Initialise a table of high score entries
         highscoreEntryTransformList = new List<Transform>();
 
+        int numOfScoresOnCurrentList = 0;
         // If ScorePreference is set to 0 (All Scores), sort the full list into the best 10, and create the table
         if (PlayerPrefs.GetInt("ScorePreference") == 0)
         {
@@ -52,7 +56,10 @@ public partial class MainMenu : MonoBehaviour
             }
 
             foreach (HighscoreEntry sortedEntry in sortedList)
+            {
                 CreateHighScoreEntryTransform(sortedEntry, scoreContainer, highscoreEntryTransformList);
+                numOfScoresOnCurrentList++;
+            }
 
         }
         // If ScorePreference is set to 1 or 2 (P1 Only or P2 Only), only create a table using scores from that mode
@@ -61,26 +68,28 @@ public partial class MainMenu : MonoBehaviour
             foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
             {
                 if (PlayerPrefs.GetInt("ScorePreference") == 1 && highscoreEntry.mode.StartsWith("1P"))
+                {
                     CreateHighScoreEntryTransform(highscoreEntry, scoreContainer, highscoreEntryTransformList);
+                    numOfScoresOnCurrentList++;
+                }
                 else if (PlayerPrefs.GetInt("ScorePreference") == 2 && highscoreEntry.mode.StartsWith("2P"))
+                {
                     CreateHighScoreEntryTransform(highscoreEntry, scoreContainer, highscoreEntryTransformList);
+                    numOfScoresOnCurrentList++;
+                }
             }
+        }
+
+        // If no entries are added, then notify user the list is empty
+        if (numOfScoresOnCurrentList == 0)
+        {
+            HighscoreEntry thisListIsEmpty = new HighscoreEntry { name = "<i>This mode's scores are empty.</i>" };
+            CreateHighScoreEntryTransform(thisListIsEmpty, scoreContainer, highscoreEntryTransformList);
+            thisListIsEmpty = new HighscoreEntry { name = "<i>Play a round and come back!</i>" };
+            CreateHighScoreEntryTransform(thisListIsEmpty, scoreContainer, highscoreEntryTransformList);
         }
     }
 
-    public void ShowResetPanel()
-    {
-        resetScoresDialog.SetActive(true);
-        btnResetNo.Select();
-    }
-
-    // When Reset button is pressed on main menu, reset scores to default values, and repopulate the table
-    public void ResetPanelYes()
-    {
-        ResetHighScoreEntries();
-        ChangeScoreTypeAndPopulate(0);
-        BackToMenu();
-    }
     private void CreateHighScoreEntryTransform(HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
     {
         // Instantiate entry, relocate it
@@ -96,7 +105,56 @@ public partial class MainMenu : MonoBehaviour
         scoreEntry.Find("Credits").GetComponent<TextMeshProUGUI>().text = highscoreEntry.score.ToString();
         scoreEntry.Find("Mode").GetComponent<TextMeshProUGUI>().text = highscoreEntry.mode;
 
+        // If level is 0, then the entry is telling user the list is empty. Remove 0's for level and credits columns.
+        if (highscoreEntry.level == 0)
+        {
+            scoreEntry.Find("Level").GetComponent<TextMeshProUGUI>().text = "";
+            scoreEntry.Find("Credits").GetComponent<TextMeshProUGUI>().text = "";
+        }
+
         transformList.Add(scoreEntry);
+    }
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Reset Panel Methods
+     * ------------------------------------------------------------------------------------------------------------------ */
+
+    Navigation navSelectUp = new Navigation { mode = Navigation.Mode.Explicit };
+    Navigation navSelectDown = new Navigation { mode = Navigation.Mode.Explicit };
+    public void ShowResetPanel()
+    {
+        resetScoresDialog.SetActive(true);
+        btnResetNo.Select();
+
+        // Initialise navigation change variables
+        Transform resetDialogItself = resetScoresDialog.transform.Find("ResetDialog");
+        Button resetNoButton = resetDialogItself.Find("ResetNoButton").GetComponent<Button>();
+        Button resetCPUButton = resetDialogItself.Find("ResetRemoveCPUButton").GetComponent<Button>();
+        Button resetYesButton = resetDialogItself.Find("ResetYesButton").GetComponent<Button>();
+
+        // Change attributes of button navigation depending on if the CPU removal button has been pressed (can also be reset)
+        bool cpuButtonPressable = PlayerPrefs.GetInt("RemovedCPUs") == 0;
+        resetCPUButton.interactable = cpuButtonPressable;
+        navSelectDown.selectOnDown = cpuButtonPressable ? resetCPUButton : resetYesButton;
+        navSelectUp.selectOnUp = cpuButtonPressable ? resetCPUButton : resetNoButton;
+        resetNoButton.navigation = navSelectDown;
+        resetYesButton.navigation = navSelectUp;
+    }
+
+    // When Reset Scores button is pressed, reset scores to default values, and repopulate the table
+    public void ResetPanelYes()
+    {
+        ResetHighScoreEntries();
+        ChangeScoreTypeAndPopulate(0);
+        BackToMenu();
+    }
+
+    // When Remove CPU Scores button is pressed, remove the default values, and repopulate the table
+    public void ResetPanelRemoveCPUs()
+    {
+        RemoveDefaultsFromScoreList();
+        ChangeScoreTypeAndPopulate(0);
+        BackToMenu();
     }
 }
 

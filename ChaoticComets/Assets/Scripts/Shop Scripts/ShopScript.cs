@@ -49,7 +49,7 @@ public partial class ShopScript : MonoBehaviour {
         PlayMusicIfEnabled();
         UpdateButtonText();
         StartCoroutine(FadeBlack("from"));
-        Cursor.visible = false;
+        StartCoroutine(UsefulFunctions.CheckForControllerChanges());
     }
 
     private IEnumerator DelayedReady() {

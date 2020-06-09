@@ -26,7 +26,7 @@ public class PlayerUiSounds : MonoBehaviour
     public void UpdatePointDisplays()
     {
         // If total credits are higher than bonus threshold, then grant a life
-        if (p.totalCredits > p.bonus)
+        if (p.totalCredits > p.bonus && !p.gM.tutorialMode)
         {
             p.bonus += bonusInterval;
             p.plrPowerups.GrantExtraLife();

@@ -4,30 +4,40 @@ using UnityEngine;
 
 public static class HighScoreHandling
 {
-    public static bool IsThisAHighScore(int newScore, string newMode)
+    // Basis of this code from Code Monkey https://www.youtube.com/watch?v=iAbaqGYdnyI
+    public static bool IsThisAHighScore(int newScore)
     {
+        int modeToFilter = BetweenScenesScript.PlayerCount;
         // Load saved Highscores
         string jsonString = PlayerPrefs.GetString("highscoreTable");
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
-        // If less than ten entries in the mode's list, then add
-        List<HighscoreEntry> listOfMatchingMode = highscores.highscoreEntryList.Where(hs => hs.mode.StartsWith(newMode.ToString())).ToList();
+        // If score = 0, then return false
+        if (newScore == 0)
+        {
+            return false;
+        }
+
+        // If less than ten entries in the mode's list, then return true
+        List<HighscoreEntry> listOfMatchingMode = highscores.highscoreEntryList.Where(hs => hs.mode.StartsWith(modeToFilter.ToString())).ToList();
         if (listOfMatchingMode.Count < 10)
         {
             return true;
         }
 
-        foreach (HighscoreEntry scoreToCompare in highscores.highscoreEntryList)
+        // If any score 
+        foreach (HighscoreEntry scoreToCompare in listOfMatchingMode)
         {
-            if (newMode.StartsWith(scoreToCompare.mode.Substring(0,2)) && scoreToCompare.score < newScore)
+            if (scoreToCompare.score < newScore)
             {
                 return true;
             }
         }
         return false;
     }
-    public static void AddHighscoreEntry(string name, int level, int score, string mode, int modeToFilter)
+    public static void AddHighscoreEntry(string name, int level, int score, string mode)
     {
+        int modeToFilter = BetweenScenesScript.PlayerCount;
         // Load saved Highscores
         string jsonString = PlayerPrefs.GetString("highscoreTable");
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
@@ -61,6 +71,7 @@ public static class HighScoreHandling
         PlayerPrefs.SetString("highscoreTable", null);
         PlayerPrefs.SetString("SavedNameFor1P", "");
         PlayerPrefs.SetString("SavedNameFor2P", "");
+        PlayerPrefs.SetInt("RemovedCPUs", 0);
 
         Highscores defaultEntries = new Highscores
         {
@@ -68,14 +79,14 @@ public static class HighScoreHandling
         };
 
         // Default values
-        string[] defaultModes = { "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)",
-                                  "2P (CPU Score)", "2P (CPU Score)", "2P (CPU Score)" };
-        string[] defaultNames = { "Rubén", "Alex", "Bozza", "Elly", "Nick", "Sam", "Literal Bot",
-                                  "Josh & Shane", "Ann & Matt", "Renee & Bubba" };
-        int[] defaultLevels =   { 12, 10, 8, 7, 6, 3, 2,
-                                  9, 5, 4 };
-        int[] defaultScores =   { 10000, 9000, 7000, 6000, 5000, 2000, 1000,
-                                  8000, 4000, 3000 };
+        string[] defaultModes = { "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)",
+                                  "2P (CPU Score)", "2P (CPU Score)", "2P (CPU Score)", "2P (CPU Score)" };
+        string[] defaultNames = { "Rubén", "Bozza", "Eric", "Acorn", "It's Joe!", "A Literal Bot",
+                                  "Justin & Alex", "The Twins", "Josh & Shane", "Rene & Bubba" };
+        int[] defaultLevels =   { 12, 9, 8, 6, 4, 2,
+                                  10, 7, 5, 3 };
+        int[] defaultScores =   { 10000, 8000, 7000, 5000, 3000, 1000,
+                                  9000, 6000, 4000, 2000 };
 
         // For all ten entries, add an entry
         for (int i = 0; i < 10; i++)
@@ -86,6 +97,36 @@ public static class HighScoreHandling
 
         // Save updated Highscores
         string json = JsonUtility.ToJson(defaultEntries);
+        PlayerPrefs.SetString("highscoreTable", json);
+        PlayerPrefs.Save();
+    }
+
+    public static void RemoveDefaultsFromScoreList()
+    {
+        // Reset relevant PlayerPref
+        PlayerPrefs.SetInt("RemovedCPUs", 1);
+        PlayerPrefs.Save();
+
+        // Load saved Highscores
+        string jsonString = PlayerPrefs.GetString("highscoreTable");
+        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+
+        Highscores trimmedScores = new Highscores
+        {
+            highscoreEntryList = new List<HighscoreEntry>()
+        };
+
+        // Check all scores for the CPU tag
+        foreach (HighscoreEntry entryToCheck in highscores.highscoreEntryList)
+        {
+            if (!entryToCheck.mode.Contains("CPU"))
+            {
+                trimmedScores.highscoreEntryList.Add(entryToCheck);
+            }
+        }
+
+        // Save updated Highscores
+        string json = JsonUtility.ToJson(trimmedScores);
         PlayerPrefs.SetString("highscoreTable", json);
         PlayerPrefs.Save();
     }

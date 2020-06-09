@@ -42,7 +42,7 @@ public partial class GameManager : MonoBehaviour
         // (!p1dead && !p2dead) didn't work. Have to check the negative of an OR statement...
         if (!(player1dead || player2dead))
         {
-            canisterCap *= 2; ufoCap *= 2; print("ok");
+            canisterCap *= 2; ufoCap *= 2;
         }
 
         // Set when the first UFO and canister will spawn

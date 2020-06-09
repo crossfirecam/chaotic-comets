@@ -9674,7 +9674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   credits: 0
   totalCredits: 0
-  bonus: 9999
+  bonus: 4999
   lives: 3
   shields: 80
   power: 80

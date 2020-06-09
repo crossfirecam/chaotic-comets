@@ -32,7 +32,6 @@ public partial class TutorialManager : MonoBehaviour
             popups[popUpIndex].SetActive(true);
             ChangePopupController();
         }
-
     }
 
     private void Update()
@@ -82,7 +81,6 @@ public partial class TutorialManager : MonoBehaviour
 
     private void DisplayChoiceDialog()
     {
-        Cursor.visible = true;
         Time.timeScale = 0;
         gM.Refs.tutorialChoicePanel.SetActive(true);
         gM.Refs.buttonWhenTutorialChoice.Select();

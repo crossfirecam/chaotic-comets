@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using Rewired;
 
 public partial class MainMenu : MonoBehaviour
 {
@@ -14,7 +15,6 @@ public partial class MainMenu : MonoBehaviour
     // ----------
 
     private void Start() {
-        Cursor.visible = true;
         ResetBetweenScenesScript();
         ChangeScoreTypeAndPopulate(PlayerPrefs.GetInt("ScorePreference", 0));
 
@@ -30,6 +30,7 @@ public partial class MainMenu : MonoBehaviour
         mixer.SetFloat("MusicVolume", Mathf.Log10(BetweenScenesScript.MusicVolume) * 20);
         mixer.SetFloat("SFXVolume", Mathf.Log10(BetweenScenesScript.SFXVolume) * 20);
         StartCoroutine(FadeBlack("from"));
+        StartCoroutine(UsefulFunctions.CheckForControllerChanges());
     }
 
     private void Update() {
