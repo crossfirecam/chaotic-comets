@@ -10,6 +10,13 @@ public static class HighScoreHandling
         string jsonString = PlayerPrefs.GetString("highscoreTable");
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
+        // If less than ten entries in the mode's list, then add
+        List<HighscoreEntry> listOfMatchingMode = highscores.highscoreEntryList.Where(hs => hs.mode.StartsWith(newMode.ToString())).ToList();
+        if (listOfMatchingMode.Count < 10)
+        {
+            return true;
+        }
+
         foreach (HighscoreEntry scoreToCompare in highscores.highscoreEntryList)
         {
             if (newMode.StartsWith(scoreToCompare.mode.Substring(0,2)) && scoreToCompare.score < newScore)
@@ -38,7 +45,7 @@ public static class HighScoreHandling
         }
 
         // ... and create full list including other gamemode
-        List<HighscoreEntry> fullListOfScores = highscores.highscoreEntryList.Where(hs => hs.mode.StartsWith(modeToFilter.ToString())).ToList();
+        List<HighscoreEntry> fullListOfScores = highscores.highscoreEntryList.Where(hs => !hs.mode.StartsWith(modeToFilter.ToString())).ToList();
         fullListOfScores.AddRange(listOfMatchingMode);
 
         // Save updated Highscores
@@ -50,12 +57,17 @@ public static class HighScoreHandling
 
     public static void ResetHighScoreEntries()
     {
+        // Reset relevant PlayerPrefs to nil
         PlayerPrefs.SetString("highscoreTable", null);
+        PlayerPrefs.SetString("SavedNameFor1P", "");
+        PlayerPrefs.SetString("SavedNameFor2P", "");
+
         Highscores defaultEntries = new Highscores
         {
             highscoreEntryList = new List<HighscoreEntry>()
         };
 
+        // Default values
         string[] defaultModes = { "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)",
                                   "2P (CPU Score)", "2P (CPU Score)", "2P (CPU Score)" };
         string[] defaultNames = { "Rubén", "Alex", "Bozza", "Elly", "Nick", "Sam", "Literal Bot",
@@ -65,6 +77,7 @@ public static class HighScoreHandling
         int[] defaultScores =   { 10000, 9000, 7000, 6000, 5000, 2000, 1000,
                                   8000, 4000, 3000 };
 
+        // For all ten entries, add an entry
         for (int i = 0; i < 10; i++)
         {
             HighscoreEntry defaultEntry = new HighscoreEntry { name = defaultNames[i], level = defaultLevels[i], score = defaultScores[i], mode = defaultModes[i] };

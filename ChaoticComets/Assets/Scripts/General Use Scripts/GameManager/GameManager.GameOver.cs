@@ -7,6 +7,7 @@ public partial class GameManager : MonoBehaviour
 {
     private int totalScore;
     private string mode;
+    private TMP_InputField currentNameField;
 
     /* ------------------------------------------------------------------------------------------------------------------
      * Game Over Methods
@@ -20,8 +21,9 @@ public partial class GameManager : MonoBehaviour
         BetweenScenesScript.ResumingFromSave = false;
         Refs.gameOverPanel.SetActive(true);
         Refs.buttonWhenGameOver.Select();
+        FindFieldAndLoadLastName();
 
-        CalculateTotalScore();
+        CalculateTotalScore("GameOver");
 
         // Shrink layout if a new high score is not accomplished
         if (!HighScoreHandling.IsThisAHighScore(totalScore, mode))
@@ -30,6 +32,7 @@ public partial class GameManager : MonoBehaviour
             gameOverRt.sizeDelta = new Vector2(gameOverRt.sizeDelta.x, 150);
             gameOverRt.Find("NewScoreParts").gameObject.SetActive(false);
         }
+
 
         // Halt all sounds and game speed
         musicManager.PauseMusic();
@@ -56,12 +59,13 @@ public partial class GameManager : MonoBehaviour
     // Return to main menu if user decides to leave from pause. Prompts user before leaving if a high score is accomplished.
     public void ExitGameFromPause()
     {
-        CalculateTotalScore();
+        CalculateTotalScore("MissionCancel");
         if (HighScoreHandling.IsThisAHighScore(totalScore, mode))
         {
             Refs.gamePausePanel.SetActive(false);
             Refs.gameOverPanelAlt.SetActive(true);
             Refs.buttonWhenGameOverAlt.Select();
+            FindFieldAndLoadLastName();
         }
         else
         {
@@ -74,14 +78,7 @@ public partial class GameManager : MonoBehaviour
     {
         // Set highscore's name depending on which panel's InputField is being used.
         string nameFromField;
-        if (Refs.gameOverPanel.activeInHierarchy)
-        {
-            nameFromField = Refs.gameOverPanel.transform.Find("NewScoreParts").Find("NameField").GetComponent<TMP_InputField>().text;
-        }
-        else //(Refs.gameOverPanelAlt.activeInHierarchy)
-        {
-            nameFromField = Refs.gameOverPanelAlt.transform.Find("NewScoreParts").Find("NameField").GetComponent<TMP_InputField>().text;
-        }
+        nameFromField = currentNameField.text;
 
         // Renames blank names to Anonymous
         if (string.IsNullOrWhiteSpace(nameFromField))
@@ -93,11 +90,19 @@ public partial class GameManager : MonoBehaviour
         if (HighScoreHandling.IsThisAHighScore(totalScore, mode))
         {
             HighScoreHandling.AddHighscoreEntry(nameFromField, levelNo, totalScore, mode, BetweenScenesScript.PlayerCount);
+
+            // If name is not the default name, then set the preset name for next game in that mode. Reduces annoyance to controller users in particular.
+            if (nameFromField == "Anonymous")
+            {
+                nameFromField = "";
+            }
+            if (BetweenScenesScript.PlayerCount == 1) { PlayerPrefs.SetString("SavedNameFor1P", nameFromField); }
+            else if (BetweenScenesScript.PlayerCount == 2) { PlayerPrefs.SetString("SavedNameFor2P", nameFromField); }
         }
     }
 
     // Calculate total score, using Total Credits count to include upgrade spending. Update some text if there's two players.
-    private void CalculateTotalScore()
+    private void CalculateTotalScore(string originOfRequest)
     {
         string difficulty = "";
         switch (BetweenScenesScript.Difficulty)
@@ -113,16 +118,30 @@ public partial class GameManager : MonoBehaviour
             totalScore += Refs.playerShip2.totalCredits;
             mode = $"2P({difficulty})";
             Text changeCongratsTextIf2P;
-            if (Refs.gameOverPanel.activeInHierarchy)
+            if (originOfRequest == "GameOver")
             {
                 changeCongratsTextIf2P = Refs.gameOverPanel.transform.Find("NewScoreParts").Find("EnterNameText").GetComponent<Text>();
                 changeCongratsTextIf2P.text = "New highscore!\nEnter your names.";
             }
-            else if (Refs.gameOverPanelAlt.activeInHierarchy)
+            else if (originOfRequest == "MissionCancel")
             {
                 changeCongratsTextIf2P = Refs.gameOverPanelAlt.transform.Find("NewScoreParts").Find("EnterNameText").GetComponent<Text>();
                 changeCongratsTextIf2P.text = "...but you got a new highscore!\nEnter your names.";
             }
         }
+    }
+
+    private void FindFieldAndLoadLastName()
+    {
+        if (Refs.gameOverPanel.activeInHierarchy)
+        {
+            currentNameField = Refs.gameOverPanel.transform.Find("NewScoreParts").Find("NameField").GetComponent<TMP_InputField>();
+        }
+        else //(Refs.gameOverPanelAlt.activeInHierarchy)
+        {
+            currentNameField = Refs.gameOverPanelAlt.transform.Find("NewScoreParts").Find("NameField").GetComponent<TMP_InputField>();
+        }
+        if (BetweenScenesScript.PlayerCount == 1) { currentNameField.text = PlayerPrefs.GetString("SavedNameFor1P"); }
+        else if (BetweenScenesScript.PlayerCount == 2) { currentNameField.text = PlayerPrefs.GetString("SavedNameFor2P"); }
     }
 }
