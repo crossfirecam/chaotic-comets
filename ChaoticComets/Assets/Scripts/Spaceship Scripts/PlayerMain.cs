@@ -6,26 +6,18 @@
 
 public class PlayerMain : MonoBehaviour {
 
-    // Player Statistics
+    [Header("Player Statistics")]
+    public int playerNumber;
     public int credits = 0, totalCredits = 0, bonus = 4999, lives = 3;
     public float shields = 80, power = 80;
 
-    // General purpose variables
-    internal Rigidbody2D rbPlayer;
-    public GameObject modelPlayer;
-    internal CapsuleCollider2D capsCollider;
-    internal GameManager gM;
-    public int playerNumber;
-    public GameObject canister;
+    [Header("Impacts, Death, Respawning")]
     private float nextDamagePossible = 0.0F;
-
-    // Ship impacts, death, respawning
     internal bool collisionsCanDamage;
     internal float highDamageThreshold = 6f;
-    public GameObject deathExplosion;
     private readonly float minTimeBetweenDamage = 0.15f;
 
-    // Player Scripts
+    [Header("Player Scripts")]
     internal PlayerInput plrInput = default;
     internal PlayerMovement plrMovement = default;
     internal PlayerPowerups plrPowerups = default;
@@ -35,7 +27,13 @@ public class PlayerMain : MonoBehaviour {
     internal PlayerSpawnDeath plrSpawnDeath = default;
     internal PlayerUiSounds plrUiSound = default;
 
-    public bool canShoot = true; // Only used to disable shooting during some tutorial sections
+    [Header("References")]
+    public GameObject deathExplosion;
+    public GameObject modelPlayer;
+    public GameObject canister;
+    internal Rigidbody2D rbPlayer;
+    internal CapsuleCollider2D capsCollider;
+    internal GameManager gM;
 
     // ----------
 

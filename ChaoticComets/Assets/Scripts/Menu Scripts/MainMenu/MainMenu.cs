@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
-using Rewired;
 
 public partial class MainMenu : MonoBehaviour
 {
@@ -13,9 +12,8 @@ public partial class MainMenu : MonoBehaviour
     public GameObject musicManagerIfNotFoundInScene;
 
     // ----------
-
     private void Start() {
-        ResetBetweenScenesScript();
+        UsefulFunctions.ResetBetweenScenesScript();
         ChangeScoreTypeAndPopulate(PlayerPrefs.GetInt("ScorePreference", 0));
 
         musicManager = FindObjectOfType<MusicManager>();
@@ -27,10 +25,10 @@ public partial class MainMenu : MonoBehaviour
         musicManager.sfxDemo = optionSFXSlider.GetComponent<AudioSource>();
         musicManager.ChangeMusicTrack(0);
 
-        mixer.SetFloat("MusicVolume", Mathf.Log10(BetweenScenesScript.MusicVolume) * 20);
-        mixer.SetFloat("SFXVolume", Mathf.Log10(BetweenScenesScript.SFXVolume) * 20);
+        mixer.SetFloat("MusicVolume", Mathf.Log10(BetweenScenes.MusicVolume) * 20);
+        mixer.SetFloat("SFXVolume", Mathf.Log10(BetweenScenes.SFXVolume) * 20);
         StartCoroutine(FadeBlack("from"));
-        StartCoroutine(UsefulFunctions.CheckForControllerChanges());
+        StartCoroutine(UsefulFunctions.CheckController());
     }
 
     private void Update() {

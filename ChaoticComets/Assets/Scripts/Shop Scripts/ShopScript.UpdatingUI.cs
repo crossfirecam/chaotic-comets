@@ -1,39 +1,42 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Rewired;
 
 public partial class ShopScript : MonoBehaviour
 {
     /* ------------------------------------------------------------------------------------------------------------------
      * Player UI code
      * ------------------------------------------------------------------------------------------------------------------ */
-    private void PrepareP1UI()
+    private void PrepareUI(int playerToPrep)
     {
-        ShopRefs.p1Events.gameObject.SetActive(true);
-        ShopRefs.p1ShieldBar.fillAmount = data.player1health / 80;
-        BetweenScenesScript.player1TempCredits = data.player1credits;
-        BetweenScenesScript.player1TempLives = data.player1lives;
-        for (int i = 0; i < 5; i++)
+        if (playerToPrep == 1)
         {
-            if (data.player1powerups[i] == 1)
-                ShopRefs.listOfP1Powerups[i].SetActive(true);
+            ShopRefs.p1Events.gameObject.SetActive(true);
+            ShopRefs.p1ShieldBar.fillAmount = data.playerList[0].health / 80;
+            BetweenScenes.player1ShopCredits = data.playerList[0].credits;
+            BetweenScenes.player1ShopLives = data.playerList[0].lives;
+            for (int i = 0; i < 5; i++)
+            {
+                if (data.playerList[0].powerups[i] == 1)
+                    ShopRefs.listOfP1Powerups[i].SetActive(true);
+            }
+            ShopRefs.readyPromptText.text = $"Press 'Ready' to\nContinue to Level {data.level + 1}...";
         }
-        ShopRefs.readyPromptText.text = $"Press 'Ready' to\nContinue to Level {data.level + 1}...";
-    }
-
-    private void PrepareP2UI()
-    {
-        ShopRefs.p2Events.gameObject.SetActive(true);
-        ShopRefs.player2GUI.SetActive(true);
-        ShopRefs.p2ShieldBar.fillAmount = data.player2health / 80;
-        BetweenScenesScript.player2TempCredits = data.player2credits;
-        BetweenScenesScript.player2TempLives = data.player2lives;
-        for (int i = 0; i < 5; i++)
+        else if (playerToPrep == 2)
         {
-            if (data.player2powerups[i] == 1)
-                ShopRefs.listOfP2Powerups[i].SetActive(true);
+            ShopRefs.p2Events.gameObject.SetActive(true);
+            ShopRefs.player2GUI.SetActive(true);
+            ShopRefs.p2ShieldBar.fillAmount = data.playerList[0].health / 80;
+            BetweenScenes.player2ShopCredits = data.playerList[0].credits;
+            BetweenScenes.player2ShopLives = data.playerList[0].lives;
+            for (int i = 0; i < 5; i++)
+            {
+                if (data.playerList[0].powerups[i] == 1)
+                    ShopRefs.listOfP2Powerups[i].SetActive(true);
+            }
+            ShopRefs.readyPromptText.text = $"Both players 'Ready' to\nContinue to Level {data.level + 1}...";
         }
-        ShopRefs.readyPromptText.text = $"Both players 'Ready' to\nContinue to Level {data.level + 1}...";
     }
 
 
@@ -79,11 +82,11 @@ public partial class ShopScript : MonoBehaviour
      * Button Updating code
      * ------------------------------------------------------------------------------------------------------------------ */
 
-    // If a button pressed begins with 'P1' or 'P2', and does not end with 'Ready' or 'Transfer', then update the button's text based on BetweenScenesScript variables
+    // If a button pressed begins with 'P1' or 'P2', and does not end with 'Ready' or 'Transfer', then update the button's text based on BetweenScenes variables
     // If button ends with 'Transfer', then change the life transfer button text
     private void UpdateButtonText()
     {
-        Button[] listOfButtons = GameObject.FindObjectsOfType<Button>();
+        Button[] listOfButtons = FindObjectsOfType<Button>();
         foreach (Button gameObj in listOfButtons)
         {
             string tempName = gameObj.transform.name;
@@ -92,29 +95,29 @@ public partial class ShopScript : MonoBehaviour
             {
                 i = int.Parse(tempName);
             }
-            int priceP1 = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP1[i] - 10);
-            int priceP2 = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP2[i] - 10);
+            int priceP1 = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenes.UpgradesP1[i] - 10);
+            int priceP2 = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenes.UpgradesP2[i] - 10);
             string upgradeTier; int tempUpgradeNumLength;
 
             if (gameObj.transform.name.StartsWith("P1") && !gameObj.transform.name.EndsWith("Ready"))
             {
                 if (!gameObj.transform.name.EndsWith("Transfer"))
                 {
-                    tempUpgradeNumLength = BetweenScenesScript.UpgradesP1[i].ToString().Length - 1;
-                    upgradeTier = BetweenScenesScript.UpgradesP1[i].ToString().Insert(tempUpgradeNumLength, ".");
-                    gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Upgrade: {priceP1}c)";
-                    if (BetweenScenesScript.UpgradesP1[i] == upgradeCap)
+                    tempUpgradeNumLength = BetweenScenes.UpgradesP1[i].ToString().Length - 1;
+                    upgradeTier = BetweenScenes.UpgradesP1[i].ToString().Insert(tempUpgradeNumLength, ".");
+                    gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n{priceP1}c to Upgrade";
+                    if (BetweenScenes.UpgradesP1[i] == upgradeCap)
                     {
-                        gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Maximum upgrade)";
+                        gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Max upgrade)";
                     }
                 }
                 else
                 {
-                    if (BetweenScenesScript.PlayerCount == 2)
+                    if (BetweenScenes.PlayerCount == 2)
                     {
-                        if (BetweenScenesScript.player1TempLives > 1) { gameObj.GetComponentInChildren<Text>().text = "Multiple Lives\n(Transfer 1 life to P2)"; }
-                        else if (BetweenScenesScript.player1TempLives == 1) { gameObj.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
-                        else { /*(BetweenScenesScript.player1TempLives < 1)*/ gameObj.GetComponentInChildren<Text>().text = "No Lives"; }
+                        if (BetweenScenes.player1ShopLives > 1) { gameObj.GetComponentInChildren<Text>().text = "Multiple Lives\n(Transfer 1 life to P2)"; }
+                        else if (BetweenScenes.player1ShopLives == 1) { gameObj.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
+                        else { /*(BetweenScenes.player1TempLives < 1)*/ gameObj.GetComponentInChildren<Text>().text = "No Lives"; }
                     }
                 }
             }
@@ -122,32 +125,32 @@ public partial class ShopScript : MonoBehaviour
             {
                 if (!gameObj.transform.name.EndsWith("Transfer"))
                 {
-                    tempUpgradeNumLength = BetweenScenesScript.UpgradesP2[i].ToString().Length - 1;
-                    upgradeTier = BetweenScenesScript.UpgradesP2[i].ToString().Insert(tempUpgradeNumLength, ".");
-                    gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Upgrade: {priceP2}c)";
-                    if (BetweenScenesScript.UpgradesP2[i] == upgradeCap)
+                    tempUpgradeNumLength = BetweenScenes.UpgradesP2[i].ToString().Length - 1;
+                    upgradeTier = BetweenScenes.UpgradesP2[i].ToString().Insert(tempUpgradeNumLength, ".");
+                    gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n{priceP2}c to Upgrade";
+                    if (BetweenScenes.UpgradesP2[i] == upgradeCap)
                     {
-                        gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Maximum upgrade)";
+                        gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Max upgrade)";
                     }
                 }
                 else
                 {
-                    if (BetweenScenesScript.PlayerCount == 2)
+                    if (BetweenScenes.PlayerCount == 2)
                     {
-                        if (BetweenScenesScript.player2TempLives > 1) { gameObj.GetComponentInChildren<Text>().text = "Multiple Lives\n(Transfer 1 life to P1)"; }
-                        else if (BetweenScenesScript.player2TempLives == 1) { gameObj.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
+                        if (BetweenScenes.player2ShopLives > 1) { gameObj.GetComponentInChildren<Text>().text = "Multiple Lives\n(Transfer 1 life to P1)"; }
+                        else if (BetweenScenes.player2ShopLives == 1) { gameObj.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
                         else { /*(BetweenScenesScript.player2TempLives < 1)*/ gameObj.GetComponentInChildren<Text>().text = "No Lives"; }
                     }
                 }
             }
-            ShopRefs.p1ScoreText.text = "Credits:\n" + BetweenScenesScript.player1TempCredits;
-            ShopRefs.p1LivesText.text = "Lives: " + BetweenScenesScript.player1TempLives;
-            ShopRefs.p1TotalScoreText.text = "Total Score:\n" + data.player1totalCredits;
+            ShopRefs.p1ScoreText.text = BetweenScenes.player1ShopCredits + "c";
+            ShopRefs.p1LivesText.text = "Lives: " + BetweenScenes.player1ShopLives;
+            ShopRefs.p1TotalScoreText.text = "Total Score:\n" + data.playerList[0].totalCredits;
             if (data.playerCount == 2)
             {
-                ShopRefs.p2ScoreText.text = "Credits:\n" + BetweenScenesScript.player2TempCredits;
-                ShopRefs.p2LivesText.text = "Lives: " + BetweenScenesScript.player2TempLives;
-                ShopRefs.p2TotalScoreText.text = "Total Score:\n" + data.player2totalCredits;
+                ShopRefs.p2ScoreText.text = BetweenScenes.player2ShopCredits + "c";
+                ShopRefs.p2LivesText.text = "Lives: " + BetweenScenes.player2ShopLives;
+                ShopRefs.p2TotalScoreText.text = "Total Score:\n" + data.playerList[1].totalCredits;
             }
         }
     }

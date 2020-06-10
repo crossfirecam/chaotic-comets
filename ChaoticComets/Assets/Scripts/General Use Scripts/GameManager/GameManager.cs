@@ -26,9 +26,14 @@ public partial class GameManager : MonoBehaviour
 
     void Start()
     {
+        // If in cheater mode, enable the cheat panel in Pause
+        if (BetweenScenes.CheaterMode)
+        {
+            Refs.gamePausePanel.transform.Find("PauseDialog").Find("CheatPanel").gameObject.SetActive(true);
+        }
 
         // If in tutorial mode, activate TutorialManager & tutorial music
-        if (BetweenScenesScript.TutorialMode || tutorialMode)
+        if (BetweenScenes.TutorialMode || tutorialMode)
         {
             StartCoroutine(Refs.playerShip1.GetComponent<PlayerInput>().DelayNewInputs());
             Refs.tutorialManager.SetActive(true);
@@ -38,7 +43,7 @@ public partial class GameManager : MonoBehaviour
         // If in normal gameplay, set player ships to become active and start gameplay
         else
         {
-            if (BetweenScenesScript.PlayerCount == 2) {
+            if (BetweenScenes.PlayerCount == 2) {
                 Refs.player2GUI.SetActive(true);
                 Refs.playerShip2.gameObject.SetActive(true);
                 player2dead = false;
@@ -48,7 +53,7 @@ public partial class GameManager : MonoBehaviour
             StartCoroutine(StartNewLevel());
         }
         PlayMusicIfEnabled();
-        StartCoroutine(UsefulFunctions.CheckForControllerChanges());
+        StartCoroutine(UsefulFunctions.CheckController());
     }
 
     void Update() {

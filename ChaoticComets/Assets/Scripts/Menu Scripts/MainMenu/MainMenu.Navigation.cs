@@ -10,6 +10,7 @@ public partial class MainMenu : MonoBehaviour
     // Options screen
     public Button btnFullscreenToggle;
     public Slider optionMusicSlider, optionSFXSlider;
+    public GameObject cheatDisclaimer, cheatDisclaimerResumeSave;
 
     // Save confirmation screen
     public Text saveDescriptionText;
@@ -31,7 +32,7 @@ public partial class MainMenu : MonoBehaviour
     // Check for a save file, and set correct player icon/text
     public void CheckForSaveFile(int i)
     {
-        BetweenScenesScript.PlayerCount = i;
+        BetweenScenes.PlayerCount = i;
 
         // If save found, show save prompt
         // If none found, show difficulty prompt
@@ -63,8 +64,8 @@ public partial class MainMenu : MonoBehaviour
 
     public void SaidNoToResuming(int i)
     {
-        BetweenScenesScript.PlayerCount = i;
-        BetweenScenesScript.ResumingFromSave = false;
+        BetweenScenes.PlayerCount = i;
+        BetweenScenes.ResumingFromSave = false;
         ShowDifficulties();
     }
 
@@ -79,12 +80,12 @@ public partial class MainMenu : MonoBehaviour
         diffNormalButton.Select();
 
         // Depending on player count, change aesthetics
-        if (BetweenScenesScript.PlayerCount == 1) {
+        if (BetweenScenes.PlayerCount == 1) {
             difficultyTitleText.text = diffTitle0;
             playerDecorDiffDialog.Find("1P").gameObject.SetActive(true);
             playerDecorDiffDialog.Find("2P").gameObject.SetActive(false);
         }
-        else if (BetweenScenesScript.PlayerCount == 2) {
+        else if (BetweenScenes.PlayerCount == 2) {
             difficultyTitleText.text = diffTitle1;
             playerDecorDiffDialog.Find("1P").gameObject.SetActive(false);
             playerDecorDiffDialog.Find("2P").gameObject.SetActive(true);
@@ -95,14 +96,15 @@ public partial class MainMenu : MonoBehaviour
     {
         // If difficulty is not already set by the save file, set difficulty from player choice
         if (i != -1)
-            BetweenScenesScript.Difficulty = i;
+            BetweenScenes.Difficulty = i;
         // If loaded from a save, difficulty is preset
         else
-        { 
-            BetweenScenesScript.ResumingFromSave = true;
+        {
+            BetweenScenes.ResumingFromSave = true;
+            BetweenScenes.CheaterMode = false;
             Saving_PlayerManager data = Saving_SaveManager.LoadData();
-            BetweenScenesScript.Difficulty = data.difficulty;
-            BetweenScenesScript.PlayerCount = data.playerCount;
+            BetweenScenes.Difficulty = data.difficulty;
+            BetweenScenes.PlayerCount = data.playerCount;
         }
         StartGame();
     }
@@ -116,8 +118,8 @@ public partial class MainMenu : MonoBehaviour
         optionsDialog.SetActive(true);
         btnFullscreenToggle.Select();
         SetBtnFullscreenText();
-        optionMusicSlider.SetValueWithoutNotify(BetweenScenesScript.MusicVolume);
-        optionSFXSlider.SetValueWithoutNotify(BetweenScenesScript.SFXVolume);
+        optionMusicSlider.SetValueWithoutNotify(BetweenScenes.MusicVolume);
+        optionSFXSlider.SetValueWithoutNotify(BetweenScenes.SFXVolume);
     }
 
     public void SwapFullscreen()
@@ -133,7 +135,7 @@ public partial class MainMenu : MonoBehaviour
         Invoke("SetBtnFullscreenText", 0.1f);
     }
 
-    public void SetBtnFullscreenText()
+    private void SetBtnFullscreenText()
     {
         if (Screen.fullScreen)
         {
@@ -143,6 +145,13 @@ public partial class MainMenu : MonoBehaviour
         {
             btnFullscreenToggle.GetComponentInChildren<Text>().text = "Fullscreen OFF";
         }
+    }
+
+    public void ToggleCheats(bool toggleValue)
+    {
+        BetweenScenes.CheaterMode = toggleValue;
+        cheatDisclaimer.SetActive(toggleValue);
+        cheatDisclaimerResumeSave.SetActive(toggleValue);
     }
 
 

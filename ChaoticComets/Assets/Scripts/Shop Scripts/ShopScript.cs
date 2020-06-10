@@ -18,21 +18,21 @@ public partial class ShopScript : MonoBehaviour {
     private MusicManager musicManager;
     private Player player1, player2;
     public ShopManagerHiddenVars ShopRefs;
+    public TextMeshProUGUI saveDisclaimer;
 
 
     private void Awake()
     {
         player1 = ReInput.players.GetPlayer(0);
-        player2 = ReInput.players.GetPlayer(BetweenScenesScript.PlayerCount == 2 ? 1 : 0);
+        player2 = ReInput.players.GetPlayer(BetweenScenes.PlayerCount == 2 ? 1 : 0);
     }
 
     void Start() {
         // Nullexception is possible here, but only if shop is loaded without a save file. In typical gameplay it isn't possible
         data = Saving_SaveManager.LoadData();
-        BetweenScenesScript.UpgradesP1 = data.player1upgrades;
-        BetweenScenesScript.UpgradesP2 = data.player2upgrades;
 
-        PrepareP1UI();
+        BetweenScenes.UpgradesP1 = data.playerList[0].upgrades;
+        PrepareUI(1);
 
         if (data.playerCount == 1) {
             p2IsReady = true;
@@ -40,7 +40,15 @@ public partial class ShopScript : MonoBehaviour {
         }
         else if (data.playerCount == 2)
         {
-            PrepareP2UI();
+            BetweenScenes.UpgradesP2 = data.playerList[1].upgrades;
+            PrepareUI(2);
+        }
+
+        if (BetweenScenes.CheaterMode)
+        {
+            ShopRefs.gamePausePanel.transform.Find("PauseDialog").Find("AutoSaveText").GetComponent<Text>().text = "In Cheat Mode, progress is not saved.\nCheat buttons aren't available in the Depot.";
+            ShopRefs.gamePausePanel.transform.Find("PauseDialog").Find("AutoSaveText").GetComponent<Text>().color = Color.red;
+            saveDisclaimer.text = "<u>Progress not saved</u>\nGame is in Cheat Mode.";
         }
 
         // DelayedReady() prevents player that is holding 'Shoot' button from instantly readying up.
@@ -49,17 +57,17 @@ public partial class ShopScript : MonoBehaviour {
         PlayMusicIfEnabled();
         UpdateButtonText();
         StartCoroutine(FadeBlack("from"));
-        StartCoroutine(UsefulFunctions.CheckForControllerChanges());
+        StartCoroutine(UsefulFunctions.CheckController());
     }
 
     private IEnumerator DelayedReady() {
         ShopRefs.p1Events.SetSelectedGameObject(ShopRefs.buttonWhenLeavingPauseBugFix.gameObject);
-        if (BetweenScenesScript.PlayerCount == 2) {
+        if (BetweenScenes.PlayerCount == 2) {
             ShopRefs.p2Events.SetSelectedGameObject(ShopRefs.buttonWhenLeavingPauseBugFix.gameObject);
         }
         yield return new WaitForSeconds(0.2f);
         ShopRefs.p1Events.SetSelectedGameObject(ShopRefs.p1ReadyButton.gameObject);
-        if (BetweenScenesScript.PlayerCount == 2) {
+        if (BetweenScenes.PlayerCount == 2) {
             ShopRefs.p2Events.SetSelectedGameObject(ShopRefs.p2ReadyButton.gameObject);
         }
     }
@@ -80,7 +88,7 @@ public partial class ShopScript : MonoBehaviour {
                 ShopRefs.p1Events.SetSelectedGameObject(ShopRefs.p1ReadyButton.gameObject);
             }
         }
-        if (BetweenScenesScript.PlayerCount == 2 && ShopRefs.p2Events.gameObject.activeInHierarchy) {
+        if (BetweenScenes.PlayerCount == 2 && ShopRefs.p2Events.gameObject.activeInHierarchy) {
             if (ShopRefs.p2Events.currentSelectedGameObject == null || ShopRefs.p2Events.currentSelectedGameObject.Equals(null)) {
                 ShopRefs.p2Events.SetSelectedGameObject(ShopRefs.p2ReadyButton.gameObject);
             }
@@ -102,6 +110,10 @@ public partial class ShopScript : MonoBehaviour {
     }
     public void BackToMainMenu() {
         Time.timeScale = 1;
+        if (BetweenScenes.CheaterMode)
+        {
+            Saving_SaveManager.EraseData();
+        }
         SceneManager.LoadScene("StartMenu");
     }
 }
@@ -114,7 +126,8 @@ public class ShopManagerHiddenVars
     public Button buttonWhenPaused, buttonWhenLeavingPauseBugFix;
 
     [Header("Player UI References")]
-    public GameObject[] listOfP1Powerups, listOfP2Powerups;
+    public GameObject[] listOfP1Powerups;
+    public GameObject[] listOfP2Powerups;
     public Image p1ShieldBar, p1PowerBar, p2ShieldBar, p2PowerBar;
     public Text p1ScoreText, p1LivesText, p1TotalScoreText, p2ScoreText, p2LivesText, p2TotalScoreText;
 

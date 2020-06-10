@@ -22,6 +22,7 @@ public partial class MainMenu : MonoBehaviour
     {
         PlayerPrefs.SetInt("ScorePreference", mode);
         PlayerPrefs.Save();
+
         switch (mode)
         {
             case 0: txtScoresHeader.text = "Top 10 Scores (Both Modes)"; break;
@@ -38,8 +39,13 @@ public partial class MainMenu : MonoBehaviour
         foreach (GameObject entry in previousScoreEntries)
             Destroy(entry);
 
-        // Fetch current high score list
+        // Fetch current high score list. If it's null, then do first-time reset to defaults.
         string jsonString = PlayerPrefs.GetString("highscoreTable");
+        if (string.IsNullOrEmpty(jsonString))
+        {
+            ResetHighScoreEntries();
+            jsonString = PlayerPrefs.GetString("highscoreTable");
+        }
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
         // Initialise a table of high score entries

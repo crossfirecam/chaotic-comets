@@ -13,8 +13,8 @@ public class PlayerAbility : MonoBehaviour
 
     private void Start()
     {
-        teleportIn = gameObject.transform.Find($"P{p.playerNumber}-TeleportParticlesIn").gameObject;
-        teleportOut = gameObject.transform.Find($"P{p.playerNumber}-TeleportParticlesOut").gameObject;
+        teleportIn = gameObject.transform.Find("TeleportParticlesIn").gameObject;
+        teleportOut = gameObject.transform.Find("TeleportParticlesOut").gameObject;
     }
 #pragma warning disable IDE0051 // HyperSpace isn't directly called, used by an Invoke
     private void Hyperspace()
@@ -45,7 +45,7 @@ public class PlayerAbility : MonoBehaviour
             }
             teleportOut.SetActive(false);
             p.power = 80f;
-            p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenReady;
+            p.plrUiSound.abilityBar.sprite = p.plrUiSound.abilityWhenReady;
             StopCoroutine("PowerTimer");
         }
     }

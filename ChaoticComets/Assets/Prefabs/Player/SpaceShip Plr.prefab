@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1478917502}
   - component: {fileID: 1478917501}
   m_Layer: 9
-  m_Name: P1-ThrusterParticles-1
+  m_Name: ThrusterParticles-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4766,7 +4766,7 @@ GameObject:
   - component: {fileID: 1780687962}
   - component: {fileID: 1780687961}
   m_Layer: 9
-  m_Name: P1-ThrusterParticles-2
+  m_Name: ThrusterParticles-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9519,7 +9519,7 @@ GameObject:
   - component: {fileID: 4755833646674510}
   - component: {fileID: 212116949272085510}
   m_Layer: 9
-  m_Name: P1-TripleCannon1
+  m_Name: TripleCannon1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9537,7 +9537,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4077047160054620}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 12}
 --- !u!212 &212116949272085510
 SpriteRenderer:
@@ -9611,7 +9611,7 @@ GameObject:
   - component: {fileID: 1146411267}
   - component: {fileID: 412295513}
   m_Layer: 9
-  m_Name: SpaceShip (P1)
+  m_Name: SpaceShip Plr
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9628,7 +9628,9 @@ Transform:
   m_LocalPosition: {x: -3, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.85}
   m_Children:
+  - {fileID: 3059230267697156259}
   - {fileID: 3636001730405527643}
+  - {fileID: 8665463204943298291}
   - {fileID: 4548557134825742}
   - {fileID: 4755833646674510}
   - {fileID: 4405181708850868}
@@ -9672,18 +9674,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea9b55d7acf00da4fa2e3be7a890ac85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNumber: 1
   credits: 0
   totalCredits: 0
   bonus: 4999
   lives: 3
   shields: 80
   power: 80
-  modelPlayer: {fileID: 301448257594196552}
-  playerNumber: 1
-  canister: {fileID: 0}
   deathExplosion: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
     type: 3}
-  canShoot: 1
+  modelPlayer: {fileID: 301448257594196552}
+  canister: {fileID: 0}
 --- !u!70 &70447958271372078
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -9810,7 +9811,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p: {fileID: 114782296946591882}
-  playerId: 0
   thrust: 350
   turnThrust: 200
   thrustInput: 0
@@ -9845,12 +9845,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p: {fileID: 114782296946591882}
-  bullet: {fileID: 1298484566697936, guid: 9c85a0c3106c44c46847d29b3c795192, type: 3}
   bulletForce: 500
   rapidFireBetweenBullets: 0.1
   fireRateRapid: 1
   fireRateTriple: 0.7
   fireRateNormal: 0.45
+  bullet: {fileID: 1298484566697936, guid: 9c85a0c3106c44c46847d29b3c795192, type: 3}
 --- !u!114 &1146411264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9922,18 +9922,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p: {fileID: 114782296946591882}
+  playerUi: {fileID: 0}
   insurancePowerup: {fileID: 0}
   farShotPowerup: {fileID: 0}
   tripleShotPowerup: {fileID: 0}
   rapidShotPowerup: {fileID: 0}
   autoBrakePowerup: {fileID: 0}
   shieldBar: {fileID: 0}
-  powerBar: {fileID: 0}
-  powerWhenCharging: {fileID: 21300000, guid: bf888890319664e4db75fce954506aad, type: 3}
-  powerWhenReady: {fileID: 21300000, guid: 48f01af672a74e44b8c7e2f7d19e8b43, type: 3}
-  scoreText: {fileID: 0}
-  livesText: {fileID: 0}
-  totalScoreText: {fileID: 0}
+  abilityBar: {fileID: 0}
+  abilityWhenCharging: {fileID: 21300000, guid: bf888890319664e4db75fce954506aad,
+    type: 3}
+  abilityWhenReady: {fileID: 21300000, guid: 48f01af672a74e44b8c7e2f7d19e8b43, type: 3}
   audioShipThrust: {fileID: 1330089242}
   audioShipAutoBrake: {fileID: 1906153777886306393}
   audioShipSFX: {fileID: 82105594093363858}
@@ -9953,7 +9952,7 @@ GameObject:
   - component: {fileID: 4405181708850868}
   - component: {fileID: 212921184802470394}
   m_Layer: 9
-  m_Name: P1-TripleCannon2
+  m_Name: TripleCannon2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9971,7 +9970,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4077047160054620}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -12}
 --- !u!212 &212921184802470394
 SpriteRenderer:
@@ -10034,7 +10033,7 @@ GameObject:
   - component: {fileID: 4548557134825742}
   - component: {fileID: 212864534456378572}
   m_Layer: 9
-  m_Name: P1-MainCannon
+  m_Name: MainCannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10052,7 +10051,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4077047160054620}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &212864534456378572
 SpriteRenderer:
@@ -10116,7 +10115,7 @@ GameObject:
   - component: {fileID: 4772189263162799131}
   - component: {fileID: 4210730744154066227}
   m_Layer: 9
-  m_Name: P1-AutoBrakeParticles-1
+  m_Name: AutoBrakeParticles-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14869,7 +14868,7 @@ GameObject:
   - component: {fileID: 4538967215236579315}
   - component: {fileID: 1330089242}
   m_Layer: 9
-  m_Name: P1-Thrusters
+  m_Name: Thrusters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14889,7 +14888,7 @@ Transform:
   - {fileID: 1478917500}
   - {fileID: 1780687960}
   m_Father: {fileID: 4077047160054620}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1330089242
 AudioSource:
@@ -15001,7 +15000,7 @@ GameObject:
   - component: {fileID: 5718183723188379678}
   - component: {fileID: 1036672183283174103}
   m_Layer: 10
-  m_Name: P1-TeleportParticlesOut
+  m_Name: TeleportParticlesOut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15019,7 +15018,7 @@ Transform:
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children: []
   m_Father: {fileID: 4077047160054620}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -177.638, y: 0, z: 0}
 --- !u!198 &2165025600139937462
 ParticleSystem:
@@ -19840,6 +19839,85 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &5709303651396408426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3059230267697156259}
+  - component: {fileID: 1777432427783814220}
+  - component: {fileID: 4082462965091413648}
+  m_Layer: 9
+  m_Name: NotesAboutPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3059230267697156259
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5709303651396408426}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4077047160054620}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1777432427783814220
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5709303651396408426}
+  m_CullTransparentMesh: 0
+--- !u!114 &4082462965091413648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5709303651396408426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: A copy of SpaceShip Plr game object must have 'playerNumber' changed, and
+    the correct model enabled. That's all.
 --- !u!1 &7944776229198386751
 GameObject:
   m_ObjectHideFlags: 0
@@ -19851,7 +19929,7 @@ GameObject:
   - component: {fileID: 7754179177425632673}
   - component: {fileID: 1906153777886306393}
   m_Layer: 9
-  m_Name: P1-AutoBrake
+  m_Name: AutoBrake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19871,7 +19949,7 @@ Transform:
   - {fileID: 670635664799553165}
   - {fileID: 8923584534620904838}
   m_Father: {fileID: 4077047160054620}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1906153777886306393
 AudioSource:
@@ -19983,7 +20061,7 @@ GameObject:
   - component: {fileID: 1088293928905218194}
   - component: {fileID: 9103512736227161739}
   m_Layer: 10
-  m_Name: P1-TeleportParticlesIn
+  m_Name: TeleportParticlesIn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20001,7 +20079,7 @@ Transform:
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children: []
   m_Father: {fileID: 4077047160054620}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -177.638, y: 0, z: 0}
 --- !u!198 &6335233809028296390
 ParticleSystem:
@@ -24834,7 +24912,7 @@ GameObject:
   - component: {fileID: 1178067593356226600}
   - component: {fileID: 5474618198092654442}
   m_Layer: 9
-  m_Name: P1-AutoBrakeParticles-2
+  m_Name: AutoBrakeParticles-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29576,6 +29654,101 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1001 &4412221488313488873
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4077047160054620}
+    m_Modifications:
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.039
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.039
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.57
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.57
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.57
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_Name
+      value: player2Model
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: a998ccea2cfc479459023a00971e9d60,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a998ccea2cfc479459023a00971e9d60, type: 3}
+--- !u!4 &8665463204943298291 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: a998ccea2cfc479459023a00971e9d60,
+    type: 3}
+  m_PrefabInstance: {fileID: 4412221488313488873}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8579102760549440321
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29621,7 +29794,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: bbe681cd8dd0e7c468aae3518ac1b0dd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: bbe681cd8dd0e7c468aae3518ac1b0dd,
         type: 3}

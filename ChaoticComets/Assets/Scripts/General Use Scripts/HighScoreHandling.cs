@@ -7,7 +7,13 @@ public static class HighScoreHandling
     // Basis of this code from Code Monkey https://www.youtube.com/watch?v=iAbaqGYdnyI
     public static bool IsThisAHighScore(int newScore)
     {
-        int modeToFilter = BetweenScenesScript.PlayerCount;
+        // If in cheater mode, then return false
+        if (BetweenScenes.CheaterMode)
+        {
+            return false;
+        }
+
+        int modeToFilter = BetweenScenes.PlayerCount;
         // Load saved Highscores
         string jsonString = PlayerPrefs.GetString("highscoreTable");
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
@@ -37,7 +43,7 @@ public static class HighScoreHandling
     }
     public static void AddHighscoreEntry(string name, int level, int score, string mode)
     {
-        int modeToFilter = BetweenScenesScript.PlayerCount;
+        int modeToFilter = BetweenScenes.PlayerCount;
         // Load saved Highscores
         string jsonString = PlayerPrefs.GetString("highscoreTable");
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);

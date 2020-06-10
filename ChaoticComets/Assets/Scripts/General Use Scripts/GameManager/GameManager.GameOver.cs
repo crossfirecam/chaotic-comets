@@ -17,7 +17,7 @@ public partial class GameManager : MonoBehaviour
     public void GameOver()
     {
         // Bring cursor back, tell game not to attempt resuming from save if 'Play Again' is picked, and open panel
-        BetweenScenesScript.ResumingFromSave = false;
+        BetweenScenes.ResumingFromSave = false;
         Refs.gameOverPanel.SetActive(true);
         Refs.buttonWhenGameOver.Select();
         FindFieldAndLoadLastName();
@@ -43,6 +43,7 @@ public partial class GameManager : MonoBehaviour
     public void PlayAgain()
     {
         CheckAndSaveHighscore();
+        UsefulFunctions.ResetBetweenScenesScript();
         Time.timeScale = 1;
         SceneManager.LoadScene("MainScene");
     }
@@ -96,8 +97,8 @@ public partial class GameManager : MonoBehaviour
             {
                 nameFromField = "";
             }
-            if (BetweenScenesScript.PlayerCount == 1) { PlayerPrefs.SetString("SavedNameFor1P", nameFromField); }
-            else if (BetweenScenesScript.PlayerCount == 2) { PlayerPrefs.SetString("SavedNameFor2P", nameFromField); }
+            if (BetweenScenes.PlayerCount == 1) { PlayerPrefs.SetString("SavedNameFor1P", nameFromField); }
+            else if (BetweenScenes.PlayerCount == 2) { PlayerPrefs.SetString("SavedNameFor2P", nameFromField); }
         }
     }
 
@@ -105,7 +106,7 @@ public partial class GameManager : MonoBehaviour
     private void CalculateTotalScore(string originOfRequest)
     {
         string difficulty = "";
-        switch (BetweenScenesScript.Difficulty)
+        switch (BetweenScenes.Difficulty)
         {
             case 0: difficulty = "Easy"; break;
             case 1: difficulty = "Normal"; break;
@@ -113,7 +114,7 @@ public partial class GameManager : MonoBehaviour
         }
         totalScore = Refs.playerShip1.totalCredits;
         mode = $"1P ({difficulty})";
-        if (BetweenScenesScript.PlayerCount == 2)
+        if (BetweenScenes.PlayerCount == 2)
         {
             totalScore += Refs.playerShip2.totalCredits;
             mode = $"2P ({difficulty})";
@@ -141,7 +142,7 @@ public partial class GameManager : MonoBehaviour
         {
             currentNameField = Refs.gameOverPanelAlt.transform.Find("NewScoreParts").Find("NameField").GetComponent<TMP_InputField>();
         }
-        if (BetweenScenesScript.PlayerCount == 1) { currentNameField.text = PlayerPrefs.GetString("SavedNameFor1P"); }
-        else if (BetweenScenesScript.PlayerCount == 2) { currentNameField.text = PlayerPrefs.GetString("SavedNameFor2P"); }
+        if (BetweenScenes.PlayerCount == 1) { currentNameField.text = PlayerPrefs.GetString("SavedNameFor1P"); }
+        else if (BetweenScenes.PlayerCount == 2) { currentNameField.text = PlayerPrefs.GetString("SavedNameFor2P"); }
     }
 }

@@ -17,7 +17,7 @@ public partial class ShopScript : MonoBehaviour
 
         musicManager.ChangeMusicTrack(2);
 
-        if (BetweenScenesScript.MusicVolume > 0f)
+        if (BetweenScenes.MusicVolume > 0f)
         {
             musicManager.currentMusicPlayer.Play();
         }
@@ -43,6 +43,7 @@ public partial class ShopScript : MonoBehaviour
             }
             ShopRefs.gamePausePanel.SetActive(true);
             ShopRefs.buttonWhenPaused.Select();
+
             Time.timeScale = 0;
         }
         else if (intent == 1)

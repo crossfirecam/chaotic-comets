@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Rewired;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerUiSounds : MonoBehaviour
@@ -6,21 +7,42 @@ public class PlayerUiSounds : MonoBehaviour
     [SerializeField] PlayerMain p = default;
 
     // UI Systems
+    public Transform playerUi;
+    private Transform plrUiPowerup, plrUiBars;
     public Image insurancePowerup, farShotPowerup, tripleShotPowerup, rapidShotPowerup, autoBrakePowerup;
     const int bonusInterval = 5000;
-    public Image shieldBar, powerBar;
-    public Sprite powerWhenCharging, powerWhenReady;
-    public Text scoreText, livesText, totalScoreText;
+    public Image shieldBar, abilityBar;
+    public Sprite abilityWhenCharging, abilityWhenReady;
+    private Text titleText, totalScoreText, scoreText, livesText;
     internal float prevshields;
 
     // Sound Systems
     public AudioSource audioShipThrust, audioShipAutoBrake, audioShipSFX; // Thrust: passive thruster noise, SFX: powerup, extra life, impact noises
     public AudioClip audClipPlrSfxImpactSoft, audClipPlrSfxImpactHard, audClipPlrSfxDeath;
 
+    private void Awake()
+    {
+        titleText = playerUi.Find("Title").GetComponent<Text>();
+        titleText.text = "Player " + p.playerNumber;
+        totalScoreText = playerUi.Find("TotalScore").GetComponent<Text>();
+        scoreText = playerUi.Find("Credits").GetComponent<Text>();
+        livesText = playerUi.Find("Lives").GetComponent<Text>();
+
+        plrUiPowerup = playerUi.Find("Powerups");
+        insurancePowerup = plrUiPowerup.Find("PowerupInsurance").GetComponent<Image>();
+        farShotPowerup = plrUiPowerup.Find("PowerupFarShot").GetComponent<Image>();
+        tripleShotPowerup = plrUiPowerup.Find("PowerupTripleShot").GetComponent<Image>();
+        rapidShotPowerup = plrUiPowerup.Find("PowerupRapidShot").GetComponent<Image>();
+        autoBrakePowerup = plrUiPowerup.Find("PowerupAutoBrake").GetComponent<Image>();
+
+        plrUiBars = playerUi.Find("Bars");
+        shieldBar = plrUiBars.Find("ShieldBarPartial").GetComponent<Image>();
+        abilityBar = plrUiBars.Find("AbilityBarPartial").GetComponent<Image>();
+    }
     public void UpdateBars()
     {
         shieldBar.fillAmount = p.shields / 80;
-        powerBar.fillAmount = p.power / 80;
+        abilityBar.fillAmount = p.power / 80;
     }
 
     public void UpdatePointDisplays()
@@ -32,7 +54,7 @@ public class PlayerUiSounds : MonoBehaviour
             p.plrPowerups.GrantExtraLife();
         }
 
-        scoreText.text = "Credits:\n" + p.credits;
+        scoreText.text = p.credits + "c";
         livesText.text = "Lives: " + p.lives;
         totalScoreText.text = "Total Score:\n" + p.totalCredits;
         if (p.gM.tutorialMode)

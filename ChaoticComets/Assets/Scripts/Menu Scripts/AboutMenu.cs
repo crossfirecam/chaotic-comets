@@ -30,6 +30,7 @@ public class AboutMenu : MonoBehaviour {
 
     void Start() {
         devText.text = devTextIntro;
+        StartCoroutine(UsefulFunctions.CheckController());
     }
 
     void Update() {

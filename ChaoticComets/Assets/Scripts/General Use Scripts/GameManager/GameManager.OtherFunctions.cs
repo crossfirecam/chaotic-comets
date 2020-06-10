@@ -6,7 +6,7 @@ public partial class GameManager : MonoBehaviour
 {
     private void CheckIfResumingFromSave()
     {
-        if (BetweenScenesScript.ResumingFromSave)
+        if (BetweenScenes.ResumingFromSave)
         { // If resuming from save file, read from save file first
             Saving_PlayerManager data = Saving_SaveManager.LoadData();
             levelNo = data.level;
@@ -27,7 +27,7 @@ public partial class GameManager : MonoBehaviour
             musicManager.ChangeMusicTrack(1);
         else
             musicManager.ChangeMusicTrack(3);
-        if (BetweenScenesScript.MusicVolume > 0f)
+        if (BetweenScenes.MusicVolume > 0f)
             musicManager.currentMusicPlayer.Play();
     }
 

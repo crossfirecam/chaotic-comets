@@ -1,4 +1,4 @@
-﻿public static class BetweenScenesScript {
+﻿public static class BetweenScenes {
     public static int PlayerCount = 1; // Defaut value of 1 player for debugging. Alternative is '2'.
     public static int Difficulty = 1; // Default value of Normal difficulty for debugging. Alternatives are '0' Easy, and '2' Hard.
 
@@ -14,6 +14,9 @@
     // Tutorial mode on or off
     public static bool TutorialMode = false;
 
+    // Cheats been activated this round
+    public static bool CheaterMode = false;
+
     // Below are integer arrays that will be turned into floats when used in Spaceship gameobjects.
     // This is because iterating on floats causes counting errors eventually with any programming language.
     // 10 = 1.0, or the base of upgrades. They'll be iterated by 1 (converted to 0.1 float) each time an upgrade is performed.
@@ -21,9 +24,9 @@
     public static int[] UpgradesP1 = { 10, 10, 10, 10 };
     public static int[] UpgradesP2 = { 10, 10, 10, 10 };
 
-    // Credits count for each player is stored here, and only saved to a file when the shop at the end of a level is loaded.
-    public static int player1TempCredits = 0;
-    public static int player2TempCredits = 0;
-    public static int player1TempLives = 0;
-    public static int player2TempLives = 0;
+    // Credits and life counter are tracked here, because after a store is over, saves are erased but these two stats are still required
+    public static int player1ShopCredits = 0;
+    public static int player2ShopCredits = 0;
+    public static int player1ShopLives = 0;
+    public static int player2ShopLives = 0;
 }

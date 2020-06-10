@@ -158,7 +158,7 @@ public partial class TutorialManager : MonoBehaviour
                     taskSetupDone = true;
                     player1.collisionsCanDamage = true;
                 }
-                if (player1.plrPowerups.ifInsuranceActive)
+                if (player1.plrPowerups.ifInsurance)
                 {
                     ResetAsteroidsIfZero(false);
                 }

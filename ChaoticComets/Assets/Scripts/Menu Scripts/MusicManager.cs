@@ -26,13 +26,13 @@ public class MusicManager : MonoBehaviour
     public void ChangeMusic(float sliderValue) {
         mixer.SetFloat("MusicVolume", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("Music", sliderValue);
-        BetweenScenesScript.MusicVolume = sliderValue;
+        BetweenScenes.MusicVolume = sliderValue;
     }
 
     public void ChangeSFX(float sliderValue) {
         mixer.SetFloat("SFXVolume", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("SFX", sliderValue);
-        BetweenScenesScript.SFXVolume = sliderValue;
+        BetweenScenes.SFXVolume = sliderValue;
         if (!sfxDemo.isPlaying) {
             sfxDemo.Play();
         }

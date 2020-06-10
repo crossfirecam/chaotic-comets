@@ -4862,16 +4862,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96ae5cde42677f343982f4e84418bc55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gM: {fileID: 0}
-  direction: {x: 0, y: 0}
-  alienSpeedBase: 2.4
-  shootingDelay: 3
-  bulletSpeed: 250
   alienHealth: 80
   alienMaxHealth: 80
   forceField: {fileID: 190270562}
   playerShip1: {fileID: 0}
   playerShip2: {fileID: 0}
+  shootingDelay: 3
+  bulletSpeed: 250
+  retreatSpeedMultiplier: -2
+  direction: {x: 0, y: 0}
+  alienSpeedBase: 2
   audioAlienHum: {fileID: 2226360239011395511}
   audioAlienSfx: {fileID: 82704775472134234}
   audClipAliexSfxShieldReflect: {fileID: 8300000, guid: 52a8e7e6dd767e34db82d86a8b696c4b,

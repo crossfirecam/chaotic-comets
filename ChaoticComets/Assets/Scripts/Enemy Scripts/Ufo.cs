@@ -6,40 +6,25 @@
  */
 public abstract partial class Ufo : MonoBehaviour
 {
-    [SerializeField] internal GameManager gM;
-
-    // Movement, physics variables
-    internal Rigidbody2D rb;
+    [Header("Movement / Physics Variables")]
     public Vector2 direction;
+    internal Rigidbody2D rb;
     public float alienSpeedBase;
     internal float alienSpeedCurrent;
 
-    // Weapon system variables
-    public float shootingDelay = 1.5f; // Seconds between bullets fired
-    public float bulletSpeed = 250; // How fast the bullet fires
-    internal float lastTimeShot = 0f; // Keeps track of when UFO last fired a bullet
-
-    // Defence system variables
-    // private float difficultyIncrease = 0.95f; TODO add this functionality later
-    public float alienHealth, alienMaxHealth;
-    private int pointsToScore = 100;
-    private readonly int teleportKillPoints = 500;
-    public GameObject forceField;
-
-    // Targetting system variables
-    public GameObject playerShip1, playerShip2;
-    internal Transform player; // Currently tracked player
-    internal bool playerFound = false, playerTooFar = false;
-
-    // Sound variables
-    public AudioSource audioAlienHum, audioAlienSfx; // Hum: passive UFO noise, SFX: impacts/shield noises
+    [Header("Sound References")]
+    public AudioSource audioAlienHum;
+    public AudioSource audioAlienSfx;
     public AudioClip audClipAliexSfxShieldReflect, audClipAlienSfxTakenDamage;
 
-    // Other variables
+    [Header("Other Variables / References")]
     public GameObject bullet;
     public GameObject deathExplosion, playerBulletExplosion, teleportEffect;
-    internal bool deathStarted = false, ufoTeleporting = false, ufoRetreating = false;
     internal TutorialManager tM;
+    internal GameManager gM;
+    internal bool deathStarted = false, ufoTeleporting = false, ufoRetreating = false;
+    public GameObject forceField;
+    public GameObject playerShip1, playerShip2;
 
     // ----------
 
@@ -53,7 +38,7 @@ public abstract partial class Ufo : MonoBehaviour
         alienSpeedCurrent = alienSpeedBase;
 
         playerShip1 = GameObject.FindGameObjectWithTag("Player");
-        if (BetweenScenesScript.PlayerCount == 2)
+        if (BetweenScenes.PlayerCount == 2)
         {
             playerShip2 = GameObject.FindGameObjectWithTag("Player 2");
         }

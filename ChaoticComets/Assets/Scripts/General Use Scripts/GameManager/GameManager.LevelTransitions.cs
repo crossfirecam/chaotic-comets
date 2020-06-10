@@ -18,9 +18,9 @@ public partial class GameManager : MonoBehaviour
         Saving_SaveManager.EraseData();
 
         // Tell ships to disable model & colliders, if previous shop says they're dead
-        if (BetweenScenesScript.player1TempLives == 0)
+        if (BetweenScenes.player1ShopLives == 0)
             Refs.playerShip1.plrSpawnDeath.PretendShipDoesntExist();
-        if (BetweenScenesScript.player2TempLives == 0 && BetweenScenesScript.PlayerCount == 2)
+        if (BetweenScenes.player2ShopLives == 0 && BetweenScenes.PlayerCount == 2)
             Refs.playerShip2.plrSpawnDeath.PretendShipDoesntExist();
 
         // Asteroid number depends on level number. Iterated in SpawnProp()
@@ -77,8 +77,8 @@ public partial class GameManager : MonoBehaviour
     // Leaves Main scene and brings up the shop
     private void BringUpShop()
     {
-        BetweenScenesScript.ResumingFromSave = true;
-        Saving_SaveManager.SaveData(this, Refs.playerShip1.gameObject, Refs.playerShip2.gameObject);
+        BetweenScenes.ResumingFromSave = true;
+        Saving_SaveManager.SaveData(this, Refs.playerShip1, Refs.playerShip2);
         SceneManager.LoadScene("ShopMenu");
     }
 

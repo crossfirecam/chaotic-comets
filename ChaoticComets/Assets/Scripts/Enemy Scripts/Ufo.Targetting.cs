@@ -2,7 +2,15 @@
 
 public abstract partial class Ufo : MonoBehaviour
 {
+    [Header("Weapon System Variables")]
+    public float shootingDelay = 1.5f; // Seconds between bullets fired
+    public float bulletSpeed = 250; // How fast the bullet fires
+    internal float lastTimeShot = 0f; // Keeps track of when UFO last fired a bullet
+
+    [Header("Targetting System Variables")]
     internal float timer = 0;
+    internal Transform player;
+    internal bool playerFound = false, playerTooFar = false;
 
     internal bool IsPlayerTooClose(float threshold)
     {
@@ -18,7 +26,7 @@ public abstract partial class Ufo : MonoBehaviour
     }
 
 
-    // Screen Wrapping. UFO does not screen wrap when in the first 3 seconds of spawning onto level, or crossing a border
+    // Screen Wrapping. UFO does not screen wrap when in the first 2 seconds of spawning onto level, or crossing a border
     internal void CheckUfoScreenWrap(bool doesDespawnAtEdge = false)
     {
         if (timer > 2f)

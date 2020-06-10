@@ -2,6 +2,13 @@
 
 public abstract partial class Ufo : MonoBehaviour
 {
+    [Header("Defence System Variables")]
+    // private float difficultyIncrease = 0.95f; TODO add this functionality later
+    public float alienHealth;
+    public float alienMaxHealth;
+    private int pointsToScore = 100;
+    private readonly int teleportKillPoints = 500;
+
     // All UFO type enemies react to player bullets in the same way
     private void OnTriggerEnter2D(Collider2D playerBullet)
     {

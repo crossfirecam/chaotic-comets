@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class UsefulFunctions : MonoBehaviour
 {
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Initial Prop Movement Calculation
+     * ------------------------------------------------------------------------------------------------------------------ */
     // Give random thrust to newly spawned props. Thanks to metalted and GlassesGuy on Unity forum (https://answers.unity.com/questions/1646067/)
     public static void FindThrust(Rigidbody2D rb, float maxThrust)
     {
@@ -25,36 +28,55 @@ public class UsefulFunctions : MonoBehaviour
         rb.AddTorque(spin);
     }
 
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Controller Detection
+     * ------------------------------------------------------------------------------------------------------------------ */
+
     private static Controller controller;
     private static GraphicRaycaster mouseInputOnCanvas;
-    private static bool willMouseReturn = true;
-    public static IEnumerator CheckForControllerChanges()
+    
+    // Check every fifth of a second if the last used controller type has changed
+    public static IEnumerator CheckController()
     {
         while (true)
         {
             CheckLastUsedController();
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSecondsRealtime(0.2f);
         }
     }
 
+    // Return which controller has last been used
+    public static void CheckLastUsedController()
+    {
+        if (mouseInputOnCanvas == null) { SetupControllerCheck(); }
+
+        controller = ReInput.controllers.GetLastActiveController();
+        //print(controller.hardwareName + " " + cursorForcedStay);
+        Cursor.visible = controller.hardwareName == "Mouse";
+        mouseInputOnCanvas.enabled = controller.hardwareName == "Mouse";
+    }
+
+    // When a scene starts, find the Canvas, so the GraphicRaycaster can be disabled when cursor is invisible
     public static void SetupControllerCheck()
     {
-        print("Finding Canvas");
         mouseInputOnCanvas = FindObjectOfType<Canvas>().GetComponent<GraphicRaycaster>();
         controller = ReInput.controllers.GetLastActiveController();
         Cursor.visible = controller.hardwareName == "Mouse";
     }
-    public static void CheckLastUsedController()
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Other
+     * ------------------------------------------------------------------------------------------------------------------ */
+
+    public static void ResetBetweenScenesScript()
     {
-        if (mouseInputOnCanvas == null)
-        {
-            SetupControllerCheck();
-        }
-        controller = ReInput.controllers.GetLastActiveController();
-        print(controller.hardwareName);
-        Cursor.visible = controller.hardwareName == "Mouse";
-        mouseInputOnCanvas.enabled = controller.hardwareName == "Mouse";
-
+        BetweenScenes.ResumingFromSave = false;
+        BetweenScenes.TutorialMode = false;
+        BetweenScenes.CheaterMode = false;
+        BetweenScenes.MusicVolume = PlayerPrefs.GetFloat("Music");
+        BetweenScenes.SFXVolume = PlayerPrefs.GetFloat("SFX");
+        BetweenScenes.UpgradesP1 = new int[] { 10, 10, 10, 10 };
+        BetweenScenes.UpgradesP2 = new int[] { 10, 10, 10, 10 };
     }
-
 }

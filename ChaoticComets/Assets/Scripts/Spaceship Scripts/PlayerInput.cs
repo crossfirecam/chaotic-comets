@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour {
 
     [SerializeField] PlayerMain p = default;
-    public int playerId = 0;
+    private int playerId;
     private Player player;
 
     // Ship movement & teleport variables
@@ -16,6 +16,7 @@ public class PlayerInput : MonoBehaviour {
 
     private void Awake()
     {
+        playerId = p.playerNumber - 1;
         player = ReInput.players.GetPlayer(playerId);
     }
 
@@ -55,7 +56,7 @@ public class PlayerInput : MonoBehaviour {
         {
             if (p.collisionsCanDamage && p.power == 80)
             {
-                p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenCharging;
+                p.plrUiSound.abilityBar.sprite = p.plrUiSound.abilityWhenCharging;
                 p.plrAbility.teleportIn.SetActive(true);
                 p.plrMisc.StartCoroutine("FadeShip", "Out");
                 p.plrAbility.Invoke("Hyperspace", 2f);

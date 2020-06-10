@@ -19,51 +19,42 @@ public class PlayerMisc : MonoBehaviour
         if (!p.gM.tutorialMode)
         {
             // If spaceship object was resumed from savefile, ask savefile
-            if (BetweenScenesScript.ResumingFromSave)
+            if (BetweenScenes.ResumingFromSave)
             {
                 SetStatsForPlayer();
                 HandlePlayerLifeStates();
 
                 // Report back what was loaded from ships.
                 print($"Loaded. Player {p.playerNumber}: {p.shields} shields, {p.credits} credits (shop save amount), " +
-                    $"{BetweenScenesScript.player1TempCredits} credits (right now, after shop), {p.bonus} bonus threshold, {p.lives} lives.");
+                    $", {p.bonus} bonus threshold, {p.lives} lives.");
             }
 
             SetUpgradeLevelsForPlayer();
         }
     }
 
-    // A function in need of compressing. TODO.
-    // What it does is set the statistics depending on what player called the function.
+    // Set the statistics depending on what player called the function.
     private void SetStatsForPlayer()
     {
         Saving_PlayerManager data = Saving_SaveManager.LoadData();
         if (p.playerNumber == 1)
         {
-            p.credits = BetweenScenesScript.player1TempCredits;
-            p.totalCredits = data.player1totalCredits;
-            p.lives = BetweenScenesScript.player1TempLives;
-            p.shields = data.player1health;
-            p.bonus = data.player1bonus;
-            if (data.player1powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
-            if (data.player1powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
-            if (data.player1powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false); }
-            if (data.player1powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
-            if (data.player1powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
+            p.credits = BetweenScenes.player1ShopCredits;
+            p.lives = BetweenScenes.player1ShopLives;
         }
         else if (p.playerNumber == 2)
         { 
-            p.credits = BetweenScenesScript.player2TempCredits;
-            p.totalCredits = data.player2totalCredits;
-            p.lives = BetweenScenesScript.player2TempLives;
-            p.shields = data.player2health;
-            p.bonus = data.player2bonus;
-            if (data.player2powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
-            if (data.player2powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
-            if (data.player2powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false); }
-            if (data.player2powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
-            if (data.player2powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
+            p.credits = BetweenScenes.player2ShopCredits;
+            p.lives = BetweenScenes.player2ShopLives;
         }
+        p.totalCredits = data.playerList[p.playerNumber - 1].totalCredits;
+        p.shields = data.playerList[p.playerNumber - 1].health;
+        p.bonus = data.playerList[p.playerNumber - 1].bonusThreshold;
+        if (data.playerList[p.playerNumber - 1].powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
+        if (data.playerList[p.playerNumber - 1].powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
+        if (data.playerList[p.playerNumber - 1].powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false); }
+        if (data.playerList[p.playerNumber - 1].powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
+        if (data.playerList[p.playerNumber - 1].powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
     }
 
     private void HandlePlayerLifeStates()
@@ -84,7 +75,7 @@ public class PlayerMisc : MonoBehaviour
     private void SetUpgradeLevelsForPlayer()
     {
         // Set the current upgrade level for Player object depending on which player they are.
-        var playerToUpgrade = new List<int[]> { BetweenScenesScript.UpgradesP1, BetweenScenesScript.UpgradesP2 };
+        var playerToUpgrade = new List<int[]> { BetweenScenes.UpgradesP1, BetweenScenes.UpgradesP2 };
         upgradeSpeed = playerToUpgrade[p.playerNumber - 1][0] / 10f;
         upgradeBrake = playerToUpgrade[p.playerNumber - 1][1] / 10f;
         upgradeFireRate = playerToUpgrade[p.playerNumber - 1][2] / 10f;

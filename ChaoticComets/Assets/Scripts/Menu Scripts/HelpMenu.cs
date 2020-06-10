@@ -6,6 +6,12 @@ using UnityEngine.UI;
 public class HelpMenu : MonoBehaviour {
 
     [SerializeField] private Button leaveHelpButton = default;
+
+    private void Start()
+    {
+        StartCoroutine(UsefulFunctions.CheckController());
+    }
+
     private void Update()
     {
         if (EventSystem.current.currentSelectedGameObject == null || EventSystem.current.currentSelectedGameObject.Equals(null))

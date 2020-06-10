@@ -13,12 +13,12 @@ public class PlayerSpawnDeath : MonoBehaviour
     {
         // If insurance is active, do not remove any powerup except for Insurance
         // Else, remove all powerups
-        if (p.plrPowerups.ifInsuranceActive)
+        if (p.plrPowerups.ifInsurance)
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.Insurance);
         else
         {
             // If difficulty is easy, do not remove Auto-Brake
-            if (BetweenScenesScript.Difficulty != 0)
+            if (BetweenScenes.Difficulty != 0)
                 p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.AutoBrake);
 
             // If in tutorial mode, do not remove rapid shot (only section where player can die with a powerup)
@@ -31,7 +31,7 @@ public class PlayerSpawnDeath : MonoBehaviour
         p.shields = 0;
         p.lives--;
         p.plrUiSound.UpdatePointDisplays();
-        p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenCharging;
+        p.plrUiSound.abilityBar.sprite = p.plrUiSound.abilityWhenCharging;
 
         GameObject newExplosion = Instantiate(p.deathExplosion, transform.position, transform.rotation);
         Destroy(newExplosion, 2f);
@@ -60,7 +60,7 @@ public class PlayerSpawnDeath : MonoBehaviour
         if (p.lives > 0 && (p.gM.asteroidCount != 0 || p.gM.tutorialMode))
         {
             // If difficulty is Easy, equip Auto-Brake every respawn
-            if (BetweenScenesScript.Difficulty == 0)
+            if (BetweenScenes.Difficulty == 0)
                 p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false);
 
             // Player becomes visible, collision damage is disabled until shields recharge, but collider itself is enabled to rebound objects
@@ -97,13 +97,13 @@ public class PlayerSpawnDeath : MonoBehaviour
         // Or, if ship is respawning at start of a level, set the previousShields level to current shield level instead
         if (p.plrUiSound.prevshields != 80) { p.plrUiSound.prevshields = p.shields; }
         p.shields = 0;
-        p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenCharging; // Set power bar to have no text
+        p.plrUiSound.abilityBar.sprite = p.plrUiSound.abilityWhenCharging; // Set power bar to have no text
         for (int shieldsTick = 0; shieldsTick <= p.plrUiSound.prevshields; shieldsTick++)
         {
             p.shields = shieldsTick;
             yield return new WaitForSeconds(2f / p.plrUiSound.prevshields);
         }
-        p.plrUiSound.powerBar.sprite = p.plrUiSound.powerWhenReady; // Set power bar to have text informing power can be used
+        p.plrUiSound.abilityBar.sprite = p.plrUiSound.abilityWhenReady; // Set power bar to have text informing power can be used
         ShipIsNowTransparent(false);
         p.collisionsCanDamage = true;
         p.plrUiSound.prevshields = 0;

@@ -5,18 +5,21 @@ using UnityEngine;
 
 public partial class TutorialManager : MonoBehaviour
 {
+    public enum ControlType { KeyboardP1, KeyboardP2, Xbox }
+
+    [Header("Tutorial Task Variables")]
     public int popUpIndex = -1;
-    private GameManager gM;
-    public PlayerMain player1;
-    private UfoFollower ufoFollower;
-    public GameObject[] popups;
     private bool taskSetupDone = false, ufoHit = false;
     public bool ufoGone = false, ufoFollowerDocile = false;
     private int playerCreditsBefore = 0;
-    public enum ControlType { KeyboardP1, KeyboardP2, Xbox }
     public ControlType chosenControlStyle = ControlType.KeyboardP1;
 
+    [Header("References")]
     private Player player;
+    public PlayerMain player1;
+    private GameManager gM;
+    private UfoFollower ufoFollower;
+    public GameObject[] popups;
 
     private void Start()
     {

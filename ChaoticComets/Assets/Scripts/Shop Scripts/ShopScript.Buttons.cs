@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public partial class ShopScript : MonoBehaviour
@@ -53,18 +54,18 @@ public partial class ShopScript : MonoBehaviour
     {
         if (ShopRefs.p1Events.currentSelectedGameObject.name.StartsWith("P1"))
         {
-            if (BetweenScenesScript.UpgradesP1[whichUpgrade] < upgradeCap)
+            if (BetweenScenes.UpgradesP1[whichUpgrade] < upgradeCap)
             {
-                int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP1[whichUpgrade] - 10);
-                if (BetweenScenesScript.player1TempCredits >= price)
+                int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenes.UpgradesP1[whichUpgrade] - 10);
+                if (BetweenScenes.player1ShopCredits >= price)
                 {
-                    BetweenScenesScript.UpgradesP1[whichUpgrade] += 1;
-                    BetweenScenesScript.player1TempCredits -= price;
-                    print($"Upgrades: {string.Join(",", BetweenScenesScript.UpgradesP1)} Credits left: {BetweenScenesScript.player1TempCredits}");
+                    BetweenScenes.UpgradesP1[whichUpgrade] += 1;
+                    BetweenScenes.player1ShopCredits -= price;
+                    print($"Upgrades: {string.Join(",", BetweenScenes.UpgradesP1)} Credits left: {BetweenScenes.player1ShopCredits}");
                 }
                 else
                 {
-                    print("Upgrade failed, not enough credits");
+                    StartCoroutine(FlashCreditsRed(1));
                 }
             }
         }
@@ -75,18 +76,18 @@ public partial class ShopScript : MonoBehaviour
     {
         if (ShopRefs.p2Events.currentSelectedGameObject.name.StartsWith("P2"))
         {
-            if (BetweenScenesScript.UpgradesP2[whichUpgrade] < upgradeCap)
+            if (BetweenScenes.UpgradesP2[whichUpgrade] < upgradeCap)
             {
-                int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenesScript.UpgradesP2[whichUpgrade] - 10);
-                if (BetweenScenesScript.player2TempCredits >= price)
+                int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenes.UpgradesP2[whichUpgrade] - 10);
+                if (BetweenScenes.player2ShopCredits >= price)
                 {
-                    BetweenScenesScript.UpgradesP2[whichUpgrade] += 1;
-                    BetweenScenesScript.player2TempCredits -= price;
-                    print($"Upgrades: {string.Join(",", BetweenScenesScript.UpgradesP2)} Credits left: {BetweenScenesScript.player2TempCredits}");
+                    BetweenScenes.UpgradesP2[whichUpgrade] += 1;
+                    BetweenScenes.player2ShopCredits -= price;
+                    print($"Upgrades: {string.Join(",", BetweenScenes.UpgradesP2)} Credits left: {BetweenScenes.player2ShopCredits}");
                 }
                 else
                 {
-                    print("Upgrade failed, not enough credits");
+                    StartCoroutine(FlashCreditsRed(2));
                 }
             }
         }
@@ -96,24 +97,45 @@ public partial class ShopScript : MonoBehaviour
     // Give a life to player number 'i'
     public void GiveLife(int playerSendingLife)
     {
-        if (playerSendingLife == 1 && BetweenScenesScript.player1TempLives > 1)
+        if (playerSendingLife == 1 && BetweenScenes.player1ShopLives > 1)
         {
-            BetweenScenesScript.player1TempLives -= 1;
-            BetweenScenesScript.player2TempLives += 1;
-            if (BetweenScenesScript.player2TempLives == 1)
+            BetweenScenes.player1ShopLives -= 1;
+            BetweenScenes.player2ShopLives += 1;
+            if (BetweenScenes.player2ShopLives == 1)
             {
                 ShopRefs.p2ShieldBar.fillAmount = 1f;
             }
         }
-        if (playerSendingLife == 2 && BetweenScenesScript.player2TempLives > 1)
+        if (playerSendingLife == 2 && BetweenScenes.player2ShopLives > 1)
         {
-            BetweenScenesScript.player2TempLives -= 1;
-            BetweenScenesScript.player1TempLives += 1;
-            if (BetweenScenesScript.player1TempLives == 1)
+            BetweenScenes.player2ShopLives -= 1;
+            BetweenScenes.player1ShopLives += 1;
+            if (BetweenScenes.player1ShopLives == 1)
             {
                 ShopRefs.p1ShieldBar.fillAmount = 1f;
             }
         }
         UpdateButtonText();
+    }
+
+    private bool isAlreadyFlashingP1 = false, isAlreadyFlashingP2 = false;
+    private IEnumerator FlashCreditsRed(int playerFlashing)
+    {
+        if (playerFlashing == 1 && !isAlreadyFlashingP1)
+        {
+            isAlreadyFlashingP1 = true;
+            ShopRefs.p1ScoreText.color = Color.red;
+            yield return new WaitForSeconds(.5f);
+            ShopRefs.p1ScoreText.color = Color.white;
+            isAlreadyFlashingP1 = false;
+        }
+        else if (playerFlashing == 2 && !isAlreadyFlashingP2)
+        {
+            isAlreadyFlashingP2 = true;
+            ShopRefs.p2ScoreText.color = Color.red;
+            yield return new WaitForSeconds(.5f);
+            ShopRefs.p2ScoreText.color = Color.white;
+            isAlreadyFlashingP2 = false;
+        }
     }
 }

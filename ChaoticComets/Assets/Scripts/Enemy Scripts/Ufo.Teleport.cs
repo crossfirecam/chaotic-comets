@@ -3,11 +3,14 @@ using UnityEngine;
 
 public abstract partial class Ufo : MonoBehaviour
 {
+    [Header("Teleport System Variables")]
+    public float retreatSpeedMultiplier;
     private readonly int teleBorderOffset = 2;
     private int teleAttempts = 0;
+
     internal void AlienRetreat()
     {
-        alienSpeedCurrent = alienSpeedBase * -3f; // Reverse direction x3 speed
+        alienSpeedCurrent = alienSpeedBase * retreatSpeedMultiplier; // Reverse direction
         ufoRetreating = true;
         forceField.SetActive(true);
         Invoke(nameof(TeleportStart), 3f);
@@ -72,10 +75,12 @@ public abstract partial class Ufo : MonoBehaviour
     {
         if (!deathStarted)
         {
-            if (!gM.tutorialMode) {
+            if (!gM.tutorialMode)
+            {
                 gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.AlienRespawn);
             }
-            else {
+            else
+            {
                 gM.Refs.tutorialManager.GetComponent<TutorialManager>().ufoGone = true;
             }
             Destroy(gameObject);

@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
             // If thrust is less than 0, then ship is braking. On hard difficulty, brake is less powerful.
             if (p.plrInput.thrustInput < 0)
             {
-                if (BetweenScenesScript.Difficulty != 2)
+                if (BetweenScenes.Difficulty != 2)
                     p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / p.plrInput.brakingPower;
                 else
                     p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / p.plrInput.brakingPower / 2;
@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
                     autoBrakeEffect1.Play();
                     autoBrakeEffect2.Play();
                 }
-                if (BetweenScenesScript.Difficulty != 2)
+                if (BetweenScenes.Difficulty != 2)
                 {
                     p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 0.2f;
                 }
