@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,39 +10,34 @@ public partial class ShopScript : MonoBehaviour
     // Code for shop's Ready system. If both players are ready, shop closes.
     public void ReadyUp(int plrReady)
     {
-        // 
+        plrReady -= 1; // Make compatible with array
         Navigation customNav = new Navigation { mode = Navigation.Mode.Explicit };
         Button[] listOfButtons = FindObjectsOfType<Button>();
 
-        if (plrReady == 1)
-        {
-            p1IsReady = !p1IsReady;
-            ShopRefs.p1ReadyButton.GetComponentInChildren<Text>().text = p1IsReady ? "Unready" : "Ready";
-            customNav.selectOnUp = p1IsReady ? null : ShopRefs.p1UpgBtnAboveReady;
-            ShopRefs.p1ReadyButton.GetComponent<Button>().navigation = customNav;
-        }
-        else
-        {
-            p2IsReady = !p2IsReady;
-            ShopRefs.p2ReadyButton.GetComponentInChildren<Text>().text = p2IsReady ? "Unready" : "Ready";
-            customNav.selectOnUp = p2IsReady ? null : ShopRefs.p2UpgBtnAboveReady;
-            ShopRefs.p2ReadyButton.GetComponent<Button>().navigation = customNav;
-        }
+        // Set text and nav for Ready button (disable moving up if player is readied)
+        plrIsReady[plrReady] = !plrIsReady[plrReady];
+        ShopRefs.plrReadyBtns[plrReady].GetComponentInChildren<Text>().text = plrIsReady[plrReady] ? "Unready" : "Ready";
+        customNav.selectOnUp = plrIsReady[plrReady] ? null : ShopRefs.plrAboveReadyBtns[plrReady];
+        ShopRefs.plrReadyBtns[plrReady].GetComponent<Button>().navigation = customNav;
 
-        foreach (Button gameObj in listOfButtons)
-        { // Find all P1 buttons that aren't 'Ready' button, and disable them
-            if (gameObj.transform.name.StartsWith(plrReady == 1 ? "P1" : "P2") && !gameObj.transform.name.EndsWith("Ready"))
+        // Find all of a player's buttons that aren't 'Ready' button, and disable them
+        string btnStartToCheck = "P" + (plrReady + 1);
+        foreach (Button btn in listOfButtons)
+        {
+            print(btn.transform.name);
+            if (btn.transform.name.StartsWith(btnStartToCheck) && !btn.transform.name.EndsWith("Ready"))
             {
-                gameObj.GetComponent<Button>().interactable = plrReady == 1 ? !p1IsReady : !p2IsReady;
+                btn.GetComponent<Button>().interactable = !plrIsReady[plrReady];
             }
         }
 
-        if (p1IsReady && p2IsReady)
+        if (plrIsReady.All(x => x))
         {
-            ShopRefs.p1ReadyButton.GetComponentInChildren<Text>().text = "";
-            ShopRefs.p2ReadyButton.GetComponentInChildren<Text>().text = "";
-            ShopRefs.p1ReadyButton.GetComponent<Button>().interactable = false;
-            ShopRefs.p2ReadyButton.GetComponent<Button>().interactable = false;
+            for (int i = 0; i < plrIsReady.Length; i++)
+            {
+                ShopRefs.plrReadyBtns[i].GetComponentInChildren<Text>().text = "";
+                ShopRefs.plrReadyBtns[i].GetComponent<Button>().interactable = false;
+            }
             GoBackToGame();
         }
     }
@@ -52,16 +49,43 @@ public partial class ShopScript : MonoBehaviour
 
     public void PerformUpgradeP1(int whichUpgrade)
     {
-        if (ShopRefs.p1Events.currentSelectedGameObject.name.StartsWith("P1"))
+        Button buttonUpgrading = ShopRefs.plrEventSystems[0].currentSelectedGameObject.GetComponent<Button>();
+        if (buttonUpgrading.name.StartsWith("P1"))
         {
             if (BetweenScenes.UpgradesP1[whichUpgrade] < upgradeCap)
             {
+
                 int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenes.UpgradesP1[whichUpgrade] - 10);
-                if (BetweenScenes.player1ShopCredits >= price)
+                if (BetweenScenes.playerShopCredits[0] >= price)
                 {
+                    buttonUpgrading.GetComponent<AudioSource>().Play();
                     BetweenScenes.UpgradesP1[whichUpgrade] += 1;
-                    BetweenScenes.player1ShopCredits -= price;
-                    print($"Upgrades: {string.Join(",", BetweenScenes.UpgradesP1)} Credits left: {BetweenScenes.player1ShopCredits}");
+                    BetweenScenes.playerShopCredits[0] -= price;
+                    print($"Upgrades: {string.Join(",", BetweenScenes.UpgradesP1)} Credits left: {BetweenScenes.playerShopCredits[0]}");
+                }
+                else
+                {
+                    StartCoroutine(FlashCreditsRed(0));
+                }
+            }
+        }
+        UpdateButtonText();
+    }
+
+    public void PerformUpgradeP2(int whichUpgrade)
+    {
+        Button buttonUpgrading = ShopRefs.plrEventSystems[1].currentSelectedGameObject.GetComponent<Button>();
+        if (buttonUpgrading.name.StartsWith("P2"))
+        {
+            if (BetweenScenes.UpgradesP2[whichUpgrade] < upgradeCap)
+            {
+                int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenes.UpgradesP2[whichUpgrade] - 10);
+                if (BetweenScenes.playerShopCredits[1] >= price)
+                {
+                    buttonUpgrading.GetComponent<AudioSource>().Play();
+                    BetweenScenes.UpgradesP2[whichUpgrade] += 1;
+                    BetweenScenes.playerShopCredits[1] -= price;
+                    print($"Upgrades: {string.Join(",", BetweenScenes.UpgradesP2)} Credits left: {BetweenScenes.playerShopCredits[1] }");
                 }
                 else
                 {
@@ -72,70 +96,70 @@ public partial class ShopScript : MonoBehaviour
         UpdateButtonText();
     }
 
-    public void PerformUpgradeP2(int whichUpgrade)
-    {
-        if (ShopRefs.p2Events.currentSelectedGameObject.name.StartsWith("P2"))
-        {
-            if (BetweenScenes.UpgradesP2[whichUpgrade] < upgradeCap)
-            {
-                int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenes.UpgradesP2[whichUpgrade] - 10);
-                if (BetweenScenes.player2ShopCredits >= price)
-                {
-                    BetweenScenes.UpgradesP2[whichUpgrade] += 1;
-                    BetweenScenes.player2ShopCredits -= price;
-                    print($"Upgrades: {string.Join(",", BetweenScenes.UpgradesP2)} Credits left: {BetweenScenes.player2ShopCredits}");
-                }
-                else
-                {
-                    StartCoroutine(FlashCreditsRed(2));
-                }
-            }
-        }
-        UpdateButtonText();
-    }
-
     // Give a life to player number 'i'
-    public void GiveLife(int playerSendingLife)
+    public void GiveLife(int plrSendingLife)
     {
-        if (playerSendingLife == 1 && BetweenScenes.player1ShopLives > 1)
+        plrSendingLife -= 1; // Make compatible with array
+        int plrReceivingLife;
+
+        // TODO support more than two players. Probably automatically determine the player with the least lives.
+        if (plrSendingLife == 0) { plrReceivingLife = 1; }
+        else /*(plrSendingLife == 1)*/ { plrReceivingLife = 0; }
+
+        // If player can send a life, then give a life
+        if (BetweenScenes.playerShopLives[plrSendingLife] > 1 && BetweenScenes.playerShopCredits[plrSendingLife] >= 500)
         {
-            BetweenScenes.player1ShopLives -= 1;
-            BetweenScenes.player2ShopLives += 1;
-            if (BetweenScenes.player2ShopLives == 1)
+            Button buttonGivingLife = ShopRefs.plrEventSystems[0].currentSelectedGameObject.GetComponent<Button>();
+            buttonGivingLife.GetComponent<AudioSource>().Play();
+
+            BetweenScenes.playerShopCredits[plrSendingLife] -= 500;
+            BetweenScenes.playerShopLives[plrSendingLife] -= 1;
+            BetweenScenes.playerShopLives[plrReceivingLife] += 1;
+            // Reset dead player's shields to full when receiving their first new life
+            if (BetweenScenes.playerShopLives[plrReceivingLife] == 1)
             {
-                ShopRefs.p2ShieldBar.fillAmount = 1f;
+                ShopRefs.listOfPlrShieldBars[plrReceivingLife].fillAmount = 1f;
             }
         }
-        if (playerSendingLife == 2 && BetweenScenes.player2ShopLives > 1)
+        else
         {
-            BetweenScenes.player2ShopLives -= 1;
-            BetweenScenes.player1ShopLives += 1;
-            if (BetweenScenes.player1ShopLives == 1)
+            // If life transfer fails, flash one or both of the offending statistics
+            if (BetweenScenes.playerShopCredits[plrSendingLife] < 500)
             {
-                ShopRefs.p1ShieldBar.fillAmount = 1f;
+                StartCoroutine(FlashCreditsRed(plrSendingLife));
+            }
+            if (BetweenScenes.playerShopLives[plrSendingLife] == 1)
+            {
+                StartCoroutine(FlashLivesRed(plrSendingLife));
             }
         }
         UpdateButtonText();
     }
 
-    private bool isAlreadyFlashingP1 = false, isAlreadyFlashingP2 = false;
+    private bool[] isAlreadyFlashingCredits = { false, false };
     private IEnumerator FlashCreditsRed(int playerFlashing)
     {
-        if (playerFlashing == 1 && !isAlreadyFlashingP1)
+        if (!isAlreadyFlashingCredits[playerFlashing])
         {
-            isAlreadyFlashingP1 = true;
-            ShopRefs.p1ScoreText.color = Color.red;
+            GetComponent<AudioSource>().Play(); // ShopManager contains a 'UiError'-playing AudioSource
+            isAlreadyFlashingCredits[playerFlashing] = true;
+            ShopRefs.listOfPlrScoreText[playerFlashing].color = Color.red;
             yield return new WaitForSeconds(.5f);
-            ShopRefs.p1ScoreText.color = Color.white;
-            isAlreadyFlashingP1 = false;
+            ShopRefs.listOfPlrScoreText[playerFlashing].color = Color.white;
+            isAlreadyFlashingCredits[playerFlashing] = false;
         }
-        else if (playerFlashing == 2 && !isAlreadyFlashingP2)
+    }
+    private bool[] isAlreadyFlashingLives = { false, false };
+    private IEnumerator FlashLivesRed(int playerFlashing)
+    {
+        if (!isAlreadyFlashingLives[playerFlashing])
         {
-            isAlreadyFlashingP2 = true;
-            ShopRefs.p2ScoreText.color = Color.red;
+            GetComponent<AudioSource>().Play(); // ShopManager contains a 'UiError'-playing AudioSource
+            isAlreadyFlashingLives[playerFlashing] = true;
+            ShopRefs.listOfPlrLivesText[playerFlashing].color = Color.red;
             yield return new WaitForSeconds(.5f);
-            ShopRefs.p2ScoreText.color = Color.white;
-            isAlreadyFlashingP2 = false;
+            ShopRefs.listOfPlrLivesText[playerFlashing].color = Color.white;
+            isAlreadyFlashingLives[playerFlashing] = false;
         }
     }
 }

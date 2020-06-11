@@ -129,6 +129,7 @@ public partial class MainMenu : MonoBehaviour
     Navigation navSelectDown = new Navigation { mode = Navigation.Mode.Explicit };
     public void ShowResetPanel()
     {
+        SetBackButton();
         resetScoresDialog.SetActive(true);
         btnResetNo.Select();
 

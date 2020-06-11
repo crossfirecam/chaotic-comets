@@ -65,7 +65,7 @@ public class UfoFollower : Ufo
                 // Continue straight forward at a higher speed until player is close enough again.
                 if (!playerTooFar)
                 {
-                    alienSpeedCurrent *= 3f;
+                    alienSpeedCurrent = alienSpeedBase * 3f;
                     playerTooFar = true;
                 }
             }
@@ -144,6 +144,6 @@ public class UfoFollower : Ufo
 
         direction = direction.normalized;
         // If both players are dead, continue moving in same direction for this frame at double speed
-        rb.MovePosition(rb.position + direction * (alienSpeedCurrent * 2) * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + direction * (alienSpeedBase * 2) * Time.fixedDeltaTime);
     }
 }

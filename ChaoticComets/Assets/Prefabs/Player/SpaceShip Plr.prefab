@@ -9923,13 +9923,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p: {fileID: 114782296946591882}
   playerUi: {fileID: 0}
-  insurancePowerup: {fileID: 0}
-  farShotPowerup: {fileID: 0}
-  tripleShotPowerup: {fileID: 0}
-  rapidShotPowerup: {fileID: 0}
-  autoBrakePowerup: {fileID: 0}
-  shieldBar: {fileID: 0}
-  abilityBar: {fileID: 0}
   abilityWhenCharging: {fileID: 21300000, guid: bf888890319664e4db75fce954506aad,
     type: 3}
   abilityWhenReady: {fileID: 21300000, guid: 48f01af672a74e44b8c7e2f7d19e8b43, type: 3}
@@ -19917,7 +19910,8 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: A copy of SpaceShip Plr game object must have 'playerNumber' changed, and
-    the correct model enabled. That's all.
+    the correct model enabled. Also, adjust the tag. Also, redefine some references
+    in Player scripts...
 --- !u!1 &7944776229198386751
 GameObject:
   m_ObjectHideFlags: 0

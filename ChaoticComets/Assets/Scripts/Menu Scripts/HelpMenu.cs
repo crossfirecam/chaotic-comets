@@ -12,14 +12,6 @@ public class HelpMenu : MonoBehaviour {
         StartCoroutine(UsefulFunctions.CheckController());
     }
 
-    private void Update()
-    {
-        if (EventSystem.current.currentSelectedGameObject == null || EventSystem.current.currentSelectedGameObject.Equals(null))
-        {
-            leaveHelpButton.Select();
-        }
-    }
-
     public void VisitMain() {
         SceneManager.LoadScene("StartMenu");
     }

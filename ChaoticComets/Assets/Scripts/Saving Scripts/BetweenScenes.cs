@@ -11,6 +11,8 @@
     // B: Game is resumed from a found save file
     public static bool ResumingFromSave = false;
 
+    public static string BackToMainMenuButton = "";
+
     // Tutorial mode on or off
     public static bool TutorialMode = false;
 
@@ -25,8 +27,6 @@
     public static int[] UpgradesP2 = { 10, 10, 10, 10 };
 
     // Credits and life counter are tracked here, because after a store is over, saves are erased but these two stats are still required
-    public static int player1ShopCredits = 0;
-    public static int player2ShopCredits = 0;
-    public static int player1ShopLives = 0;
-    public static int player2ShopLives = 0;
+    public static int[] playerShopCredits = { 0, 0 };
+    public static int[] playerShopLives = { 0, 0 };
 }

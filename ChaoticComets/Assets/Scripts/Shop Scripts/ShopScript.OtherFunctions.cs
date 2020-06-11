@@ -7,6 +7,7 @@ public partial class ShopScript : MonoBehaviour
 {
     private void PlayMusicIfEnabled()
     {
+
         // Change music track
         musicManager = FindObjectOfType<MusicManager>();
         if (!musicManager)
@@ -30,12 +31,10 @@ public partial class ShopScript : MonoBehaviour
 
     public void PauseGame(int intent)
     {
-        if (intent == 0)
+        if (intent == 0 && !ShopRefs.saveFailedPanel.activeInHierarchy && !ShopRefs.mouseWarningPanel.activeInHierarchy)
         { // Pause game
 
-            ShopRefs.p1Events.gameObject.SetActive(false);
-            ShopRefs.p2Events.gameObject.SetActive(false);
-            ShopRefs.pauseEventSystem.GetComponent<RewiredStandaloneInputModule>().enabled = true;
+            DisablePlrEventsEnablePauseEvents();
 
             if (musicManager != null)
             {
@@ -51,9 +50,12 @@ public partial class ShopScript : MonoBehaviour
 
             ShopRefs.buttonWhenLeavingPauseBugFix.Select(); // Select it with pause event system, not upcoming event systems
             ShopRefs.pauseEventSystem.GetComponent<RewiredStandaloneInputModule>().enabled = false;
-            ShopRefs.p1Events.gameObject.SetActive(true);
-            if (ShopRefs.player2GUI.activeInHierarchy)
-                ShopRefs.p2Events.gameObject.SetActive(true);
+
+            // Resume event systems for however many players are present
+            for (int i = 0; i < BetweenScenes.PlayerCount; i++)
+            {
+                ShopRefs.plrEventSystems[i].gameObject.SetActive(true);
+            }
 
             if (PlayerPrefs.GetFloat("Music") > 0f && musicManager != null)
             {
@@ -92,5 +94,29 @@ public partial class ShopScript : MonoBehaviour
                 yield return null;
             }
         }
+    }
+
+    private void DisablePlrEventsEnablePauseEvents()
+    {
+        ShopRefs.plrEventSystems[0].gameObject.SetActive(false);
+        ShopRefs.plrEventSystems[1].gameObject.SetActive(false);
+        ShopRefs.pauseEventSystem.GetComponent<RewiredStandaloneInputModule>().enabled = true;
+    }
+
+    private bool mouseWarningActive = false;
+    public void PlayMouseWarning()
+    {
+        if (!mouseWarningActive)
+        {
+            StartCoroutine(MouseWarning());
+        }
+    }
+    private IEnumerator MouseWarning()
+    {
+        mouseWarningActive = true;
+        ShopRefs.mouseWarningPanel.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        mouseWarningActive = false;
+        ShopRefs.mouseWarningPanel.SetActive(false);
     }
 }

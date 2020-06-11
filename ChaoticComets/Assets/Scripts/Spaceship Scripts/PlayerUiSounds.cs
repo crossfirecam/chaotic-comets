@@ -9,9 +9,9 @@ public class PlayerUiSounds : MonoBehaviour
     // UI Systems
     public Transform playerUi;
     private Transform plrUiPowerup, plrUiBars;
-    public Image insurancePowerup, farShotPowerup, tripleShotPowerup, rapidShotPowerup, autoBrakePowerup;
+    internal Image insurancePowerup, farShotPowerup, tripleShotPowerup, rapidShotPowerup, autoBrakePowerup;
     const int bonusInterval = 5000;
-    public Image shieldBar, abilityBar;
+    internal Image shieldBar, abilityBar;
     public Sprite abilityWhenCharging, abilityWhenReady;
     private Text titleText, totalScoreText, scoreText, livesText;
     internal float prevshields;

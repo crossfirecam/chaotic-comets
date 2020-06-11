@@ -22,7 +22,7 @@ public class AboutMenu : MonoBehaviour {
         devText1_0 = "<u>March 2019</u>: Chaotic Comets was revisited to be published online. It came with UI enhancements, difficulty options, and easier controller selection.",
         devText1_1 = "<u>May 2019</u>: Chaotic Comets was updated to 1.1. Ship handling & visual effects were improved, sound effects / music were added, and plenty of bugs were fixed.",
         devText1_2 = "<u>June 2019</u>: Chaotic Comets was updated to 1.2. UFO's have more interesting mechanics, saving and a shop between levels was introduced, and there was a lot of testing done.",
-        devText1_3 = "<u>June 2020</u>: After a year of on-and-off dev, 1.3 was done. Includes improved UFO AI, an interactive tutorial, better controller support, and a <i>ton</i> of code review & bug fixes.",
+        devText1_3 = "<u>June 2020</u>: After a year of on-and-off dev, 1.3 was done. Includes a new UFO, interactive tutorial, highscores, and a <i>ton</i> of other features, code review & bug fixes.",
         devTextUpcoming = "Upcoming patches will include more features to enhance gameplay. Thank you for playing the game!";
     public Button returnToMenuButton;
 
@@ -31,12 +31,6 @@ public class AboutMenu : MonoBehaviour {
     void Start() {
         devText.text = devTextIntro;
         StartCoroutine(UsefulFunctions.CheckController());
-    }
-
-    void Update() {
-        if (EventSystem.current.currentSelectedGameObject == null || EventSystem.current.currentSelectedGameObject.Equals(null)) {
-            returnToMenuButton.Select();
-        }
     }
 
     public void VisitMain() {

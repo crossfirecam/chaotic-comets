@@ -24,19 +24,18 @@ public partial class MainMenu : MonoBehaviour
     private readonly string diffText2 = "Standard gameplay. Try other difficulties to change ship's handling.";
     private readonly string diffText3 = "Ship's manual brake and Auto-Brake are less effective. A real test of maneuverability.";
 
-
     // Misc UI objects
-    public Button returnToMenuButton, saveFirstButton;
+    public Button returnToMenuButton, saveFirstButton, optionsFirstButton;
     public Transform playerDecorDiffDialog;
 
     // Check for a save file, and set correct player icon/text
-    public void CheckForSaveFile(int i)
+    public void CheckForSaveFile(int plrAmountRequested)
     {
-        BetweenScenes.PlayerCount = i;
+        BetweenScenes.PlayerCount = plrAmountRequested;
 
-        // If save found, show save prompt
+        // If save found, and cheat mode flag is not found in the save, show save prompt
         // If none found, show difficulty prompt
-        if (Saving_SaveManager.LoadData() != null)
+        if (Saving_SaveManager.LoadData() != null && !Saving_SaveManager.LoadData().isCheatModeOn)
         {
             ShowSavePrompt();
         }
@@ -47,24 +46,40 @@ public partial class MainMenu : MonoBehaviour
     }
 
     // Display a prompt to make a new game or resume saved game
+    private Text saveDialogHeader, saveDialogInfo, saveDialogNewGame;
     public void ShowSavePrompt()
     {
+        SetBackButton();
         Saving_PlayerManager data = Saving_SaveManager.LoadData();
-        string tempSavePlayerCount = data.playerCount.ToString() + " Player";
-        if (data.playerCount == 2) { tempSavePlayerCount += "s"; }
-        string tempSaveDifficulty = data.difficulty.ToString();
-        if (tempSaveDifficulty == "0") { tempSaveDifficulty = "Easy"; }
-        if (tempSaveDifficulty == "1") { tempSaveDifficulty = "Normal"; }
-        if (tempSaveDifficulty == "2") { tempSaveDifficulty = "Hard"; }
-        string tempSaveLevel = $"Level {data.level + 1}";
-        saveDescriptionText.text = $"{tempSavePlayerCount},\n{tempSaveDifficulty}, {tempSaveLevel}";
+
+        if (saveDialogHeader == null)
+        {
+            saveDialogHeader = saveOptionDialog.transform.Find("SaveDialog").Find("SaveHeader").GetComponent<Text>();
+            saveDialogInfo = saveOptionDialog.transform.Find("SaveDialog").Find("SaveInfo").GetComponent<Text>();
+            saveDialogNewGame = saveOptionDialog.transform.Find("SaveDialog").Find("SaveNewBtn").GetComponentInChildren<Text>();
+        }
+
+        string savePlayerCount = $"{(data.playerCount == 1 ? "One" : "Two")}";
+        saveDialogHeader.text = $"{savePlayerCount} Player Mode\nAuto-Save Found";
+        saveDialogNewGame.text = $"New {savePlayerCount} Player Game";
+
+        string saveDifficulty;
+        switch (data.difficulty)
+        {
+            case 0: saveDifficulty = "Easy"; break;
+            case 1: saveDifficulty = "Normal"; break;
+            case 2: saveDifficulty = "Hard"; break;
+            default: saveDifficulty = "Error"; break;
+        }
+        string saveLevel = $"Level {data.level + 1}";
+        saveDialogInfo.text = $"{saveDifficulty}, {saveLevel}";
+
         saveOptionDialog.SetActive(true);
         saveFirstButton.Select();
     }
 
-    public void SaidNoToResuming(int i)
+    public void SaidNoToResuming()
     {
-        BetweenScenes.PlayerCount = i;
         BetweenScenes.ResumingFromSave = false;
         ShowDifficulties();
     }
@@ -72,6 +87,7 @@ public partial class MainMenu : MonoBehaviour
     // Display a prompt to select difficulty
     public void ShowDifficulties()
     {
+        SetBackButton();
         // Dismiss save dialog if open
         saveOptionDialog.SetActive(false);
 
@@ -114,9 +130,9 @@ public partial class MainMenu : MonoBehaviour
      * ------------------------------------------------------------------------------------------------------------------ */
     public void ShowOptions()
     {
-        mainMenuPanel.SetActive(false);
+        SetBackButton();
         optionsDialog.SetActive(true);
-        btnFullscreenToggle.Select();
+        optionsFirstButton.Select();
         SetBtnFullscreenText();
         optionMusicSlider.SetValueWithoutNotify(BetweenScenes.MusicVolume);
         optionSFXSlider.SetValueWithoutNotify(BetweenScenes.SFXVolume);
@@ -163,6 +179,7 @@ public partial class MainMenu : MonoBehaviour
     {
         if (!fadeBlack.activeInHierarchy)
         {
+            audioMenuBack.Play();
             saveOptionDialog.SetActive(false);
             difficultyDialog.SetActive(false);
             optionsDialog.SetActive(false);
@@ -173,8 +190,13 @@ public partial class MainMenu : MonoBehaviour
         }
     }
 
+    private void SetBackButton()
+    {
+        returnToMenuButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+    }
+
     /* ------------------------------------------------------------------------------------------------------------------
-     * Update per-frame functions
+     * Other Nav functions
      * ------------------------------------------------------------------------------------------------------------------ */
     public void OnMenuGoBack()
     {
@@ -186,7 +208,7 @@ public partial class MainMenu : MonoBehaviour
 
     private void CheckHighlightedButton()
     {
-        // Each frame, check what button is highlighted. Change difficulty descriptions, or pull a button back into focus if mouse clicks away from a button.
+        // Each frame, check what button is highlighted. Change difficulty descriptions.
         if (EventSystem.current.currentSelectedGameObject != null && !EventSystem.current.currentSelectedGameObject.Equals(null))
         {
             if (EventSystem.current.currentSelectedGameObject.name == "Diff-BackButton") { difficultyText.text = diffText0; }
@@ -194,14 +216,9 @@ public partial class MainMenu : MonoBehaviour
             else if (EventSystem.current.currentSelectedGameObject.name == "Diff-NormalButton") { difficultyText.text = diffText2; }
             else if (EventSystem.current.currentSelectedGameObject.name == "Diff-HardButton") { difficultyText.text = diffText3; }
         }
-        // If the mouse is used to click auto highlight away, then drag a highlight back onto a certain button.
         else
         {
-            if (difficultyDialog.activeInHierarchy) { diffNormalButton.Select(); }
-            else if (saveOptionDialog.activeInHierarchy) { saveFirstButton.Select(); }
-            else if (optionsDialog.activeInHierarchy) { btnFullscreenToggle.Select(); }
-            else if (resetScoresDialog.activeInHierarchy) { btnResetNo.Select(); }
-            else { returnToMenuButton.Select(); }
+            returnToMenuButton.Select();
         }
     }
 }

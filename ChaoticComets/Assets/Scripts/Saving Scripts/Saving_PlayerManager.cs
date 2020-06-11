@@ -7,6 +7,7 @@ public class Saving_PlayerManager
     public int playerCount = 1;
     public int difficulty = 0;
     public int level;
+    public bool isCheatModeOn = false;
 
     public List<Player> playerList = new List<Player>();
 
@@ -16,6 +17,9 @@ public class Saving_PlayerManager
         playerCount = BetweenScenes.PlayerCount;
         difficulty = BetweenScenes.Difficulty;
         level = gM.levelNo;
+
+        // Only checked when loaded from main menu. Fixes an exploit where players can get to a shop, quit the game, and come back to resume normally.
+        isCheatModeOn = BetweenScenes.CheaterMode;
 
         for (int i = 0; i < playerCount; i++)
         {

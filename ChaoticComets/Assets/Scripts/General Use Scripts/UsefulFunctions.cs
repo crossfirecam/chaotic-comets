@@ -34,7 +34,7 @@ public class UsefulFunctions : MonoBehaviour
      * ------------------------------------------------------------------------------------------------------------------ */
 
     private static Controller controller;
-    private static GraphicRaycaster mouseInputOnCanvas;
+    public static GraphicRaycaster mouseInputOnCanvas;
     
     // Check every fifth of a second if the last used controller type has changed
     public static IEnumerator CheckController()
@@ -49,7 +49,8 @@ public class UsefulFunctions : MonoBehaviour
     // Return which controller has last been used
     public static void CheckLastUsedController()
     {
-        if (mouseInputOnCanvas == null) { SetupControllerCheck(); }
+        if (mouseInputOnCanvas == null)
+        { SetupControllerCheck(); }
 
         controller = ReInput.controllers.GetLastActiveController();
         //print(controller.hardwareName + " " + cursorForcedStay);

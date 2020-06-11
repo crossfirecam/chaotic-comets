@@ -31,3 +31,10 @@ MusicGameplay - Lunar Ambience LOOP
 MusicMainMenu - Space Station SLOW LOOP
 MusicShop - Deep Space Ambience LOOP
 MusicTutorial - Space Map LOOP
+
+UI Sounds
+UiClose - UI_Animate_Stutter_Beep_Disappear_stereo
+UiError - UI_Error_Double_Note_Down_Muffled_Short_stereo
+UiOpen - UI_Animate_Stutter_Beep_Appear_stereo
+UiPress - UI_Beep_Double_Clean_Up_stereo
+UiUpgrade - TOOL_Impact_Wrench_Comperssed_Air_Segment_03_stereo

@@ -6,7 +6,7 @@ public partial class MainMenu : MonoBehaviour
     public void StartGame()
     {
         StartCoroutine(FadeBlack("to"));
-        Invoke("LoadScene", 1f);
+        Invoke(nameof(LoadScene), 1f);
     }
 
     private void LoadScene()
@@ -31,11 +31,13 @@ public partial class MainMenu : MonoBehaviour
     }
     public void VisitHelp()
     {
+        BetweenScenes.BackToMainMenuButton = "Help";
         SceneManager.LoadScene("HelpMenu");
     }
 
     public void VisitAbout()
     {
+        BetweenScenes.BackToMainMenuButton = "About";
         SceneManager.LoadScene("AboutMenu");
     }
 

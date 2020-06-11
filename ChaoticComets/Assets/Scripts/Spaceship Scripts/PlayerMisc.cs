@@ -37,24 +37,18 @@ public class PlayerMisc : MonoBehaviour
     private void SetStatsForPlayer()
     {
         Saving_PlayerManager data = Saving_SaveManager.LoadData();
-        if (p.playerNumber == 1)
-        {
-            p.credits = BetweenScenes.player1ShopCredits;
-            p.lives = BetweenScenes.player1ShopLives;
-        }
-        else if (p.playerNumber == 2)
-        { 
-            p.credits = BetweenScenes.player2ShopCredits;
-            p.lives = BetweenScenes.player2ShopLives;
-        }
-        p.totalCredits = data.playerList[p.playerNumber - 1].totalCredits;
-        p.shields = data.playerList[p.playerNumber - 1].health;
-        p.bonus = data.playerList[p.playerNumber - 1].bonusThreshold;
-        if (data.playerList[p.playerNumber - 1].powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
-        if (data.playerList[p.playerNumber - 1].powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
-        if (data.playerList[p.playerNumber - 1].powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false); }
-        if (data.playerList[p.playerNumber - 1].powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
-        if (data.playerList[p.playerNumber - 1].powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
+
+        int plrToSet = p.playerNumber - 1;
+        p.credits = BetweenScenes.playerShopCredits[plrToSet];
+        p.lives = BetweenScenes.playerShopLives[plrToSet];
+        p.totalCredits = data.playerList[plrToSet].totalCredits;
+        p.shields = data.playerList[plrToSet].health;
+        p.bonus = data.playerList[plrToSet].bonusThreshold;
+        if (data.playerList[plrToSet].powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
+        if (data.playerList[plrToSet].powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
+        if (data.playerList[plrToSet].powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false); }
+        if (data.playerList[plrToSet].powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
+        if (data.playerList[plrToSet].powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
     }
 
     private void HandlePlayerLifeStates()

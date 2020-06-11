@@ -6,6 +6,7 @@ Version 1.3 - UFO AI, Tutorial, Gameplay tweaks (2020 June)
 - High Score board added to main menu. Tracks top 10 scores for each game mode.
 - The game's gotten more difficult. Player ship has reduced base stats. Asteroids travel faster.
 - Interactive Tutorial added. Teaches the player game concepts with keyboard or Xbox controller prompts.
+- Two auto-save slots, one for each game mode. Cheat mode added to Options.
 - Lots of QOL changes, bug fixes, and backend code improvements.
 
 Version 1.2 - UFO, Store, and Saving (2019 June)
@@ -45,9 +46,10 @@ Player changes
 - Invulnerability time during shield charge-up is reduced.
 
 Gameplay changes
-- High Score system added. Can be filtered by game mode and reset.
+- High Score system added. Can be filtered by game mode and reset. Last used nickname in each mode is saved for the next time.
 - Control Test section removed. Replaced with an interactive tutorial.
     - Teaches the player most gameplay aspects, with a choice of P1/P2 keyboard or Xbox controller prompts.
+- Cheat mode in Options for spawning props and granting powerups/lives/credits. Disables saving and high scores.
 - Shop upgrades are cheaper. (Previous cost + 1000) per level, down from (P cost + 2000).
 - Extra lives come every 5000 points, down from 10,000.
 - Bullet size shrunk by half. Emits light.
@@ -62,10 +64,9 @@ Sound / UI improvements
 - Removed all prompts for controller choices. The newly added Rewired allows for both to control the player at the same time.
 - Fullscreen / Windowed toggle added.
 - Pause screen pauses all SFX and music, resumes immediately.
-- Shop shows controls in a more visual way.
+- Shop, About, and Player UI updated considerably. All UI has sound effects now.
 - Previously loud noises are reduced in volume. UFO noises pitched down to sound different.
-- About screen updated considerably.
-- Player UI adjusted, powerup icons have added border
+- Mouse cursor disappears whenever other control methods are used.
 
 Bug fixes from 1.2
 - Player now earns lives based on total credits, instead of current credits that could be spent and not contribute to extra lives.

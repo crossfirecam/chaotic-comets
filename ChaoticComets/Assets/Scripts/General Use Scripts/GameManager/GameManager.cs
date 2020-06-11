@@ -56,20 +56,6 @@ public partial class GameManager : MonoBehaviour
         StartCoroutine(UsefulFunctions.CheckController());
     }
 
-    void Update() {
-        // Each frame, check if pause menu is open, and what button is highlighted.
-        // If the mouse is used to click auto highlight away, then drag a highlight back onto a certain button.
-        if (Refs.gamePausePanel.activeInHierarchy || Refs.gameOverPanel.activeInHierarchy || Refs.tutorialChoicePanel.activeInHierarchy) {
-            if (EventSystem.current.currentSelectedGameObject == null || EventSystem.current.currentSelectedGameObject.Equals(null))
-            {
-                // If on pause panel, then select the resume button. If on game over panel, select play again button.
-                if (Refs.gamePausePanel.activeInHierarchy) { Refs.buttonWhenPaused.Select(); }
-                else if (Refs.gameOverPanel.activeInHierarchy) { Refs.buttonWhenGameOver.Select(); }
-                else { Refs.buttonWhenTutorialChoice.Select(); }
-            }
-        }
-    }
-
     // Screen Wrapping
     public void CheckScreenWrap(Transform current, float xOldOffset = 0f, float yOldOffset = 0f, float xNewOffset = 0f, float yNewOffset = 0f)
     {
