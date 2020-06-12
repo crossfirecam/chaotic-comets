@@ -45,6 +45,7 @@ public abstract partial class Ufo : MonoBehaviour
                 }
                 // If UFO screenwraps, tell UFO to face the player again so it can accelerate toward them once popping out the other side
                 // This isn't to happen while UFO is retreating, or else it gets stuck on the edges of the screen
+                // A null reference exception can happen here. No consequences though, the error only happens for one frame of movement
                 else if (!ufoRetreating)
                 {
                     direction = (player.position - transform.position);

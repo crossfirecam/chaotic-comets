@@ -35,8 +35,9 @@ public partial class ShopScript : MonoBehaviour {
     void Start()
     {
         // Uncomment this if testing a two-player save file
-        //BetweenScenes.PlayerCount = 2;
+        BetweenScenes.PlayerCount = 2; Debug.LogWarning("PlayerCount set manually in ShopScript");
 
+        // Load data. If failed, then send user to main menu with error message
         data = Saving_SaveManager.LoadData();
         if (data == null)
         {
@@ -44,19 +45,19 @@ public partial class ShopScript : MonoBehaviour {
             DisablePlrEventsEnablePauseEvents();
         }
 
-        BetweenScenes.UpgradesP1 = data.playerList[0].upgrades;
-        PrepareUI(1);
-
+        // Prepare UI for each player
+        for (int i = 0; i < BetweenScenes.PlayerCount; i++)
+        {
+            PrepareUI(i);
+            BetweenScenes.PlayerShopUpgrades[i] = data.playerList[i].upgrades;
+        }
+        // In single player mode, say that P2 is ready and move P1's buttons to the center
         if (data.playerCount == 1) {
             plrIsReady[1] = true;
             Player1OnlyGUI();
         }
-        else if (data.playerCount == 2)
-        {
-            BetweenScenes.UpgradesP2 = data.playerList[1].upgrades;
-            PrepareUI(2);
-        }
 
+        // If save is in cheater mode, change some details
         if (BetweenScenes.CheaterMode)
         {
             ShopRefs.gamePausePanel.transform.Find("PauseDialog").Find("AutoSaveText").GetComponent<Text>().text = "In Cheat Mode, progress is not saved.\nCheat buttons aren't available in the Depot.";
@@ -72,15 +73,18 @@ public partial class ShopScript : MonoBehaviour {
         StartCoroutine(FadeBlack("from"));
     }
 
+    // When shop opens, find all player event systems and select an offscreen button for 0.2s,
+    // Then select ready button. This is to prevent players that are holding 'Fire' from instantly being flagged as ready.
     private IEnumerator DelayedReady() {
-        ShopRefs.plrEventSystems[0].SetSelectedGameObject(ShopRefs.buttonWhenLeavingPauseBugFix.gameObject);
-        if (BetweenScenes.PlayerCount == 2) {
-            ShopRefs.plrEventSystems[1].SetSelectedGameObject(ShopRefs.buttonWhenLeavingPauseBugFix.gameObject);
+        for (int i = 0; i < BetweenScenes.PlayerCount; i++)
+        {
+            ShopRefs.plrEventSystems[i].gameObject.SetActive(true);
+            ShopRefs.plrEventSystems[i].SetSelectedGameObject(ShopRefs.buttonWhenLeavingPauseBugFix.gameObject);
         }
         yield return new WaitForSeconds(0.2f);
-        ShopRefs.plrEventSystems[0].SetSelectedGameObject(ShopRefs.plrReadyBtns[0].gameObject);
-        if (BetweenScenes.PlayerCount == 2) {
-            ShopRefs.plrEventSystems[1].SetSelectedGameObject(ShopRefs.plrReadyBtns[1].gameObject);
+        for (int i = 0; i < BetweenScenes.PlayerCount; i++)
+        {
+            ShopRefs.plrEventSystems[i].SetSelectedGameObject(ShopRefs.plrReadyBtns[i].gameObject);
         }
     }
 
@@ -91,13 +95,6 @@ public partial class ShopScript : MonoBehaviour {
             }
             else {
                 PauseGame(0);
-            }
-        }
-        // Each frame, check what button is highlighted. Pull a button back into focus if mouse clicks away from a button.
-        // If the mouse is used to click auto highlight away, then drag a highlight back onto a certain button.
-        if (ShopRefs.pauseEventSystem.gameObject.activeInHierarchy && ShopRefs.gamePausePanel.activeInHierarchy) {
-            if (ShopRefs.pauseEventSystem.currentSelectedGameObject == null || ShopRefs.pauseEventSystem.currentSelectedGameObject.Equals(null)) {
-                ShopRefs.pauseEventSystem.SetSelectedGameObject(ShopRefs.buttonWhenPaused.gameObject);
             }
         }
     }

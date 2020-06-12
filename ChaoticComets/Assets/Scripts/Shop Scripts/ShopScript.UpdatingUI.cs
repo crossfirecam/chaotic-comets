@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Rewired;
+using System.Linq;
+using System.Collections.Generic;
 
 public partial class ShopScript : MonoBehaviour
 {
     /* ------------------------------------------------------------------------------------------------------------------
-     * Player UI code
+     * Prepare UI - Fill shield bar, credit/lives counters
      * ------------------------------------------------------------------------------------------------------------------ */
     private void PrepareUI(int plrToPrep)
     {
-        plrToPrep -= 1; // Make compatible with array
-
         ShopRefs.listOfPlrShieldBars[plrToPrep].fillAmount = data.playerList[plrToPrep].health / 80;
-        BetweenScenes.playerShopCredits[plrToPrep] = data.playerList[plrToPrep].credits;
-        BetweenScenes.playerShopLives[plrToPrep] = data.playerList[plrToPrep].lives;
+        ShopRefs.listOfPlrTotalScoreText[plrToPrep].text = "Total Score:\n" + data.playerList[plrToPrep].totalCredits;
+        BetweenScenes.PlayerShopCredits[plrToPrep] = data.playerList[plrToPrep].credits;
+        BetweenScenes.PlayerShopLives[plrToPrep] = data.playerList[plrToPrep].lives;
         for (int i = 0; i < 5; i++)
         {
             if (data.playerList[plrToPrep].powerups[i] == 1)
@@ -22,7 +22,6 @@ public partial class ShopScript : MonoBehaviour
                 ShopRefs.listOfPlrPowerups[plrToPrep][i].SetActive(true);
             }
         }
-        ShopRefs.plrEventSystems[plrToPrep].gameObject.SetActive(true);
         ShopRefs.readyPromptText.text = $"Press 'Ready' to\nContinue to Level {data.level + 1}...";
 
         if (plrToPrep == 1)
@@ -33,40 +32,41 @@ public partial class ShopScript : MonoBehaviour
     }
 
 
-    // If One Player mode is selected, edit where the buttons and text are in the shop.
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Player 1 Only GUI - If One Player mode is selected, edit where the buttons and text are in the shop.
+     * ------------------------------------------------------------------------------------------------------------------ */
     private void Player1OnlyGUI()
     {
         Button[] listOfButtons = FindObjectsOfType<Button>();
-        foreach (Button gameObj in listOfButtons)
+        foreach (Button button in listOfButtons)
         {
-            if (gameObj.transform.name.StartsWith("P1"))
+            Transform btnTra = button.transform;
+            if (btnTra.name.StartsWith("P1"))
             {
-                float tempYPosition = gameObj.transform.localPosition.y;
-                gameObj.transform.localPosition = new Vector3(430, tempYPosition);
+                float tempY = btnTra.localPosition.y + 30;
+                btnTra.localPosition = new Vector3(430, tempY);
             }
-            if (gameObj.transform.name.EndsWith("Transfer"))
+            if (btnTra.name.EndsWith("Transfer"))
             {
-                gameObj.gameObject.SetActive(false);
+                button.gameObject.SetActive(false);
             }
-            float tempXPosition = gameObj.transform.localPosition.x;
-            float tempYPosition2 = gameObj.transform.localPosition.y + 30;
-            gameObj.transform.localPosition = new Vector3(tempXPosition, tempYPosition2);
         }
         TextMeshProUGUI[] listOfTextBoxes = FindObjectsOfType<TextMeshProUGUI>();
-        foreach (TextMeshProUGUI gameObj in listOfTextBoxes)
+        foreach (TextMeshProUGUI text in listOfTextBoxes)
         {
-            if (gameObj.transform.name == "P1UpgradesTitle")
-                gameObj.transform.localPosition = new Vector3(430, 7);
-            if (gameObj.transform.name == "UpgLifeTransfer")
-                gameObj.gameObject.SetActive(false);
-
-            else if (gameObj.transform.name.StartsWith("Upg"))
+            Transform txtTra = text.transform;
+            if (txtTra.name == "P1UpgradesTitle")
             {
-                float tempYPosition = gameObj.transform.localPosition.y;
-                gameObj.transform.localPosition = new Vector3(-144, tempYPosition);
-                float tempXPosition = gameObj.transform.localPosition.x;
-                float tempYPosition2 = gameObj.transform.localPosition.y + 30;
-                gameObj.transform.localPosition = new Vector3(tempXPosition, tempYPosition2);
+                txtTra.localPosition = new Vector3(430, 7);
+                continue;
+            }
+            if (txtTra.name == "UpgLifeTransfer")
+                txtTra.gameObject.SetActive(false);
+
+            else if (txtTra.name.StartsWith("Upg"))
+            {
+                float tempY = txtTra.localPosition.y + 30;
+                txtTra.localPosition = new Vector3(-144, tempY);
             }
         }
     }
@@ -74,74 +74,71 @@ public partial class ShopScript : MonoBehaviour
     /* ------------------------------------------------------------------------------------------------------------------
      * Button Updating code
      * ------------------------------------------------------------------------------------------------------------------ */
-
-    // If a button pressed begins with 'P1' or 'P2', and does not end with 'Ready' or 'Transfer', then update the button's text based on BetweenScenes variables
-    // If button ends with 'Transfer', then change the life transfer button text
+    private List<Button> listOfAllButtons = new List<Button>();
+    private List<Button> listOfFilteredButtons = new List<Button>();
     private void UpdateButtonText()
     {
-        Button[] listOfButtons = FindObjectsOfType<Button>();
-        foreach (Button gameObj in listOfButtons)
+        // If filtered button list is empty, fill it with updatable buttons
+        if (!listOfFilteredButtons.Any()) {
+            listOfAllButtons = FindObjectsOfType<Button>().ToList();
+            foreach (Button button in listOfAllButtons)
+            {
+                // The list-populating is exclusion-based because most of the desired buttons end in different single digits
+                // These unwanted buttons are for a UI selection bug, checking for mouse input, and readying the players respectively
+                if (!button.name.EndsWith("Bug") && !button.name.EndsWith("Check") && !button.name.EndsWith("Ready"))
+                {
+                    listOfFilteredButtons.Add(button);
+                }
+            }
+        }
+        foreach (Button button in listOfFilteredButtons)
         {
-            string tempName = gameObj.transform.name;
-            tempName = tempName.Substring(tempName.Length - 1, 1);
-            if (int.TryParse(tempName, out int i))
+            // If button name does not end with 'Transfer'... It is an upgrade button.
+            // Update the button's text based on BetweenScenes variables.
+            if (!button.name.EndsWith("Transfer"))
             {
-                i = int.Parse(tempName);
-            }
-            int priceP1 = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenes.UpgradesP1[i] - 10);
-            int priceP2 = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenes.UpgradesP2[i] - 10);
-            string upgradeTier; int tempUpgradeNumLength;
+                // Buttons that don't match any EndsWith criteria above are upgrade buttons
+                int upgrade = int.Parse(button.name.Last().ToString());
+                int player = int.Parse(button.name[1].ToString());
+                int plrIndex = player - 1;
+                int currentUpgradeTier = BetweenScenes.PlayerShopUpgrades[plrIndex][upgrade];
 
-            if (gameObj.transform.name.StartsWith("P1") && !gameObj.transform.name.EndsWith("Ready"))
-            {
-                if (!gameObj.transform.name.EndsWith("Transfer"))
-                {
-                    tempUpgradeNumLength = BetweenScenes.UpgradesP1[i].ToString().Length - 1;
-                    upgradeTier = BetweenScenes.UpgradesP1[i].ToString().Insert(tempUpgradeNumLength, ".");
-                    gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n({priceP1}c to Upgrade)";
-                    if (BetweenScenes.UpgradesP1[i] == upgradeCap)
-                    {
-                        gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Max upgrade)";
-                    }
-                }
-                else
-                {
-                    if (BetweenScenes.PlayerCount == 2)
-                    {
-                        if (BetweenScenes.playerShopLives[0] > 1) { gameObj.GetComponentInChildren<Text>().text = "Transfer 1 life to P2\n(Cost: 500c)"; }
-                        else if (BetweenScenes.playerShopLives[0] == 1) { gameObj.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
-                        else { /*(BetweenScenes.player1TempLives < 1)*/ gameObj.GetComponentInChildren<Text>().text = "No Lives"; }
-                    }
-                }
-            }
-            else if (gameObj.transform.name.StartsWith("P2") && !gameObj.transform.name.EndsWith("Ready"))
-            {
-                if (!gameObj.transform.name.EndsWith("Transfer"))
-                {
-                    tempUpgradeNumLength = BetweenScenes.UpgradesP2[i].ToString().Length - 1;
-                    upgradeTier = BetweenScenes.UpgradesP2[i].ToString().Insert(tempUpgradeNumLength, ".");
-                    gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n({priceP2}c to Upgrade)";
-                    if (BetweenScenes.UpgradesP2[i] == upgradeCap)
-                    {
-                        gameObj.GetComponentInChildren<Text>().text = $"Current: x{upgradeTier}\n(Max upgrade)";
-                    }
-                }
-                else
-                {
-                    if (BetweenScenes.PlayerCount == 2)
-                    {
-                        if (BetweenScenes.playerShopLives[1] > 1) { gameObj.GetComponentInChildren<Text>().text = "Transfer 1 life to P1\n(Cost: 500c)"; }
-                        else if (BetweenScenes.playerShopLives[1] == 1) { gameObj.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
-                        else { /*(BetweenScenesScript.player2TempLives < 1)*/ gameObj.GetComponentInChildren<Text>().text = "No Lives"; }
-                    }
-                }
-            }
+                // Determine price for the upgrade
+                int tierComparedToBase = currentUpgradeTier - 10;
+                int priceForUpgrade = baseUpgradePrice + (priceIncreasePerLevel * tierComparedToBase);
 
-            for (int j = 0; j < BetweenScenes.PlayerCount; j++)
-            {
-                ShopRefs.listOfPlrScoreText[j].text = BetweenScenes.playerShopCredits[j] + "c";
-                ShopRefs.listOfPlrLivesText[j].text = "Lives: " + BetweenScenes.playerShopLives[j];
+                // Set text for button
+                string tierInDecimalForm = currentUpgradeTier.ToString().Insert(currentUpgradeTier.ToString().Length - 1, ".");
+                button.GetComponentInChildren<Text>().text = $"Current: x{tierInDecimalForm}\n({priceForUpgrade}c to Upgrade)";
+                if (currentUpgradeTier == upgradeCap)
+                {
+                    button.GetComponentInChildren<Text>().text = $"Current: x{tierInDecimalForm}\n(Max upgrade)";
+                }
             }
+            // If button ends with 'Transfer', then change the life transfer button text.
+            else if (button.name.EndsWith("Transfer"))
+            {
+                if (BetweenScenes.PlayerCount == 2)
+                {
+                    int player = int.Parse(button.name[1].ToString());
+                    int plrIndex = player - 1;
+                    int otherPlayer = 0;
+                    switch (player)
+                    {
+                        case 1: otherPlayer = 2; break;
+                        case 2: otherPlayer = 1; break;
+                    }
+                    if (BetweenScenes.PlayerShopLives[plrIndex] > 1) { button.GetComponentInChildren<Text>().text = $"Transfer 1 life to P{otherPlayer}\n(Cost: 500c)"; }
+                    else if (BetweenScenes.PlayerShopLives[plrIndex] == 1) { button.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
+                    else { button.GetComponentInChildren<Text>().text = "No Lives"; }
+                }
+            }
+        }
+        // After any button edit, change player's life and credits counter
+        for (int j = 0; j < BetweenScenes.PlayerCount; j++)
+        {
+            ShopRefs.listOfPlrScoreText[j].text = BetweenScenes.PlayerShopCredits[j] + "c";
+            ShopRefs.listOfPlrLivesText[j].text = "Lives: " + BetweenScenes.PlayerShopLives[j];
         }
     }
 }

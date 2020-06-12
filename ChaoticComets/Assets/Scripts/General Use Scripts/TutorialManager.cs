@@ -9,7 +9,7 @@ public partial class TutorialManager : MonoBehaviour
 
     [Header("Tutorial Task Variables")]
     public int popUpIndex = -1;
-    private bool taskSetupDone = false, ufoHit = false;
+    private bool taskSetupDone = false, ufoHit = false, popup16Ready = false;
     public bool ufoGone = false, ufoFollowerDocile = false;
     private int playerCreditsBefore = 0;
     public ControlType chosenControlStyle = ControlType.KeyboardP1;

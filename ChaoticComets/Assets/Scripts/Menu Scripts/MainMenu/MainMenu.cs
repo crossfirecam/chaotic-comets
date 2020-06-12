@@ -13,10 +13,10 @@ public partial class MainMenu : MonoBehaviour
     private AudioSource audioMenuBack;
 
     // ----------
-    private void Start() {
-        UsefulFunctions.ResetBetweenScenesScript();
+    private void Start()
+    {
         StartupSoundManagement();
-
+        UsefulFunctions.ResetBetweenScenesScript();
         ChangeScoreTypeAndPopulate(PlayerPrefs.GetInt("ScorePreference", 0));
 
         
@@ -90,12 +90,20 @@ public partial class MainMenu : MonoBehaviour
             musicManager = FindObjectOfType<MusicManager>();
         }
 
-        // Find the SFX slider in Options
+        // Find the SFX slider in Options, and set default values (for some reason GetFloat's defaultValue wouldn't work...)
         musicManager.sfxDemo = optionSFXSlider.GetComponent<AudioSource>();
+        if (!PlayerPrefs.HasKey("Music"))
+        {
+            PlayerPrefs.SetFloat("Music", 0.8f);
+            PlayerPrefs.SetFloat("SFX", 0.8f);
+            PlayerPrefs.Save();
+        }
 
         // Change music to main menu track, set volumes
         musicManager.ChangeMusicTrack(0);
-        mixer.SetFloat("MusicVolume", Mathf.Log10(BetweenScenes.MusicVolume) * 20);
-        mixer.SetFloat("SFXVolume", Mathf.Log10(BetweenScenes.SFXVolume) * 20);
+        float musicVol = PlayerPrefs.GetFloat("Music");
+        float sfxVol = PlayerPrefs.GetFloat("SFX");
+        mixer.SetFloat("MusicVolume", Mathf.Log10(musicVol) * 20);
+        mixer.SetFloat("SFXVolume", Mathf.Log10(sfxVol) * 20);
     }
 }

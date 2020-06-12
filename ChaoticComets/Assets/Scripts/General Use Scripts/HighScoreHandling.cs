@@ -85,14 +85,14 @@ public static class HighScoreHandling
         };
 
         // Default values
-        string[] defaultModes = { "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)",
-                                  "2P (CPU Score)", "2P (CPU Score)", "2P (CPU Score)", "2P (CPU Score)" };
-        string[] defaultNames = { "Rubén", "Bozza", "Eric", "Acorn", "It's Joe!", "A Literal Bot",
-                                  "Justin & Alex", "The Twins", "Josh & Shane", "Rene & Bubba" };
-        int[] defaultLevels =   { 12, 9, 8, 6, 4, 2,
-                                  10, 7, 5, 3 };
-        int[] defaultScores =   { 10000, 8000, 7000, 5000, 3000, 1000,
-                                  9000, 6000, 4000, 2000 };
+        string[] defaultModes = { "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)", "1P (CPU Score)",
+                                  "2P (CPU Score)", "2P (CPU Score)", "2P (CPU Score)", "2P (CPU Score)", "2P (CPU Score)" };
+        string[] defaultNames = { "Rubén", "Bozza", "Nick", "Eric", "A Literal Bot",
+                                  "Justin & Alex", "The Twins", "Josh & Shane", "It's Joe! And Acorn!", "Rene & Bubba" };
+        int[] defaultLevels =   { 12, 9, 7, 4, 2,
+                                  10, 8, 6, 5, 3 };
+        int[] defaultScores =   { 10000, 8000, 6000, 3000, 1000,
+                                  9000, 7000, 5000, 4000, 2000 };
 
         // For all ten entries, add an entry
         for (int i = 0; i < 10; i++)

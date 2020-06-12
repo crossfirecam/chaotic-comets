@@ -28,6 +28,9 @@ public partial class MainMenu : MonoBehaviour
     public Button returnToMenuButton, saveFirstButton, optionsFirstButton;
     public Transform playerDecorDiffDialog;
 
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Save Dialog - Checking for save file, and showing dialog
+     * ------------------------------------------------------------------------------------------------------------------ */
     // Check for a save file, and set correct player icon/text
     public void CheckForSaveFile(int plrAmountRequested)
     {
@@ -84,6 +87,9 @@ public partial class MainMenu : MonoBehaviour
         ShowDifficulties();
     }
 
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Difficulty Select
+     * ------------------------------------------------------------------------------------------------------------------ */
     // Display a prompt to select difficulty
     public void ShowDifficulties()
     {
@@ -126,7 +132,7 @@ public partial class MainMenu : MonoBehaviour
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
-     * Options Screen functions
+     * Options Screen
      * ------------------------------------------------------------------------------------------------------------------ */
     public void ShowOptions()
     {
@@ -134,8 +140,8 @@ public partial class MainMenu : MonoBehaviour
         optionsDialog.SetActive(true);
         optionsFirstButton.Select();
         SetBtnFullscreenText();
-        optionMusicSlider.SetValueWithoutNotify(BetweenScenes.MusicVolume);
-        optionSFXSlider.SetValueWithoutNotify(BetweenScenes.SFXVolume);
+        optionMusicSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("Music"));
+        optionSFXSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("SFX"));
     }
 
     public void SwapFullscreen()
@@ -172,8 +178,7 @@ public partial class MainMenu : MonoBehaviour
 
 
     /* ------------------------------------------------------------------------------------------------------------------
-     * BackToMenu
-     * Returns to main menu and cancels all other dialogs, if the game is not fading to black
+     * Back To Main Menu - Returns to main menu and cancels all other dialogs, if the game is not fading to black.
      * ------------------------------------------------------------------------------------------------------------------ */
     public void BackToMenu()
     {
@@ -189,7 +194,7 @@ public partial class MainMenu : MonoBehaviour
             returnToMenuButton.Select();
         }
     }
-
+    // When entering a panel from main menu, return to the button pressed later.
     private void SetBackButton()
     {
         returnToMenuButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();

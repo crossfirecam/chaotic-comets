@@ -18,17 +18,15 @@ public partial class ShopScript : MonoBehaviour
 
         musicManager.ChangeMusicTrack(2);
 
-        if (BetweenScenes.MusicVolume > 0f)
+        if (PlayerPrefs.GetFloat("Music") > 0f)
         {
             musicManager.currentMusicPlayer.Play();
         }
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
-    * Pause & FadeBlack code
+    * Pausing
     * ------------------------------------------------------------------------------------------------------------------ */
-
-
     public void PauseGame(int intent)
     {
         if (intent == 0 && !ShopRefs.saveFailedPanel.activeInHierarchy && !ShopRefs.mouseWarningPanel.activeInHierarchy)
@@ -66,6 +64,16 @@ public partial class ShopScript : MonoBehaviour
         }
     }
 
+    private void DisablePlrEventsEnablePauseEvents()
+    {
+        ShopRefs.plrEventSystems[0].gameObject.SetActive(false);
+        ShopRefs.plrEventSystems[1].gameObject.SetActive(false);
+        ShopRefs.pauseEventSystem.GetComponent<RewiredStandaloneInputModule>().enabled = true;
+    }
+
+    /* ------------------------------------------------------------------------------------------------------------------
+    * FadeBlack
+    * ------------------------------------------------------------------------------------------------------------------ */
     private IEnumerator FadeBlack(string ToOrFrom)
     {
         Image tempFade = ShopRefs.fadeBlack.GetComponent<Image>();
@@ -96,13 +104,9 @@ public partial class ShopScript : MonoBehaviour
         }
     }
 
-    private void DisablePlrEventsEnablePauseEvents()
-    {
-        ShopRefs.plrEventSystems[0].gameObject.SetActive(false);
-        ShopRefs.plrEventSystems[1].gameObject.SetActive(false);
-        ShopRefs.pauseEventSystem.GetComponent<RewiredStandaloneInputModule>().enabled = true;
-    }
-
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Mouse Warning - Functions that show user a warning when clicking in shop
+     * ------------------------------------------------------------------------------------------------------------------ */
     private bool mouseWarningActive = false;
     public void PlayMouseWarning()
     {

@@ -14492,6 +14492,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.209
       objectReference: {fileID: 0}
+    - target: {fileID: 4405181708850868, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755833646674510, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
 --- !u!1001 &1908154365
@@ -15459,7 +15467,7 @@ MonoBehaviour:
   popUpIndex: -1
   ufoGone: 0
   ufoFollowerDocile: 0
-  chosenControlStyle: 1
+  chosenControlStyle: 0
   player1: {fileID: 1146411255}
   popups:
   - {fileID: 1808252452}
@@ -16017,6 +16025,11 @@ PrefabInstance:
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: instantkillAsteroids
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
+        type: 3}
+      propertyPath: tutorialMode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7573104357208989298, guid: 066c9ff725ed57f49b4f3e2606b5f38f,

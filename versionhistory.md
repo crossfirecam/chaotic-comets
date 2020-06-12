@@ -77,6 +77,7 @@ Bug fixes from 1.2
 - Dead spaceships no longer collide with objects.
 - Canteens no longer clip into asteroids.
 - UFOs can no longer be instantly killed without going through the retreat phase.
+- Music and SFX sliders are set correctly on startup.
 
 
 

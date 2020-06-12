@@ -150,8 +150,9 @@ public partial class TutorialManager : MonoBehaviour
                 }
                 ContinueIf(ufoFollower.deathStarted || player.GetButtonDown("Ability")); // Allow skipping
                 break;
-
             case 16: // Powerup Insurance
+                // This could be skipped instantly if player is 0 shields.
+                // A separate bool and while loop were added to prevent this step being instantly skipped.
                 if (!taskSetupDone)
                 {
                     StartCoroutine(SetUpPopup16());
@@ -162,7 +163,7 @@ public partial class TutorialManager : MonoBehaviour
                 {
                     ResetAsteroidsIfZero(false);
                 }
-                ContinueIf(player1.shields == 0);
+                ContinueIf(player1.shields == 0 && popup16Ready);
                 break;
 
             case 17: // Teleport
@@ -250,6 +251,12 @@ public partial class TutorialManager : MonoBehaviour
         if (!ufoFollower.deathStarted)
             ufoFollower.TeleportStart(); ufoFollowerDocile = true;
         yield return new WaitForSeconds(3);
+        while (player1.shields == 0)
+        {
+            yield return new WaitForSeconds(1);
+            print("Player is dead entering Popup16. Waiting for 1 second to apply Insurance");
+        }
+        popup16Ready = true;
         player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance);
         player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot);
         player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot);

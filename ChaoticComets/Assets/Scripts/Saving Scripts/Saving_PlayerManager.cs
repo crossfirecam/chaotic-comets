@@ -31,21 +31,6 @@ public class Saving_PlayerManager
             if (playerScripts[i].plrPowerups.ifRapidShot) { powerupsToSave[3] = 1; }
             if (playerScripts[i].plrPowerups.ifTripleShot) { powerupsToSave[4] = 1; }
 
-            // Upgrade order: Speed, brake efficiency, fire rate, shot speed
-            int[] upgradesToSave = { 10, 10, 10, 10 };
-
-            // Determine which BetweenScenes upgrade array to use. TODO make this nicer
-            int[] currentUpgradeArray = new int[4];
-            switch (i)
-            {
-                case 0: BetweenScenes.UpgradesP1.CopyTo(currentUpgradeArray, 0); break;
-                case 1: BetweenScenes.UpgradesP2.CopyTo(currentUpgradeArray, 0); break;
-            }
-            upgradesToSave[0] = currentUpgradeArray[0];
-            upgradesToSave[1] = currentUpgradeArray[1];
-            upgradesToSave[2] = currentUpgradeArray[2];
-            upgradesToSave[3] = currentUpgradeArray[3];
-
             // Initilise new Player
             Player currentPlayer = new Player
             {
@@ -55,7 +40,7 @@ public class Saving_PlayerManager
                 bonusThreshold = playerScripts[i].bonus,
                 lives = playerScripts[i].lives,
                 powerups = powerupsToSave,
-                upgrades = upgradesToSave
+                upgrades = BetweenScenes.PlayerShopUpgrades[i]
             };
             playerList.Add(currentPlayer);
         }

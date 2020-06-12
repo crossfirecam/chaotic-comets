@@ -9,6 +9,8 @@ For an idea of how to play, check out the 'Help' or 'Tutorial' section.
 To uninstall this game, delete the entire 'Chaotic Comets' folder.
 
 ###More Info
+Online multiplayer can potentially be achieved using Parsec - third party software for streaming/players co-op games over the internet.
+
 If you find any bugs or the game crashes, please try your best to recall what may have caused the problem, and leave a comment on the GameJolt page (https://gamejolt.com/games/chaotic-comets/400816)
 Thank you for trying my game!
 

@@ -39,8 +39,8 @@ public class PlayerMisc : MonoBehaviour
         Saving_PlayerManager data = Saving_SaveManager.LoadData();
 
         int plrToSet = p.playerNumber - 1;
-        p.credits = BetweenScenes.playerShopCredits[plrToSet];
-        p.lives = BetweenScenes.playerShopLives[plrToSet];
+        p.credits = BetweenScenes.PlayerShopCredits[plrToSet];
+        p.lives = BetweenScenes.PlayerShopLives[plrToSet];
         p.totalCredits = data.playerList[plrToSet].totalCredits;
         p.shields = data.playerList[plrToSet].health;
         p.bonus = data.playerList[plrToSet].bonusThreshold;
@@ -68,12 +68,11 @@ public class PlayerMisc : MonoBehaviour
 
     private void SetUpgradeLevelsForPlayer()
     {
-        // Set the current upgrade level for Player object depending on which player they are.
-        var playerToUpgrade = new List<int[]> { BetweenScenes.UpgradesP1, BetweenScenes.UpgradesP2 };
-        upgradeSpeed = playerToUpgrade[p.playerNumber - 1][0] / 10f;
-        upgradeBrake = playerToUpgrade[p.playerNumber - 1][1] / 10f;
-        upgradeFireRate = playerToUpgrade[p.playerNumber - 1][2] / 10f;
-        upgradeShotSpeed = playerToUpgrade[p.playerNumber - 1][3] / 10f;
+        // Set the current upgrade level for Player
+        upgradeSpeed = BetweenScenes.PlayerShopUpgrades[p.playerNumber - 1][0] / 10f;
+        upgradeBrake = BetweenScenes.PlayerShopUpgrades[p.playerNumber - 1][1] / 10f;
+        upgradeFireRate = BetweenScenes.PlayerShopUpgrades[p.playerNumber - 1][2] / 10f;
+        upgradeShotSpeed = BetweenScenes.PlayerShopUpgrades[p.playerNumber - 1][3] / 10f;
 
         // Bullet force and fire rate are affected by multipliers purchased from the shop
         p.plrWeapons.bulletForce *= upgradeShotSpeed;

@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class HelpMenu : MonoBehaviour {
 
-    [SerializeField] private Button leaveHelpButton = default;
-
     private void Start()
     {
         StartCoroutine(UsefulFunctions.CheckController());

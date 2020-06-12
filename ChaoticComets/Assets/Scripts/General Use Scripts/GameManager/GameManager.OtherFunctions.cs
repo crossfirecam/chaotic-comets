@@ -27,7 +27,7 @@ public partial class GameManager : MonoBehaviour
             musicManager.ChangeMusicTrack(1);
         else
             musicManager.ChangeMusicTrack(3);
-        if (BetweenScenes.MusicVolume > 0f)
+        if (PlayerPrefs.GetFloat("Music") > 0f)
             musicManager.currentMusicPlayer.Play();
     }
 
