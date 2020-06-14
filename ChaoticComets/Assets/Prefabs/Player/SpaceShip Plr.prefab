@@ -9760,8 +9760,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p: {fileID: 114782296946591882}
-  thrust: 350
-  turnThrust: 200
   thrustInput: 0
   turnInput: 0
 --- !u!114 &1146411262
@@ -9781,6 +9779,8 @@ MonoBehaviour:
   thruster2: {fileID: 1780687962}
   autoBrakeEffect1: {fileID: 4772189263162799131}
   autoBrakeEffect2: {fileID: 1178067593356226600}
+  thrustPower: 0
+  turnThrustPower: 0
 --- !u!114 &1146411263
 MonoBehaviour:
   m_ObjectHideFlags: 0

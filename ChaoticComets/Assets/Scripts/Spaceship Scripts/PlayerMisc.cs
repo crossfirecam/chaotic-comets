@@ -81,8 +81,8 @@ public class PlayerMisc : MonoBehaviour
         p.plrWeapons.fireRateTriple /= upgradeFireRate;
 
         // Thrust and brake efficiency are affected by multipliers purchased from the shop
-        p.plrInput.thrust *= upgradeSpeed;
-        p.plrInput.brakingPower /= upgradeBrake;
+        p.plrMovement.thrustPower *= upgradeSpeed;
+        p.plrMovement.manualBrakePower *= upgradeBrake;
 
         p.plrUiSound.UpdatePointDisplays();
     }

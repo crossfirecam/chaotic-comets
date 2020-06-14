@@ -56,6 +56,11 @@ public partial class GameManager : MonoBehaviour
         StartCoroutine(UsefulFunctions.CheckController());
     }
 
+    private void Update()
+    {
+        print($"Player 1 Speed: {Refs.playerShip1.rbPlayer.velocity.magnitude} Player 2 Speed: {Refs.playerShip2.rbPlayer.velocity.magnitude}");
+    }
+
     // Screen Wrapping
     public void CheckScreenWrap(Transform current, float xOldOffset = 0f, float yOldOffset = 0f, float xNewOffset = 0f, float yNewOffset = 0f)
     {

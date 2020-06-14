@@ -21,6 +21,9 @@ public partial class ShopScript : MonoBehaviour {
     public TextMeshProUGUI saveDisclaimer;
 
 
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Awake & Start - Startup functions
+     * ------------------------------------------------------------------------------------------------------------------ */
     private void Awake()
     {
         player1 = ReInput.players.GetPlayer(0);
@@ -69,12 +72,14 @@ public partial class ShopScript : MonoBehaviour {
         StartCoroutine(DelayedReady());
 
         PlayMusicIfEnabled();
-        UpdateButtonText();
+        InitialiseButtonText();
         StartCoroutine(FadeBlack("from"));
     }
 
-    // When shop opens, find all player event systems and select an offscreen button for 0.2s,
-    // Then select ready button. This is to prevent players that are holding 'Fire' from instantly being flagged as ready.
+    /* ------------------------------------------------------------------------------------------------------------------
+     * DelayedReady - When shop opens, find all player event systems and select an offscreen button for 0.2s.
+     * Then select ready button. This is to prevent players that are holding 'Fire' from instantly being flagged as ready.
+     * ------------------------------------------------------------------------------------------------------------------ */
     private IEnumerator DelayedReady() {
         for (int i = 0; i < BetweenScenes.PlayerCount; i++)
         {
@@ -88,6 +93,9 @@ public partial class ShopScript : MonoBehaviour {
         }
     }
 
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Update - Only used in shop to check for pausing
+     * ------------------------------------------------------------------------------------------------------------------ */
     void Update() {
         if (player1.GetButtonDown("Pause") || player2.GetButtonDown("Pause")) {
             if (ShopRefs.gamePausePanel.activeInHierarchy) {
@@ -99,6 +107,9 @@ public partial class ShopScript : MonoBehaviour {
         }
     }
 
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Scene Change Functions
+     * ------------------------------------------------------------------------------------------------------------------ */
     public void GoBackToGame() {
         ShopRefs.readyPromptText.text = $"Prepare for Level {data.level + 1}!";
         StartCoroutine(FadeBlack("to"));
@@ -117,6 +128,9 @@ public partial class ShopScript : MonoBehaviour {
     }
 }
 
+/* ------------------------------------------------------------------------------------------------------------------
+ * ShopManagerHiddenVars - To keep Unity inspector less cluttered, this is a class containing drag-in references
+ * ------------------------------------------------------------------------------------------------------------------ */
 [System.Serializable]
 public class ShopManagerHiddenVars
 {

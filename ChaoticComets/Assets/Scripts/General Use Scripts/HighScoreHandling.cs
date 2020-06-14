@@ -5,6 +5,10 @@ using UnityEngine;
 public static class HighScoreHandling
 {
     // Basis of this code from Code Monkey https://www.youtube.com/watch?v=iAbaqGYdnyI
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     * IsThisAHighScore - Checks against a set of criteria, to see if newScore is eligible to replace any existing score
+     * ------------------------------------------------------------------------------------------------------------------ */
     public static bool IsThisAHighScore(int newScore)
     {
         // If in cheater mode, then return false
@@ -41,6 +45,10 @@ public static class HighScoreHandling
         }
         return false;
     }
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     * AddHighscoreEntry - Add a highscore with 4 attributes to the JSON highscore table
+     * ------------------------------------------------------------------------------------------------------------------ */
     public static void AddHighscoreEntry(string name, int level, int score, string mode)
     {
         int modeToFilter = BetweenScenes.PlayerCount;
@@ -71,6 +79,9 @@ public static class HighScoreHandling
         PlayerPrefs.Save();
     }
 
+    /* ------------------------------------------------------------------------------------------------------------------
+     * ResetHighScoreEntries - Player can choose to erase the high score board. These are the preset values
+     * ------------------------------------------------------------------------------------------------------------------ */
     public static void ResetHighScoreEntries()
     {
         // Reset relevant PlayerPrefs to nil
@@ -107,6 +118,9 @@ public static class HighScoreHandling
         PlayerPrefs.Save();
     }
 
+    /* ------------------------------------------------------------------------------------------------------------------
+     * RemoveDefaultsFromScoreList - Any scores that are preset values are removed from the high score board
+     * ------------------------------------------------------------------------------------------------------------------ */
     public static void RemoveDefaultsFromScoreList()
     {
         // Reset relevant PlayerPref
@@ -137,6 +151,9 @@ public static class HighScoreHandling
         PlayerPrefs.Save();
     }
 
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Highscores & HighscoreEntry - Public classes for an entire list of highscores, and a single highscore entry
+     * ------------------------------------------------------------------------------------------------------------------ */
     public class Highscores
     {
         public List<HighscoreEntry> highscoreEntryList;

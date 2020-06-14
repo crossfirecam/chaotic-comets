@@ -224,7 +224,6 @@ public class PlayerPowerups : MonoBehaviour
                 print("Invalid powerup requested in PlayerPowerups");
                 break;
         }
-        print($"{powerup} removed from player {p.playerNumber}");
     }
 
 

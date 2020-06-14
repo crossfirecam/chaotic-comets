@@ -7,14 +7,23 @@ public class PlayerMovement : MonoBehaviour
     private bool autoBrakeEngaged = false;
     public ParticleSystem thruster1, thruster2, autoBrakeEffect1, autoBrakeEffect2;
 
+    private float currentSpeed;
+    // Acceleration
+    internal float thrustPower = 350f, turnThrustPower = 200f;
+    // Braking
+    private readonly float stopSpeedThreshold = 0.8f;
+    internal float manualBrakePower = 1f;
+    private readonly float autoBrakeStrength = 5f;
+
     public void ShipMovement()
     {
         // Rotate the ship
         if (p.plrInput.turnInput != 0 && p.modelPlayer.activeInHierarchy)
         {
-            transform.Rotate(Vector3.forward * -p.plrInput.turnInput * Time.deltaTime * p.plrInput.turnThrust);
+            transform.Rotate(Vector3.forward * -p.plrInput.turnInput * Time.deltaTime * turnThrustPower);
         }
 
+        currentSpeed = p.rbPlayer.velocity.magnitude;
         // Active thrusting (forward or braking thrust)
         // Apply force on Y axis of spaceship, multiply by thrust
         if (p.plrInput.thrustInput != 0 && p.modelPlayer.activeInHierarchy && p.plrInput.isNotTeleporting)
@@ -28,23 +37,30 @@ public class PlayerMovement : MonoBehaviour
             if (!thruster1.isPlaying) { thruster1.Play(); }
             if (!thruster2.isPlaying) { thruster2.Play(); }
 
-            // If thrust is less than 0, then ship is braking. On hard difficulty, brake is less powerful.
+            // If thrust is less than 0, then ship is braking.
             if (p.plrInput.thrustInput < 0)
             {
-                if (BetweenScenes.Difficulty != 2)
-                    p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / p.plrInput.brakingPower;
-                else
-                    p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / p.plrInput.brakingPower / 2;
-
+                if (currentSpeed > stopSpeedThreshold)
+                {
+                    // If hard, manual brake is less effective
+                    p.rbPlayer.drag = currentSpeed * (manualBrakePower / currentSpeed);
+                    if (BetweenScenes.Difficulty == 2)
+                    { 
+                        p.rbPlayer.drag /= 1.5f;
+                    }
+                }
                 // If ship is slow enough, stop it
-                if (p.rbPlayer.velocity.magnitude < 0.8f)
+                else
+                {
                     p.rbPlayer.velocity = new Vector2(0, 0);
+                }
             }
+
             // If thrust is more than 0, then ship is moving forward.
             else
             {
-                p.rbPlayer.AddRelativeForce(Vector2.up * p.plrInput.thrustInput * Time.deltaTime * p.plrInput.thrust);
-                p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 10f;
+                p.rbPlayer.AddRelativeForce(Vector2.up * p.plrInput.thrustInput * Time.deltaTime * thrustPower);
+                p.rbPlayer.drag = currentSpeed * (1f / currentSpeed);
             }
         }
         // Passive Drag (no thruster controls pressed)
@@ -54,30 +70,30 @@ public class PlayerMovement : MonoBehaviour
             if (p.plrUiSound.audioShipThrust.isPlaying) { p.plrUiSound.audioShipThrust.Stop(); }
             if (thruster1.isPlaying) { thruster1.Stop(); }
             if (thruster2.isPlaying) { thruster2.Stop(); }
-            if (p.plrPowerups.ifAutoBrake && p.rbPlayer.velocity.magnitude != 0)
+            if (p.plrPowerups.ifAutoBrake && currentSpeed != 0)
             {
-                if (!autoBrakeEngaged && p.rbPlayer.velocity.magnitude > 4)
+                if (!autoBrakeEngaged && currentSpeed > 3)
                 {
                     p.plrUiSound.audioShipAutoBrake.Play();
                     autoBrakeEngaged = true;
                     autoBrakeEffect1.Play();
                     autoBrakeEffect2.Play();
                 }
-                if (BetweenScenes.Difficulty != 2)
+
+                // If hard, auto-brake is 5x less effective. Stops with about a ship-length of clearance instead of instantly.
+                p.rbPlayer.drag = currentSpeed * autoBrakeStrength;
+                if (BetweenScenes.Difficulty == 2)
                 {
-                    p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 0.2f;
+                    p.rbPlayer.drag /= 5f;
                 }
-                else
-                {
-                    p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 2f;
-                }
+
                 // If ship is slow enough, stop it
-                if (p.rbPlayer.velocity.magnitude < 0.4f)
+                if (currentSpeed < stopSpeedThreshold)
                 {
                     p.rbPlayer.velocity = new Vector2(0,0);
                 }
             }
-            else { p.rbPlayer.drag = p.rbPlayer.velocity.magnitude / 8f; }
+            else { p.rbPlayer.drag = currentSpeed / 8f; }
         }
     }
 

@@ -23,10 +23,6 @@ public class AsteroidBehaviour : MonoBehaviour {
     void Start ()
     {
         GetComponents();
-        GiveRandomMovement();
-    }
-    private void GiveRandomMovement()
-    {
         UsefulFunctions.FindThrust(rbAsteroid, maxThrust);
         UsefulFunctions.FindTorque(rbAsteroid, maxSpin);
     }
@@ -56,37 +52,31 @@ public class AsteroidBehaviour : MonoBehaviour {
             // Explosion effect
             GameObject newExplosion = Instantiate(explosion, transform.position, transform.rotation);
             Destroy(newExplosion, 2f);
-            // Split and destroy asteroid
-            float randomiser = Random.Range(0f, 1f);
-            if (asteroidSize == 3) {
-                if (!debugMode) {
-                    Instantiate(asteroidMedium, transform.position, transform.rotation);
-                    Instantiate(asteroidMedium, transform.position, transform.rotation);
-                    gM.UpdateNumberAsteroids(1);
-                    if (randomiser < 0.5f) {
-                        Instantiate(asteroidMedium, transform.position, transform.rotation);
-                        gM.UpdateNumberAsteroids(1);
-                    }
+
+            // Large and Medium asteroids split into 2-3 pieces
+            if (!debugMode && asteroidSize != 1)
+            {
+                GameObject asteroidType = asteroidMedium;
+                if (asteroidSize == 2) { asteroidType = asteroidSmall; }
+
+                int asteroidAmount = Random.Range(2, 4);
+                for (int i = 0; i < asteroidAmount; i++)
+                {
+                    Instantiate(asteroidType, transform.position, transform.rotation);
                 }
-                else { gM.UpdateNumberAsteroids(-1); }
+                gM.UpdateNumberAsteroids(asteroidAmount - 1);
             }
-            else if (asteroidSize == 2) {
-                Instantiate(asteroidSmall, transform.position, transform.rotation);
-                Instantiate(asteroidSmall, transform.position, transform.rotation);
-                gM.UpdateNumberAsteroids(1);
-                if (randomiser < 0.5f) {
-                    Instantiate(asteroidSmall, transform.position, transform.rotation);
-                    gM.UpdateNumberAsteroids(1);
-                }
-            }
-            else if (asteroidSize == 1) {
+            // Small asteroids and ones with DebugMode enabled simply remove 1 from asteroid count
+            else
+            {
                 gM.UpdateNumberAsteroids(-1);
             }
-            Destroy(transform.parent.gameObject); // Script is attached to child - destroy parent gameobject
+            // After being hit, original asteroid disappears. Destroy parent gameobject
+            Destroy(transform.parent.gameObject);
         }
     }
 
-    // Set large asteroids to only take one hit to destroy
+    // Set asteroids to only take one hit to destroy
     public void DebugMode() {
         debugMode = true;
     }
@@ -96,6 +86,6 @@ public class AsteroidBehaviour : MonoBehaviour {
         rbAsteroid = GetComponent<Rigidbody2D>();
         playerShip1 = GameObject.FindWithTag("Player");
         playerShip2 = GameObject.FindWithTag("Player 2");
-        gM = GameObject.FindObjectOfType<GameManager>();
+        gM = FindObjectOfType<GameManager>();
     }
 }

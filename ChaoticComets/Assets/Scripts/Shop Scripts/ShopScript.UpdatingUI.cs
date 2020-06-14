@@ -72,11 +72,11 @@ public partial class ShopScript : MonoBehaviour
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
-     * Button Updating code
+     * InitialiseButtonText - Find all buttons with changeable text, and set their text values
      * ------------------------------------------------------------------------------------------------------------------ */
     private List<Button> listOfAllButtons = new List<Button>();
     private List<Button> listOfFilteredButtons = new List<Button>();
-    private void UpdateButtonText()
+    private void InitialiseButtonText()
     {
         // If filtered button list is empty, fill it with updatable buttons
         if (!listOfFilteredButtons.Any()) {
@@ -93,52 +93,71 @@ public partial class ShopScript : MonoBehaviour
         }
         foreach (Button button in listOfFilteredButtons)
         {
+            int plrIndex = int.Parse(button.name[1].ToString()) - 1;
             // If button name does not end with 'Transfer'... It is an upgrade button.
             // Update the button's text based on BetweenScenes variables.
             if (!button.name.EndsWith("Transfer"))
             {
-                // Buttons that don't match any EndsWith criteria above are upgrade buttons
-                int upgrade = int.Parse(button.name.Last().ToString());
-                int player = int.Parse(button.name[1].ToString());
-                int plrIndex = player - 1;
-                int currentUpgradeTier = BetweenScenes.PlayerShopUpgrades[plrIndex][upgrade];
-
-                // Determine price for the upgrade
-                int tierComparedToBase = currentUpgradeTier - 10;
-                int priceForUpgrade = baseUpgradePrice + (priceIncreasePerLevel * tierComparedToBase);
-
-                // Set text for button
-                string tierInDecimalForm = currentUpgradeTier.ToString().Insert(currentUpgradeTier.ToString().Length - 1, ".");
-                button.GetComponentInChildren<Text>().text = $"Current: x{tierInDecimalForm}\n({priceForUpgrade}c to Upgrade)";
-                if (currentUpgradeTier == upgradeCap)
-                {
-                    button.GetComponentInChildren<Text>().text = $"Current: x{tierInDecimalForm}\n(Max upgrade)";
-                }
+                UpdateButtonUpgrade(plrIndex, button);
             }
             // If button ends with 'Transfer', then change the life transfer button text.
             else if (button.name.EndsWith("Transfer"))
             {
-                if (BetweenScenes.PlayerCount == 2)
-                {
-                    int player = int.Parse(button.name[1].ToString());
-                    int plrIndex = player - 1;
-                    int otherPlayer = 0;
-                    switch (player)
-                    {
-                        case 1: otherPlayer = 2; break;
-                        case 2: otherPlayer = 1; break;
-                    }
-                    if (BetweenScenes.PlayerShopLives[plrIndex] > 1) { button.GetComponentInChildren<Text>().text = $"Transfer 1 life to P{otherPlayer}\n(Cost: 500c)"; }
-                    else if (BetweenScenes.PlayerShopLives[plrIndex] == 1) { button.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
-                    else { button.GetComponentInChildren<Text>().text = "No Lives"; }
-                }
+                UpdateButtonTransfer(plrIndex, button);
             }
         }
-        // After any button edit, change player's life and credits counter
-        for (int j = 0; j < BetweenScenes.PlayerCount; j++)
+    }
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Button Update Functions - Change a single upgrade or transfer button's text
+     * ------------------------------------------------------------------------------------------------------------------ */
+    private void UpdateButtonUpgrade(int plrIndex, Button button)
+    {
+        // Buttons are passed to this function are upgrade buttons, their final char will be int-compatible
+        int upgrade = int.Parse(button.name.Last().ToString());
+        int currentUpgradeTier = BetweenScenes.PlayerShopUpgrades[plrIndex][upgrade];
+
+        // Determine price for the upgrade
+        int tierComparedToBase = currentUpgradeTier - 10;
+        int priceForUpgrade = baseUpgradePrice + (priceIncreasePerLevel * tierComparedToBase);
+
+        // Set text for button
+        string tierInDecimalForm = currentUpgradeTier.ToString().Insert(currentUpgradeTier.ToString().Length - 1, ".");
+        button.GetComponentInChildren<Text>().text = $"Current: x{tierInDecimalForm}\n({priceForUpgrade}c to Upgrade)";
+        if (currentUpgradeTier == upgradeCap)
         {
-            ShopRefs.listOfPlrScoreText[j].text = BetweenScenes.PlayerShopCredits[j] + "c";
-            ShopRefs.listOfPlrLivesText[j].text = "Lives: " + BetweenScenes.PlayerShopLives[j];
+            button.GetComponentInChildren<Text>().text = $"Current: x{tierInDecimalForm}\n(Max upgrade)";
+        }
+        UpdatePlayerCounters(plrIndex);
+    }
+
+    private void UpdateButtonTransfer(int plrIndex, Button button)
+    {
+        if (BetweenScenes.PlayerCount == 2)
+        {
+            int plrNum = plrIndex + 1;
+            int otherPlayer = 0;
+            switch (plrNum)
+            {
+                case 1: otherPlayer = 2; break;
+                case 2: otherPlayer = 1; break;
+            }
+            if (BetweenScenes.PlayerShopLives[plrIndex] > 1) { button.GetComponentInChildren<Text>().text = $"Transfer 1 life to P{otherPlayer}\n(Cost: 500c)"; }
+            else if (BetweenScenes.PlayerShopLives[plrIndex] == 1) { button.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
+            else { button.GetComponentInChildren<Text>().text = "No Lives"; }
+        }
+        UpdatePlayerCounters(plrIndex);
+    }
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     * UpdatePlayerCounters - After any button edit, update text of player's credits, and both player's lives
+     * ------------------------------------------------------------------------------------------------------------------ */
+    private void UpdatePlayerCounters(int plrIndex)
+    {
+        ShopRefs.listOfPlrScoreText[plrIndex].text = BetweenScenes.PlayerShopCredits[plrIndex] + "c";
+        for (int i = 0; i < BetweenScenes.PlayerCount; i++)
+        {
+            ShopRefs.listOfPlrLivesText[i].text = "Lives: " + BetweenScenes.PlayerShopLives[i];
         }
     }
 }

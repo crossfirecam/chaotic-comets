@@ -8,9 +8,7 @@ public class PlayerInput : MonoBehaviour {
     private int playerId;
     private Player player;
 
-    // Ship movement & teleport variables
-    public float thrust, turnThrust;
-    internal float brakingPower = 2f;
+    // Ship input variables
     public float thrustInput, turnInput;
     internal bool canUseButtons = true, isNotTeleporting = true;
 

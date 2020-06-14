@@ -16025,7 +16025,7 @@ PrefabInstance:
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: instantkillAsteroids
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}

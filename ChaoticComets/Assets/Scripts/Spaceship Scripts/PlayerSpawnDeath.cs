@@ -14,7 +14,10 @@ public class PlayerSpawnDeath : MonoBehaviour
         // If insurance is active, do not remove any powerup except for Insurance
         // Else, remove all powerups
         if (p.plrPowerups.ifInsurance)
+        {
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.Insurance);
+            print($"Insurance powerup removed from player {p.playerNumber}");
+        }
         else
         {
             // If difficulty is easy, do not remove Auto-Brake
@@ -27,6 +30,7 @@ public class PlayerSpawnDeath : MonoBehaviour
 
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.TripleShot);
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.FarShot);
+            print($"Non-insurance powerups removed from player {p.playerNumber}");
         }
         p.shields = 0;
         p.lives--;

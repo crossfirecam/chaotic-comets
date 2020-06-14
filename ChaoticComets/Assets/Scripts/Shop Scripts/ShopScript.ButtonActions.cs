@@ -64,7 +64,7 @@ public partial class ShopScript : MonoBehaviour
                 BetweenScenes.PlayerShopUpgrades[player][whichUpgrade] += 1;
                 BetweenScenes.PlayerShopCredits[player] -= price;
                 print($"Upgrades: {string.Join(",", BetweenScenes.PlayerShopUpgrades[player])} Credits left: {BetweenScenes.PlayerShopCredits[player]}");
-                UpdateButtonText();
+                UpdateButtonUpgrade(player, buttonUpgrading);
             }
             else
             {
@@ -78,6 +78,8 @@ public partial class ShopScript : MonoBehaviour
     * ------------------------------------------------------------------------------------------------------------------ */
     public void GiveLife(int plrSendingLife)
     {
+        Button buttonGivingLife = ShopRefs.plrEventSystems[plrSendingLife].currentSelectedGameObject.GetComponent<Button>();
+
         // TODO support more than two players. Probably automatically determine the player with the least lives.
         int plrReceivingLife;
         if (plrSendingLife == 0) { plrReceivingLife = 1; }
@@ -86,7 +88,6 @@ public partial class ShopScript : MonoBehaviour
         // If player can send a life, then give a life
         if (BetweenScenes.PlayerShopLives[plrSendingLife] > 1 && BetweenScenes.PlayerShopCredits[plrSendingLife] >= 500)
         {
-            Button buttonGivingLife = ShopRefs.plrEventSystems[plrSendingLife].currentSelectedGameObject.GetComponent<Button>();
             buttonGivingLife.GetComponent<AudioSource>().Play();
 
             BetweenScenes.PlayerShopCredits[plrSendingLife] -= 500;
@@ -110,7 +111,7 @@ public partial class ShopScript : MonoBehaviour
                 StartCoroutine(FlashLivesRed(plrSendingLife));
             }
         }
-        UpdateButtonText();
+        UpdateButtonTransfer(plrSendingLife, buttonGivingLife);
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
