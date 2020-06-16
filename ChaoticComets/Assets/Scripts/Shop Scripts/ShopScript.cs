@@ -38,7 +38,7 @@ public partial class ShopScript : MonoBehaviour {
     void Start()
     {
         // Uncomment this if testing a two-player save file
-        BetweenScenes.PlayerCount = 2; Debug.LogWarning("PlayerCount set manually in ShopScript");
+        //BetweenScenes.PlayerCount = 2; Debug.LogWarning("PlayerCount set manually in ShopScript");
 
         // Load data. If failed, then send user to main menu with error message
         data = Saving_SaveManager.LoadData();

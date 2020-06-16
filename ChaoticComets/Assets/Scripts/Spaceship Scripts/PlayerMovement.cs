@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 p.rbPlayer.AddRelativeForce(Vector2.up * p.plrInput.thrustInput * Time.deltaTime * thrustPower);
-                p.rbPlayer.drag = currentSpeed * (1f / currentSpeed);
+                if (currentSpeed != 0) { p.rbPlayer.drag = currentSpeed * (1f / currentSpeed); }
             }
         }
         // Passive Drag (no thruster controls pressed)

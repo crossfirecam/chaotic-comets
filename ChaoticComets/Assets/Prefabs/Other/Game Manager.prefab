@@ -74,6 +74,7 @@ MonoBehaviour:
     buttonWhenGameOver: {fileID: 0}
     buttonWhenGameOverAlt: {fileID: 0}
     buttonWhenLeavingPauseBugFix: {fileID: 0}
+    propParent: {fileID: 0}
     playerShip1: {fileID: 0}
     playerShip2: {fileID: 0}
     largeAsteroidProp: {fileID: 1158260402081020, guid: 7e00352104cdbc04aa6bef0c7b13737e,

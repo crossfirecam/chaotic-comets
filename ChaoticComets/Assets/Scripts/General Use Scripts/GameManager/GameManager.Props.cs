@@ -3,7 +3,6 @@
 public partial class GameManager : MonoBehaviour
 {
     [Header("Prop Variables")]
-    public bool instantkillAsteroids = false;
     private readonly int lastLevelWithoutEnemies = 1;
     private float ufoAmountSpawned, canisterAmountSpawned, ufoCap, canisterCap = 1; // Variables used to track how many props have, and can spawn.
 
@@ -129,17 +128,17 @@ public partial class GameManager : MonoBehaviour
         }
         if (type == PropType.UfoFollower)
         {
-            GameObject newFollower = Instantiate(Refs.ufoFollowerProp);
+            GameObject newFollower = Instantiate(Refs.ufoFollowerProp, Refs.propParent);
             newFollower.transform.position = spawnPosition;
         }
         if (type == PropType.UfoPasser)
         {
-            GameObject newPasser = Instantiate(Refs.ufoPasserProp);
+            GameObject newPasser = Instantiate(Refs.ufoPasserProp, Refs.propParent);
             newPasser.transform.position = spawnPosition;
         }
         else if (type == PropType.Canister)
         {
-            GameObject newCanister = Instantiate(Refs.canisterProp);
+            GameObject newCanister = Instantiate(Refs.canisterProp, Refs.propParent);
             newCanister.transform.position = spawnPosition;
         }
         else if (type == PropType.Asteroid)
@@ -147,10 +146,10 @@ public partial class GameManager : MonoBehaviour
             GameObject newAsteroid;
             if (!safeVersion)
             {
-                newAsteroid = Instantiate(Refs.largeAsteroidProp, spawnPosition, Quaternion.identity);
+                newAsteroid = Instantiate(Refs.largeAsteroidProp, spawnPosition, Quaternion.identity, Refs.propParent);
             }
             else {
-                newAsteroid = Instantiate(Refs.largeAsteroidSafeProp, spawnPosition, Quaternion.identity);
+                newAsteroid = Instantiate(Refs.largeAsteroidSafeProp, spawnPosition, Quaternion.identity, Refs.propParent);
             }
             asteroidCount += 1;
             if (instantkillAsteroids)

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 /*
  * This class handles all in-game meta logic, such as level transitions, telling objects when and how to spawn, player management, etc.
@@ -8,6 +7,9 @@ using UnityEngine.EventSystems;
 
 public partial class GameManager : MonoBehaviour
 {
+    [Header("Debug Settings (set false in public builds)")]
+    public bool instantkillAsteroids = false;
+    public bool cheatMode = false;
 
     [Header("Tutorial Mode")]
     public bool tutorialMode = true; // Not in tutorial by default
@@ -24,6 +26,13 @@ public partial class GameManager : MonoBehaviour
     [Header("Inspector References")]
     public GameManagerHiddenVars Refs;
 
+    private void Awake()
+    {
+        if (cheatMode)
+        {
+            BetweenScenes.CheaterMode = true;
+        }
+    }
     void Start()
     {
         // If in cheater mode, enable the cheat panel in Pause
@@ -48,17 +57,16 @@ public partial class GameManager : MonoBehaviour
                 Refs.playerShip2.gameObject.SetActive(true);
                 player2dead = false;
             }
-            CheckIfResumingFromSave();
             StartCoroutine(FadeBlack("from"));
-            StartCoroutine(StartNewLevel());
+            // Level -1 is used by the Testing script. In Level -1, nothing else spawns except ships.
+            if (levelNo != -1)
+            {
+                CheckIfResumingFromSave();
+                StartCoroutine(StartNewLevel());
+            }
         }
         PlayMusicIfEnabled();
         StartCoroutine(UsefulFunctions.CheckController());
-    }
-
-    private void Update()
-    {
-        print($"Player 1 Speed: {Refs.playerShip1.rbPlayer.velocity.magnitude} Player 2 Speed: {Refs.playerShip2.rbPlayer.velocity.magnitude}");
     }
 
     // Screen Wrapping
@@ -90,8 +98,8 @@ public class GameManagerHiddenVars
     public Button buttonWhenPaused, buttonWhenGameOver, buttonWhenGameOverAlt, buttonWhenLeavingPauseBugFix;
 
     [Header("Prop References")]
-    public PlayerMain playerShip1;
-    public PlayerMain playerShip2;
+    public Transform propParent;
+    public PlayerMain playerShip1, playerShip2;
     public GameObject largeAsteroidProp, ufoFollowerProp, ufoPasserProp, canisterProp;
 
     [Header("Other References")]
