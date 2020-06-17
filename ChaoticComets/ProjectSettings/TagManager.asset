@@ -13,6 +13,10 @@ TagManager:
   - asteroidParent
   - ufo
   - ufofadingpart
+  - bullet4
+  - rewiredInputManager
+  - MiscSounds
+  - ScoreEntry
   layers:
   - Default
   - TransparentFX
@@ -25,7 +29,7 @@ TagManager:
   - AsteroidsLayer
   - SpaceShips
   - SpaceShipsTeleport
-  - 
+  - Canteens
   - 
   - 
   - 
