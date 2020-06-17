@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public partial class ShopScript : MonoBehaviour {
 
     [Header("Shop Variables")]
-    private readonly int baseUpgradePrice = 1000, priceIncreasePerLevel = 1000, upgradeCap = 15;
+    private readonly int baseUpgradePrice = 500, priceIncreasePerLevel = 750, upgradeCap = 15;
     public bool[] plrIsReady = { false, false };
     private float fadingAlpha = 0f;
 

@@ -59,7 +59,7 @@ public class PowerupBehaviour : MonoBehaviour {
         audioPowerupExpire.Play();
 
         UsefulFunctions.FindThrust(rbCanister, maxThrust);
-        UsefulFunctions.FindTorque(rbCanister, maxSpin); // TODO Restore functionality
+        UsefulFunctions.FindTorque(rbCanister, maxSpin);
     }
 
     // Called from Start(). Sets off an expiry animation after a random time

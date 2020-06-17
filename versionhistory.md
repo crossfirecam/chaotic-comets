@@ -5,7 +5,7 @@ Version 1.3 - UFO AI, Tutorial, Gameplay tweaks (2020 June)
 - New UFO type added, and both type's AI have been improved greatly.
 - High Score board added to main menu. Tracks top 10 scores for each game mode.
 - The game's gotten more difficult. Player ship has reduced base stats. Asteroids travel faster.
-- Interactive Tutorial added. Teaches the player game concepts with keyboard or Xbox controller prompts.
+- Interactive Tutorial added. Teaches the player game concepts with keyboard or Xbox controller prompts. Help screen improved.
 - Two auto-save slots, one for each game mode. Cheat mode added to Options.
 - Lots of QOL changes, bug fixes, and backend code improvements.
 
@@ -31,30 +31,29 @@ DETAILED CHANGELOGS
 
 ### Version 1.3 Detailed Changelog (2020-06-05)
 UFO changes
-- Red UFO added. Flies from left to right, only once, then disappears. Features heavier weaponry.
-    - Red UFO deviates in direction up and down as well. Never goes offscreen.
-- Green UFO AI improved. No longer rams the player, maintains some distance. Follows players through edges of the screen.
+- Red Class UFO added. Flies from left to right, only once, then disappears. Features heavier weaponry.
+    - Red Class UFO deviates in direction up and down as well. Never goes offscreen.
+- Green Class UFO AI improved. No longer rams the player, maintains some distance. Follows players through edges of the screen.
 - Shield is also used during collisions to give more realism to the UFOs. Flicks on and off when hitting a large object.
 - UFO spawn cap changed. 0 on level 1, 1 on levels 2-3, 2 on levels 4-7, and all others 3 UFOs. Doubles in two-player mode.
 
 Player changes
 - Most aspects of the player have been changed. Base fire rate down, base thrust speed up, base shot speed up.
-- Knockback from collisions reduced, and collisions no longer spin the player out of rotational control.
-- Triple shot has a 12 degree cone instead of 20 degrees.
+    - Knockback from collisions reduced, and collisions no longer spin the player out of rotational control.
+    - Triple shot has a 12 degree cone instead of 20 degrees.
+    - Invulnerability time during shield charge-up is reduced.
 - Auto-Brake and manual brake will bring the ship to a complete stop.
     - Auto-Brake now shows a particle effect when stopping the ship fast enough.
-- Invulnerability time during shield charge-up is reduced.
 
 Gameplay changes
 - High Score system added. Can be filtered by game mode and reset. Last used nickname in each mode is saved for the next time.
 - Control Test section removed. Replaced with an interactive tutorial.
     - Teaches the player most gameplay aspects, with a choice of P1/P2 keyboard or Xbox controller prompts.
 - Cheat mode in Options for spawning props and granting powerups/lives/credits. Disables saving and high scores.
-- Shop upgrades are cheaper. (Previous cost + 1000) per level, down from (P cost + 2000).
-- Extra lives come every 5000 points, down from 10,000.
-- Bullet size shrunk by half. Emits light.
-- Player and UFO slightly shrunk.
-- All asteroids are faster.
+- Shop upgrades are cheaper. (Previous cost + 750c) per level, down from (P cost + 2000c). ~40k to max everything instead of ~60k.
+    - Manual Brake Efficiency upgrade fixed to function properly.
+    - Extra lives come every 5000 points, down from 10,000.
+- Bullet size shrunk by half (& emits light). Player and UFO slightly smaller. All asteroids are faster.
 
 Bonus item improvements
 - Powerup canister gives items more fairly. Less receiving of the same few powerups.
@@ -62,21 +61,22 @@ Bonus item improvements
 
 Sound / UI improvements
 - Removed all prompts for controller choices. The newly added Rewired allows for both to control the player at the same time.
+    - Mouse cursor disappears whenever other control methods are used.
 - Fullscreen / Windowed toggle added.
+    - Window size can be manually changed. Any monitor fullscreen, or manual window change that isn't 16x9 is letterboxed / pillarboxed.
 - Pause screen pauses all SFX and music, resumes immediately.
-- Shop, About, and Player UI updated considerably. All UI has sound effects now.
+- Shop, About, Help, and Player UI updated considerably. All UI has sound effects now.
 - Previously loud noises are reduced in volume. UFO noises pitched down to sound different.
-- Mouse cursor disappears whenever other control methods are used.
 
 Bug fixes from 1.2
-- Player now earns lives based on total credits, instead of current credits that could be spent and not contribute to extra lives.
-- UFO attempting to retreat now will always retreat in the opposite direction. No more randomly ramming forward into the player.
-- UFO attempting to retreat won't teleport while offscreen anymore. Checks to see if their location is in a certain range, then tries to teleport.
-- Player upgrades aren't transferred from one game to another under certain conditions
-- UFO bullets killing a player now plays the ship explosion sound.
-- Dead spaceships no longer collide with objects.
+- PLAYER FIXES: Player now earns lives based on total credits, instead of current credits that could be spent and not contribute to extra lives.
+    - Player upgrades aren't transferred from one game to another under certain conditions
+    - Dead spaceships no longer collide with objects.
+- UFO FIXES: UFO attempting to retreat now will always retreat in the opposite direction. No more randomly ramming forward into the player.
+    - UFO attempting to retreat won't teleport while offscreen anymore. Checks to see if their location is in a certain range, then tries to teleport.
+    - UFOs can no longer be instantly killed without going through the retreat phase.
+    - UFO bullets killing a player now plays the ship explosion sound.
 - Canteens no longer clip into asteroids.
-- UFOs can no longer be instantly killed without going through the retreat phase.
 - Music and SFX sliders are set correctly on startup.
 
 
@@ -139,6 +139,8 @@ Other changes:
 - Main/Controls/About menu layouts changed.
 - A note has been added to controls screen. Due to key rollover on some keyboards, players 1 & 2 (both playing on keyboard) cannot shoot, thrust and rotate all at the same time. The default controls were kept the same due to the low chance of that specific scenario happening, and that all other attempts to change the controls felt inconvenient to play with.
 
+
+
 ### Version 1.0 Detailed Changelog (2019-03-18)
 - Changed Main Menu UI, made keyboard/gamepad selection easier.
 - Changed all UI, compatible with both controller and keyboard.
@@ -147,7 +149,9 @@ Other changes:
 - Tweaks to shot speed, canteen size, and how ability meter is displayed.
 - Help/About menu layouts changed.
 
-### PRE-GAMEJOLT VERSIONS
+
+
+### PRE-PUBLIC VERSIONS
 These builds are not available publicly. Version 1.0 is the foundation for public updates.
 
 Early December 2018 b1.1 - Online Portfolio version

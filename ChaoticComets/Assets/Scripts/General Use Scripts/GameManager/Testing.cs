@@ -8,7 +8,8 @@ using UnityEngine;
 public class Testing : MonoBehaviour
 {
     private GameManager gM;
-    private float timer = 0f, nextUpdate = 0f, updateInterval = 0.5f;
+    private float timer = 0f, nextUpdate = 0f;
+    private readonly float updateInterval = 0.5f;
 
     [Header("Testing Environments")]
     public bool onLevelNegativeOne = false;

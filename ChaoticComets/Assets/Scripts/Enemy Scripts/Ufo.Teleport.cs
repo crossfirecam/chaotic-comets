@@ -16,10 +16,10 @@ public abstract partial class Ufo : MonoBehaviour
         Invoke(nameof(TeleportStart), 3f);
     }
 
-    // If the UFO is not dying, then start the teleport sequence at the end of a level
+    // If the UFO is in a visible area of the screen and not dying, then start the teleport sequence at the end of a level
     public void TeleportStart()
     {
-        if (UfoIsInVisibleArea())
+        if (UfoIsInVisibleArea() || (gM.tutorialMode && alienHealth == 70)) // Exception for Tutorial popup 12, the Red UFO teleports immediately
         {
             if (!deathStarted)
             {

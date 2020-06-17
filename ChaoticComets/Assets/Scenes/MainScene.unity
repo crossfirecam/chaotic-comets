@@ -3841,14 +3841,14 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 505755506}
-    characterCount: 79
+    characterCount: 87
     spriteCount: 0
     spaceCount: 15
-    wordCount: 15
+    wordCount: 17
     linkCount: 0
     lineCount: 2
     pageCount: 1
-    materialCount: 2
+    materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -4001,14 +4001,14 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 528402840}
-    characterCount: 85
+    characterCount: 93
     spriteCount: 0
     spaceCount: 14
-    wordCount: 14
+    wordCount: 16
     linkCount: 0
     lineCount: 2
     pageCount: 1
-    materialCount: 2
+    materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -4720,7 +4720,7 @@ GameObject:
   - component: {fileID: 599989135}
   - component: {fileID: 599989134}
   m_Layer: 5
-  m_Name: Popup 11 - Powerup RetroThruster
+  m_Name: Popup 11 - Powerup Auto-Brake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4940,7 +4940,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Level Clear!
+  m_Text: 'Area Clear!
 
 
     Saving progress...'
@@ -5558,6 +5558,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1520551541}
     m_Modifications:
+    - target: {fileID: 274087088323893229, guid: 3ed67a39bb1bf9542844702498b29d7c,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -8402243486434906986, guid: bfa907f580510884cafa4d65085f495f,
+        type: 3}
     - target: {fileID: 1584264424030234699, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5809,14 +5815,14 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 707744754}
-    characterCount: 117
+    characterCount: 127
     spriteCount: 0
     spaceCount: 23
-    wordCount: 22
+    wordCount: 24
     linkCount: 0
     lineCount: 2
     pageCount: 1
-    materialCount: 2
+    materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -6612,14 +6618,14 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 838991228}
-    characterCount: 74
+    characterCount: 83
     spriteCount: 0
     spaceCount: 12
-    wordCount: 12
+    wordCount: 14
     linkCount: 0
     lineCount: 2
     pageCount: 1
-    materialCount: 2
+    materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -7082,7 +7088,7 @@ MonoBehaviour:
   m_text: 'The next ship is fighting back. <u>Rapid Shot</u> from canisters is
 
     good
-    against UFOs. <i>Keep shooting the UFO to continue<i>.'
+    against aliens. <i>Keep shooting the ship to continue<i>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8483,14 +8489,14 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1072631902}
-    characterCount: 128
+    characterCount: 138
     spriteCount: 0
     spaceCount: 21
-    wordCount: 20
+    wordCount: 22
     linkCount: 0
     lineCount: 2
     pageCount: 1
-    materialCount: 2
+    materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -10143,14 +10149,14 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1350944456}
-    characterCount: 105
+    characterCount: 115
     spriteCount: 0
     spaceCount: 20
-    wordCount: 17
+    wordCount: 19
     linkCount: 0
     lineCount: 2
     pageCount: 1
-    materialCount: 2
+    materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -10407,7 +10413,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Another one! The <u>green</u> ones have weaker guns, but give chase.
+  m_text: 'These <u>Green Class</u> ones have weaker guns, but give chase.
 
     Right
     now this one can''t shoot or take damage. <i>Press  <R_Ability> to move on</i>.'
@@ -10479,12 +10485,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1373444791}
-    characterCount: 128
+    characterCount: 134
     spriteCount: 0
     spaceCount: 24
     wordCount: 25
     linkCount: 0
-    lineCount: 2
+    lineCount: 3
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -11987,14 +11993,14 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1546492505}
-    characterCount: 111
+    characterCount: 121
     spriteCount: 0
-    spaceCount: 20
-    wordCount: 19
+    spaceCount: 21
+    wordCount: 22
     linkCount: 0
     lineCount: 2
     pageCount: 1
-    materialCount: 2
+    materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -13123,7 +13129,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Enemy spotted! These <u>red alien ships</u> fly fast and hit hard.
+  m_text: 'Enemy spotted! These <u>Red Class</u> alien ships fly fast and hit hard.
 
     Avoid,
     or pursue at your own risk. <i>Land a shot on it to move on</i>.'
@@ -13195,10 +13201,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1724098608}
-    characterCount: 124
+    characterCount: 130
     spriteCount: 0
-    spaceCount: 25
-    wordCount: 26
+    spaceCount: 26
+    wordCount: 27
     linkCount: 0
     lineCount: 2
     pageCount: 1
@@ -13988,14 +13994,14 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1808252454}
-    characterCount: 79
+    characterCount: 75
     spriteCount: 0
-    spaceCount: 14
+    spaceCount: 11
     wordCount: 13
     linkCount: 0
     lineCount: 2
     pageCount: 1
-    materialCount: 2
+    materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -14937,6 +14943,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerUI (Plr1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791802002027053980, guid: 3ed67a39bb1bf9542844702498b29d7c,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791802002027053980, guid: 3ed67a39bb1bf9542844702498b29d7c,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791802002027053980, guid: 3ed67a39bb1bf9542844702498b29d7c,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791802002027053980, guid: 3ed67a39bb1bf9542844702498b29d7c,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791802002027053980, guid: 3ed67a39bb1bf9542844702498b29d7c,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ed67a39bb1bf9542844702498b29d7c, type: 3}
@@ -40499,11 +40530,16 @@ PrefabInstance:
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: cheatMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: tutorialMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
+        type: 3}
+      propertyPath: instantkillAsteroids
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7573104357208989298, guid: 066c9ff725ed57f49b4f3e2606b5f38f,

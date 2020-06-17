@@ -105,17 +105,23 @@ public partial class MainMenu : MonoBehaviour
         scoreEntryRect.anchoredPosition = new Vector2(0, baseEntryY - offsetEntryY * transformList.Count);
         scoreEntry.gameObject.SetActive(true);
 
-        // Populate entry with details
+        // Populate entry with details. Mode displays an icon.
         scoreEntry.Find("Name").GetComponent<TextMeshProUGUI>().text = highscoreEntry.name;
         scoreEntry.Find("Level").GetComponent<TextMeshProUGUI>().text = highscoreEntry.level.ToString();
         scoreEntry.Find("Credits").GetComponent<TextMeshProUGUI>().text = highscoreEntry.score.ToString();
-        scoreEntry.Find("Mode").GetComponent<TextMeshProUGUI>().text = highscoreEntry.mode;
+        TextMeshProUGUI modeText = scoreEntry.Find("Mode").GetComponent<TextMeshProUGUI>();
+        if (highscoreEntry.mode != null)
+        {
+            modeText.text = highscoreEntry.mode.Replace("1P", "<sprite=0>");
+            modeText.text = modeText.text.Replace("2P", "<sprite=2>");
+        }
 
         // If level is 0, then the entry is telling user the list is empty. Remove 0's for level and credits columns.
         if (highscoreEntry.level == 0)
         {
             scoreEntry.Find("Level").GetComponent<TextMeshProUGUI>().text = "";
             scoreEntry.Find("Credits").GetComponent<TextMeshProUGUI>().text = "";
+            modeText.text = "";
         }
 
         transformList.Add(scoreEntry);

@@ -13,6 +13,9 @@ Asteroids and Powerups spawn with completely random direction, and can still sta
 Scaling of the camera during non-16x9 resolutions achieved with AspectRatioEnforcer script by Eric Haines (Eric5h5)
 - http://wiki.unity3d.com/index.php?title=AspectRatioEnforcer
 
+A debugging tool for finding Missing Reference errors in Unity by Lior Tal of Gamasutra
+- https://www.gamasutra.com/blogs/LiorTal/20141208/231690/Finding_Missing_Object_References_in_Unity.php
+
 The game was started using an indepth series by Scripting is Fun for an Asteroids project.
 Since the first two weeks of dev, I've turned the game code into something much more ambitious, but this foundation is appreciated.
 - https://www.youtube.com/watch?v=TG_KLJ49URM&list=PLa5_l08N9jzMKA8gNHG42Mv3idfIkztBU

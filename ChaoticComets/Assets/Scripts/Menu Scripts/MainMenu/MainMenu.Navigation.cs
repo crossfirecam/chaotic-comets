@@ -67,7 +67,9 @@ public partial class MainMenu : MonoBehaviour
         saveDialogNewGame.text = $"New {savePlayerCount} Player Game";
 
         string saveDifficulty;
+        #pragma warning disable IDE0066 // Cannot use switch statement in Unity, unfortunately
         switch (data.difficulty)
+        #pragma warning restore IDE0066 // Cannot use switch statement in Unity, unfortunately
         {
             case 0: saveDifficulty = "Easy"; break;
             case 1: saveDifficulty = "Normal"; break;
@@ -192,12 +194,16 @@ public partial class MainMenu : MonoBehaviour
 
             mainMenuPanel.SetActive(true);
             returnToMenuButton.Select();
+            returnToMenuButton = null;
         }
     }
     // When entering a panel from main menu, return to the button pressed later.
     private void SetBackButton()
     {
-        returnToMenuButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+        if (returnToMenuButton == null)
+        {
+            returnToMenuButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+        }
     }
 
     /* ------------------------------------------------------------------------------------------------------------------

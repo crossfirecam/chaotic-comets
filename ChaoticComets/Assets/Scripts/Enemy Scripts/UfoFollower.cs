@@ -7,6 +7,7 @@
 public class UfoFollower : Ufo
 {
     private bool movingRandomly = false;
+    private Vector2 directionBeforeStopping = Vector2.zero;
     private void Update()
     {
         // Weapon systems. If criteria are met, then shoot depending on enemy type
@@ -56,6 +57,12 @@ public class UfoFollower : Ufo
     {
         if (IsPlayerTooClose(2f))
         {
+            // Stores the previously used direction vector.
+            // Prevents a bug where a player that very slowly leaves the screen can leave the UFO standing still.
+            if (directionBeforeStopping == Vector2.zero)
+            {
+                directionBeforeStopping = direction;
+            }
             direction = Vector2.zero;
         }
         else
@@ -67,6 +74,14 @@ public class UfoFollower : Ufo
                 {
                     alienSpeedCurrent = alienSpeedBase * 3f;
                     playerTooFar = true;
+                }
+
+                // If player is too far, but direction is 0, then set direction to previously stored vector.
+                // Prevents a bug where a player that very slowly leaves the screen can leave the UFO standing still.
+                if (direction == Vector2.zero)
+                {
+                    direction = directionBeforeStopping;
+                    directionBeforeStopping = Vector2.zero;
                 }
             }
             else

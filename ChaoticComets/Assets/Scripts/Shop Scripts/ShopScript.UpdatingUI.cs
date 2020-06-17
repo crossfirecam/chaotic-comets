@@ -85,7 +85,7 @@ public partial class ShopScript : MonoBehaviour
             {
                 // The list-populating is exclusion-based because most of the desired buttons end in different single digits
                 // These unwanted buttons are for a UI selection bug, checking for mouse input, and readying the players respectively
-                if (!button.name.EndsWith("Bug") && !button.name.EndsWith("Check") && !button.name.EndsWith("Ready"))
+                if (!button.name.EndsWith("FixButton") && !button.name.EndsWith("Check") && !button.name.EndsWith("Ready"))
                 {
                     listOfFilteredButtons.Add(button);
                 }
