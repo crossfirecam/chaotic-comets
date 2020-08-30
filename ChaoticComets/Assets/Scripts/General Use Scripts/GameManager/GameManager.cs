@@ -10,6 +10,7 @@ public partial class GameManager : MonoBehaviour
     [Header("Debug Settings (set false in public builds)")]
     public bool instantkillAsteroids = false;
     public bool cheatMode = false;
+    public bool hideUiExtendBorders = false;
 
     [Header("Tutorial Mode")]
     public bool tutorialMode = true; // Not in tutorial by default
@@ -17,7 +18,7 @@ public partial class GameManager : MonoBehaviour
     [Header("General purpose variables")]
     public int asteroidCount;
     public int levelNo = 0;
-    [HideInInspector] public float screenTop = 8f, screenBottom = 8f, screenLeft = 11f, screenRight = 11f;
+    internal float screenTop = 8.5f, screenBottom = -8.5f, screenLeft = -11f, screenRight = 11f;
     private MusicManager musicManager;
 
     [Header("Other Variables")]
@@ -31,6 +32,11 @@ public partial class GameManager : MonoBehaviour
         if (cheatMode)
         {
             BetweenScenes.CheaterMode = true;
+        }
+        if (hideUiExtendBorders)
+        {
+            FindObjectOfType<Canvas>().GetComponent<Canvas>().enabled = false;
+            screenLeft = -14.5f; screenRight = 14.5f;
         }
     }
     void Start()

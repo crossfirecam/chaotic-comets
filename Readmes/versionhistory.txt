@@ -1,7 +1,9 @@
-Chaotic Comets Version History:
+Chaotic Comets Version History
 The top section of this document only details the most important changes. Full changelogs are further down this document.
 
+------------------
 Version 1.3 - UFO AI, Tutorial, Gameplay tweaks (2020 June)
+------------------
 - New UFO type added, and both type's AI have been improved greatly.
 - High Score board added to main menu. Tracks top 10 scores for each game mode.
 - The game's gotten more difficult. Player ship has reduced base stats. Asteroids travel faster.
@@ -9,19 +11,25 @@ Version 1.3 - UFO AI, Tutorial, Gameplay tweaks (2020 June)
 - Two auto-save slots, one for each game mode. Cheat mode added to Options.
 - Lots of QOL changes, bug fixes, and backend code improvements.
 
+------------------
 Version 1.2 - UFO, Store, and Saving (2019 June)
+------------------
 - UFOs are more interesting to fight. Retreats at low health. Bonus credits for finishing off after they retreat.
 - Asteroids and UFOs now have more kick when they're hit. Avoid bumping into things.
 - Game auto-saves at the end of levels. Data is only removed once a new game is started, or the saved game reaches Game Over.
 - A shop is available between levels. Top speed, brake efficiency, fire rate, and shot speed can be upgraded.
 - Ton of bug fixes & testing.
 
+------------------
 Version 1.1 - Particles, Music & Bug Fixes (2019 May)
+------------------
 - Particle effects added to player thrusters, teleport. Also added to UFO teleport. Bullets are also particles now.
 - Music added. Can be disabled from main menu.
 - UFOs that are not destroyed now teleport away at the end of levels.
 
+------------------
 Version 1.0 - Public release of Chaotic Comets (2019 March)
+------------------
 - Prior versions of the game were created for a design show in November 2018. This patch brought the game to the wider public and mainly focused on UI changes.
 - Main menu greatly improved. Dialogs pop up that allow for difficulty and control options.
 - All UI elements are compatible with either gamepad or mouse.
@@ -29,7 +37,9 @@ Version 1.0 - Public release of Chaotic Comets (2019 March)
 
 DETAILED CHANGELOGS
 
-### Version 1.3 Detailed Changelog (2020-06-05)
+------------------
+Version 1.3 Detailed Changelog (2020-06-05)
+------------------
 UFO changes
 - Red Class UFO added. Flies from left to right, only once, then disappears. Features heavier weaponry.
     - Red Class UFO deviates in direction up and down as well. Never goes offscreen.
@@ -81,7 +91,9 @@ Bug fixes from 1.2
 
 
 
-### Version 1.2 Detailed Changelog (2019-06-07)
+------------------
+Version 1.2 Detailed Changelog (2019-06-07)
+------------------
 UFO changes
 - UFO's base speed and shot speed have increased
 - While shield is up, bullets will reflect off of UFO shields
@@ -119,7 +131,9 @@ Bug fixes from 1.1
 
 
 
-### Version 1.1 Detailed Changelog (2019-05-21)
+------------------
+Version 1.1 Detailed Changelog (2019-05-21)
+------------------
 Player ship changes:
 - Top speed has been greatly reduced for better handling.
 - Teleport ability has visual cues and invulnerability time.
@@ -141,7 +155,9 @@ Other changes:
 
 
 
-### Version 1.0 Detailed Changelog (2019-03-18)
+------------------
+Version 1.0 Detailed Changelog (2019-03-18)
+------------------
 - Changed Main Menu UI, made keyboard/gamepad selection easier.
 - Changed all UI, compatible with both controller and keyboard.
 - Difficulty settings added before each game starts. Easy: Auto braking, Normal: Typical braking, Hard: No braking.
@@ -151,7 +167,9 @@ Other changes:
 
 
 
-### PRE-PUBLIC VERSIONS
+------------------
+PRE-PUBLIC VERSIONS
+------------------
 These builds are not available publicly. Version 1.0 is the foundation for public updates.
 
 Early December 2018 b1.1 - Online Portfolio version

@@ -7,7 +7,6 @@ public partial class MainMenu : MonoBehaviour
 {
     public AudioMixer mixer;
     public GameObject fadeBlack;
-    private float fadingAlpha = 0f;
     private MusicManager musicManager;
     public GameObject musicManagerIfNotFoundInScene;
     private AudioSource audioMenuBack;
@@ -44,39 +43,42 @@ public partial class MainMenu : MonoBehaviour
     /* ------------------------------------------------------------------------------------------------------------------
      * Other functions
      * ------------------------------------------------------------------------------------------------------------------ */
-    private bool alreadyFading = false;
+    private bool fadingInAlready = false;
+    private float fadingAlpha = 0f;
     private IEnumerator FadeBlack(string ToOrFrom) {
-        if (!alreadyFading)
+        // If 'fade to' is trigger during 'fade from', this variable stops the while loop that does 'fade from'
+        if (!fadingInAlready)
         {
-            alreadyFading = true;
-            Image tempFade = fadeBlack.GetComponent<Image>();
-            Color origColor = tempFade.color;
-            float speedOfFade = 2f;
-            fadeBlack.SetActive(true);
-            if (ToOrFrom == "from")
-            {
-                fadingAlpha = 1f;
-                while (fadingAlpha > 0f)
-                {
-                    fadingAlpha -= speedOfFade * Time.deltaTime;
-                    tempFade.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);
-                    yield return null;
-                }
-                fadeBlack.SetActive(false);
-            }
-            else if (ToOrFrom == "to")
-            {
-                fadingAlpha = 0f;
-                while (fadingAlpha < 1f)
-                {
-                    fadingAlpha += speedOfFade * Time.deltaTime;
-                    tempFade.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);
-                    yield return null;
-                }
-            }
-            yield return new WaitForSeconds(1);
-            alreadyFading = false;
+            fadingInAlready = true;
+            fadingAlpha = 0f;
         }
+
+        Image tempFade = fadeBlack.GetComponent<Image>();
+        Color origColor = tempFade.color;
+        float speedOfFade = 2f;
+        fadeBlack.SetActive(true);
+        if (ToOrFrom == "from")
+        {
+            fadingAlpha = 1f;
+            while (fadingAlpha > 0f && fadingInAlready)
+            {
+                fadingAlpha -= speedOfFade * Time.deltaTime;
+                tempFade.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);
+                yield return null;
+            }
+            fadeBlack.SetActive(false);
+            fadingInAlready = false;
+        }
+        else if (ToOrFrom == "to")
+        {
+            while (fadingAlpha < 1f)
+            {
+                fadingAlpha += speedOfFade * Time.deltaTime;
+                tempFade.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);
+                yield return null;
+            }
+        }
+        yield return new WaitForSeconds(1);
     }
 
     private void StartupSoundManagement()
