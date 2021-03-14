@@ -35,7 +35,6 @@ public class PlayerSpawnDeath : MonoBehaviour
         p.shields = 0;
         p.lives--;
         p.plrUiSound.UpdatePointDisplays();
-        p.plrUiSound.abilityBar.sprite = p.plrUiSound.abilityWhenCharging;
 
         GameObject newExplosion = Instantiate(p.deathExplosion, transform.position, transform.rotation);
         Destroy(newExplosion, 2f);
@@ -101,13 +100,11 @@ public class PlayerSpawnDeath : MonoBehaviour
         // Or, if ship is respawning at start of a level, set the previousShields level to current shield level instead
         if (p.plrUiSound.prevshields != 80) { p.plrUiSound.prevshields = p.shields; }
         p.shields = 0;
-        p.plrUiSound.abilityBar.sprite = p.plrUiSound.abilityWhenCharging; // Set power bar to have no text
         for (int shieldsTick = 0; shieldsTick <= p.plrUiSound.prevshields; shieldsTick++)
         {
             p.shields = shieldsTick;
             yield return new WaitForSeconds(2f / p.plrUiSound.prevshields);
         }
-        p.plrUiSound.abilityBar.sprite = p.plrUiSound.abilityWhenReady; // Set power bar to have text informing power can be used
         ShipIsNowTransparent(false);
         p.collisionsCanDamage = true;
         p.plrUiSound.prevshields = 0;

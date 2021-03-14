@@ -54,7 +54,6 @@ public class PlayerInput : MonoBehaviour {
         {
             if (p.collisionsCanDamage && p.power == 80)
             {
-                p.plrUiSound.abilityBar.sprite = p.plrUiSound.abilityWhenCharging;
                 p.plrAbility.teleportIn.SetActive(true);
                 p.plrMisc.StartCoroutine("FadeShip", "Out");
                 p.plrAbility.Invoke("Hyperspace", 2f);

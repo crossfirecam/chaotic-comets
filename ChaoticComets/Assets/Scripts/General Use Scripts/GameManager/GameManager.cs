@@ -18,7 +18,7 @@ public partial class GameManager : MonoBehaviour
     [Header("General purpose variables")]
     public int asteroidCount;
     public int levelNo = 0;
-    internal float screenTop = 8.5f, screenBottom = -8.5f, screenLeft = -11f, screenRight = 11f;
+    internal float screenTop = 8.5f, screenBottom = -7.5f, screenLeft = -15f, screenRight = 15f;
     private MusicManager musicManager;
 
     [Header("Other Variables")]
@@ -52,7 +52,6 @@ public partial class GameManager : MonoBehaviour
         {
             StartCoroutine(Refs.playerShip1.GetComponent<PlayerInput>().DelayNewInputs());
             Refs.tutorialManager.SetActive(true);
-            Refs.titleP1.text = "Tutorial";
             tutorialMode = true;
         }
         // If in normal gameplay, set player ships to become active and start gameplay

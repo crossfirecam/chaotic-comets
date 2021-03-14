@@ -143,7 +143,8 @@ public class ShopManagerHiddenVars
     public GameObject[] listOfPlr2Powerups;
     public GameObject[][] listOfPlrPowerups = new GameObject[2][];
     public Image[] listOfPlrShieldBars, listOfPlrAbilityBars;
-    public Text[] listOfPlrScoreText, listOfPlrLivesText, listOfPlrTotalScoreText;
+    public Text[] listOfPlrTotalScoreText;
+    public TextMeshProUGUI[] listOfPlrScoreText, listOfPlrLivesText;
 
     [Header("Shop UI References")]
     public TextMeshProUGUI readyPromptText;

@@ -1,6 +1,7 @@
 ﻿using Rewired;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerUiSounds : MonoBehaviour
 {
@@ -12,8 +13,7 @@ public class PlayerUiSounds : MonoBehaviour
     internal Image insurancePowerup, farShotPowerup, tripleShotPowerup, rapidShotPowerup, autoBrakePowerup;
     const int bonusInterval = 5000;
     internal Image shieldBar, abilityBar;
-    public Sprite abilityWhenCharging, abilityWhenReady;
-    private Text titleText, totalScoreText, scoreText, livesText;
+    private TextMeshProUGUI totalScoreText, scoreText, livesText;
     internal float prevshields;
 
     // Sound Systems
@@ -22,11 +22,9 @@ public class PlayerUiSounds : MonoBehaviour
 
     private void Awake()
     {
-        titleText = playerUi.Find("Title").GetComponent<Text>();
-        titleText.text = "Player " + p.playerNumber;
-        totalScoreText = playerUi.Find("TotalScore").GetComponent<Text>();
-        scoreText = playerUi.Find("Credits").GetComponent<Text>();
-        livesText = playerUi.Find("Lives").GetComponent<Text>();
+        totalScoreText = playerUi.Find("TotalScore").GetComponent<TextMeshProUGUI>();
+        scoreText = playerUi.Find("Credits").GetComponent<TextMeshProUGUI>();
+        livesText = playerUi.Find("Lives").GetComponent<TextMeshProUGUI>();
 
         plrUiPowerup = playerUi.Find("Powerups");
         insurancePowerup = plrUiPowerup.Find("PowerupInsurance").GetComponent<Image>();
@@ -36,8 +34,8 @@ public class PlayerUiSounds : MonoBehaviour
         autoBrakePowerup = plrUiPowerup.Find("PowerupAutoBrake").GetComponent<Image>();
 
         plrUiBars = playerUi.Find("Bars");
-        shieldBar = plrUiBars.Find("ShieldBarPartial").GetComponent<Image>();
-        abilityBar = plrUiBars.Find("AbilityBarPartial").GetComponent<Image>();
+        shieldBar = plrUiBars.Find("ShieldBarActive").GetComponent<Image>();
+        abilityBar = plrUiBars.Find("AbilityBarActive").GetComponent<Image>();
     }
     public void UpdateBars()
     {
@@ -56,10 +54,10 @@ public class PlayerUiSounds : MonoBehaviour
 
         scoreText.text = p.credits + "c";
         livesText.text = "Lives: " + p.lives;
-        totalScoreText.text = "Total Score:\n" + p.totalCredits;
+        //totalScoreText.text = "Total Score:\n" + p.totalCredits; TODO Restore total score functionality
         if (p.gM.tutorialMode)
         {
-            livesText.text = "Lives: ∞";
+            livesText.text = "Lives: Inf.";
             p.lives = 2; // Ensure player never game-overs in tutorial
         }
     }

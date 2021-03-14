@@ -22,12 +22,12 @@ public partial class ShopScript : MonoBehaviour
                 ShopRefs.listOfPlrPowerups[plrToPrep][i].SetActive(true);
             }
         }
-        ShopRefs.readyPromptText.text = $"Press 'Ready' to\nContinue to Level {data.level + 1}...";
+        ShopRefs.readyPromptText.text = $"Press 'Ready' to continue to Level {data.level + 1}...";
 
         if (plrToPrep == 1)
         {
             ShopRefs.player2GUI.SetActive(true);
-            ShopRefs.readyPromptText.text = $"Both players 'Ready' to\nContinue to Level {data.level + 1}...";
+            ShopRefs.readyPromptText.text = $"Both players 'Ready' to continue to Level {data.level + 1}...";
         }
     }
 

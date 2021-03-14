@@ -45,7 +45,6 @@ public class PlayerAbility : MonoBehaviour
             }
             teleportOut.SetActive(false);
             p.power = 80f;
-            p.plrUiSound.abilityBar.sprite = p.plrUiSound.abilityWhenReady;
             StopCoroutine("PowerTimer");
         }
     }
