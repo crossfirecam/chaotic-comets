@@ -190,7 +190,7 @@ public class PlayerPowerups : MonoBehaviour
 
     public void GrantExtraLife()
     {
-        p.lives++;
+        p.gM.playerLives++;
         p.plrUiSound.audioShipSFX.clip = lifeGained;
         p.plrUiSound.audioShipSFX.Play();
         p.plrUiSound.UpdatePointDisplays();
@@ -253,8 +253,6 @@ public class PlayerPowerups : MonoBehaviour
     public void CheatGiveCredits()
     {
         p.bonus += 5000;
-        p.credits += 5000;
-        p.totalCredits += 5000;
-        p.plrUiSound.UpdatePointDisplays();
+        p.ScorePoints(5000);
     }
 }

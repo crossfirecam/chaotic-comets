@@ -26,7 +26,7 @@ public class PlayerMisc : MonoBehaviour
 
                 // Report back what was loaded from ships.
                 print($"Loaded. Player {p.playerNumber}: {p.shields} shields, {p.credits} credits (shop save amount), " +
-                    $", {p.bonus} bonus threshold, {p.lives} lives.");
+                    $", {p.bonus} bonus threshold.");
             }
 
             SetUpgradeLevelsForPlayer();
@@ -40,7 +40,6 @@ public class PlayerMisc : MonoBehaviour
 
         int plrToSet = p.playerNumber - 1;
         p.credits = BetweenScenes.PlayerShopCredits[plrToSet];
-        p.lives = BetweenScenes.PlayerShopLives[plrToSet];
         p.totalCredits = data.playerList[plrToSet].totalCredits;
         p.shields = data.playerList[plrToSet].health;
         p.bonus = data.playerList[plrToSet].bonusThreshold;
@@ -54,13 +53,13 @@ public class PlayerMisc : MonoBehaviour
     private void HandlePlayerLifeStates()
     {
         // If one player is dead... disable their model/colliders, then tell GameManager the player is dead.
-        if (p.lives == 0)
+        if (p.isAlive == false)
         {
             p.plrSpawnDeath.PretendShipDoesntExist();
             p.gM.GetComponent<GameManager>().PlayerDied(p.playerNumber);
         }
         // If a player has died, but brought to life by another player, they'll have >1 life and 0 shields. Give revived player 80 shields.
-        else if (p.lives > 0 && p.shields == 0)
+        else if (p.isAlive == true && p.shields == 0)
         {
             p.plrUiSound.prevshields = 80;
         }

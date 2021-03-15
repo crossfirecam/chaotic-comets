@@ -33,7 +33,7 @@ public class PlayerSpawnDeath : MonoBehaviour
             print($"Non-insurance powerups removed from player {p.playerNumber}");
         }
         p.shields = 0;
-        p.lives--;
+        p.gM.playerLives--;
         p.plrUiSound.UpdatePointDisplays();
 
         GameObject newExplosion = Instantiate(p.deathExplosion, transform.position, transform.rotation);
@@ -42,8 +42,8 @@ public class PlayerSpawnDeath : MonoBehaviour
         PretendShipDoesntExist();
         p.gM.PlayerLostLife(p.playerNumber);
 
-        // If player out of lives, then tell GM the player is dead. Else, respawn them in 3 seconds.
-        if (p.lives < 1)
+        // If player caused the mission to run out of lives, then tell GM the player is dead. Else, respawn them in 3 seconds.
+        if (p.gM.playerLives < 1)
             p.gM.PlayerDied(p.playerNumber);
         else
             p.plrUiSound.prevshields = 80; Invoke("RespawnShip", 3f);
@@ -60,7 +60,7 @@ public class PlayerSpawnDeath : MonoBehaviour
 
     public void RespawnShip()
     {
-        if (p.lives > 0 && (p.gM.asteroidCount != 0 || p.gM.tutorialMode))
+        if (p.gM.playerLives > 0 && (p.gM.asteroidCount != 0 || p.gM.tutorialMode))
         {
             // If difficulty is Easy, equip Auto-Brake every respawn
             if (BetweenScenes.Difficulty == 0)

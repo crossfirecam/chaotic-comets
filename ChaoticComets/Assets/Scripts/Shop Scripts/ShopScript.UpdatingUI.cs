@@ -12,9 +12,9 @@ public partial class ShopScript : MonoBehaviour
     private void PrepareUI(int plrToPrep)
     {
         ShopRefs.listOfPlrShieldBars[plrToPrep].fillAmount = data.playerList[plrToPrep].health / 80;
-        ShopRefs.listOfPlrTotalScoreText[plrToPrep].text = "Total Score:\n" + data.playerList[plrToPrep].totalCredits;
+        ShopRefs.listOfPlrTotalScoreText[plrToPrep].text = "T: " + data.playerList[plrToPrep].totalCredits;
         BetweenScenes.PlayerShopCredits[plrToPrep] = data.playerList[plrToPrep].credits;
-        BetweenScenes.PlayerShopLives[plrToPrep] = data.playerList[plrToPrep].lives;
+        BetweenScenes.PlayerShopLives = data.lives;
         for (int i = 0; i < 5; i++)
         {
             if (data.playerList[plrToPrep].powerups[i] == 1)
@@ -94,17 +94,8 @@ public partial class ShopScript : MonoBehaviour
         foreach (Button button in listOfFilteredButtons)
         {
             int plrIndex = int.Parse(button.name[1].ToString()) - 1;
-            // If button name does not end with 'Transfer'... It is an upgrade button.
             // Update the button's text based on BetweenScenes variables.
-            if (!button.name.EndsWith("Transfer"))
-            {
-                UpdateButtonUpgrade(plrIndex, button);
-            }
-            // If button ends with 'Transfer', then change the life transfer button text.
-            else if (button.name.EndsWith("Transfer"))
-            {
-                UpdateButtonTransfer(plrIndex, button);
-            }
+            UpdateButtonUpgrade(plrIndex, button);
         }
     }
 
@@ -131,33 +122,11 @@ public partial class ShopScript : MonoBehaviour
         UpdatePlayerCounters(plrIndex);
     }
 
-    private void UpdateButtonTransfer(int plrIndex, Button button)
-    {
-        if (BetweenScenes.PlayerCount == 2)
-        {
-            int plrNum = plrIndex + 1;
-            int otherPlayer = 0;
-            switch (plrNum)
-            {
-                case 1: otherPlayer = 2; break;
-                case 2: otherPlayer = 1; break;
-            }
-            if (BetweenScenes.PlayerShopLives[plrIndex] > 1) { button.GetComponentInChildren<Text>().text = $"Transfer 1 life to P{otherPlayer}\n(Cost: 500c)"; }
-            else if (BetweenScenes.PlayerShopLives[plrIndex] == 1) { button.GetComponentInChildren<Text>().text = "One Life\n(Cannot transfer)"; }
-            else { button.GetComponentInChildren<Text>().text = "No Lives"; }
-        }
-        UpdatePlayerCounters(plrIndex);
-    }
-
     /* ------------------------------------------------------------------------------------------------------------------
      * UpdatePlayerCounters - After any button edit, update text of player's credits, and both player's lives
      * ------------------------------------------------------------------------------------------------------------------ */
     private void UpdatePlayerCounters(int plrIndex)
     {
         ShopRefs.listOfPlrScoreText[plrIndex].text = BetweenScenes.PlayerShopCredits[plrIndex] + "c";
-        for (int i = 0; i < BetweenScenes.PlayerCount; i++)
-        {
-            ShopRefs.listOfPlrLivesText[i].text = "Lives: " + BetweenScenes.PlayerShopLives[i];
-        }
     }
 }

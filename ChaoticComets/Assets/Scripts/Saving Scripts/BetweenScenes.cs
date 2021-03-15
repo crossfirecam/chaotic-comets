@@ -29,5 +29,5 @@
     // Credits and life counter are tracked here, because shop allows players to refund by leaving and coming back.
     // These values aren't committed to the save until the time the next level ends.
     public static int[] PlayerShopCredits = { 0, 0 };
-    public static int[] PlayerShopLives = { 0, 0 };
+    public static int PlayerShopLives = 0;
 }

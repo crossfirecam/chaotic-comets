@@ -10,6 +10,7 @@ public partial class GameManager : MonoBehaviour
         { // If resuming from save file, read from save file first
             Saving_PlayerManager data = Saving_SaveManager.LoadData();
             levelNo = data.level;
+            playerLives = data.lives;
         }
     }
     private void PlayMusicIfEnabled()

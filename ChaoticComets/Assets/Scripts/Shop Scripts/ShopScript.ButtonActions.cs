@@ -74,47 +74,6 @@ public partial class ShopScript : MonoBehaviour
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
-    * Life Transfer Button - Allows player to transfer a life to another player.
-    * ------------------------------------------------------------------------------------------------------------------ */
-    public void GiveLife(int plrSendingLife)
-    {
-        Button buttonGivingLife = ShopRefs.plrEventSystems[plrSendingLife].currentSelectedGameObject.GetComponent<Button>();
-
-        // TODO support more than two players. Probably automatically determine the player with the least lives.
-        int plrReceivingLife;
-        if (plrSendingLife == 0) { plrReceivingLife = 1; }
-        else /*(plrSendingLife == 1)*/ { plrReceivingLife = 0; }
-
-        // If player can send a life, then give a life
-        if (BetweenScenes.PlayerShopLives[plrSendingLife] > 1 && BetweenScenes.PlayerShopCredits[plrSendingLife] >= 500)
-        {
-            buttonGivingLife.GetComponent<AudioSource>().Play();
-
-            BetweenScenes.PlayerShopCredits[plrSendingLife] -= 500;
-            BetweenScenes.PlayerShopLives[plrSendingLife] -= 1;
-            BetweenScenes.PlayerShopLives[plrReceivingLife] += 1;
-            // Reset dead player's shields to full when receiving their first new life
-            if (BetweenScenes.PlayerShopLives[plrReceivingLife] == 1)
-            {
-                ShopRefs.listOfPlrShieldBars[plrReceivingLife].fillAmount = 1f;
-            }
-        }
-        else
-        {
-            // If life transfer fails, flash one or both of the offending statistics
-            if (BetweenScenes.PlayerShopCredits[plrSendingLife] < 500)
-            {
-                StartCoroutine(FlashCreditsRed(plrSendingLife));
-            }
-            if (BetweenScenes.PlayerShopLives[plrSendingLife] == 1)
-            {
-                StartCoroutine(FlashLivesRed(plrSendingLife));
-            }
-        }
-        UpdateButtonTransfer(plrSendingLife, buttonGivingLife);
-    }
-
-    /* ------------------------------------------------------------------------------------------------------------------
     * Stat Flashing Methods - Gives player feedback if not enough credits or lives to perform an action.
     * ------------------------------------------------------------------------------------------------------------------ */
     private bool[] isAlreadyFlashingCredits = { false, false };
@@ -131,17 +90,17 @@ public partial class ShopScript : MonoBehaviour
         }
     }
 
-    private bool[] isAlreadyFlashingLives = { false, false };
-    private IEnumerator FlashLivesRed(int playerFlashing)
-    {
-        if (!isAlreadyFlashingLives[playerFlashing])
-        {
-            GetComponent<AudioSource>().Play(); // ShopManager contains a 'UiError'-playing AudioSource
-            isAlreadyFlashingLives[playerFlashing] = true;
-            ShopRefs.listOfPlrLivesText[playerFlashing].color = Color.red;
-            yield return new WaitForSeconds(.5f);
-            ShopRefs.listOfPlrLivesText[playerFlashing].color = Color.white;
-            isAlreadyFlashingLives[playerFlashing] = false;
-        }
-    }
+    //private bool[] isAlreadyFlashingLives = { false, false };
+    //private IEnumerator FlashLivesRed(int playerFlashing)
+    //{
+    //    if (!isAlreadyFlashingLives[playerFlashing])
+    //    {
+    //        GetComponent<AudioSource>().Play(); // ShopManager contains a 'UiError'-playing AudioSource
+    //        isAlreadyFlashingLives[playerFlashing] = true;
+    //        ShopRefs.listOfPlrLivesText[playerFlashing].color = Color.red;
+    //        yield return new WaitForSeconds(.5f);
+    //        ShopRefs.listOfPlrLivesText[playerFlashing].color = Color.white;
+    //        isAlreadyFlashingLives[playerFlashing] = false;
+    //    }
+    //}
 }

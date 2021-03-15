@@ -8,12 +8,12 @@ public class PlayerUiSounds : MonoBehaviour
     [SerializeField] PlayerMain p = default;
 
     // UI Systems
-    public Transform playerUi;
+    public Transform playerUi, gameUi;
     private Transform plrUiPowerup, plrUiBars;
     internal Image insurancePowerup, farShotPowerup, tripleShotPowerup, rapidShotPowerup, autoBrakePowerup;
     const int bonusInterval = 5000;
     internal Image shieldBar, abilityBar;
-    private TextMeshProUGUI totalScoreText, scoreText, livesText;
+    private TextMeshProUGUI totalScoreText, currentCreditsText, livesText;
     internal float prevshields;
 
     // Sound Systems
@@ -22,9 +22,10 @@ public class PlayerUiSounds : MonoBehaviour
 
     private void Awake()
     {
+        livesText = gameUi.Find("Lives").GetComponent<TextMeshProUGUI>();
+
+        currentCreditsText = playerUi.Find("Credits").GetComponent<TextMeshProUGUI>();
         totalScoreText = playerUi.Find("TotalScore").GetComponent<TextMeshProUGUI>();
-        scoreText = playerUi.Find("Credits").GetComponent<TextMeshProUGUI>();
-        livesText = playerUi.Find("Lives").GetComponent<TextMeshProUGUI>();
 
         plrUiPowerup = playerUi.Find("Powerups");
         insurancePowerup = plrUiPowerup.Find("PowerupInsurance").GetComponent<Image>();
@@ -52,13 +53,17 @@ public class PlayerUiSounds : MonoBehaviour
             p.plrPowerups.GrantExtraLife();
         }
 
-        scoreText.text = p.credits + "c";
-        livesText.text = "Lives: " + p.lives;
-        //totalScoreText.text = "Total Score:\n" + p.totalCredits; TODO Restore total score functionality
+        currentCreditsText.text = p.credits + "¢";
+        livesText.text = "Lives: " + p.gM.playerLives;
+        totalScoreText.text = "T: " + p.totalCredits;
         if (p.gM.tutorialMode)
         {
             livesText.text = "Lives: Inf.";
-            p.lives = 2; // Ensure player never game-overs in tutorial
+            p.gM.playerLives = 2; // Ensure player never game-overs in tutorial
+        }
+        if (p.gM.playerLives <= -1) // TODO Ensure this edge case works. Player dies with 0 lives remaining should not display -1.
+        {
+            livesText.text = "Lives: 0";
         }
     }
 

@@ -7,6 +7,7 @@ public class Saving_PlayerManager
     public int playerCount = 1;
     public int difficulty = 0;
     public int level;
+    public int lives;
     public bool isCheatModeOn = false;
 
     public List<Player> playerList = new List<Player>();
@@ -17,6 +18,7 @@ public class Saving_PlayerManager
         playerCount = BetweenScenes.PlayerCount;
         difficulty = BetweenScenes.Difficulty;
         level = gM.levelNo;
+        lives = gM.playerLives;
 
         // Only checked when loaded from main menu. Fixes an exploit where players can get to a shop, quit the game, and come back to resume normally.
         isCheatModeOn = BetweenScenes.CheaterMode;
@@ -38,7 +40,6 @@ public class Saving_PlayerManager
                 credits = playerScripts[i].credits,
                 totalCredits = playerScripts[i].totalCredits,
                 bonusThreshold = playerScripts[i].bonus,
-                lives = playerScripts[i].lives,
                 powerups = powerupsToSave,
                 upgrades = BetweenScenes.PlayerShopUpgrades[i]
             };
@@ -53,7 +54,6 @@ public class Saving_PlayerManager
         public int credits = 0;
         public int totalCredits = 0;
         public int bonusThreshold = 0;
-        public int lives = 0;
         // Powerup order: Insurance, Far Shot, Auto-Brake, Rapid Shot, Triple Shot
         public int[] powerups = { 0, 0, 0, 0, 0 };
         // Upgrade order: Speed, brake efficiency, fire rate, shot speed
