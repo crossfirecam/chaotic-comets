@@ -10,7 +10,6 @@ public class PlayerMain : MonoBehaviour {
     public int playerNumber;
     public int credits = 0, totalCredits = 0, bonus = 4999;
     public float shields = 80, power = 80;
-    public bool isAlive = true;
 
     [Header("Impacts, Death, Respawning")]
     private float nextDamagePossible = 0.0F;

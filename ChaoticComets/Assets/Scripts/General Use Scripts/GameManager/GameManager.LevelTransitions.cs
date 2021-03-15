@@ -15,12 +15,13 @@ public partial class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
         // Increase level count, and erase autosave data
         levelNo++;
+        Refs.waveText.text = "Wave: " + levelNo;
         Saving_SaveManager.EraseData();
 
         // Tell ships to disable model & colliders, if previous shop says they're dead
-        if (Refs.playerShip1.isAlive == false)
+        if (player1dead)
             Refs.playerShip1.plrSpawnDeath.PretendShipDoesntExist();
-        if (Refs.playerShip1.isAlive == false && BetweenScenes.PlayerCount == 2)
+        if (player2dead && BetweenScenes.PlayerCount == 2)
             Refs.playerShip2.plrSpawnDeath.PretendShipDoesntExist();
 
         // Asteroid number depends on level number. Iterated in SpawnProp()

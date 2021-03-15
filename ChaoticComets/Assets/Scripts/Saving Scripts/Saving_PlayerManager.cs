@@ -8,6 +8,7 @@ public class Saving_PlayerManager
     public int difficulty = 0;
     public int level;
     public int lives;
+    public bool player1dead, player2dead;
     public bool isCheatModeOn = false;
 
     public List<Player> playerList = new List<Player>();
@@ -19,6 +20,8 @@ public class Saving_PlayerManager
         difficulty = BetweenScenes.Difficulty;
         level = gM.levelNo;
         lives = gM.playerLives;
+        player1dead = gM.player1dead;
+        player2dead = gM.player2dead;
 
         // Only checked when loaded from main menu. Fixes an exploit where players can get to a shop, quit the game, and come back to resume normally.
         isCheatModeOn = BetweenScenes.CheaterMode;

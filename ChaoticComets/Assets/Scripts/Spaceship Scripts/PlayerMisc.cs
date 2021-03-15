@@ -15,6 +15,7 @@ public class PlayerMisc : MonoBehaviour
 
     internal void OtherStartFunctions()
     {
+        Debug.Log(p.playerNumber);
         // If tutorial mode, then ignore all start functions. Else, go ahead.
         if (!p.gM.tutorialMode)
         {
@@ -26,7 +27,7 @@ public class PlayerMisc : MonoBehaviour
 
                 // Report back what was loaded from ships.
                 print($"Loaded. Player {p.playerNumber}: {p.shields} shields, {p.credits} credits (shop save amount), " +
-                    $", {p.bonus} bonus threshold.");
+                    $"{p.bonus} bonus threshold.");
             }
 
             SetUpgradeLevelsForPlayer();
@@ -52,17 +53,20 @@ public class PlayerMisc : MonoBehaviour
 
     private void HandlePlayerLifeStates()
     {
+        bool[] tempGMLifeStates = { p.gM.player1dead, p.gM.player2dead };
+        int plrToSet = p.playerNumber - 1;
+
         // If one player is dead... disable their model/colliders, then tell GameManager the player is dead.
-        if (p.isAlive == false)
+        if (tempGMLifeStates[plrToSet] == true)
         {
             p.plrSpawnDeath.PretendShipDoesntExist();
             p.gM.GetComponent<GameManager>().PlayerDied(p.playerNumber);
         }
-        // If a player has died, but brought to life by another player, they'll have >1 life and 0 shields. Give revived player 80 shields.
-        else if (p.isAlive == true && p.shields == 0)
-        {
-            p.plrUiSound.prevshields = 80;
-        }
+        //// If a player has died, but brought to life by another player, they'll have >1 life and 0 shields. Give revived player 80 shields.
+        //else if (tempGMLifeStates[plrToSet] == true && p.shields == 0)
+        //{
+        //    p.plrUiSound.prevshields = 80;
+        //}
     }
 
     private void SetUpgradeLevelsForPlayer()

@@ -61,10 +61,10 @@ public class PlayerUiSounds : MonoBehaviour
             livesText.text = "Lives: Inf.";
             p.gM.playerLives = 2; // Ensure player never game-overs in tutorial
         }
-        if (p.gM.playerLives <= -1) // TODO Ensure this edge case works. Player dies with 0 lives remaining should not display -1.
-        {
-            livesText.text = "Lives: 0";
-        }
+        //if (p.gM.playerLives <= -1) // TODO Ensure this edge case works. Player dies with 0 lives remaining should not display -1.
+        //{
+        //    livesText.text = "Lives: 0";
+        //}
     }
 
     public GameObject[] ReturnPlayerSounds()

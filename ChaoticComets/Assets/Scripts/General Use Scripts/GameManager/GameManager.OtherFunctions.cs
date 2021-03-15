@@ -11,6 +11,8 @@ public partial class GameManager : MonoBehaviour
             Saving_PlayerManager data = Saving_SaveManager.LoadData();
             levelNo = data.level;
             playerLives = data.lives;
+            player1dead = data.player1dead;
+            player2dead = data.player2dead;
         }
     }
     private void PlayMusicIfEnabled()

@@ -10,14 +10,13 @@ public partial class GameManager : MonoBehaviour
     [Header("Debug Settings (set false in public builds)")]
     public bool instantkillAsteroids = false;
     public bool cheatMode = false;
-    public bool hideUiExtendBorders = false;
 
     [Header("Tutorial Mode")]
     public bool tutorialMode = true; // Not in tutorial by default
 
     [Header("General purpose variables")]
     public int asteroidCount;
-    public int levelNo = 0, playerLives = 3;
+    public int levelNo = 0, playerLives = 2;
     internal float screenTop = 8.5f, screenBottom = -7.5f, screenLeft = -15f, screenRight = 15f;
     private MusicManager musicManager;
 
@@ -32,11 +31,6 @@ public partial class GameManager : MonoBehaviour
         if (cheatMode)
         {
             BetweenScenes.CheaterMode = true;
-        }
-        if (hideUiExtendBorders)
-        {
-            FindObjectOfType<Canvas>().GetComponent<Canvas>().enabled = false;
-            screenLeft = -14.5f; screenRight = 14.5f;
         }
     }
     void Start()
@@ -53,6 +47,8 @@ public partial class GameManager : MonoBehaviour
             StartCoroutine(Refs.playerShip1.GetComponent<PlayerInput>().DelayNewInputs());
             Refs.tutorialManager.SetActive(true);
             tutorialMode = true;
+            Refs.waveText.text = "(Tutorial)";
+            // TODO tutorial should set all UI values to 0
         }
         // If in normal gameplay, set player ships to become active and start gameplay
         else
@@ -92,7 +88,7 @@ public class GameManagerHiddenVars
     [Header("Tutorial References")]
     public AudioClip musicTutorial;
     public GameObject tutorialManager, tutorialChoicePanel;
-    public Text titleP1;
+    public TMPro.TextMeshProUGUI waveText;
     public Button buttonWhenTutorialChoice;
     public GameObject largeAsteroidSafeProp;
 

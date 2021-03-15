@@ -43,23 +43,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a64b9a0b7529f1408767e5ace0c7f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instantkillAsteroids: 0
   player1dead: 0
   player2dead: 1
   player1TEMPDEAD: 0
   player2TEMPDEAD: 0
+  instantkillAsteroids: 0
+  cheatMode: 0
   tutorialMode: 0
   asteroidCount: 0
   levelNo: 0
-  screenTop: 8.5
-  screenBottom: -8.5
-  screenLeft: -11
-  screenRight: 11
+  playerLives: 2
   Refs:
     musicTutorial: {fileID: 8300000, guid: 656934a71c7296a4296afca257d5ce9b, type: 3}
     tutorialManager: {fileID: 0}
     tutorialChoicePanel: {fileID: 0}
-    titleP1: {fileID: 0}
+    waveText: {fileID: 0}
     buttonWhenTutorialChoice: {fileID: 0}
     largeAsteroidSafeProp: {fileID: 1158260402081020, guid: c709e894203e8034ba9c16948a871155,
       type: 3}

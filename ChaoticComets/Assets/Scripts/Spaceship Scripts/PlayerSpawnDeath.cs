@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerSpawnDeath : MonoBehaviour
 {
     [SerializeField] PlayerMain p = default;
+    private bool shipIsRespawning = false;
 
     internal void ShipIsDead()
     {
@@ -33,7 +34,15 @@ public class PlayerSpawnDeath : MonoBehaviour
             print($"Non-insurance powerups removed from player {p.playerNumber}");
         }
         p.shields = 0;
-        p.gM.playerLives--;
+        if (p.gM.playerLives != 0) // Only remove a life from the counter if the players have at least one to spare.
+        {
+            p.plrUiSound.prevshields = 80; Invoke("RespawnShip", 3f);
+            p.gM.playerLives--;
+        }
+        else // If life counter is 0 when a player dies, they've depleted the life counter and need to stay dead
+        {
+            p.gM.PlayerDied(p.playerNumber);
+        }
         p.plrUiSound.UpdatePointDisplays();
 
         GameObject newExplosion = Instantiate(p.deathExplosion, transform.position, transform.rotation);
@@ -41,12 +50,6 @@ public class PlayerSpawnDeath : MonoBehaviour
 
         PretendShipDoesntExist();
         p.gM.PlayerLostLife(p.playerNumber);
-
-        // If player caused the mission to run out of lives, then tell GM the player is dead. Else, respawn them in 3 seconds.
-        if (p.gM.playerLives < 1)
-            p.gM.PlayerDied(p.playerNumber);
-        else
-            p.plrUiSound.prevshields = 80; Invoke("RespawnShip", 3f);
     }
 
     public void ShipIsRecovering()
@@ -60,7 +63,7 @@ public class PlayerSpawnDeath : MonoBehaviour
 
     public void RespawnShip()
     {
-        if (p.gM.playerLives > 0 && (p.gM.asteroidCount != 0 || p.gM.tutorialMode))
+        if (p.gM.playerLives >= 0 || p.gM.tutorialMode)
         {
             // If difficulty is Easy, equip Auto-Brake every respawn
             if (BetweenScenes.Difficulty == 0)
@@ -97,7 +100,8 @@ public class PlayerSpawnDeath : MonoBehaviour
     // When ship is killed, take 4 seconds total to recharge shields. Ship becomes hittable after those 4s.
     private IEnumerator InvulnTimer()
     {
-        // Or, if ship is respawning at start of a level, set the previousShields level to current shield level instead
+        shipIsRespawning = true;
+        // If ship is respawning at start of a level, set the previousShields level to current shield level
         if (p.plrUiSound.prevshields != 80) { p.plrUiSound.prevshields = p.shields; }
         p.shields = 0;
         for (int shieldsTick = 0; shieldsTick <= p.plrUiSound.prevshields; shieldsTick++)
@@ -105,6 +109,7 @@ public class PlayerSpawnDeath : MonoBehaviour
             p.shields = shieldsTick;
             yield return new WaitForSeconds(2f / p.plrUiSound.prevshields);
         }
+        shipIsRespawning = false;
         ShipIsNowTransparent(false);
         p.collisionsCanDamage = true;
         p.plrUiSound.prevshields = 0;
@@ -124,7 +129,7 @@ public class PlayerSpawnDeath : MonoBehaviour
         }
         for (float shieldsTick = p.shields; shieldsTick <= shieldToRecoverTo; shieldsTick++)
         {
-            if (p.shields == 80) { break; } // If a canister is picked up during regen, break the loop
+            if (p.shields == 80 || shipIsRespawning) { break; } // If a canister is picked up during regen, or if ship is respawning after a death, break the loop
             p.shields = shieldsTick;
             yield return new WaitForSeconds(1f / shieldTimer);
         }
