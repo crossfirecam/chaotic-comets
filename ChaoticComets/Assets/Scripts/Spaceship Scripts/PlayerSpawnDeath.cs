@@ -42,6 +42,8 @@ public class PlayerSpawnDeath : MonoBehaviour
         else // If life counter is 0 when a player dies, they've depleted the life counter and need to stay dead
         {
             p.gM.PlayerDied(p.playerNumber);
+            p.plrUiSound.ShowRespawnOverlay(true);
+            p.plrUiSound.UpdateRespawnStatus();
         }
         p.plrUiSound.UpdatePointDisplays();
 
@@ -57,7 +59,7 @@ public class PlayerSpawnDeath : MonoBehaviour
         if (p.shields < 80 && p.shields > 0)
         {
             p.gM.ShowRechargeText();
-            StartCoroutine("RecoveringTimer");
+            StartCoroutine(nameof(RecoveringTimer));
         }
     }
 
@@ -140,6 +142,28 @@ public class PlayerSpawnDeath : MonoBehaviour
         p.modelPlayer.SetActive(false);
         p.collisionsCanDamage = false;
         p.capsCollider.enabled = false;
+    }
+
+    // When the team of 2 players loses all reserve lives, respawning is impossible.
+    // Alive teammate gains a life: Remind the dead player that they can respawn.
+    // Alive teammate loses a life while this player still hasn't respawned: Remind dead player that they cannot respawn.
+    public void RefreshRespawnStatus()
+    {
+        p.plrUiSound.UpdateRespawnStatus();
+        if (p.gM.playerLives == 0)
+        {
+            Debug.Log("Plr " + p.playerNumber + " cannot respawn");
+        }
+        else
+        {
+            Debug.Log("Plr " + p.playerNumber + " can respawn");
+        }
+    }
+
+    public void ShipChoseToRespawn()
+    {
+        p.gM.PlayerChoseToRespawn();
+        RespawnShip();
     }
 
     private void ShipIsNowTransparent(bool transpOrSolid)

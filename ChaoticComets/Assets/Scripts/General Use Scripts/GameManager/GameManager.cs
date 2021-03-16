@@ -16,7 +16,7 @@ public partial class GameManager : MonoBehaviour
 
     [Header("General purpose variables")]
     public int asteroidCount;
-    public int levelNo = 0, playerLives = 2;
+    public int levelNo = 0;
     internal float screenTop = 8.5f, screenBottom = -7.5f, screenLeft = -15f, screenRight = 15f;
     private MusicManager musicManager;
 
@@ -35,39 +35,46 @@ public partial class GameManager : MonoBehaviour
     }
     void Start()
     {
-        // If in cheater mode, enable the cheat panel in Pause
-        if (BetweenScenes.CheaterMode)
-        {
+        // If in cheater mode and tutorial mode isn't selected, enable the cheat panel in Pause Menu
+        if (BetweenScenes.CheaterMode && !BetweenScenes.TutorialMode)
             Refs.gamePausePanel.transform.Find("PauseDialog").Find("CheatPanel").gameObject.SetActive(true);
-        }
 
         // If in tutorial mode, activate TutorialManager & tutorial music
-        if (BetweenScenes.TutorialMode || tutorialMode)
-        {
-            StartCoroutine(Refs.playerShip1.GetComponent<PlayerInput>().DelayNewInputs());
-            Refs.tutorialManager.SetActive(true);
-            tutorialMode = true;
-            Refs.waveText.text = "(Tutorial)";
-            // TODO tutorial should set all UI values to 0
-        }
         // If in normal gameplay, set player ships to become active and start gameplay
+        if (BetweenScenes.TutorialMode)
+            StartTutorialMode();
         else
-        {
-            if (BetweenScenes.PlayerCount == 2) {
-                Refs.player2GUI.SetActive(true);
-                Refs.playerShip2.gameObject.SetActive(true);
-                player2dead = false;
-            }
-            StartCoroutine(FadeBlack("from"));
-            // Level -1 is used by the Testing script. In Level -1, nothing else spawns except ships.
-            if (levelNo != -1)
-            {
-                CheckIfResumingFromSave();
-                StartCoroutine(StartNewLevel());
-            }
-        }
+            StartNormalMode();
+
         PlayMusicIfEnabled();
         StartCoroutine(UsefulFunctions.CheckController());
+    }
+
+    private void StartTutorialMode()
+    {
+        StartCoroutine(Refs.playerShip1.GetComponent<PlayerInput>().DelayNewInputs());
+        Refs.tutorialManager.SetActive(true);
+        tutorialMode = true;
+        Refs.waveText.text = "(Tutorial)";
+        // TODO tutorial should set all UI values to 0
+    }
+
+    private void StartNormalMode()
+    {
+        if (BetweenScenes.PlayerCount == 2)
+        {
+            Refs.player2GUI.SetActive(true);
+            Refs.playerShip2.gameObject.SetActive(true);
+            player2dead = false;
+        }
+        StartCoroutine(FadeBlack("from"));
+
+        // Level -1 is used by the Testing script. In Level -1, nothing else spawns except ships.
+        if (levelNo != -1)
+        {
+            CheckIfResumingFromSave();
+            StartCoroutine(StartNewLevel());
+        }
     }
 
     // Screen Wrapping

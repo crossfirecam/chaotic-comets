@@ -15,7 +15,6 @@ public class PlayerMisc : MonoBehaviour
 
     internal void OtherStartFunctions()
     {
-        Debug.Log(p.playerNumber);
         // If tutorial mode, then ignore all start functions. Else, go ahead.
         if (!p.gM.tutorialMode)
         {

@@ -8,7 +8,7 @@ public class PlayerUiSounds : MonoBehaviour
     [SerializeField] PlayerMain p = default;
 
     // UI Systems
-    public Transform playerUi, gameUi;
+    public Transform playerUi, gameUi, respawnOverlay;
     private Transform plrUiPowerup, plrUiBars;
     internal Image insurancePowerup, farShotPowerup, tripleShotPowerup, rapidShotPowerup, autoBrakePowerup;
     const int bonusInterval = 5000;
@@ -61,10 +61,23 @@ public class PlayerUiSounds : MonoBehaviour
             livesText.text = "Lives: Inf.";
             p.gM.playerLives = 2; // Ensure player never game-overs in tutorial
         }
-        //if (p.gM.playerLives <= -1) // TODO Ensure this edge case works. Player dies with 0 lives remaining should not display -1.
-        //{
-        //    livesText.text = "Lives: 0";
-        //}
+    }
+
+    public void ShowRespawnOverlay(bool status)
+    {
+        respawnOverlay.gameObject.SetActive(status);
+    }
+
+    public void UpdateRespawnStatus()
+    {
+        if (p.gM.playerLives == 0)
+        {
+            respawnOverlay.Find("RespawnOverlayText").GetComponent<TextMeshProUGUI>().text = "No lives left.";
+        }
+        else
+        {
+            respawnOverlay.Find("RespawnOverlayText").GetComponent<TextMeshProUGUI>().text = "Press 'Fire' to respawn!";
+        }
     }
 
     public GameObject[] ReturnPlayerSounds()

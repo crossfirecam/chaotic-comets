@@ -190,7 +190,7 @@ public class PlayerPowerups : MonoBehaviour
 
     public void GrantExtraLife()
     {
-        p.gM.playerLives++;
+        p.gM.PlayerGainedLife();
         p.plrUiSound.audioShipSFX.clip = lifeGained;
         p.plrUiSound.audioShipSFX.Play();
         p.plrUiSound.UpdatePointDisplays();
