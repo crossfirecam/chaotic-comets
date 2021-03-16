@@ -89,18 +89,4 @@ public partial class ShopScript : MonoBehaviour
             isAlreadyFlashingCredits[playerFlashing] = false;
         }
     }
-
-    //private bool[] isAlreadyFlashingLives = { false, false };
-    //private IEnumerator FlashLivesRed(int playerFlashing)
-    //{
-    //    if (!isAlreadyFlashingLives[playerFlashing])
-    //    {
-    //        GetComponent<AudioSource>().Play(); // ShopManager contains a 'UiError'-playing AudioSource
-    //        isAlreadyFlashingLives[playerFlashing] = true;
-    //        ShopRefs.listOfPlrLivesText[playerFlashing].color = Color.red;
-    //        yield return new WaitForSeconds(.5f);
-    //        ShopRefs.listOfPlrLivesText[playerFlashing].color = Color.white;
-    //        isAlreadyFlashingLives[playerFlashing] = false;
-    //    }
-    //}
 }

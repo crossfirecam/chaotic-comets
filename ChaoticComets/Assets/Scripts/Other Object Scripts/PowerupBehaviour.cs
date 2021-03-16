@@ -29,7 +29,7 @@ public class PowerupBehaviour : MonoBehaviour {
         GiveRandomMovement();
 
         timeUntilWarning = Random.Range(8f, 12f);
-        Invoke("StartExpiry", timeUntilWarning);
+        Invoke(nameof(StartExpiry), timeUntilWarning);
 
         if (gM.CheckIfEndOfLevel()) { print("Canister attempted to spawn during level transition"); Destroy(gameObject); }
     }
@@ -64,7 +64,7 @@ public class PowerupBehaviour : MonoBehaviour {
 
     // Called from Start(). Sets off an expiry animation after a random time
     void StartExpiry() {
-        StartCoroutine("PowerupExpiry");
+        StartCoroutine(nameof(PowerupExpiry));
     }
     IEnumerator PowerupExpiry() {
         audioPowerupExpire.clip = expireSound;

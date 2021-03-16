@@ -13,12 +13,13 @@ public partial class GameManager : MonoBehaviour
     private IEnumerator StartNewLevel()
     {
         yield return new WaitForSeconds(0.05f);
+
         // Increase level count, and erase autosave data
         levelNo++;
         Refs.waveText.text = "Wave: " + levelNo;
         Saving_SaveManager.EraseData();
 
-        // Tell ships to disable model & colliders, if previous shop says they're dead
+        // Tell ships to disable model & colliders if they are dead
         if (player1dead)
             Refs.playerShip1.plrSpawnDeath.PretendShipDoesntExist();
         if (player2dead && BetweenScenes.PlayerCount == 2)
@@ -40,7 +41,6 @@ public partial class GameManager : MonoBehaviour
         else { ufoCap = 3; }
 
         // Double the cap if both players are alive
-        // (!p1dead && !p2dead) didn't work. Have to check the negative of an OR statement...
         if (!(player1dead || player2dead))
         {
             canisterCap *= 2; ufoCap *= 2;
@@ -61,8 +61,8 @@ public partial class GameManager : MonoBehaviour
         if (!player1dead || !player2dead)
         {
             GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
-            foreach (GameObject ufo in listOfUfos) { ufo.GetComponent<Ufo>().TeleportStart(); }
-            Invoke("EndLevelFanFare2", 2.5f);
+            foreach (GameObject ufo in listOfUfos) { ufo.GetComponent<Ufo>().TeleportStart(true); }
+            Invoke(nameof(EndLevelFanFare2), 2.5f);
         }
     }
     private void EndLevelFanFare2()
@@ -72,7 +72,7 @@ public partial class GameManager : MonoBehaviour
         if (!player1dead) { Refs.playerShip1.plrSpawnDeath.ShipIsRecovering(); }
         if (!player2dead) { Refs.playerShip2.plrSpawnDeath.ShipIsRecovering(); }
         StartCoroutine(FadeBlack("to"));
-        Invoke("BringUpShop", 3f);
+        Invoke(nameof(BringUpShop), 3f);
     }
 
     // Leaves Main scene and brings up the shop

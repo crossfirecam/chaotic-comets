@@ -113,7 +113,7 @@ public partial class ShopScript : MonoBehaviour {
     public void GoBackToGame() {
         ShopRefs.readyPromptText.text = $"Prepare for Level {data.level + 1}!";
         StartCoroutine(FadeBlack("to"));
-        Invoke("LoadMainGame", 1f);
+        Invoke(nameof(LoadMainGame), 1f);
     }
     private void LoadMainGame() {
         SceneManager.LoadScene("MainScene");

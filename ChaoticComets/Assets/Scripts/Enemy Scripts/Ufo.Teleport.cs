@@ -16,10 +16,13 @@ public abstract partial class Ufo : MonoBehaviour
         Invoke(nameof(TeleportStart), 3f);
     }
 
-    // If the UFO is in a visible area of the screen and not dying, then start the teleport sequence at the end of a level
-    public void TeleportStart()
+    // If the UFO is in a visible area of the screen and not dying, then start the teleport sequence.
+    // Caused either by the UFO getting to low health, tutorial popup 12, or because level is ending.
+    public void TeleportStart(bool forceLeaveEndOfLevel = false)
     {
-        if (UfoIsInVisibleArea() || (gM.tutorialMode && alienHealth == 70)) // Exception for Tutorial popup 12, the Red UFO teleports immediately
+        if (UfoIsInVisibleArea() ||
+            (gM.tutorialMode && alienHealth == 70) || // Exception for Tutorial popup 12, the Red UFO teleports immediately
+            forceLeaveEndOfLevel == true)             // Exception for end of level, UFO will teleport immediately to avoid hurting player during ending sequence
         {
             if (!deathStarted)
             {
@@ -34,7 +37,7 @@ public abstract partial class Ufo : MonoBehaviour
                 {
                     StartCoroutine(FadeOut(rend));
                 }
-                Invoke("TeleportEnd", 2f);
+                Invoke(nameof(TeleportEnd), 2f);
             }
         }
         else
@@ -94,7 +97,7 @@ public abstract partial class Ufo : MonoBehaviour
         audioAlienSfx.clip = audClipAliexSfxShieldReflect;
         audioAlienSfx.pitch = 0.7f;
         audioAlienSfx.Play();
-        if (!ufoRetreating) { StartCoroutine(ShieldFadesOn()); Invoke("FlickShieldOff", 0.3f); }
+        if (!ufoRetreating) { StartCoroutine(ShieldFadesOn()); Invoke(nameof(FlickShieldOff), 0.3f); }
     }
 
     private void FlickShieldOff()

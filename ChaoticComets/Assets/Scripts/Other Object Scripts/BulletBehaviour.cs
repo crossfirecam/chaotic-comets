@@ -17,7 +17,7 @@ public class BulletBehaviour : MonoBehaviour {
 
     // PlayerMain tells bullet to be destroyed at a certain time
     public void FizzleOutBullet(float destroyTime) {
-        Invoke("StopAnimation", destroyTime - animationStopTime);
+        Invoke(nameof(StopAnimation), destroyTime - animationStopTime);
     }
     private void StopAnimation() {
         if (ifBulletReflected)
@@ -34,7 +34,7 @@ public class BulletBehaviour : MonoBehaviour {
                     gameObject.GetComponentInChildren<ParticleSystem>().Stop();
                 }
             }
-            Invoke("RemoveBullet", animationStopTime);
+            Invoke(nameof(RemoveBullet), animationStopTime);
         }
     }
 
@@ -43,7 +43,7 @@ public class BulletBehaviour : MonoBehaviour {
     {
         Destroy(gameObject.GetComponentInChildren<ParticleSystem>());
         gameObject.GetComponent<Collider2D>().enabled = false;
-        Invoke("RemoveBullet", 2f);
+        Invoke(nameof(RemoveBullet), 2f);
 
     }
 

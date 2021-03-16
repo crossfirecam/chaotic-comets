@@ -156,7 +156,7 @@ public partial class MainMenu : MonoBehaviour
         {
             Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
         }
-        Invoke("SetBtnFullscreenText", 0.1f);
+        Invoke(nameof(SetBtnFullscreenText), 0.1f);
     }
 
     private void SetBtnFullscreenText()

@@ -36,7 +36,7 @@ public class PlayerSpawnDeath : MonoBehaviour
         p.shields = 0;
         if (p.gM.playerLives != 0) // Only remove a life from the counter if the players have at least one to spare.
         {
-            p.plrUiSound.prevshields = 80; Invoke("RespawnShip", 3f);
+            p.plrUiSound.prevshields = 80; Invoke(nameof(RespawnShip), 3f);
             p.gM.playerLives--;
         }
         else // If life counter is 0 when a player dies, they've depleted the life counter and need to stay dead

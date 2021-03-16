@@ -75,8 +75,8 @@ public abstract partial class Ufo : MonoBehaviour
             float durationOfExplosions = 1.5f;
             deathStarted = true;
             if (ufoTeleporting) { rateOfExplosions = 0.2f; durationOfExplosions = 2.5f; }
-            InvokeRepeating("DeathExplosions", 0.0f, rateOfExplosions);
-            Invoke("DeathRoutine", durationOfExplosions);
+            InvokeRepeating(nameof(DeathExplosions), 0.0f, rateOfExplosions);
+            Invoke(nameof(DeathRoutine), durationOfExplosions);
         }
     }
 
@@ -90,7 +90,7 @@ public abstract partial class Ufo : MonoBehaviour
     // Final instructions for UFO when it's about to die
     private void DeathRoutine()
     {
-        CancelInvoke("DeathExplosions");
+        CancelInvoke(nameof(DeathExplosions));
         /* Increase stats for next time TODO fix these
         shootingDelay = shootingDelay * difficultyIncrease;
         alienSpeed = alienSpeed / difficultyIncrease;

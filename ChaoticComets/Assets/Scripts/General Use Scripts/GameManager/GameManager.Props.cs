@@ -6,11 +6,6 @@ public partial class GameManager : MonoBehaviour
     private readonly int lastLevelWithoutEnemies = 1;
     private float ufoAmountSpawned, canisterAmountSpawned, ufoCap, canisterCap = 1; // Variables used to track how many props have, and can spawn.
 
-    [Header("Player Status Variables")]
-    public bool player1dead = false;
-    public bool player2dead = true; // Only one player by default
-    [HideInInspector] public bool player1TEMPDEAD = false, player2TEMPDEAD = false; // Only used to alert UFO that player is temporarily inactive
-
     public enum PropSpawnReason { AlienFirst, CanisterFirst, AlienRespawn, CanisterRespawn };
     public void AlienAndPowerupLogic(PropSpawnReason reason)
     {
@@ -48,7 +43,7 @@ public partial class GameManager : MonoBehaviour
         {
             if (reason == PropSpawnReason.CanisterRespawn)
             {
-                Invoke("RespawnCanister", 1.0f);
+                Invoke(nameof(RespawnCanister), 1.0f);
             }
             else if (reason == PropSpawnReason.AlienRespawn)
             {
@@ -68,14 +63,14 @@ public partial class GameManager : MonoBehaviour
             { // Alien will not appear until a certain level
                 ufoAmountSpawned += 1;
                 print($"Next UFO will spawn in: {randomTime}. Only {ufoCap - ufoAmountSpawned} more can spawn.");
-                Invoke("RespawnAlien", randomTime);
+                Invoke(nameof(RespawnAlien), randomTime);
             }
         }
         else if ((reason == PropSpawnReason.CanisterFirst || reason == PropSpawnReason.CanisterRespawn) && canisterAmountSpawned < canisterCap)
         {
             canisterAmountSpawned += 1;
             print($"Next canister will spawn in: {randomTime}. Only {canisterCap - canisterAmountSpawned} more can spawn.");
-            Invoke("RespawnCanister", randomTime);
+            Invoke(nameof(RespawnCanister), randomTime);
         }
     }
 
@@ -166,32 +161,7 @@ public partial class GameManager : MonoBehaviour
         asteroidCount += change;
         if (asteroidCount == 0 && !tutorialMode)
         {
-            Invoke("EndLevelFanFare", 2f);
-        }
-    }
-
-
-    // If a player dies, set the value for their death. If both are dead, game is over
-    public void PlayerDied(int playerThatDied)
-    {
-        print($"Player {playerThatDied} has died.");
-        if (playerThatDied == 1) { player1dead = true; }
-        else if (playerThatDied == 2) { player2dead = true; }
-        if (player1dead && player2dead)
-        {
-            Invoke("GameOver", 2f);
-        }
-    }
-
-    // When either ship is destroyed, alien will change target
-    public void PlayerLostLife(int playerNumber)
-    {
-        if (playerNumber == 1) { player1TEMPDEAD = true; }
-        else if (playerNumber == 2) { player2TEMPDEAD = true; }
-        GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
-        foreach (GameObject ufo in listOfUfos)
-        {
-            ufo.GetComponent<Ufo>().PlayerDied();
+            Invoke(nameof(EndLevelFanFare), 2f);
         }
     }
 
