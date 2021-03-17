@@ -17,7 +17,7 @@ public class PlayerSpawnDeath : MonoBehaviour
         if (p.plrPowerups.ifInsurance)
         {
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.Insurance);
-            print($"Insurance powerup removed from player {p.playerNumber}");
+            print($"Insurance powerup removed from player {p.playerNumber + 1}");
         }
         else
         {
@@ -31,7 +31,7 @@ public class PlayerSpawnDeath : MonoBehaviour
 
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.TripleShot);
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.FarShot);
-            print($"Non-insurance powerups removed from player {p.playerNumber}");
+            print($"Non-insurance powerups removed from player {p.playerNumber + 1}");
         }
         p.shields = 0;
         if (p.gM.playerLives != 0) // Only remove a life from the counter if the players have at least one to spare.
@@ -84,18 +84,18 @@ public class PlayerSpawnDeath : MonoBehaviour
                 transform.position = new Vector2(0f, 0f);
             else
             {
-                if (p.playerNumber == 1) { transform.position = new Vector2(-3f, 0f); }
+                if (p.playerNumber == 0) { transform.position = new Vector2(-3f, 0f); }
                 else { transform.position = new Vector2(3f, 0f); }
             }
 
             // Alert GameManger that their temporary death is over for UFO tracking
-            if (p.playerNumber == 1)
+            if (p.playerNumber == 0)
                 p.gM.player1TEMPDEAD = false;
             else
                 p.gM.player2TEMPDEAD = false;
 
             ShipIsNowTransparent(true);
-            StartCoroutine("InvulnTimer");
+            StartCoroutine(nameof(InvulnTimer));
         }
     }
 
@@ -152,11 +152,11 @@ public class PlayerSpawnDeath : MonoBehaviour
         p.plrUiSound.UpdateRespawnStatus();
         if (p.gM.playerLives == 0)
         {
-            Debug.Log("Plr " + p.playerNumber + " cannot respawn");
+            Debug.Log($"Plr {p.playerNumber + 1} cannot respawn");
         }
         else
         {
-            Debug.Log("Plr " + p.playerNumber + " can respawn");
+            Debug.Log($"Plr {p.playerNumber + 1} can respawn");
         }
     }
 

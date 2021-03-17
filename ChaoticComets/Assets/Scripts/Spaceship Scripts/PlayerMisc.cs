@@ -25,7 +25,7 @@ public class PlayerMisc : MonoBehaviour
                 HandlePlayerLifeStates();
 
                 // Report back what was loaded from ships.
-                print($"Loaded. Player {p.playerNumber}: {p.shields} shields, {p.credits} credits (shop save amount), " +
+                print($"Loaded. Player {p.playerNumber + 1}: {p.shields} shields, {p.credits} credits (shop save amount), " +
                     $"{p.bonus} bonus threshold.");
             }
 
@@ -38,25 +38,23 @@ public class PlayerMisc : MonoBehaviour
     {
         Saving_PlayerManager data = Saving_SaveManager.LoadData();
 
-        int plrToSet = p.playerNumber - 1;
-        p.credits = BetweenScenes.PlayerShopCredits[plrToSet];
-        p.totalCredits = data.playerList[plrToSet].totalCredits;
-        p.shields = data.playerList[plrToSet].health;
-        p.bonus = data.playerList[plrToSet].bonusThreshold;
-        if (data.playerList[plrToSet].powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
-        if (data.playerList[plrToSet].powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
-        if (data.playerList[plrToSet].powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false); }
-        if (data.playerList[plrToSet].powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
-        if (data.playerList[plrToSet].powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
+        p.credits = BetweenScenes.PlayerShopCredits[p.playerNumber];
+        p.totalCredits = data.playerList[p.playerNumber].totalCredits;
+        p.shields = data.playerList[p.playerNumber].health;
+        p.bonus = data.playerList[p.playerNumber].bonusThreshold;
+        if (data.playerList[p.playerNumber].powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
+        if (data.playerList[p.playerNumber].powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
+        if (data.playerList[p.playerNumber].powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false); }
+        if (data.playerList[p.playerNumber].powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
+        if (data.playerList[p.playerNumber].powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
     }
 
     private void HandlePlayerLifeStates()
     {
         bool[] tempGMLifeStates = { p.gM.player1dead, p.gM.player2dead };
-        int plrToSet = p.playerNumber - 1;
 
         // If one player is dead... disable their model/colliders, then tell GameManager the player is dead.
-        if (tempGMLifeStates[plrToSet] == true)
+        if (tempGMLifeStates[p.playerNumber] == true)
         {
             p.plrSpawnDeath.PretendShipDoesntExist();
             p.gM.GetComponent<GameManager>().PlayerDied(p.playerNumber);
@@ -71,10 +69,10 @@ public class PlayerMisc : MonoBehaviour
     private void SetUpgradeLevelsForPlayer()
     {
         // Set the current upgrade level for Player
-        upgradeSpeed = BetweenScenes.PlayerShopUpgrades[p.playerNumber - 1][0] / 10f;
-        upgradeBrake = BetweenScenes.PlayerShopUpgrades[p.playerNumber - 1][1] / 10f;
-        upgradeFireRate = BetweenScenes.PlayerShopUpgrades[p.playerNumber - 1][2] / 10f;
-        upgradeShotSpeed = BetweenScenes.PlayerShopUpgrades[p.playerNumber - 1][3] / 10f;
+        upgradeSpeed = BetweenScenes.PlayerShopUpgrades[p.playerNumber][0] / 10f;
+        upgradeBrake = BetweenScenes.PlayerShopUpgrades[p.playerNumber][1] / 10f;
+        upgradeFireRate = BetweenScenes.PlayerShopUpgrades[p.playerNumber][2] / 10f;
+        upgradeShotSpeed = BetweenScenes.PlayerShopUpgrades[p.playerNumber][3] / 10f;
 
         // Bullet force and fire rate are affected by multipliers purchased from the shop
         p.plrWeapons.bulletForce *= upgradeShotSpeed;

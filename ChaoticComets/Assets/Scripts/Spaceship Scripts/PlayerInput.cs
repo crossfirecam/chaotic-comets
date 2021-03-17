@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour {
 
     [SerializeField] PlayerMain p = default;
-    private int playerId;
     private Player player;
 
     // Ship input variables
@@ -14,8 +13,7 @@ public class PlayerInput : MonoBehaviour {
 
     private void Awake()
     {
-        playerId = p.playerNumber - 1;
-        player = ReInput.players.GetPlayer(playerId);
+        player = ReInput.players.GetPlayer(p.playerNumber);
     }
 
     // Contains code for receiving inputs from player
@@ -70,7 +68,6 @@ public class PlayerInput : MonoBehaviour {
 
     public void SwapToP2InputForTutorial()
     {
-        playerId = 1;
-        player = ReInput.players.GetPlayer(playerId);
+        player = ReInput.players.GetPlayer(1); // Force 2P controls for tutorial
     }
 }

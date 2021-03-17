@@ -12,8 +12,8 @@ public partial class GameManager : MonoBehaviour
     public void PlayerDied(int playerThatDied)
     {
         print($"Player {playerThatDied} has died.");
-        if (playerThatDied == 1) { player1dead = true; }
-        else if (playerThatDied == 2) { player2dead = true; }
+        if (playerThatDied == 0) { player1dead = true; }
+        else if (playerThatDied == 1) { player2dead = true; }
 
         if (player1dead && player2dead)
             Invoke(nameof(GameOver), 2f);
@@ -23,8 +23,8 @@ public partial class GameManager : MonoBehaviour
     // When either ship is destroyed, alien will change target
     public void PlayerLostLife(int playerNumber)
     {
-        if (playerNumber == 1) { player1TEMPDEAD = true; }
-        else if (playerNumber == 2) { player2TEMPDEAD = true; }
+        if (playerNumber == 0) { player1TEMPDEAD = true; }
+        else if (playerNumber == 1) { player2TEMPDEAD = true; }
         GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
         foreach (GameObject ufo in listOfUfos)
         {

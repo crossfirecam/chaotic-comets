@@ -55,7 +55,8 @@ public partial class GameManager : MonoBehaviour
         StartCoroutine(Refs.playerShip1.GetComponent<PlayerInput>().DelayNewInputs());
         Refs.tutorialManager.SetActive(true);
         tutorialMode = true;
-        Refs.waveText.text = "(Tutorial)";
+        playerLives = -1; // Player lives don't matter in tutorial mode.
+
         // TODO tutorial should set all UI values to 0
     }
 
@@ -95,7 +96,6 @@ public class GameManagerHiddenVars
     [Header("Tutorial References")]
     public AudioClip musicTutorial;
     public GameObject tutorialManager, tutorialChoicePanel;
-    public TMPro.TextMeshProUGUI waveText;
     public Button buttonWhenTutorialChoice;
     public GameObject largeAsteroidSafeProp;
 

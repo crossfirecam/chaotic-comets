@@ -8,12 +8,11 @@ public class PlayerUiSounds : MonoBehaviour
     [SerializeField] PlayerMain p = default;
 
     // UI Systems
-    public Transform playerUi, gameUi, respawnOverlay;
-    private Transform plrUiPowerup, plrUiBars;
-    internal Image insurancePowerup, farShotPowerup, tripleShotPowerup, rapidShotPowerup, autoBrakePowerup;
+    public Transform playerUi, respawnOverlay;
+    private Transform plrUiBars;
     const int bonusInterval = 5000;
     internal Image shieldBar, abilityBar;
-    private TextMeshProUGUI totalScoreText, currentCreditsText, livesText;
+    private TextMeshProUGUI totalScoreText, currentCreditsText;
     internal float prevshields;
 
     // Sound Systems
@@ -22,17 +21,8 @@ public class PlayerUiSounds : MonoBehaviour
 
     private void Awake()
     {
-        livesText = gameUi.Find("Lives").GetComponent<TextMeshProUGUI>();
-
         currentCreditsText = playerUi.Find("Credits").GetComponent<TextMeshProUGUI>();
         totalScoreText = playerUi.Find("TotalScore").GetComponent<TextMeshProUGUI>();
-
-        plrUiPowerup = playerUi.Find("Powerups");
-        insurancePowerup = plrUiPowerup.Find("PowerupInsurance").GetComponent<Image>();
-        farShotPowerup = plrUiPowerup.Find("PowerupFarShot").GetComponent<Image>();
-        tripleShotPowerup = plrUiPowerup.Find("PowerupTripleShot").GetComponent<Image>();
-        rapidShotPowerup = plrUiPowerup.Find("PowerupRapidShot").GetComponent<Image>();
-        autoBrakePowerup = plrUiPowerup.Find("PowerupAutoBrake").GetComponent<Image>();
 
         plrUiBars = playerUi.Find("Bars");
         shieldBar = plrUiBars.Find("ShieldBarActive").GetComponent<Image>();
@@ -53,14 +43,8 @@ public class PlayerUiSounds : MonoBehaviour
             p.plrPowerups.GrantExtraLife();
         }
 
-        currentCreditsText.text = p.credits + "¢";
-        livesText.text = "Lives: " + p.gM.playerLives;
-        totalScoreText.text = "T: " + p.totalCredits;
-        if (p.gM.tutorialMode)
-        {
-            livesText.text = "Lives: Inf.";
-            p.gM.playerLives = 2; // Ensure player never game-overs in tutorial
-        }
+        UiManager.i.SetPlayerCredits(p.playerNumber, p.credits, p.totalCredits);
+        UiManager.i.SetShipsText(p.gM.playerLives);
     }
 
     public void ShowRespawnOverlay(bool status)

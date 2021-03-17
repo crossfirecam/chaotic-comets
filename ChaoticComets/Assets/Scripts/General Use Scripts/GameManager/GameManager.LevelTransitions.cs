@@ -16,7 +16,7 @@ public partial class GameManager : MonoBehaviour
 
         // Increase level count, and erase autosave data
         levelNo++;
-        Refs.waveText.text = "Wave: " + levelNo;
+        UiManager.i.SetWaveText(levelNo);
         Saving_SaveManager.EraseData();
 
         // Tell ships to disable model & colliders if they are dead

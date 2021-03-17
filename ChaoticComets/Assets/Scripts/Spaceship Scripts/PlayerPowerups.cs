@@ -133,32 +133,33 @@ public class PlayerPowerups : MonoBehaviour
      * Powerup Application, Removal
      * ------------------------------------------------------------------------------------------------------------------ */
 
-    public enum Powerups { Insurance, FarShot, TripleShot, RapidShot, AutoBrake, ShieldRefill, ExtraLife, MediumPrize, SmallPrize };
+    public enum Powerups { Insurance, FarShot, RapidShot, AutoBrake, TripleShot, ShieldRefill, ExtraLife, MediumPrize, SmallPrize };
 
     public void ApplyPowerup(Powerups powerup, bool playSound = true)
     {
+        // If powerup is one that triggers a UI icon to turn on, then tell UiManager
+        if ((int)powerup <= 4)
+        {
+            UiManager.i.SetPlayerPowerup(p.playerNumber, (int)powerup, true);
+        }
+
         switch (powerup)
         {
             case Powerups.Insurance:
                 ifInsurance = true;
-                p.plrUiSound.insurancePowerup.gameObject.SetActive(true);
                 break;
             case Powerups.FarShot:
                 ifFarShot = true;
-                p.plrUiSound.farShotPowerup.gameObject.SetActive(true);
                 p.plrWeapons.bulletDestroyTime = PlayerWeapons.bulletTimeIfFar;
                 break;
             case Powerups.TripleShot:
                 ifTripleShot = true;
-                p.plrUiSound.tripleShotPowerup.gameObject.SetActive(true);
                 break;
             case Powerups.RapidShot:
                 ifRapidShot = true;
-                p.plrUiSound.rapidShotPowerup.gameObject.SetActive(true);
                 break;
             case Powerups.AutoBrake:
                 ifAutoBrake = true;
-                p.plrUiSound.autoBrakePowerup.gameObject.SetActive(true);
                 break;
             case Powerups.ShieldRefill:
                 p.shields = 80;
@@ -182,7 +183,7 @@ public class PlayerPowerups : MonoBehaviour
         // Other powerup, play the sound - unless credited to player after a shop screen.
         if (powerup != Powerups.ExtraLife && playSound)
         {
-            print($"{powerup} given to player {p.playerNumber}");
+            print($"{powerup} given to player {p.playerNumber + 1}");
             p.plrUiSound.audioShipSFX.clip = powerupReceived;
             p.plrUiSound.audioShipSFX.Play();
         }
@@ -197,28 +198,29 @@ public class PlayerPowerups : MonoBehaviour
     }
     public void RemovePowerup(Powerups powerup)
     {
+        // If powerup is one that triggers a UI icon to turn off, then tell UiManager
+        if ((int)powerup <= 4)
+        {
+            UiManager.i.SetPlayerPowerup(p.playerNumber, (int)powerup, false);
+        }
+
         switch (powerup)
         {
             case Powerups.Insurance:
                 ifInsurance = false;
-                p.plrUiSound.insurancePowerup.gameObject.SetActive(false);
                 break;
             case Powerups.FarShot:
                 ifFarShot = false;
-                p.plrUiSound.farShotPowerup.gameObject.SetActive(false);
                 p.plrWeapons.bulletDestroyTime = PlayerWeapons.bulletTimeIfNormal;
                 break;
             case Powerups.TripleShot:
                 ifTripleShot = false;
-                p.plrUiSound.tripleShotPowerup.gameObject.SetActive(false);
                 break;
             case Powerups.RapidShot:
                 ifRapidShot = false;
-                p.plrUiSound.rapidShotPowerup.gameObject.SetActive(false);
                 break;
             case Powerups.AutoBrake:
                 ifAutoBrake = false;
-                p.plrUiSound.autoBrakePowerup.gameObject.SetActive(false);
                 break;
             default:
                 print("Invalid powerup requested in PlayerPowerups");
