@@ -48,7 +48,7 @@ public class PlayerMain : MonoBehaviour {
             plrInput.CheckInputs();
             plrMovement.ShipMovement();
             gM.CheckScreenWrap(transform);
-            plrUiSound.UpdateBars();
+            UiManager.i.SetPlayerStatusBars(playerNumber, shields, power);
         }
     }
 

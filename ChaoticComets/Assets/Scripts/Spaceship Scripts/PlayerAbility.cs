@@ -29,7 +29,7 @@ public class PlayerAbility : MonoBehaviour
         teleportIn.SetActive(false);
         p.plrMisc.StartCoroutine("FadeShip", "In");
         teleportOut.SetActive(true);
-        StartCoroutine("PowerTimer", "Hyperspace");
+        StartCoroutine(nameof(PowerTimer), "Hyperspace");
     }
 
     // When power is used, take 12 seconds total to recharge power. Ship can use power after those 12s.
@@ -45,7 +45,7 @@ public class PlayerAbility : MonoBehaviour
             }
             teleportOut.SetActive(false);
             p.power = 80f;
-            StopCoroutine("PowerTimer");
+            StopCoroutine(nameof(PowerTimer));
         }
     }
 }

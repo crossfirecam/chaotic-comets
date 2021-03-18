@@ -31,10 +31,12 @@ public partial class GameManager : MonoBehaviour
             ufo.GetComponent<Ufo>().PlayerDied();
         }
 
-        // Get both players to check for respawn eligibility
-        Refs.playerShip1.plrSpawnDeath.RefreshRespawnStatus();
+        // Get both players to check for respawn eligibility.
+
+        // When the team of 2 players loses all reserve lives, respawning is impossible. Any dead player remains dead, alive players cannot respawn.
+        UiManager.i.SetPlayerRespawnStatus(0, playerLives);
         if (BetweenScenes.PlayerCount == 2)
-            Refs.playerShip2.plrSpawnDeath.RefreshRespawnStatus();
+            UiManager.i.SetPlayerRespawnStatus(1, playerLives);
     }
 
     // When a life is gained, add to total lives. If in 2P mode, notify dead player that they can respawn.
@@ -44,16 +46,16 @@ public partial class GameManager : MonoBehaviour
         if (BetweenScenes.PlayerCount == 2)
         {
             if (player1dead)
-                Refs.playerShip1.plrSpawnDeath.RefreshRespawnStatus();
+                UiManager.i.SetPlayerRespawnStatus(0, playerLives);
             else
-                Refs.playerShip2.plrSpawnDeath.RefreshRespawnStatus();
+                UiManager.i.SetPlayerRespawnStatus(1, playerLives);
         }
     }
 
     public void PlayerChoseToRespawn()
     {
-        player1dead = !player1dead;
-        player2dead = !player2dead;
+        player1dead = false;
+        player2dead = false;
         playerLives--;
     }
 }

@@ -96,4 +96,9 @@ public class PlayerWeapons : MonoBehaviour
             }
         }
     }
+
+    internal void DelayNewShots(float delay)
+    {
+        nextFire = Time.time + delay;
+    }
 }

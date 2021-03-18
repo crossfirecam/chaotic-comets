@@ -31,6 +31,14 @@ public class PlayerInput : MonoBehaviour {
                 {
                     p.plrWeapons.FiringLogic();
                 }
+                // If shields are 0, check if player is dead, then if there are enough lives to attempt a respawn.
+                else if (p.shields == 0)
+                {
+                    if ((p.playerNumber == 0 ? p.gM.player1dead : p.gM.player2dead) && p.gM.playerLives >= 1)
+                    {
+                        p.plrSpawnDeath.ShipChoseToRespawn();
+                    }
+                }
             }
 
             if (player.GetButtonDown("Ability"))

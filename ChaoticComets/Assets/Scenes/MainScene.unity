@@ -2686,6 +2686,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &389748940 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6775165271627527060, guid: 3ed67a39bb1bf9542844702498b29d7c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1908154365}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &402405116
 GameObject:
   m_ObjectHideFlags: 0
@@ -6080,6 +6086,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769664883}
   m_CullTransparentMesh: 0
+--- !u!114 &779050646 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7628482448286945297, guid: 3ed67a39bb1bf9542844702498b29d7c,
+    type: 3}
+  m_PrefabInstance: {fileID: 698271231}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &780423542 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5628005330111302880, guid: 5cf0dc9415eb8e742aece150306297e5,
@@ -7816,6 +7834,12 @@ Transform:
 --- !u!1 &985854980 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1648475796410713837, guid: 3ed67a39bb1bf9542844702498b29d7c,
+    type: 3}
+  m_PrefabInstance: {fileID: 698271231}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &985902064 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6775165271627527060, guid: 3ed67a39bb1bf9542844702498b29d7c,
     type: 3}
   m_PrefabInstance: {fileID: 698271231}
   m_PrefabAsset: {fileID: 0}
@@ -11648,6 +11672,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481261222}
   m_CullTransparentMesh: 0
+--- !u!114 &1491939537 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7628482448286945297, guid: 3ed67a39bb1bf9542844702498b29d7c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1908154365}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1518882732
 GameObject:
   m_ObjectHideFlags: 0
@@ -12349,6 +12385,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 532388870}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1626649708 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1690106420356328313, guid: 3ed67a39bb1bf9542844702498b29d7c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1908154365}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1629313902
 GameObject:
   m_ObjectHideFlags: 0
@@ -14264,6 +14312,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5885844596164704705}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1882486259 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1690106420356328313, guid: 3ed67a39bb1bf9542844702498b29d7c,
+    type: 3}
+  m_PrefabInstance: {fileID: 698271231}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1898998633
 GameObject:
   m_ObjectHideFlags: 0
@@ -40747,9 +40807,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 139455087c49ea34498a97b6e558f53e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  midUiWave: {fileID: 689312814}
-  midUiShips: {fileID: 377000399}
-  midUiBonus: {fileID: 745514231}
+  gameUiWave: {fileID: 689312814}
+  gameUiShips: {fileID: 377000399}
+  gameUiBonus: {fileID: 745514231}
   plrUiCurrentCredits:
   - {fileID: 251770869}
   - {fileID: 1316877944}
@@ -40768,3 +40828,12 @@ MonoBehaviour:
   - {fileID: 1615997670}
   - {fileID: 1375502996}
   - {fileID: 985854980}
+  plrShieldBars:
+  - {fileID: 1626649708}
+  - {fileID: 1882486259}
+  plrAbilityBars:
+  - {fileID: 1491939537}
+  - {fileID: 779050646}
+  plrRespawnOverlayObjects:
+  - {fileID: 389748940}
+  - {fileID: 985902064}

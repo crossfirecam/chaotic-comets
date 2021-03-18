@@ -42,8 +42,8 @@ public class PlayerSpawnDeath : MonoBehaviour
         else // If life counter is 0 when a player dies, they've depleted the life counter and need to stay dead
         {
             p.gM.PlayerDied(p.playerNumber);
-            p.plrUiSound.ShowRespawnOverlay(true);
-            p.plrUiSound.UpdateRespawnStatus();
+            UiManager.i.ShowPlayerRespawnOverlay(p.playerNumber, true);
+            UiManager.i.SetPlayerRespawnStatus(p.playerNumber, p.gM.playerLives);
         }
         p.plrUiSound.UpdatePointDisplays();
 
@@ -144,25 +144,13 @@ public class PlayerSpawnDeath : MonoBehaviour
         p.capsCollider.enabled = false;
     }
 
-    // When the team of 2 players loses all reserve lives, respawning is impossible.
-    // Alive teammate gains a life: Remind the dead player that they can respawn.
-    // Alive teammate loses a life while this player still hasn't respawned: Remind dead player that they cannot respawn.
-    public void RefreshRespawnStatus()
-    {
-        p.plrUiSound.UpdateRespawnStatus();
-        if (p.gM.playerLives == 0)
-        {
-            Debug.Log($"Plr {p.playerNumber + 1} cannot respawn");
-        }
-        else
-        {
-            Debug.Log($"Plr {p.playerNumber + 1} can respawn");
-        }
-    }
-
-    public void ShipChoseToRespawn()
+    internal void ShipChoseToRespawn()
     {
         p.gM.PlayerChoseToRespawn();
+        p.shields = 80;
+        p.plrAbility.teleportOut.SetActive(true);
+        UiManager.i.ShowPlayerRespawnOverlay(p.playerNumber, false);
+        p.plrWeapons.DelayNewShots(0.4f); // Slight delay so that ship doesn't fire as soon as it respawns
         RespawnShip();
     }
 
