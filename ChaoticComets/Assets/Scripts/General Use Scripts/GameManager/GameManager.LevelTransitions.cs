@@ -21,9 +21,9 @@ public partial class GameManager : MonoBehaviour
 
         // Tell ships to disable model & colliders if they are dead
         if (player1dead)
-            Refs.playerShip1.plrSpawnDeath.PretendShipDoesntExist();
+            Refs.playerShip1.plrSpawnDeath.PretendShipDoesntExist(true);
         if (player2dead && BetweenScenes.PlayerCount == 2)
-            Refs.playerShip2.plrSpawnDeath.PretendShipDoesntExist();
+            Refs.playerShip2.plrSpawnDeath.PretendShipDoesntExist(true);
 
         // Asteroid number depends on level number. Iterated in SpawnProp()
         asteroidCount = 0;

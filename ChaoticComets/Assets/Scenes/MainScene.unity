@@ -14737,7 +14737,7 @@ PrefabInstance:
     - target: {fileID: 945888638429997292, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1584264424030234699, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
@@ -14777,17 +14777,17 @@ PrefabInstance:
     - target: {fileID: 1648475796410713837, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1649733782182504139, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1650081811997378953, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1650105576858299363, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
@@ -14797,7 +14797,7 @@ PrefabInstance:
     - target: {fileID: 1650371123423601609, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1650398517979045565, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
@@ -40635,7 +40635,7 @@ PrefabInstance:
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: instantkillAsteroids
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}

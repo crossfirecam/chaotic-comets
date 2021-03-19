@@ -87,9 +87,7 @@ public class PlayerMisc : MonoBehaviour
         p.plrUiSound.UpdatePointDisplays();
     }
 
-#pragma warning disable IDE0051 // FadeShip isn't directly called, used by a StartCoroutine
-    private IEnumerator FadeShip(string inOrOut)
-#pragma warning restore IDE0051
+    internal IEnumerator FadeShip(string inOrOut, float fadingInEndTransparency = 1f)
     {
         Renderer[] listOfShipParts = GetComponentsInChildren<Renderer>();
         if (inOrOut == "Out")
@@ -111,7 +109,7 @@ public class PlayerMisc : MonoBehaviour
         else
         {
             p.plrInput.isNotTeleporting = true;
-            for (float fadeTick = 0f; fadeTick <= 1f; fadeTick += 0.1f)
+            for (float fadeTick = 0f; fadeTick <= fadingInEndTransparency; fadeTick += 0.1f)
             {
                 foreach (Renderer shipPart in listOfShipParts)
                 {

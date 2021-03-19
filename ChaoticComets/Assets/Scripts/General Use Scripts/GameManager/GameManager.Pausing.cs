@@ -20,9 +20,8 @@ public partial class GameManager : MonoBehaviour
             }
 
             // Delay player input, so thrusting and shooting can't happen on the same frame as the game is unpaused
-            if (!player1dead)
-                StartCoroutine(Refs.playerShip1.GetComponent<PlayerInput>().DelayNewInputs());
-            if (!player2dead)
+            StartCoroutine(Refs.playerShip1.GetComponent<PlayerInput>().DelayNewInputs());
+            if (BetweenScenes.PlayerCount == 2)
                 StartCoroutine(Refs.playerShip2.GetComponent<PlayerInput>().DelayNewInputs());
 
             Refs.gamePausePanel.SetActive(true);

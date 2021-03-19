@@ -27,25 +27,30 @@ public class PlayerAbility : MonoBehaviour
         transform.position = newPosition;
         p.rbPlayer.velocity = Vector2.zero;
         teleportIn.SetActive(false);
-        p.plrMisc.StartCoroutine("FadeShip", "In");
-        teleportOut.SetActive(true);
-        StartCoroutine(nameof(PowerTimer), "Hyperspace");
+        p.plrMisc.StartCoroutine(p.plrMisc.FadeShip("In"));
+        StartCoroutine(nameof(TeleportOutTimer));
     }
 
-    // When power is used, take 12 seconds total to recharge power. Ship can use power after those 12s.
-    internal IEnumerator PowerTimer(string powerType)
+    // When a teleportation ends (either after player uses Hyperspace ability, or when respawning)
+    // Take 12 seconds total to recharge power. Ship can use power after those 12s.
+    internal IEnumerator TeleportOutTimer()
     {
-        if (powerType == "Hyperspace")
+        teleportOut.SetActive(true);
+        p.power = 0;
+        for (int powerTick = 0; powerTick <= 80; powerTick++)
         {
-            p.power = 0;
-            for (int powerTick = 0; powerTick <= 80; powerTick++)
-            {
-                p.power = powerTick;
-                yield return new WaitForSeconds(0.15f);
-            }
-            teleportOut.SetActive(false);
-            p.power = 80f;
-            StopCoroutine(nameof(PowerTimer));
+            p.power = powerTick;
+            yield return new WaitForSeconds(0.15f);
         }
+        teleportOut.SetActive(false);
+        p.power = 80f;
+        StopCoroutine(nameof(TeleportOutTimer));
+    }
+
+    internal void ResetPowerMeter()
+    {
+        teleportOut.SetActive(false);
+        p.power = 0;
+        StopCoroutine(nameof(TeleportOutTimer));
     }
 }

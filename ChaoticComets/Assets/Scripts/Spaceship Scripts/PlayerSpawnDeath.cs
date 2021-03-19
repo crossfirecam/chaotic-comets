@@ -34,6 +34,7 @@ public class PlayerSpawnDeath : MonoBehaviour
             print($"Non-insurance powerups removed from player {p.playerNumber + 1}");
         }
         p.shields = 0;
+        p.power = 0;
         if (p.gM.playerLives != 0) // Only remove a life from the counter if the players have at least one to spare.
         {
             p.plrUiSound.prevshields = 80; Invoke(nameof(RespawnShip), 3f);
@@ -51,6 +52,7 @@ public class PlayerSpawnDeath : MonoBehaviour
         Destroy(newExplosion, 2f);
 
         PretendShipDoesntExist();
+        p.plrAbility.ResetPowerMeter();
         p.gM.PlayerLostLife(p.playerNumber);
     }
 
@@ -95,6 +97,8 @@ public class PlayerSpawnDeath : MonoBehaviour
                 p.gM.player2TEMPDEAD = false;
 
             ShipIsNowTransparent(true);
+            p.plrMisc.StartCoroutine(p.plrMisc.FadeShip("In", 0.5f));
+            p.plrAbility.StartCoroutine("TeleportOutTimer");
             StartCoroutine(nameof(InvulnTimer));
         }
     }
@@ -137,20 +141,24 @@ public class PlayerSpawnDeath : MonoBehaviour
         }
     }
 
-    public void PretendShipDoesntExist()
+    public void PretendShipDoesntExist(bool levelJustStarting = false)
     {
         p.modelPlayer.SetActive(false);
         p.collisionsCanDamage = false;
         p.capsCollider.enabled = false;
+        if (levelJustStarting)
+        {
+            UiManager.i.ShowPlayerRespawnOverlay(p.playerNumber, true);
+            UiManager.i.SetPlayerRespawnStatus(p.playerNumber, p.gM.playerLives);
+        }
     }
 
     internal void ShipChoseToRespawn()
     {
         p.gM.PlayerChoseToRespawn();
         p.shields = 80;
-        p.plrAbility.teleportOut.SetActive(true);
         UiManager.i.ShowPlayerRespawnOverlay(p.playerNumber, false);
-        p.plrWeapons.DelayNewShots(0.4f); // Slight delay so that ship doesn't fire as soon as it respawns
+        p.plrInput.DelayNewInputs(); // Slight delay so that ship doesn't fire as soon as it respawns
         RespawnShip();
     }
 
