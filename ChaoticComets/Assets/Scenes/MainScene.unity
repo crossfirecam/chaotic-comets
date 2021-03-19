@@ -14734,6 +14734,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 413929086}
     m_Modifications:
+    - target: {fileID: 945888638429997292, guid: 3ed67a39bb1bf9542844702498b29d7c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1584264424030234699, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
       propertyPath: m_RootOrder
@@ -14772,17 +14777,17 @@ PrefabInstance:
     - target: {fileID: 1648475796410713837, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1649733782182504139, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1650081811997378953, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1650105576858299363, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
@@ -14792,13 +14797,28 @@ PrefabInstance:
     - target: {fileID: 1650371123423601609, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1650398517979045565, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
       propertyPath: m_Name
       value: PlayerUI (Plr1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1650419904409936369, guid: 3ed67a39bb1bf9542844702498b29d7c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1690106420356328313, guid: 3ed67a39bb1bf9542844702498b29d7c,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1690106420356328313, guid: 3ed67a39bb1bf9542844702498b29d7c,
+        type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4170838784362844303, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
       propertyPath: m_textInfo.lineCount
@@ -14898,6 +14918,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.characterCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641959343267550853, guid: 3ed67a39bb1bf9542844702498b29d7c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6671168162959235650, guid: 3ed67a39bb1bf9542844702498b29d7c,
         type: 3}
