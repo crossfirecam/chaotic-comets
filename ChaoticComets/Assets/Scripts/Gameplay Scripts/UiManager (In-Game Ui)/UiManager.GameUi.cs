@@ -2,23 +2,8 @@
 using TMPro;
 using UnityEngine.UI;
 
-public class UiManager : MonoBehaviour
+public partial class UiManager : MonoBehaviour
 {
-    private static UiManager _i;
-    public static UiManager i { get { if (_i == null) _i = FindObjectOfType<UiManager>(); return _i; } }
-
-    private void Awake()
-    {
-        plrUiPowerups = new GameObject[][] { plr1UiPowerups, plr2UiPowerups};
-
-        // Find text objects that are children of player's Respawn Overlays
-        plrRespawnOverlayTexts = new TextMeshProUGUI[]
-        {
-            plrRespawnOverlayObjects[0].GetComponentInChildren<TextMeshProUGUI>(),
-            plrRespawnOverlayObjects[1].GetComponentInChildren<TextMeshProUGUI>()
-        };
-    }
-
     /* ------------------------------------------------------------------------------------------------------------------
      * Game State UI - Wave, Ships, Bonus counters in lower middle of screen.
      * ------------------------------------------------------------------------------------------------------------------ */

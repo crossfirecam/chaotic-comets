@@ -20,11 +20,11 @@ public partial class GameManager : MonoBehaviour
     internal float screenTop = 8.5f, screenBottom = -7.5f, screenLeft = -15f, screenRight = 15f;
     private MusicManager musicManager;
 
-    [Header("Other Variables")]
-    private float fadingAlpha = 0f;
-
     [Header("Inspector References")]
     public GameManagerHiddenVars Refs;
+
+    private static GameManager _i;
+    public static GameManager i { get { if (_i == null) _i = FindObjectOfType<GameManager>(); return _i; } }
 
     private void Awake()
     {
@@ -37,7 +37,7 @@ public partial class GameManager : MonoBehaviour
     {
         // If in cheater mode and tutorial mode isn't selected, enable the cheat panel in Pause Menu
         if (BetweenScenes.CheaterMode && !BetweenScenes.TutorialMode)
-            Refs.gamePausePanel.transform.Find("PauseDialog").Find("CheatPanel").gameObject.SetActive(true);
+            UiManager.i.EnablePauseCheatPanel();
 
         // If in tutorial mode, activate TutorialManager & tutorial music
         // If in normal gameplay, set player ships to become active and start gameplay
@@ -68,7 +68,7 @@ public partial class GameManager : MonoBehaviour
             Refs.playerShip2.gameObject.SetActive(true);
             player2dead = false;
         }
-        StartCoroutine(FadeBlack("from"));
+        UiManager.i.StartCoroutine(UiManager.i.FadeScreenBlack("from"));
 
         // Level -1 is used by the Testing script. In Level -1, nothing else spawns except ships.
         if (levelNo != -1)
@@ -95,15 +95,12 @@ public class GameManagerHiddenVars
 {
     [Header("Tutorial References")]
     public AudioClip musicTutorial;
-    public GameObject tutorialManager, tutorialChoicePanel;
-    public Button buttonWhenTutorialChoice;
+    public GameObject tutorialManager;
     public GameObject largeAsteroidSafeProp;
 
     [Header("UI References")]
     public GameObject gameLevelShieldRechargeText;
-    public GameObject fadeBlack, player2GUI;
-    public GameObject gameOverPanel, gameOverPanelAlt, gamePausePanel, gameLevelPanel;
-    public Button buttonWhenPaused, buttonWhenGameOver, buttonWhenGameOverAlt, buttonWhenLeavingPauseBugFix;
+    public GameObject player2GUI;
 
     [Header("Prop References")]
     public Transform propParent;

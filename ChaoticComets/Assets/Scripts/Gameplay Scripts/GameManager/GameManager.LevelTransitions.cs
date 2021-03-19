@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public partial class GameManager : MonoBehaviour
 {
@@ -67,11 +66,10 @@ public partial class GameManager : MonoBehaviour
     }
     private void EndLevelFanFare2()
     {
-        Refs.gameLevelPanel.SetActive(true);
         // Player Shield Recovery
         if (!player1dead) { Refs.playerShip1.plrSpawnDeath.ShipIsRecovering(); }
         if (!player2dead) { Refs.playerShip2.plrSpawnDeath.ShipIsRecovering(); }
-        StartCoroutine(FadeBlack("to"));
+        UiManager.i.LevelCompleted();
         Invoke(nameof(BringUpShop), 3f);
     }
 
@@ -93,39 +91,5 @@ public partial class GameManager : MonoBehaviour
     // If a ship has less than full shields, show the text say shields are being recharged
     public void ShowRechargeText() { Refs.gameLevelShieldRechargeText.SetActive(true); }
 
-    /* ------------------------------------------------------------------------------------------------------------------
-     * Other Level Transition Methods
-     * ------------------------------------------------------------------------------------------------------------------ */
 
-    // FadeBlack is used to gradually fade the screen to or from black
-    private IEnumerator FadeBlack(string ToOrFrom)
-    {
-        Image tempFade = Refs.fadeBlack.GetComponent<Image>();
-        Color origColor = tempFade.color;
-        float speedOfFade = 0.6f;
-        Refs.fadeBlack.SetActive(true);
-        if (ToOrFrom == "from")
-        {
-            fadingAlpha = 1f;
-            while (fadingAlpha > 0f)
-            {
-                fadingAlpha -= speedOfFade * Time.deltaTime;
-                tempFade.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);
-                yield return null;
-            }
-            Refs.fadeBlack.SetActive(false);
-        }
-        else if (ToOrFrom == "to")
-        {
-            fadingAlpha = 0f;
-            speedOfFade = 1.2f;
-            yield return new WaitForSeconds(2f);
-            while (fadingAlpha < 1f)
-            {
-                fadingAlpha += speedOfFade * Time.deltaTime;
-                tempFade.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);
-                yield return null;
-            }
-        }
-    }
 }

@@ -44,7 +44,7 @@ public class PlayerMain : MonoBehaviour {
     
     // If game is not paused, then run per-frame updates
     void Update () {
-        if (!gM.Refs.gamePausePanel.activeInHierarchy) {
+        if (!UiManager.i.GameIsPaused()) {
             plrInput.CheckInputs();
             plrMovement.ShipMovement();
             gM.CheckScreenWrap(transform);

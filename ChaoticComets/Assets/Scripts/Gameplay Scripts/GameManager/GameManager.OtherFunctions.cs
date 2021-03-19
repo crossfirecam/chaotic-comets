@@ -34,15 +34,9 @@ public partial class GameManager : MonoBehaviour
             musicManager.currentMusicPlayer.Play();
     }
 
-    // If game over panel, or tutorial control choice panel are up, do not pause, otherwise handle pausing
-    public void OnPause()
+    // Auto-save warning for Pause Menu. Don't show if game just starting, it's level 1, or it's tutorial mode.
+    public bool AutoSaveWarnShouldHide()
     {
-        if (!Refs.gameOverPanel.activeInHierarchy && !Refs.tutorialChoicePanel.activeInHierarchy)
-        {
-            if (Refs.gamePausePanel.activeInHierarchy)
-                PauseGame(1);
-            else
-                PauseGame(0);
-        }
+        return levelNo == 0 || levelNo == 1 || tutorialMode;
     }
 }

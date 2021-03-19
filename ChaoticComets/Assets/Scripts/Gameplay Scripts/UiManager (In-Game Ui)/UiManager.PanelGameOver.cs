@@ -2,24 +2,25 @@
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
+using System;
 
-public partial class GameManager : MonoBehaviour
+public partial class UiManager : MonoBehaviour
 {
+    [Header("Game Over Dialog UI")]
+    [SerializeField] private GameObject panelGameOver;
+    [SerializeField] private GameObject panelGameOverAlt;
+    [SerializeField] private Button buttonWhenGameOver, buttonWhenGameOverAlt;
     private int totalScore;
     private string mode;
     private TMP_InputField currentNameField;
-
-    /* ------------------------------------------------------------------------------------------------------------------
-     * Game Over Methods
-     * ------------------------------------------------------------------------------------------------------------------ */
 
     // Show game over panel and pause the game when the game is over
     public void GameOver()
     {
         // Bring cursor back, tell game not to attempt resuming from save if 'Play Again' is picked, and open panel
         BetweenScenes.ResumingFromSave = false;
-        Refs.gameOverPanel.SetActive(true);
-        Refs.buttonWhenGameOver.Select();
+        panelGameOver.SetActive(true);
+        buttonWhenGameOver.Select();
         FindFieldAndLoadLastName();
 
         CalculateTotalScore("GameOver");
@@ -27,15 +28,15 @@ public partial class GameManager : MonoBehaviour
         // Shrink layout if a new high score is not accomplished
         if (!HighScoreHandling.IsThisAHighScore(totalScore))
         {
-            RectTransform gameOverRt = Refs.gameOverPanel.GetComponent<RectTransform>();
+            RectTransform gameOverRt = panelGameOver.GetComponent<RectTransform>();
             gameOverRt.sizeDelta = new Vector2(gameOverRt.sizeDelta.x, 150);
             gameOverRt.Find("NewScoreParts").gameObject.SetActive(false);
         }
 
 
         // Halt all sounds and game speed
-        musicManager.PauseMusic();
-        musicManager.FindAllSfxAndPlayPause(0);
+        MusicManager.i.PauseMusic();
+        MusicManager.i.FindAllSfxAndPlayPause(0);
         Time.timeScale = 0;
     }
 
@@ -60,12 +61,12 @@ public partial class GameManager : MonoBehaviour
     public void ExitGameFromPause()
     {
         CalculateTotalScore("MissionCancel");
-        if (HighScoreHandling.IsThisAHighScore(totalScore) && !tutorialMode)
+        if (HighScoreHandling.IsThisAHighScore(totalScore) && !GameManager.i.tutorialMode)
         {
-            Refs.gamePausePanel.SetActive(false);
-            Refs.gameOverPanelAlt.SetActive(true);
-            Refs.fadeBlack.SetActive(false);
-            Refs.buttonWhenGameOverAlt.Select();
+            panelPauseMenu.SetActive(false);
+            panelGameOverAlt.SetActive(true);
+            fadeBlack.SetActive(false);
+            buttonWhenGameOverAlt.Select();
             FindFieldAndLoadLastName();
         }
         else
@@ -90,7 +91,7 @@ public partial class GameManager : MonoBehaviour
         // Submit high score
         if (HighScoreHandling.IsThisAHighScore(totalScore))
         {
-            HighScoreHandling.AddHighscoreEntry(nameFromField, levelNo, totalScore, mode);
+            HighScoreHandling.AddHighscoreEntry(nameFromField, GameManager.i.levelNo, totalScore, mode);
 
             // If name is not the default name, then set the preset name for next game in that mode. Reduces annoyance to controller users in particular.
             if (nameFromField == "Anonymous")
@@ -112,21 +113,21 @@ public partial class GameManager : MonoBehaviour
             case 1: difficulty = "Normal"; break;
             case 2: difficulty = "Hard"; break;
         }
-        totalScore = Refs.playerShip1.totalCredits;
+        totalScore = GameManager.i.Refs.playerShip1.totalCredits;
         mode = $"1P ({difficulty})";
         if (BetweenScenes.PlayerCount == 2)
         {
-            totalScore += Refs.playerShip2.totalCredits;
+            totalScore += GameManager.i.Refs.playerShip2.totalCredits;
             mode = $"2P ({difficulty})";
             Text changeCongratsTextIf2P;
             if (originOfRequest == "GameOver")
             {
-                changeCongratsTextIf2P = Refs.gameOverPanel.transform.Find("NewScoreParts").Find("EnterNameText").GetComponent<Text>();
+                changeCongratsTextIf2P = panelGameOver.transform.Find("NewScoreParts").Find("EnterNameText").GetComponent<Text>();
                 changeCongratsTextIf2P.text = "New highscore!\nEnter your names.";
             }
             else if (originOfRequest == "MissionCancel")
             {
-                changeCongratsTextIf2P = Refs.gameOverPanelAlt.transform.Find("NewScoreParts").Find("EnterNameText").GetComponent<Text>();
+                changeCongratsTextIf2P = panelGameOverAlt.transform.Find("NewScoreParts").Find("EnterNameText").GetComponent<Text>();
                 changeCongratsTextIf2P.text = "...but you got a new highscore!\nEnter your names.";
             }
         }
@@ -134,13 +135,13 @@ public partial class GameManager : MonoBehaviour
 
     private void FindFieldAndLoadLastName()
     {
-        if (Refs.gameOverPanel.activeInHierarchy)
+        if (panelGameOver.activeInHierarchy)
         {
-            currentNameField = Refs.gameOverPanel.transform.Find("NewScoreParts").Find("NameField").GetComponent<TMP_InputField>();
+            currentNameField = panelGameOver.transform.Find("NewScoreParts").Find("NameField").GetComponent<TMP_InputField>();
         }
         else //(Refs.gameOverPanelAlt.activeInHierarchy)
         {
-            currentNameField = Refs.gameOverPanelAlt.transform.Find("NewScoreParts").Find("NameField").GetComponent<TMP_InputField>();
+            currentNameField = panelGameOverAlt.transform.Find("NewScoreParts").Find("NameField").GetComponent<TMP_InputField>();
         }
         if (BetweenScenes.PlayerCount == 1) { currentNameField.text = PlayerPrefs.GetString("SavedNameFor1P"); }
         else if (BetweenScenes.PlayerCount == 2) { currentNameField.text = PlayerPrefs.GetString("SavedNameFor2P"); }

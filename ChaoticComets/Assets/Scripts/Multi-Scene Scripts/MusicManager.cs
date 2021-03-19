@@ -10,16 +10,16 @@ public class MusicManager : MonoBehaviour
     public AudioClip musicMainMenu, musicGameplay, musicShop, musicTutorial;
     private int lastTrackRequested = -1; // When first created, pick the scene's chosen song
 
-    public static MusicManager instance;
+    public static MusicManager i;
     private void Awake()
     {
-        if (instance != null)
+        if (i != null)
         {
             Destroy(gameObject);
         }
         else
         {
-            instance = this;
+            i = this;
             DontDestroyOnLoad(gameObject);
         }
     }

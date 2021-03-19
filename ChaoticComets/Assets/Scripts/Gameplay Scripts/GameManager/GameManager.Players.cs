@@ -16,7 +16,7 @@ public partial class GameManager : MonoBehaviour
         else if (playerThatDied == 1) { player2dead = true; }
 
         if (player1dead && player2dead)
-            Invoke(nameof(GameOver), 2f);
+            UiManager.i.Invoke(nameof(UiManager.i.GameOver), 2f);
 
     }
 

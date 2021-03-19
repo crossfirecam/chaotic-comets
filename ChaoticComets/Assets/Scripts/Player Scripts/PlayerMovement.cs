@@ -99,6 +99,6 @@ public class PlayerMovement : MonoBehaviour
 
     private bool DialogsNotOpen()
     {
-        return !p.gM.Refs.gamePausePanel.activeInHierarchy && !p.gM.Refs.tutorialChoicePanel.activeInHierarchy;
+        return !UiManager.i.GameIsPaused() && !UiManager.i.GameIsOnTutorialScreen();
     }
 }

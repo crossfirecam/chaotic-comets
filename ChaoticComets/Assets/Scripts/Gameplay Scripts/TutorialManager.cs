@@ -29,7 +29,7 @@ public partial class TutorialManager : MonoBehaviour
         player1.plrUiSound.UpdatePointDisplays();
 
         if (popUpIndex == -1) // Set to -1 only when tutorial starts. Does not apply when debugging.
-            DisplayChoiceDialog();
+            UiManager.i.DisplayTutorialChoiceDialog();
         else
         {
             popups[popUpIndex].SetActive(true);
@@ -82,13 +82,6 @@ public partial class TutorialManager : MonoBehaviour
      * Choice of control scheme
      * ------------------------------------------------------------------------------------------------------------------ */
 
-    private void DisplayChoiceDialog()
-    {
-        Time.timeScale = 0;
-        gM.Refs.tutorialChoicePanel.SetActive(true);
-        gM.Refs.buttonWhenTutorialChoice.Select();
-    }
-
     public void SetControls(string chosenControl)
     {
         switch (chosenControl)
@@ -105,9 +98,7 @@ public partial class TutorialManager : MonoBehaviour
                 chosenControlStyle = ControlType.Xbox;
                 break;
         }
-
-        gM.Refs.tutorialChoicePanel.SetActive(false);
-        Time.timeScale = 1;
+        UiManager.i.DismissTutorialChoiceDialog();
         popUpIndex++;
         popups[popUpIndex].SetActive(true);
         ChangePopupController();

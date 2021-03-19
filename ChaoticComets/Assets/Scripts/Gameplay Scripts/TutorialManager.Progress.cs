@@ -185,7 +185,7 @@ public partial class TutorialManager : MonoBehaviour
 
     private void ContinueIf(bool continuationCriteria)
     {
-        if (continuationCriteria && !gM.Refs.gamePausePanel.activeInHierarchy)
+        if (continuationCriteria && !UiManager.i.GameIsPaused())
         {
             popups[popUpIndex].SetActive(false);
             popUpIndex++;

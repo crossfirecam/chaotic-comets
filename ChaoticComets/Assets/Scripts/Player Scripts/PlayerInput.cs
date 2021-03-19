@@ -35,7 +35,6 @@ public class PlayerInput : MonoBehaviour {
 
             if (player.GetButtonDown("Shoot"))
             {
-                Debug.Log(canUseButtons);
                 // If shields are 0, check if player is dead, then if there are enough lives to attempt a respawn. Only allow this if game is unpaused.
                 if (p.shields == 0)
                 {
@@ -53,7 +52,7 @@ public class PlayerInput : MonoBehaviour {
             }
             if (player.GetButtonDown("Pause"))
             {
-                p.gM.OnPause();
+                UiManager.i.OnPressingPauseButton();
             }
         }
     }
