@@ -90,19 +90,19 @@ public class UfoPasser : Ufo
         switch (attemptedMoveType)
         {
             case PasserMove.Up:
-                if (transform.position.y < gM.screenTop - 3f)
+                if (transform.position.y < GameManager.i.screenTop - 3f)
                 {
                     return true;
                 }
                 break;
             case PasserMove.Straight:
-                if (transform.position.y < gM.screenTop - 0.5f && transform.position.y > gM.screenBottom + 0.5f)
+                if (transform.position.y < GameManager.i.screenTop - 0.5f && transform.position.y > GameManager.i.screenBottom + 0.5f)
                 {
                     return true;
                 }
                 break;
             case PasserMove.Down:
-                if (transform.position.y > gM.screenBottom + 3f)
+                if (transform.position.y > GameManager.i.screenBottom + 3f)
                 {
                     return true;
                 }
@@ -129,11 +129,11 @@ public class UfoPasser : Ufo
     {
         // Choose a player to target
         float randomFloat = Random.Range(0.0f, 1f);
-        if (randomFloat >= 0.5f && !gM.player1dead && !gM.player1TEMPDEAD)
+        if (randomFloat >= 0.5f && !GameManager.i.player1dead && !GameManager.i.player1TEMPDEAD)
         {
             player = GameObject.FindWithTag("Player").transform;
         }
-        else if (randomFloat <= 0.49f && !gM.player2dead && !gM.player2TEMPDEAD)
+        else if (randomFloat <= 0.49f && !GameManager.i.player2dead && !GameManager.i.player2TEMPDEAD)
         {
             player = GameObject.FindWithTag("Player 2").transform;
         }

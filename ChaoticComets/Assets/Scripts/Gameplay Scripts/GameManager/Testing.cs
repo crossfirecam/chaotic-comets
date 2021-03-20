@@ -7,7 +7,6 @@ using UnityEngine;
 // This class is used for testing during gameplay without needing to change other files. Attached to GameManager gameobject.
 public class Testing : MonoBehaviour
 {
-    private GameManager gM;
     private float timer = 0f, nextUpdate = 0f;
     private readonly float updateInterval = 0.5f;
 
@@ -19,11 +18,10 @@ public class Testing : MonoBehaviour
     public bool speedReportTest2P = false;
     private void Awake()
     {
-        gM = FindObjectOfType<GameManager>();
         BetweenScenes.CheaterMode = true;
         if (onLevelNegativeOne)
         {
-            gM.levelNo = -1;
+            GameManager.i.levelNo = -1;
         }
         BetweenScenes.PlayerCount = playerCount;
     }
@@ -35,7 +33,8 @@ public class Testing : MonoBehaviour
             nextUpdate += updateInterval;
             if (speedReportTest2P)
             {
-                print($"Speed Test: P1: {Math.Round(gM.Refs.playerShip1.rbPlayer.velocity.magnitude, 2)} | P2: {Math.Round(gM.Refs.playerShip2.rbPlayer.velocity.magnitude, 2)}");
+                print($"Speed Test: P1: {Math.Round(GameManager.i.Refs.playerShip1.rbPlayer.velocity.magnitude, 2)}" +
+                                $"| P2: {Math.Round(GameManager.i.Refs.playerShip2.rbPlayer.velocity.magnitude, 2)}");
             }
         }
     }

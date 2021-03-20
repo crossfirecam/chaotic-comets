@@ -33,7 +33,6 @@ public class PlayerMain : MonoBehaviour {
     public GameObject canister;
     internal Rigidbody2D rbPlayer;
     internal CapsuleCollider2D capsCollider;
-    internal GameManager gM;
 
     // ----------
 
@@ -47,7 +46,7 @@ public class PlayerMain : MonoBehaviour {
         if (!UiManager.i.GameIsPaused()) {
             plrInput.CheckInputs();
             plrMovement.ShipMovement();
-            gM.CheckScreenWrap(transform);
+            GameManager.i.CheckScreenWrap(transform);
             UiManager.i.SetPlayerStatusBars(playerNumber, shields, power);
         }
     }
@@ -119,7 +118,6 @@ public class PlayerMain : MonoBehaviour {
 
     private void GetComponents()
     {
-        gM = FindObjectOfType<GameManager>();
         rbPlayer = gameObject.GetComponent<Rigidbody2D>();
         capsCollider = gameObject.GetComponent<CapsuleCollider2D>();
         plrInput = gameObject.GetComponent<PlayerInput>();

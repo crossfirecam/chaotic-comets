@@ -3,7 +3,6 @@
 public class BulletBehaviour : MonoBehaviour {
 
     // General purpose variables
-    public GameManager gM;
     public bool ifBulletNotAlien;
     private readonly float animationStopTime = .2f;
     public bool ifBulletReflected;
@@ -12,7 +11,7 @@ public class BulletBehaviour : MonoBehaviour {
     
     void Update ()
     {
-        gM.CheckScreenWrap(transform);
+        GameManager.i.CheckScreenWrap(transform);
     }
 
     // PlayerMain tells bullet to be destroyed at a certain time

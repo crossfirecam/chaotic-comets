@@ -21,7 +21,6 @@ public abstract partial class Ufo : MonoBehaviour
     public GameObject bullet;
     public GameObject deathExplosion, playerBulletExplosion, teleportEffect;
     internal TutorialManager tM;
-    internal GameManager gM;
     internal bool deathStarted = false, ufoTeleporting = false, ufoRetreating = false;
     public GameObject forceField;
     public GameObject playerShip1, playerShip2;
@@ -31,9 +30,8 @@ public abstract partial class Ufo : MonoBehaviour
     // All UFO type enemies start by finding players, setting speed, etc
     internal virtual void Start()
     {
-        gM = FindObjectOfType<GameManager>();
         rb = FindObjectOfType<Rigidbody2D>();
-        if (gM.tutorialMode) { tM = gM.Refs.tutorialManager.GetComponent<TutorialManager>(); }
+        if (GameManager.i.tutorialMode) { tM = GameManager.i.Refs.tutorialManager.GetComponent<TutorialManager>(); }
 
         alienSpeedCurrent = alienSpeedBase;
 
@@ -43,7 +41,7 @@ public abstract partial class Ufo : MonoBehaviour
             playerShip2 = GameObject.FindGameObjectWithTag("Player 2");
         }
         // If alien ship is called during level transition, it destroys itself
-        if (gM.CheckIfEndOfLevel() && !ufoTeleporting) {
+        if (GameManager.i.CheckIfEndOfLevel() && !ufoTeleporting) {
             print("UFO attempted to spawn during level transition");
             Destroy(gameObject);
         }

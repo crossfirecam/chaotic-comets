@@ -17,14 +17,12 @@ public partial class TutorialManager : MonoBehaviour
     [Header("References")]
     private Player player;
     public PlayerMain player1;
-    private GameManager gM;
     private UfoFollower ufoFollower;
     public GameObject[] popups;
 
     private void Start()
     {
         player = ReInput.players.GetPlayer(0);
-        gM = FindObjectOfType<GameManager>();
         player1.power = 0;
         player1.plrUiSound.UpdatePointDisplays();
 

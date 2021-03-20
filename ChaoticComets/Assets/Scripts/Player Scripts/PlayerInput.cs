@@ -38,8 +38,8 @@ public class PlayerInput : MonoBehaviour {
                 // If shields are 0, check if player is dead, then if there are enough lives to attempt a respawn. Only allow this if game is unpaused.
                 if (p.shields == 0)
                 {
-                    if ((p.playerNumber == 0 ? p.gM.player1dead : p.gM.player2dead)
-                        && p.gM.playerLives >= 1)
+                    if ((p.playerNumber == 0 ? GameManager.i.player1dead : GameManager.i.player2dead)
+                        && GameManager.i.playerLives >= 1)
                     {
                         p.plrSpawnDeath.ShipChoseToRespawn();
                     }
@@ -61,7 +61,7 @@ public class PlayerInput : MonoBehaviour {
     {
         // If power button is pressed, and level has no asteroids, then proceed (criteria skipped in tutorial mode).
         // Then check if ship has full power with colliders enabled.
-        if (((p.gM.asteroidCount != 0) || p.gM.tutorialMode))
+        if (((GameManager.i.asteroidCount != 0) || GameManager.i.tutorialMode))
         {
             if (p.collisionsCanDamage && p.power == 80)
             {

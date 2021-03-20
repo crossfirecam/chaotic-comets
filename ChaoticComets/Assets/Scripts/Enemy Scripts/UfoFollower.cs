@@ -99,7 +99,7 @@ public class UfoFollower : Ufo
 
     internal void WeaponLogicFollower()
     {
-        if (!(gM.tutorialMode && tM.ufoFollowerDocile))
+        if (!(GameManager.i.tutorialMode && tM.ufoFollowerDocile))
         {
             Vector2 towardPlayer = (player.position - transform.position);
             float angle = Mathf.Atan2(towardPlayer.y, towardPlayer.x) * Mathf.Rad2Deg - 90f;
@@ -118,12 +118,12 @@ public class UfoFollower : Ufo
     {
         // Choose a player to target
         float randomFloat = Random.Range(0.0f, 1f);
-        if (randomFloat >= 0.5f && !gM.player1dead && !gM.player1TEMPDEAD)
+        if (randomFloat >= 0.5f && !GameManager.i.player1dead && !GameManager.i.player1TEMPDEAD)
         {
             player = GameObject.FindWithTag("Player").transform;
             direction = (player.position - transform.position);
         }
-        else if (randomFloat <= 0.49f && !gM.player2dead && !gM.player2TEMPDEAD)
+        else if (randomFloat <= 0.49f && !GameManager.i.player2dead && !GameManager.i.player2TEMPDEAD)
         {
             player = GameObject.FindWithTag("Player 2").transform;
             direction = (player.position - transform.position);

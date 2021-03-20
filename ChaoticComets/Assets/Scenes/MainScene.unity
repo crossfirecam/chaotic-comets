@@ -40635,7 +40635,7 @@ PrefabInstance:
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: instantkillAsteroids
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
@@ -40862,11 +40862,6 @@ MonoBehaviour:
   plrRespawnOverlayObjects:
   - {fileID: 389748940}
   - {fileID: 985902064}
-  panelPauseMenu: {fileID: 1061111377}
-  buttonWhenPaused: {fileID: 40200585}
-  buttonWhenLeavingPauseBugFix: {fileID: 1266671739}
-  pauseAutoSaveWarningText: {fileID: 1989055857}
-  pauseCheatMenu: {fileID: 427970269}
   panelCongrats: {fileID: 1428264771}
   panelTutorialChoice: {fileID: 459934446}
   buttonWhenTutorialChoice: {fileID: 1199954055}
@@ -40874,4 +40869,9 @@ MonoBehaviour:
   panelGameOverAlt: {fileID: 670418416}
   buttonWhenGameOver: {fileID: 875127378}
   buttonWhenGameOverAlt: {fileID: 278387450}
+  panelPauseMenu: {fileID: 1061111377}
+  buttonWhenPaused: {fileID: 40200585}
+  buttonWhenLeavingPauseBugFix: {fileID: 1266671739}
+  pauseAutoSaveWarningText: {fileID: 1989055857}
+  pauseCheatMenu: {fileID: 427970269}
   fadeBlack: {fileID: 1315207910}

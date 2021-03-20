@@ -16,7 +16,7 @@ public class PlayerMisc : MonoBehaviour
     internal void OtherStartFunctions()
     {
         // If tutorial mode, then ignore all start functions. Else, go ahead.
-        if (!p.gM.tutorialMode)
+        if (!GameManager.i.tutorialMode)
         {
             // If spaceship object was resumed from savefile, ask savefile
             if (BetweenScenes.ResumingFromSave)
@@ -51,13 +51,13 @@ public class PlayerMisc : MonoBehaviour
 
     private void HandlePlayerLifeStates()
     {
-        bool[] tempGMLifeStates = { p.gM.player1dead, p.gM.player2dead };
+        bool[] tempGMLifeStates = { GameManager.i.player1dead, GameManager.i.player2dead };
 
         // If one player is dead... disable their model/colliders, then tell GameManager the player is dead.
         if (tempGMLifeStates[p.playerNumber] == true)
         {
             p.plrSpawnDeath.PretendShipDoesntExist();
-            p.gM.GetComponent<GameManager>().PlayerDied(p.playerNumber);
+            GameManager.i.PlayerDied(p.playerNumber);
         }
         //// If a player has died, but brought to life by another player, they'll have >1 life and 0 shields. Give revived player 80 shields.
         //else if (tempGMLifeStates[plrToSet] == true && p.shields == 0)

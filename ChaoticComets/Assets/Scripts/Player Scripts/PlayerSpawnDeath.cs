@@ -26,7 +26,7 @@ public class PlayerSpawnDeath : MonoBehaviour
                 p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.AutoBrake);
 
             // If in tutorial mode, do not remove rapid shot (only section where player can die with a powerup)
-            if (!p.gM.tutorialMode)
+            if (!GameManager.i.tutorialMode)
                 p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.RapidShot);
 
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.TripleShot);
@@ -35,16 +35,16 @@ public class PlayerSpawnDeath : MonoBehaviour
         }
         p.shields = 0;
         p.power = 0;
-        if (p.gM.playerLives != 0) // Only remove a life from the counter if the players have at least one to spare.
+        if (GameManager.i.playerLives != 0) // Only remove a life from the counter if the players have at least one to spare.
         {
             p.plrUiSound.prevshields = 80; Invoke(nameof(RespawnShip), 3f);
-            p.gM.playerLives--;
+            GameManager.i.playerLives--;
         }
         else // If life counter is 0 when a player dies, they've depleted the life counter and need to stay dead
         {
-            p.gM.PlayerDied(p.playerNumber);
+            GameManager.i.PlayerDied(p.playerNumber);
             UiManager.i.ShowPlayerRespawnOverlay(p.playerNumber, true);
-            UiManager.i.SetPlayerRespawnStatus(p.playerNumber, p.gM.playerLives);
+            UiManager.i.SetPlayerRespawnStatus(p.playerNumber, GameManager.i.playerLives);
         }
         p.plrUiSound.UpdatePointDisplays();
 
@@ -53,21 +53,21 @@ public class PlayerSpawnDeath : MonoBehaviour
 
         PretendShipDoesntExist();
         p.plrAbility.ResetPowerMeter();
-        p.gM.PlayerLostLife(p.playerNumber);
+        GameManager.i.PlayerLostLife(p.playerNumber);
     }
 
     public void ShipIsRecovering()
     {
         if (p.shields < 80 && p.shields > 0)
         {
-            p.gM.ShowRechargeText();
+            GameManager.i.ShowRechargeText();
             StartCoroutine(nameof(RecoveringTimer));
         }
     }
 
     public void RespawnShip()
     {
-        if (p.gM.playerLives >= 0 || p.gM.tutorialMode)
+        if (GameManager.i.playerLives >= 0 || GameManager.i.tutorialMode)
         {
             // If difficulty is Easy, equip Auto-Brake every respawn
             if (BetweenScenes.Difficulty == 0)
@@ -82,7 +82,7 @@ public class PlayerSpawnDeath : MonoBehaviour
 
             // If at least one player is dead, place the other in the center of the screen
             // If both players exist, place them apart
-            if (p.gM.player1dead || p.gM.player2dead)
+            if (GameManager.i.player1dead || GameManager.i.player2dead)
                 transform.position = new Vector2(0f, 0f);
             else
             {
@@ -92,9 +92,9 @@ public class PlayerSpawnDeath : MonoBehaviour
 
             // Alert GameManger that their temporary death is over for UFO tracking
             if (p.playerNumber == 0)
-                p.gM.player1TEMPDEAD = false;
+                GameManager.i.player1TEMPDEAD = false;
             else
-                p.gM.player2TEMPDEAD = false;
+                GameManager.i.player2TEMPDEAD = false;
 
             ShipIsNowTransparent(true);
             p.plrMisc.StartCoroutine(p.plrMisc.FadeShip("In", 0.5f));
@@ -149,13 +149,13 @@ public class PlayerSpawnDeath : MonoBehaviour
         if (levelJustStarting)
         {
             UiManager.i.ShowPlayerRespawnOverlay(p.playerNumber, true);
-            UiManager.i.SetPlayerRespawnStatus(p.playerNumber, p.gM.playerLives);
+            UiManager.i.SetPlayerRespawnStatus(p.playerNumber, GameManager.i.playerLives);
         }
     }
 
     internal void ShipChoseToRespawn()
     {
-        p.gM.PlayerChoseToRespawn();
+        GameManager.i.PlayerChoseToRespawn();
         p.shields = 80;
         UiManager.i.ShowPlayerRespawnOverlay(p.playerNumber, false);
         p.plrInput.DelayNewInputs(); // Slight delay so that ship doesn't fire as soon as it respawns

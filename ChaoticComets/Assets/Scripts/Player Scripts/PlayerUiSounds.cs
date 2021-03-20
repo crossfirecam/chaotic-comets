@@ -15,14 +15,14 @@ public class PlayerUiSounds : MonoBehaviour
     public void UpdatePointDisplays()
     {
         // If total credits are higher than bonus threshold, then grant a life
-        if (p.totalCredits > p.bonus && !p.gM.tutorialMode)
+        if (p.totalCredits > p.bonus && !GameManager.i.tutorialMode)
         {
             p.bonus += bonusInterval;
             p.plrPowerups.GrantExtraLife();
         }
 
         UiManager.i.SetPlayerCredits(p.playerNumber, p.credits, p.totalCredits);
-        UiManager.i.SetShipsText(p.gM.playerLives);
+        UiManager.i.SetShipsText(GameManager.i.playerLives);
     }
 
     public GameObject[] ReturnPlayerSounds()

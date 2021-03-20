@@ -4,7 +4,6 @@ using UnityEngine;
 public class PowerupBehaviour : MonoBehaviour {
     
     // General purpose variables
-    public GameManager gM;
     private Renderer rend;
     public GameObject explosion, expirationPop;
     private float timeUntilWarning;
@@ -23,7 +22,6 @@ public class PowerupBehaviour : MonoBehaviour {
     // Set object variables, determine random expiry time, and give random movement. If spawned at end of level, destroy canister
     void Start ()
     {
-        gM = FindObjectOfType<GameManager>();
         rbCanister = GetComponent<Rigidbody2D>();
         rend = GetComponentInChildren<Renderer>();
         GiveRandomMovement();
@@ -31,19 +29,19 @@ public class PowerupBehaviour : MonoBehaviour {
         timeUntilWarning = Random.Range(8f, 12f);
         Invoke(nameof(StartExpiry), timeUntilWarning);
 
-        if (gM.CheckIfEndOfLevel()) { print("Canister attempted to spawn during level transition"); Destroy(gameObject); }
+        if (GameManager.i.CheckIfEndOfLevel()) { print("Canister attempted to spawn during level transition"); Destroy(gameObject); }
     }
 
     // Every frame, check if canister needs to loop screen
     void Update() {
-        gM.CheckScreenWrap(transform, 0f, 0f, 0.5f, 0.5f);
+        GameManager.i.CheckScreenWrap(transform, 0f, 0f, 0.5f, 0.5f);
     }
 
     // Destroy canister when shot by players
     void OnTriggerEnter2D(Collider2D triggerObject) {
         if (triggerObject.gameObject.CompareTag("bullet") || triggerObject.gameObject.CompareTag("bullet2")) {
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
-            gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
+            GameManager.i.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
             triggerObject.enabled = false;
             Destroy(triggerObject.GetComponentInChildren<ParticleSystem>());
             Destroy(triggerObject.gameObject, 5f);
@@ -83,7 +81,7 @@ public class PowerupBehaviour : MonoBehaviour {
         }
         GameObject newPop = Instantiate(expirationPop, transform.position, transform.rotation);
         Destroy(newPop, 2f);
-        gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
+        GameManager.i.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
         Destroy(gameObject);
     }
 }

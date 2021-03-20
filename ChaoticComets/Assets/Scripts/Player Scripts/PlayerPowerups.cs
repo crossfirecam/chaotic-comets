@@ -16,7 +16,7 @@ public class PlayerPowerups : MonoBehaviour
     internal void GivePowerup()
     {
         // If in the tutorial, a collected canister will only ever give the first demo, TripleShot
-        if (p.gM.tutorialMode)
+        if (GameManager.i.tutorialMode)
         {
             ApplyPowerup(Powerups.TripleShot);
             return;
@@ -75,7 +75,7 @@ public class PlayerPowerups : MonoBehaviour
     }
     private void PowerupDecided()
     {
-        p.gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
+        GameManager.i.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
         powerupUndecided = false;
     }
 
@@ -191,7 +191,7 @@ public class PlayerPowerups : MonoBehaviour
 
     public void GrantExtraLife()
     {
-        p.gM.PlayerGainedLife();
+        GameManager.i.PlayerGainedLife();
         p.plrUiSound.audioShipSFX.clip = lifeGained;
         p.plrUiSound.audioShipSFX.Play();
         p.plrUiSound.UpdatePointDisplays();

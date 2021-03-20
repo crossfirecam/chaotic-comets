@@ -14,7 +14,7 @@ public abstract partial class Ufo : MonoBehaviour
     {
         if (playerBullet.gameObject.CompareTag("bullet") || playerBullet.gameObject.CompareTag("bullet2"))
         {
-            if (gM.tutorialMode && tM.ufoFollowerDocile)
+            if (GameManager.i.tutorialMode && tM.ufoFollowerDocile)
             {
                 FlickShieldOn();
                 ReflectBullet(playerBullet);
@@ -100,7 +100,7 @@ public abstract partial class Ufo : MonoBehaviour
         if (shootingDelay < 1.3f) { shootingDelay = 1.3f; }
         if (alienSpeed > 1.6f) { alienSpeed = 1.6f; }
         if (alienMaxHealth > 90f) { alienMaxHealth = 90f; }*/
-        gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.AlienRespawn);
+        GameManager.i.AlienAndPowerupLogic(GameManager.PropSpawnReason.AlienRespawn);
         Destroy(gameObject);
     }
 

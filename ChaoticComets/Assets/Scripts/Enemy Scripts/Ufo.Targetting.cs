@@ -32,14 +32,14 @@ public abstract partial class Ufo : MonoBehaviour
         if (timer > 2f)
         {
             Vector3 savedPosition = transform.position;
-            gM.CheckScreenWrap(transform);
+            GameManager.i.CheckScreenWrap(transform);
 
             if (savedPosition != transform.position)
             {
                 if (!doesDespawnAtEdge) { timer = 0; }
 
                 // If UFO is Passer, kill the UFO when it reaches the edge, unless retreating
-                if (doesDespawnAtEdge && savedPosition.x > gM.screenRight && !ufoRetreating)
+                if (doesDespawnAtEdge && savedPosition.x > GameManager.i.screenRight && !ufoRetreating)
                 {
                     DeathRoutine();
                 }

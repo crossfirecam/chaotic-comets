@@ -4,7 +4,6 @@ public class AsteroidBehaviour : MonoBehaviour {
 
     // General purpose variables
     public bool debugMode = false;
-    private GameManager gM;
     public int points;
     private bool beenHit = false;
 
@@ -29,7 +28,7 @@ public class AsteroidBehaviour : MonoBehaviour {
     
     void Update ()
     {
-        gM.CheckScreenWrap(transform, 0f, 0f, 0.5f, 0.5f);
+        GameManager.i.CheckScreenWrap(transform, 0f, 0f, 0.5f, 0.5f);
     }
 
     void OnTriggerEnter2D(Collider2D otherObject) {
@@ -64,12 +63,12 @@ public class AsteroidBehaviour : MonoBehaviour {
                 {
                     Instantiate(asteroidType, transform.position, transform.rotation);
                 }
-                gM.UpdateNumberAsteroids(asteroidAmount - 1);
+                GameManager.i.UpdateNumberAsteroids(asteroidAmount - 1);
             }
             // Small asteroids and ones with DebugMode enabled simply remove 1 from asteroid count
             else
             {
-                gM.UpdateNumberAsteroids(-1);
+                GameManager.i.UpdateNumberAsteroids(-1);
             }
             // After being hit, original asteroid disappears. Destroy parent gameobject
             Destroy(transform.parent.gameObject);
@@ -86,6 +85,5 @@ public class AsteroidBehaviour : MonoBehaviour {
         rbAsteroid = GetComponent<Rigidbody2D>();
         playerShip1 = GameObject.FindWithTag("Player");
         playerShip2 = GameObject.FindWithTag("Player 2");
-        gM = FindObjectOfType<GameManager>();
     }
 }

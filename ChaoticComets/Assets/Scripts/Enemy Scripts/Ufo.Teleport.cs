@@ -13,7 +13,14 @@ public abstract partial class Ufo : MonoBehaviour
         alienSpeedCurrent = alienSpeedBase * retreatSpeedMultiplier; // Reverse direction
         ufoRetreating = true;
         forceField.SetActive(true);
-        Invoke(nameof(TeleportStart), 3f);
+        Invoke(nameof(TeleportStartFromInvoke), 3f);
+    }
+
+    // TODO Temporary bodge to allow Unity to invoke TeleportStart().
+    // Even though the parameter on the function is entirely optional, Unity still insists on not allowing Invoke() to call it, since it can't handle parameters at all.
+    private void TeleportStartFromInvoke()
+    {
+        TeleportStart();
     }
 
     // If the UFO is in a visible area of the screen and not dying, then start the teleport sequence.
@@ -21,7 +28,7 @@ public abstract partial class Ufo : MonoBehaviour
     public void TeleportStart(bool forceLeaveEndOfLevel = false)
     {
         if (UfoIsInVisibleArea() ||
-            (gM.tutorialMode && alienHealth == 70) || // Exception for Tutorial popup 12, the Red UFO teleports immediately
+            (GameManager.i.tutorialMode && alienHealth == 70) || // Exception for Tutorial popup 12, the Red UFO teleports immediately
             forceLeaveEndOfLevel == true)             // Exception for end of level, UFO will teleport immediately to avoid hurting player during ending sequence
         {
             if (!deathStarted)
@@ -41,7 +48,9 @@ public abstract partial class Ufo : MonoBehaviour
             }
         }
         else
-            Invoke(nameof(TeleportStart), 1f);
+        {
+            Invoke(nameof(TeleportStartFromInvoke), 1f);
+        }
     }
 
     // Fade the ship's material color as it teleports
@@ -78,13 +87,13 @@ public abstract partial class Ufo : MonoBehaviour
     {
         if (!deathStarted)
         {
-            if (!gM.tutorialMode)
+            if (!GameManager.i.tutorialMode)
             {
-                gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.AlienRespawn);
+                GameManager.i.AlienAndPowerupLogic(GameManager.PropSpawnReason.AlienRespawn);
             }
             else
             {
-                gM.Refs.tutorialManager.GetComponent<TutorialManager>().ufoGone = true;
+                GameManager.i.Refs.tutorialManager.GetComponent<TutorialManager>().ufoGone = true;
             }
             Destroy(gameObject);
         }
@@ -145,9 +154,9 @@ public abstract partial class Ufo : MonoBehaviour
     private bool UfoIsInVisibleArea()
     {
         print("Checking if UFO is in visible area. Attempt #" + teleAttempts);
-        if (transform.position.x > gM.screenLeft + teleBorderOffset && transform.position.x < gM.screenRight - teleBorderOffset)
+        if (transform.position.x > GameManager.i.screenLeft + teleBorderOffset && transform.position.x < GameManager.i.screenRight - teleBorderOffset)
         {
-            if (transform.position.y > gM.screenBottom + teleBorderOffset && transform.position.y < gM.screenTop - teleBorderOffset)
+            if (transform.position.y > GameManager.i.screenBottom + teleBorderOffset && transform.position.y < GameManager.i.screenTop - teleBorderOffset)
             {
                 return true;
             }

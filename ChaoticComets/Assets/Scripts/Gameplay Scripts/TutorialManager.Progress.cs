@@ -28,15 +28,15 @@ public partial class TutorialManager : MonoBehaviour
 
                 if (!taskSetupDone)
                 {
-                    gM.SpawnProp(GameManager.PropType.Asteroid, default, true); // Spawn safe asteroid
+                    GameManager.i.SpawnProp(GameManager.PropType.Asteroid, default, true); // Spawn safe asteroid
                     player1.collisionsCanDamage = false;
                     taskSetupDone = true;
                 }
-                ContinueIf(gM.asteroidCount > 1);
+                ContinueIf(GameManager.i.asteroidCount > 1);
                 break;
 
             case 5: // Asteroids 2
-                ContinueIf(gM.asteroidCount == 0 || player.GetButtonDown("Ability"));
+                ContinueIf(GameManager.i.asteroidCount == 0 || player.GetButtonDown("Ability"));
                 break;
 
             case 6: // Shields
@@ -62,7 +62,7 @@ public partial class TutorialManager : MonoBehaviour
             case 8: // Canteen
                 if (!taskSetupDone)
                 {
-                    gM.SpawnProp(GameManager.PropType.Canister);
+                    GameManager.i.SpawnProp(GameManager.PropType.Canister);
                     taskSetupDone = true;
                 }
                 ContinueIf(player1.plrPowerups.ifTripleShot);
@@ -111,7 +111,7 @@ public partial class TutorialManager : MonoBehaviour
                     player1.collisionsCanDamage = true;
                     playerCreditsBefore = player1.credits;
                     player1.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.AutoBrake);
-                    gM.SpawnProp(GameManager.PropType.UfoPasser);
+                    GameManager.i.SpawnProp(GameManager.PropType.UfoPasser);
                     taskSetupDone = true;
                 }
                 if (player1.credits > playerCreditsBefore && !ufoHit)
@@ -127,7 +127,7 @@ public partial class TutorialManager : MonoBehaviour
                 if (!taskSetupDone)
                 {
                     ufoHit = false; ufoGone = false; ufoFollowerDocile = true;
-                    gM.SpawnProp(GameManager.PropType.UfoFollower);
+                    GameManager.i.SpawnProp(GameManager.PropType.UfoFollower);
                     ufoFollower = FindObjectOfType<UfoFollower>();
                     taskSetupDone = true;
                 }
@@ -205,18 +205,18 @@ public partial class TutorialManager : MonoBehaviour
         {
             if (!safeAsteroids)
             {
-                gM.SpawnProp(GameManager.PropType.Asteroid);
+                GameManager.i.SpawnProp(GameManager.PropType.Asteroid);
             }
             else
             {
-                gM.SpawnProp(GameManager.PropType.Asteroid, default, true);
+                GameManager.i.SpawnProp(GameManager.PropType.Asteroid, default, true);
             }
         }
     }
 
     private void ResetAsteroidsIfZero(bool safeAsteroids)
     {
-        if (gM.asteroidCount == 0)
+        if (GameManager.i.asteroidCount == 0)
         {
             CreateAsteroids(3, safeAsteroids);
         }
@@ -228,7 +228,7 @@ public partial class TutorialManager : MonoBehaviour
         {
             Destroy(asteroid.gameObject);
         }
-        gM.asteroidCount = 0;
+        GameManager.i.asteroidCount = 0;
     }
 
     private IEnumerator ReplaceUfoFollower()
@@ -238,7 +238,7 @@ public partial class TutorialManager : MonoBehaviour
             ufoFollower.TeleportStart();
             yield return new WaitForSeconds(3);
         }
-        gM.SpawnProp(GameManager.PropType.UfoFollower);
+        GameManager.i.SpawnProp(GameManager.PropType.UfoFollower);
         ufoFollower = FindObjectOfType<UfoFollower>();
 
         ufoFollowerDocile = false;
