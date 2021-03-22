@@ -88,8 +88,5 @@ public partial class GameManager : MonoBehaviour
         return false;
     }
 
-    // If a ship has less than full shields, show the text say shields are being recharged
-    public void ShowRechargeText() { Refs.gameLevelShieldRechargeText.SetActive(true); }
-
 
 }

@@ -60,7 +60,7 @@ public class PlayerSpawnDeath : MonoBehaviour
     {
         if (p.shields < 80 && p.shields > 0)
         {
-            GameManager.i.ShowRechargeText();
+            UiManager.i.ShowRechargeText();
             StartCoroutine(nameof(RecoveringTimer));
         }
     }

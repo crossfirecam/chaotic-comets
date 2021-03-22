@@ -64,7 +64,7 @@ public partial class GameManager : MonoBehaviour
     {
         if (BetweenScenes.PlayerCount == 2)
         {
-            Refs.player2GUI.SetActive(true);
+            UiManager.i.ShowP2UI();
             Refs.playerShip2.gameObject.SetActive(true);
             player2dead = false;
         }
@@ -94,13 +94,8 @@ public partial class GameManager : MonoBehaviour
 public class GameManagerHiddenVars
 {
     [Header("Tutorial References")]
-    public AudioClip musicTutorial;
     public GameObject tutorialManager;
     public GameObject largeAsteroidSafeProp;
-
-    [Header("UI References")]
-    public GameObject gameLevelShieldRechargeText;
-    public GameObject player2GUI;
 
     [Header("Prop References")]
     public Transform propParent;

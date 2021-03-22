@@ -20,6 +20,9 @@ public partial class TutorialManager : MonoBehaviour
     private UfoFollower ufoFollower;
     public GameObject[] popups;
 
+    private static TutorialManager _i;
+    public static TutorialManager i { get { if (_i == null) _i = FindObjectOfType<TutorialManager>(); return _i; } }
+
     private void Start()
     {
         player = ReInput.players.GetPlayer(0);

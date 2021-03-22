@@ -14,7 +14,7 @@ public abstract partial class Ufo : MonoBehaviour
     {
         if (playerBullet.gameObject.CompareTag("bullet") || playerBullet.gameObject.CompareTag("bullet2"))
         {
-            if (GameManager.i.tutorialMode && tM.ufoFollowerDocile)
+            if (GameManager.i.tutorialMode && TutorialManager.i.ufoFollowerDocile)
             {
                 FlickShieldOn();
                 ReflectBullet(playerBullet);

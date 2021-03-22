@@ -93,7 +93,7 @@ public abstract partial class Ufo : MonoBehaviour
             }
             else
             {
-                GameManager.i.Refs.tutorialManager.GetComponent<TutorialManager>().ufoGone = true;
+                TutorialManager.i.ufoGone = true;
             }
             Destroy(gameObject);
         }

@@ -83,4 +83,15 @@ public partial class UiManager : MonoBehaviour
 
         Debug.Log($"Plr {playerNum + 1} {(playerLives == 0 ? "cannot" : "can")} respawn");
     }
+
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Player UI - Show 2nd Player UI
+     * ------------------------------------------------------------------------------------------------------------------ */
+    [SerializeField] private GameObject player2GUI;
+
+    public void ShowP2UI()
+    {
+        player2GUI.SetActive(true);
+    }
 }

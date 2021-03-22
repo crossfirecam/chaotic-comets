@@ -20,7 +20,6 @@ public abstract partial class Ufo : MonoBehaviour
     [Header("Other Variables / References")]
     public GameObject bullet;
     public GameObject deathExplosion, playerBulletExplosion, teleportEffect;
-    internal TutorialManager tM;
     internal bool deathStarted = false, ufoTeleporting = false, ufoRetreating = false;
     public GameObject forceField;
     public GameObject playerShip1, playerShip2;
@@ -31,7 +30,6 @@ public abstract partial class Ufo : MonoBehaviour
     internal virtual void Start()
     {
         rb = FindObjectOfType<Rigidbody2D>();
-        if (GameManager.i.tutorialMode) { tM = GameManager.i.Refs.tutorialManager.GetComponent<TutorialManager>(); }
 
         alienSpeedCurrent = alienSpeedBase;
 

@@ -40599,6 +40599,11 @@ PrefabInstance:
       objectReference: {fileID: 955625160}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
+      propertyPath: tutorialManager
+      value: 
+      objectReference: {fileID: 2046260824}
+    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
+        type: 3}
       propertyPath: Refs.playerShip1
       value: 
       objectReference: {fileID: 1146411255}
@@ -40862,7 +40867,9 @@ MonoBehaviour:
   plrRespawnOverlayObjects:
   - {fileID: 389748940}
   - {fileID: 985902064}
+  player2GUI: {fileID: 47752220}
   panelCongrats: {fileID: 1428264771}
+  gameLevelShieldRechargeText: {fileID: 958112309}
   panelTutorialChoice: {fileID: 459934446}
   buttonWhenTutorialChoice: {fileID: 1199954055}
   panelGameOver: {fileID: 372029258}

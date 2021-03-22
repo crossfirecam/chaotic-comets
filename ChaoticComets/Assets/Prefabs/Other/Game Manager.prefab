@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a64b9a0b7529f1408767e5ace0c7f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLives: 2
   player1dead: 0
   player2dead: 1
   player1TEMPDEAD: 0
@@ -52,26 +53,11 @@ MonoBehaviour:
   tutorialMode: 0
   asteroidCount: 0
   levelNo: 0
-  playerLives: 2
   Refs:
     musicTutorial: {fileID: 8300000, guid: 656934a71c7296a4296afca257d5ce9b, type: 3}
     tutorialManager: {fileID: 0}
-    tutorialChoicePanel: {fileID: 0}
-    waveText: {fileID: 0}
-    buttonWhenTutorialChoice: {fileID: 0}
     largeAsteroidSafeProp: {fileID: 1158260402081020, guid: c709e894203e8034ba9c16948a871155,
       type: 3}
-    gameLevelShieldRechargeText: {fileID: 0}
-    fadeBlack: {fileID: 0}
-    player2GUI: {fileID: 0}
-    gameOverPanel: {fileID: 0}
-    gameOverPanelAlt: {fileID: 0}
-    gamePausePanel: {fileID: 0}
-    gameLevelPanel: {fileID: 0}
-    buttonWhenPaused: {fileID: 0}
-    buttonWhenGameOver: {fileID: 0}
-    buttonWhenGameOverAlt: {fileID: 0}
-    buttonWhenLeavingPauseBugFix: {fileID: 0}
     propParent: {fileID: 0}
     playerShip1: {fileID: 0}
     playerShip2: {fileID: 0}

@@ -169,11 +169,10 @@ public partial class TutorialManager : MonoBehaviour
             case 17: // Teleport
                 if (!taskSetupDone)
                 {
-                    player1.power = 80;
                     DestroyAllAsteroids();
                     taskSetupDone = true;
                 }
-                ContinueIf(player.GetButtonDown("Ability") && player1.shields == 80);
+                ContinueIf(player.GetButtonDown("Ability") && player1.power == 80);
                 break;
 
             case 18: // End
@@ -249,7 +248,7 @@ public partial class TutorialManager : MonoBehaviour
     private IEnumerator SetUpPopup16()
     {
         if (!ufoFollower.deathStarted)
-            ufoFollower.TeleportStart(); ufoFollowerDocile = true;
+            ufoFollower.TeleportStart(true); ufoFollowerDocile = true;
         yield return new WaitForSeconds(3);
         while (player1.shields == 0)
         {

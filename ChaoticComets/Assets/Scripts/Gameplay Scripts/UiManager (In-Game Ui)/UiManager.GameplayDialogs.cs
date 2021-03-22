@@ -9,10 +9,17 @@ public partial class UiManager : MonoBehaviour
      * ------------------------------------------------------------------------------------------------------------------ */
     [Header("Congrats Dialog UI")]
     [SerializeField] private GameObject panelCongrats;
+    [SerializeField] private GameObject gameLevelShieldRechargeText;
     public void LevelCompleted()
     {
         panelCongrats.SetActive(true);
         StartCoroutine(FadeScreenBlack("to"));
+    }
+
+    // If a ship has less than full shields, show the text say shields are being recharged
+    public void ShowRechargeText()
+    {
+        gameLevelShieldRechargeText.SetActive(true);
     }
 
     /* ------------------------------------------------------------------------------------------------------------------

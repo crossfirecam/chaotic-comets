@@ -99,7 +99,7 @@ public class UfoFollower : Ufo
 
     internal void WeaponLogicFollower()
     {
-        if (!(GameManager.i.tutorialMode && tM.ufoFollowerDocile))
+        if (!(GameManager.i.tutorialMode && TutorialManager.i.ufoFollowerDocile))
         {
             Vector2 towardPlayer = (player.position - transform.position);
             float angle = Mathf.Atan2(towardPlayer.y, towardPlayer.x) * Mathf.Rad2Deg - 90f;

@@ -47,11 +47,11 @@ public partial class GameManager : MonoBehaviour
             }
             else if (reason == PropSpawnReason.AlienRespawn)
             {
-                if (Refs.tutorialManager.GetComponent<TutorialManager>().popUpIndex == 12)
+                if (TutorialManager.i.popUpIndex == 12)
                 {
                     SpawnProp(PropType.UfoPasser);
                 }
-                else if (Refs.tutorialManager.GetComponent<TutorialManager>().popUpIndex == 15)
+                else if (TutorialManager.i.popUpIndex == 15)
                 {
                     SpawnProp(PropType.UfoFollower);
                 }

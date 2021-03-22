@@ -16,11 +16,10 @@ public class PlayerAbility : MonoBehaviour
         teleportIn = gameObject.transform.Find("TeleportParticlesIn").gameObject;
         teleportOut = gameObject.transform.Find("TeleportParticlesOut").gameObject;
     }
-#pragma warning disable IDE0051 // HyperSpace isn't directly called, used by an Invoke
+
     private void Hyperspace()
-#pragma warning restore IDE0051
     {
-        // Initiate local newPosition, and pick new position depending on what screen the player is using (game or help screen)
+        // Initiate local newPosition, and pick new position
         Vector2 newPosition;
         newPosition = new Vector2(Random.Range(-7.4f, -2.6f), Random.Range(-4.0f, 1.2f));
 
@@ -37,14 +36,33 @@ public class PlayerAbility : MonoBehaviour
     {
         teleportOut.SetActive(true);
         p.power = 0;
-        for (int powerTick = 0; powerTick <= 80; powerTick++)
+
+        // If not in tutorial, recharge power meter
+        if (GameManager.i.tutorialMode == false)
         {
-            p.power = powerTick;
-            yield return new WaitForSeconds(0.15f);
+            for (int powerTick = 0; powerTick <= 80; powerTick++)
+            {
+                p.power = powerTick;
+                yield return new WaitForSeconds(0.15f);
+            }
+            p.power = 80f;
+        }
+        // If in tutorial (popup 17/18), recharge power meter faster
+        else if (TutorialManager.i.popUpIndex >= 17)
+        {
+            for (int powerTick = 0; powerTick <= 80; powerTick++)
+            {
+                p.power = powerTick;
+                yield return new WaitForSeconds(0.03f);
+            }
+            p.power = 80f;
+        }
+        // If in tutorial (not popup 17), don't recharge power meter after death
+        else
+        {
+            yield return new WaitForSeconds(2f);
         }
         teleportOut.SetActive(false);
-        p.power = 80f;
-        StopCoroutine(nameof(TeleportOutTimer));
     }
 
     internal void ResetPowerMeter()
