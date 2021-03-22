@@ -52,6 +52,7 @@ public partial class ShopScript : MonoBehaviour {
         for (int i = 0; i < BetweenScenes.PlayerCount; i++)
         {
             PrepareUI(i);
+            ShopRefs.plrShipsText.text = "Ships: " + data.lives;
             BetweenScenes.PlayerShopUpgrades[i] = data.playerList[i].upgrades;
         }
         // In single player mode, say that P2 is ready and move P1's buttons to the center
@@ -63,8 +64,8 @@ public partial class ShopScript : MonoBehaviour {
         // If save is in cheater mode, change some details
         if (BetweenScenes.CheaterMode)
         {
-            ShopRefs.gamePausePanel.transform.Find("PauseDialog").Find("AutoSaveText").GetComponent<Text>().text = "In Cheat Mode, progress is not saved.\nCheat buttons aren't available in the Depot.";
-            ShopRefs.gamePausePanel.transform.Find("PauseDialog").Find("AutoSaveText").GetComponent<Text>().color = Color.red;
+            ShopRefs.autoSaveWarningText.text = "In Cheat Mode, progress is not saved.\nCheat buttons aren't available in the Depot.";
+            ShopRefs.autoSaveWarningText.color = Color.red;
             saveDisclaimer.text = "<u>Progress not saved</u>\nGame is in Cheat Mode.";
         }
 
@@ -144,6 +145,7 @@ public class ShopManagerHiddenVars
     public GameObject[][] listOfPlrPowerups = new GameObject[2][];
     public Image[] listOfPlrShieldBars, listOfPlrAbilityBars;
     public TextMeshProUGUI[] listOfPlrScoreText, listOfPlrTotalScoreText;
+    public TextMeshProUGUI plrShipsText;
 
     [Header("Shop UI References")]
     public TextMeshProUGUI readyPromptText;
@@ -157,4 +159,5 @@ public class ShopManagerHiddenVars
     [Header("Other References")]
     public GameObject musicManagerIfNotFoundInScene;
     public GameObject fadeBlack, player2GUI, saveFailedPanel, mouseWarningPanel;
+    public Text autoSaveWarningText;
 }

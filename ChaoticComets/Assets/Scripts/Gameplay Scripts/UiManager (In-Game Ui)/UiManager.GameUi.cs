@@ -24,7 +24,7 @@ public partial class UiManager : MonoBehaviour
     }
     public void SetBonusText(int bonus)
     {
-        gameUiBonus.text = "Bonus: " + bonus;
+        gameUiBonus.text = "Time Bonus: " + bonus;
     }
 
 

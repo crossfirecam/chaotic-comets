@@ -13,6 +13,7 @@ public partial class ShopScript : MonoBehaviour
     {
         ShopRefs.listOfPlrShieldBars[plrToPrep].fillAmount = data.playerList[plrToPrep].health / 80;
         ShopRefs.listOfPlrTotalScoreText[plrToPrep].text = "T: " + data.playerList[plrToPrep].totalCredits;
+        ShopRefs.plrShipsText.text = "Ships: " + data.lives;
         BetweenScenes.PlayerShopCredits[plrToPrep] = data.playerList[plrToPrep].credits;
         BetweenScenes.PlayerShopLives = data.lives;
         for (int i = 0; i < 5; i++)

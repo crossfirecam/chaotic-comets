@@ -4,6 +4,8 @@ using UnityEngine;
 
 public partial class GameManager : MonoBehaviour
 {
+    private const int bonusPerAsteroid = 500;
+
     private void CheckIfResumingFromSave()
     {
         if (BetweenScenes.ResumingFromSave)
@@ -38,5 +40,20 @@ public partial class GameManager : MonoBehaviour
     public bool AutoSaveWarnShouldHide()
     {
         return levelNo == 0 || levelNo == 1 || tutorialMode;
+    }
+
+    private IEnumerator BonusCounter()
+    {
+        bonusValue = bonusPerAsteroid * asteroidCount;
+        for (int i = bonusValue; i >= 0; i -= 10)
+        {
+            if (asteroidCount == 0)
+            {
+                break;
+            }
+            bonusValue = i;
+            UiManager.i.SetBonusText(bonusValue);
+            yield return new WaitForSeconds(1f);
+        }
     }
 }

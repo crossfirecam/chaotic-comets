@@ -26,7 +26,11 @@ public partial class GameManager : MonoBehaviour
 
         // Asteroid number depends on level number. Iterated in SpawnProp()
         asteroidCount = 0;
-        for (int i = 0; i < levelNo + 1; i++) { SpawnProp(PropType.Asteroid); }
+        int asteroidCap = (levelNo + 3) / 2;
+        for (int i = 0; i < asteroidCap; i++)
+        {
+            SpawnProp(PropType.Asteroid);
+        }
         yield return new WaitForSeconds(0.01f);
 
         // Player Respawn
@@ -48,6 +52,8 @@ public partial class GameManager : MonoBehaviour
         // Set when the first UFO and canister will spawn
         AlienAndPowerupLogic(PropSpawnReason.AlienFirst);
         AlienAndPowerupLogic(PropSpawnReason.CanisterFirst);
+
+        StartCoroutine(nameof(BonusCounter));
     }
 
     /* ------------------------------------------------------------------------------------------------------------------

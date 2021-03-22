@@ -7828,6 +7828,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1691290452}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1691290454 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5885844595168307918, guid: 3ef336a4f496d9e489a4cd13a389d173,
+    type: 3}
+  m_PrefabInstance: {fileID: 1691290452}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1699276468 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1648475796410713837, guid: 3ed67a39bb1bf9542844702498b29d7c,
@@ -9308,6 +9320,7 @@ MonoBehaviour:
     listOfPlrTotalScoreText:
     - {fileID: 1138855737}
     - {fileID: 2020280916}
+    plrShipsText: {fileID: 1691290454}
     readyPromptText: {fileID: 646591905}
     plrAboveReadyBtns:
     - {fileID: 981841476}
@@ -9325,6 +9338,7 @@ MonoBehaviour:
     player2GUI: {fileID: 660043388}
     saveFailedPanel: {fileID: 898476507}
     mouseWarningPanel: {fileID: 151928997}
+    autoSaveWarningText: {fileID: 1174955047254772756}
   saveDisclaimer: {fileID: 246136125}
 --- !u!4 &2119128600
 Transform:
