@@ -53,8 +53,8 @@ MonoBehaviour:
   tutorialMode: 0
   asteroidCount: 0
   levelNo: 0
+  bonusValue: 0
   Refs:
-    musicTutorial: {fileID: 8300000, guid: 656934a71c7296a4296afca257d5ce9b, type: 3}
     tutorialManager: {fileID: 0}
     largeAsteroidSafeProp: {fileID: 1158260402081020, guid: c709e894203e8034ba9c16948a871155,
       type: 3}

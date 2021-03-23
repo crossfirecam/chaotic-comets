@@ -161,7 +161,7 @@ public partial class GameManager : MonoBehaviour
         asteroidCount += change;
         if (asteroidCount == 0 && !tutorialMode)
         {
-            Invoke(nameof(EndLevelFanFare), 2f);
+            Invoke(nameof(EndLevelFanFare), 1f);
         }
     }
 

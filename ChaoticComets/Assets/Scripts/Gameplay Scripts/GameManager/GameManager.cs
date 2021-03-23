@@ -17,6 +17,7 @@ public partial class GameManager : MonoBehaviour
     [Header("General purpose variables")]
     public int asteroidCount;
     public int levelNo = 0, bonusValue = 0;
+    private const int bonusPerAsteroid = 200;
     internal float screenTop = 8.5f, screenBottom = -7.5f, screenLeft = -15f, screenRight = 15f;
     private MusicManager musicManager;
 

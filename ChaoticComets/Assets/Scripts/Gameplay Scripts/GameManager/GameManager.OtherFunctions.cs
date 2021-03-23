@@ -4,7 +4,6 @@ using UnityEngine;
 
 public partial class GameManager : MonoBehaviour
 {
-    private const int bonusPerAsteroid = 500;
 
     private void CheckIfResumingFromSave()
     {
@@ -44,7 +43,7 @@ public partial class GameManager : MonoBehaviour
 
     private IEnumerator BonusCounter()
     {
-        bonusValue = bonusPerAsteroid * asteroidCount;
+        bonusValue = 300 + (bonusPerAsteroid * asteroidCount);
         for (int i = bonusValue; i >= 0; i -= 10)
         {
             if (asteroidCount == 0)

@@ -65,9 +65,14 @@ public partial class GameManager : MonoBehaviour
     {
         if (!player1dead || !player2dead)
         {
+            float waitTime = 1f;
             GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
-            foreach (GameObject ufo in listOfUfos) { ufo.GetComponent<Ufo>().TeleportStart(true); }
-            Invoke(nameof(EndLevelFanFare2), 2.5f);
+            if (listOfUfos.Length != 0)
+            {
+                foreach (GameObject ufo in listOfUfos) { ufo.GetComponent<Ufo>().TeleportStart(true); }
+                waitTime = 2f;
+            }
+            Invoke(nameof(EndLevelFanFare2), waitTime);
         }
     }
     private void EndLevelFanFare2()
@@ -75,8 +80,8 @@ public partial class GameManager : MonoBehaviour
         // Player Shield Recovery
         if (!player1dead) { Refs.playerShip1.plrSpawnDeath.ShipIsRecovering(); }
         if (!player2dead) { Refs.playerShip2.plrSpawnDeath.ShipIsRecovering(); }
-        UiManager.i.LevelCompleted();
-        Invoke(nameof(BringUpShop), 3f);
+        UiManager.i.LevelCompleted(bonusValue);
+        // Shop scene will open after 2 second wait, bonus counter, another 2 second wait
     }
 
     // Leaves Main scene and brings up the shop

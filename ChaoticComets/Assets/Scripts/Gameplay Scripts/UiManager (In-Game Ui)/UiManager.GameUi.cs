@@ -7,6 +7,7 @@ public partial class UiManager : MonoBehaviour
     /* ------------------------------------------------------------------------------------------------------------------
      * Game State UI - Wave, Ships, Bonus counters in lower middle of screen.
      * ------------------------------------------------------------------------------------------------------------------ */
+    [SerializeField] private AudioSource gameUiBonusAudSrc;
     [SerializeField] private TextMeshProUGUI gameUiWave, gameUiShips, gameUiBonus;
 
     public void SetWaveText(int wave)
@@ -22,9 +23,24 @@ public partial class UiManager : MonoBehaviour
         if (ships <= -1) // Tutorial Mode
             gameUiShips.text = "Ships: Inf.";
     }
+
+    private bool firstBonusSound = true;
     public void SetBonusText(int bonus)
     {
+        // Change sound effect pitch. Alternate between two of them.
+        if ((bonus / 10) % 2 == 0)
+            gameUiBonusAudSrc.pitch = 0.4f;
+        else
+            gameUiBonusAudSrc.pitch = 0.6f;
+
+        // Don't play sound effect when text first appears
+        if (!firstBonusSound)
+            gameUiBonusAudSrc.Play();
+        else
+            firstBonusSound = false;
+
         gameUiBonus.text = "Time Bonus: " + bonus;
+
     }
 
 
