@@ -98,7 +98,8 @@ public class PlayerSpawnDeath : MonoBehaviour
 
             ShipIsNowTransparent(true);
             p.plrMisc.StartCoroutine(p.plrMisc.FadeShip("In", 0.5f));
-            p.plrAbility.StartCoroutine("TeleportOutTimer");
+            p.plrAbility.StartCoroutine("TeleportOutEffect");
+            p.plrAbility.StartCoroutine("RechargePowerMeter");
             StartCoroutine(nameof(InvulnTimer));
         }
     }

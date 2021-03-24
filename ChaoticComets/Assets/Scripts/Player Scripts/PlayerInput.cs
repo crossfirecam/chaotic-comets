@@ -65,9 +65,7 @@ public class PlayerInput : MonoBehaviour {
         {
             if (p.collisionsCanDamage && p.power == 80)
             {
-                p.plrAbility.teleportIn.SetActive(true);
-                p.plrMisc.StartCoroutine(p.plrMisc.FadeShip("Out"));
-                p.plrAbility.Invoke("Hyperspace", 2f);
+                p.plrAbility.HyperspaceStart();
             }
         }
     }

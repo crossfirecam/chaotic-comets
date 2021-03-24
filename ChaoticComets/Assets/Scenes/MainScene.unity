@@ -15222,6 +15222,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114782296946591882, guid: 5cf0dc9415eb8e742aece150306297e5,
         type: 3}
+      propertyPath: power
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114782296946591882, guid: 5cf0dc9415eb8e742aece150306297e5,
+        type: 3}
       propertyPath: playerNumber
       value: 0
       objectReference: {fileID: 0}
