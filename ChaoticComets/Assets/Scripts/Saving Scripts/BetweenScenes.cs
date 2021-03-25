@@ -1,6 +1,6 @@
 ﻿public static class BetweenScenes {
     // Defaut value of 1 player for debugging. Alternative is '2'.
-    public static int PlayerCount = 1;
+    public static int PlayerCount = 2;
     // Default value of Normal difficulty for debugging. Alternatives are '0' Easy, and '2' Hard.
     public static int Difficulty = 1;
 

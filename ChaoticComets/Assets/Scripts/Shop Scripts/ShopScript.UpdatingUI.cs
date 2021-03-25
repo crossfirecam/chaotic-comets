@@ -27,7 +27,7 @@ public partial class ShopScript : MonoBehaviour
 
         if (plrToPrep == 1)
         {
-            ShopRefs.player2GUI.SetActive(true);
+            //ShopRefs.player2GUI.SetActive(true);
             ShopRefs.readyPromptText.text = $"Both players 'Ready' to continue to Level {data.level + 1}...";
         }
     }
@@ -38,89 +38,19 @@ public partial class ShopScript : MonoBehaviour
      * ------------------------------------------------------------------------------------------------------------------ */
     private void Player1OnlyGUI()
     {
-        Button[] listOfButtons = FindObjectsOfType<Button>();
-        foreach (Button button in listOfButtons)
-        {
-            Transform btnTra = button.transform;
-            if (btnTra.name.StartsWith("P1"))
-            {
-                float tempY = btnTra.localPosition.y + 30;
-                btnTra.localPosition = new Vector3(430, tempY);
-            }
-            if (btnTra.name.EndsWith("Transfer"))
-            {
-                button.gameObject.SetActive(false);
-            }
-        }
-        TextMeshProUGUI[] listOfTextBoxes = FindObjectsOfType<TextMeshProUGUI>();
-        foreach (TextMeshProUGUI text in listOfTextBoxes)
-        {
-            Transform txtTra = text.transform;
-            if (txtTra.name == "P1UpgradesTitle")
-            {
-                txtTra.localPosition = new Vector3(430, 7);
-                continue;
-            }
-            if (txtTra.name == "UpgLifeTransfer")
-                txtTra.gameObject.SetActive(false);
-
-            else if (txtTra.name.StartsWith("Upg"))
-            {
-                float tempY = txtTra.localPosition.y + 30;
-                txtTra.localPosition = new Vector3(-144, tempY);
-            }
-        }
+        // TODO Remove divider and shift Shop UI over if only in 1 Player Mode
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
-     * InitialiseButtonText - Find all buttons with changeable text, and set their text values
+     * MainButtonHovered - Change what's shown on the purchasing panel when a button is hovered over.
      * ------------------------------------------------------------------------------------------------------------------ */
-    private List<Button> listOfAllButtons = new List<Button>();
-    private List<Button> listOfFilteredButtons = new List<Button>();
-    private void InitialiseButtonText()
+    public void MainButtonHovered(int plrIndex)
     {
-        // If filtered button list is empty, fill it with updatable buttons
-        if (!listOfFilteredButtons.Any()) {
-            listOfAllButtons = FindObjectsOfType<Button>().ToList();
-            foreach (Button button in listOfAllButtons)
-            {
-                // The list-populating is exclusion-based because most of the desired buttons end in different single digits
-                // These unwanted buttons are for a UI selection bug, checking for mouse input, and readying the players respectively
-                if (!button.name.EndsWith("FixButton") && !button.name.EndsWith("Check") && !button.name.EndsWith("Ready"))
-                {
-                    listOfFilteredButtons.Add(button);
-                }
-            }
-        }
-        foreach (Button button in listOfFilteredButtons)
-        {
-            int plrIndex = int.Parse(button.name[1].ToString()) - 1;
-            // Update the button's text based on BetweenScenes variables.
-            UpdateButtonUpgrade(plrIndex, button);
-        }
-    }
+        // Find button pressed, turn the last character in the name into an integer
+        Button buttonHovered = ShopRefs.plrEventSystems[plrIndex].currentSelectedGameObject.GetComponent<Button>();
+        int whichHovered = int.Parse(buttonHovered.name.Last().ToString());
 
-    /* ------------------------------------------------------------------------------------------------------------------
-     * Button Update Functions - Change a single upgrade or transfer button's text
-     * ------------------------------------------------------------------------------------------------------------------ */
-    private void UpdateButtonUpgrade(int plrIndex, Button button)
-    {
-        // Buttons are passed to this function are upgrade buttons, their final char will be int-compatible
-        int upgrade = int.Parse(button.name.Last().ToString());
-        int currentUpgradeTier = BetweenScenes.PlayerShopUpgrades[plrIndex][upgrade];
-
-        // Determine price for the upgrade
-        int tierComparedToBase = currentUpgradeTier - 10;
-        int priceForUpgrade = baseUpgradePrice + (priceIncreasePerLevel * tierComparedToBase);
-
-        // Set text for button
-        string tierInDecimalForm = currentUpgradeTier.ToString().Insert(currentUpgradeTier.ToString().Length - 1, ".");
-        button.GetComponentInChildren<Text>().text = $"Current: x{tierInDecimalForm}\n({priceForUpgrade}c to Upgrade)";
-        if (currentUpgradeTier == upgradeCap)
-        {
-            button.GetComponentInChildren<Text>().text = $"Current: x{tierInDecimalForm}\n(Max upgrade)";
-        }
-        UpdatePlayerCounters(plrIndex);
+        ShopRefs.plrPurchasePanels[plrIndex].SetTextElements(whichHovered);
     }
 
     /* ------------------------------------------------------------------------------------------------------------------

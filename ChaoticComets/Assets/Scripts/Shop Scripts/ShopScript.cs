@@ -73,8 +73,8 @@ public partial class ShopScript : MonoBehaviour {
         StartCoroutine(DelayedReady());
 
         PlayMusicIfEnabled();
-        InitialiseButtonText();
         StartCoroutine(FadeBlack("from"));
+        LoadInButtonArrays();
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
@@ -151,6 +151,7 @@ public class ShopManagerHiddenVars
     public TextMeshProUGUI readyPromptText;
     public Button[] plrAboveReadyBtns;
     public Button[] plrReadyBtns;
+    public PurchasePanel[] plrPurchasePanels;
 
     [Header("Event System References")]
     public EventSystem pauseEventSystem;
