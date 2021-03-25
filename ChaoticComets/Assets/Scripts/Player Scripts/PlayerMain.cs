@@ -15,8 +15,8 @@ public class PlayerMain : MonoBehaviour {
     private float nextDamagePossible = 0.0F;
     [SerializeField] internal bool collisionsCanDamage;
     internal float highDamageThreshold = 6f;
-    private const float minTimeBetweenDamage = 0.15f;
-    private const float damageFromHardImpact = 60f, damageFromNormalImpact = 30f;
+    private const float minTimeBetweenDamage = 0.05f;
+    internal float damageFromImpact = 30f;
 
     [Header("Player Scripts")]
     internal PlayerInput plrInput = default;
@@ -63,22 +63,16 @@ public class PlayerMain : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.CompareTag("asteroid") || col.gameObject.CompareTag("ufo")) {
             // Slightly push spaceship away from collided object, whether invulnerable or not. UFO pushback stacks with this
-            Vector2 force = gameObject.transform.position - col.transform.position;
-            int magnitude = 30;
-            gameObject.GetComponent<Rigidbody2D>().AddForce(force * magnitude);
+            //Vector2 force = gameObject.transform.position - col.transform.position;
+            //int magnitude = 30;
+            //gameObject.GetComponent<Rigidbody2D>().AddForce(force * magnitude);
 
             if (collisionsCanDamage && Time.time > nextDamagePossible) {
                 nextDamagePossible = Time.time + minTimeBetweenDamage;
                 if (col.gameObject.CompareTag("asteroid")) { col.gameObject.GetComponent<AsteroidBehaviour>().AsteroidWasHit(); }
-                // If ship rams hard enough, deal more damage
-                if (col.relativeVelocity.magnitude > highDamageThreshold) {
-                    plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactHard;
-                    shields -= damageFromHardImpact;
-                }
-                else {
-                    plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactSoft;
-                    shields -= damageFromNormalImpact;
-                }
+
+                plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactSoft;
+                shields -= damageFromImpact;
                 if (shields <= 0)
                 {
                     plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxDeath;
