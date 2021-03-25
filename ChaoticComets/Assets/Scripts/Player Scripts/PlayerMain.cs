@@ -13,9 +13,10 @@ public class PlayerMain : MonoBehaviour {
 
     [Header("Impacts, Death, Respawning")]
     private float nextDamagePossible = 0.0F;
-    internal bool collisionsCanDamage;
+    [SerializeField] internal bool collisionsCanDamage;
     internal float highDamageThreshold = 6f;
-    private readonly float minTimeBetweenDamage = 0.15f;
+    private const float minTimeBetweenDamage = 0.15f;
+    private const float damageFromHardImpact = 60f, damageFromNormalImpact = 30f;
 
     [Header("Player Scripts")]
     internal PlayerInput plrInput = default;
@@ -63,7 +64,7 @@ public class PlayerMain : MonoBehaviour {
         if (col.gameObject.CompareTag("asteroid") || col.gameObject.CompareTag("ufo")) {
             // Slightly push spaceship away from collided object, whether invulnerable or not. UFO pushback stacks with this
             Vector2 force = gameObject.transform.position - col.transform.position;
-            int magnitude = 40;
+            int magnitude = 30;
             gameObject.GetComponent<Rigidbody2D>().AddForce(force * magnitude);
 
             if (collisionsCanDamage && Time.time > nextDamagePossible) {
@@ -72,11 +73,11 @@ public class PlayerMain : MonoBehaviour {
                 // If ship rams hard enough, deal more damage
                 if (col.relativeVelocity.magnitude > highDamageThreshold) {
                     plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactHard;
-                    shields -= 30f;
+                    shields -= damageFromHardImpact;
                 }
                 else {
                     plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactSoft;
-                    shields -= 20f;
+                    shields -= damageFromNormalImpact;
                 }
                 if (shields <= 0)
                 {

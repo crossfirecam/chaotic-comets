@@ -9792,10 +9792,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p: {fileID: 114782296946591882}
   bulletForce: 500
-  rapidFireBetweenBullets: 0.1
-  fireRateRapid: 1
+  rapidFireBetweenBullets: 0.06
+  fireRateRapid: 1.4
+  fireRateRapidWithTriple: 2
   fireRateTriple: 0.7
-  fireRateNormal: 0.45
+  fireRateTripleQuickFire: 0.4
+  fireRateNormalHeld: 0.4
+  fireRateNormalQuickFire: 0.1
   bullet: {fileID: 1298484566697936, guid: 9c85a0c3106c44c46847d29b3c795192, type: 3}
 --- !u!114 &1146411264
 MonoBehaviour:

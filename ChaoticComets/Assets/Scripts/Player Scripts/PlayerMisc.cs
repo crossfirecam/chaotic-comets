@@ -76,9 +76,9 @@ public class PlayerMisc : MonoBehaviour
 
         // Bullet force and fire rate are affected by multipliers purchased from the shop
         p.plrWeapons.bulletForce *= upgradeShotSpeed;
-        p.plrWeapons.fireRateNormal /= upgradeFireRate;
+        p.plrWeapons.fireRateNormalHeld /= upgradeFireRate;
         p.plrWeapons.fireRateRapid /= upgradeFireRate;
-        p.plrWeapons.fireRateTriple /= upgradeFireRate;
+        p.plrWeapons.fireRateTripleHeld /= upgradeFireRate;
 
         // Thrust and brake efficiency are affected by multipliers purchased from the shop
         p.plrMovement.thrustPower *= upgradeSpeed;
@@ -119,7 +119,8 @@ public class PlayerMisc : MonoBehaviour
                 }
                 yield return new WaitForSeconds(0.1f);
             }
-            p.collisionsCanDamage = true;
+            if (fadingInEndTransparency == 1f)
+                p.collisionsCanDamage = true;
         }
     }
 }

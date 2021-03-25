@@ -25,13 +25,15 @@ public partial class UiManager : MonoBehaviour
     }
 
     private bool firstBonusSound = true;
+    private float[] pitchesToPlay = { 0.6f, 0.5f, 0.4f };
+    private int currentPitch = 1;
     public void SetBonusText(int bonus)
     {
-        // Change sound effect pitch. Alternate between two of them.
-        if ((bonus / 10) % 2 == 0)
-            gameUiBonusAudSrc.pitch = 0.4f;
-        else
-            gameUiBonusAudSrc.pitch = 0.6f;
+        // Change sound effect pitch. Alternate between four of them.
+        currentPitch += 1;
+        if (currentPitch == 3)
+            currentPitch = 0;
+        gameUiBonusAudSrc.pitch = pitchesToPlay[currentPitch];
 
         // Don't play sound effect when text first appears
         if (!firstBonusSound)

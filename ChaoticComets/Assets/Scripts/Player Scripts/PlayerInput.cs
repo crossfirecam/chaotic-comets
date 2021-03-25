@@ -1,4 +1,5 @@
 ﻿using Rewired;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -24,25 +25,28 @@ public class PlayerInput : MonoBehaviour {
             turnInput = player.GetAxis("Rotate");
             thrustInput = player.GetAxis("Move");
 
-            // If fire button is pressed or held, and ship is not teleporting, not dead, and able to fire, then fire
-            if (player.GetButton("Shoot"))
-            {
-                if (isNotTeleporting && p.shields != 0 && Time.time > p.plrWeapons.nextFire)
-                {
-                    p.plrWeapons.FiringLogic();
-                }
-            }
 
             if (player.GetButtonDown("Shoot"))
             {
                 // If shields are 0, check if player is dead, then if there are enough lives to attempt a respawn. Only allow this if game is unpaused.
                 if (p.shields == 0)
                 {
-                    if ((p.playerNumber == 0 ? GameManager.i.player1dead : GameManager.i.player2dead)
-                        && GameManager.i.playerLives >= 1)
+                    if (ValidTimeToRespawn())
                     {
                         p.plrSpawnDeath.ShipChoseToRespawn();
                     }
+                }
+                else if (ValidTimeToFire(p.plrWeapons.nextFireQuickFire))
+                {
+                    p.plrWeapons.FiringLogic();
+                }
+            }
+            // If fire button is pressed or held, and ship is not teleporting, not dead, and able to fire, then fire
+            else if (player.GetButton("Shoot"))
+            {
+                if (ValidTimeToFire(p.plrWeapons.nextFire))
+                {
+                    p.plrWeapons.FiringLogic();
                 }
             }
 
@@ -80,5 +84,16 @@ public class PlayerInput : MonoBehaviour {
     public void SwapToP2InputForTutorial()
     {
         player = ReInput.players.GetPlayer(1); // Force 2P controls for tutorial
+    }
+
+    private bool ValidTimeToFire(float nextValidFiringTime)
+    {
+        return isNotTeleporting && p.shields != 0 && Time.time > nextValidFiringTime;
+    }
+
+    private bool ValidTimeToRespawn()
+    {
+        bool playerIsDead = p.playerNumber == 0 ? GameManager.i.player1dead : GameManager.i.player2dead;
+        return playerIsDead && GameManager.i.playerLives >= 1;
     }
 }
