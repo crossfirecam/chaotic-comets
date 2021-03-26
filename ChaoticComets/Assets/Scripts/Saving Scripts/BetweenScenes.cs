@@ -17,17 +17,16 @@
     // Cheats been activated this round
     public static bool CheaterMode = false;
 
-    // Below are integer arrays that will be turned into floats when used in Spaceship gameobjects.
-    // This is because iterating on floats causes counting errors eventually.
-    // 10 = 1.0, or the base of upgrades. They'll be iterated by 1 (converted to 0.1 float) each time an upgrade is performed.
-    // In order, upgrades are: Top speed, braking efficiency, fire rate, shot speed.
+    // Upgrades for the players. These values are only committed to a save once the current shop and next wave are passed.
+    // In order, upgrades are: Brake Power, Teleport Rate, Auto Firerate, Munitions Firerate, Shot Speed, Shot Range.
     public static int[][] PlayerShopUpgrades = new int[2][] {
-        new int[] { 10, 10, 10, 10 },
-        new int[] { 10, 10, 10, 10 }
+        new int[] { 0, 0, 0, 0, 0, 0 },
+        new int[] { 0, 0, 0, 0, 0, 0 }
     };
 
     // Credits and life counter are tracked here, because shop allows players to refund by leaving and coming back.
     // These values aren't committed to the save until the time the next level ends.
     public static int[] PlayerShopCredits = { 0, 0 };
+    public static float[] PlayerShopShields = { 0, 0 };
     public static int PlayerShopLives = 0;
 }

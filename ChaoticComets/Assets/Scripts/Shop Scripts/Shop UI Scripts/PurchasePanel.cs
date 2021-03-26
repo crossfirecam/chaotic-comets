@@ -7,9 +7,16 @@ using TMPro;
 public class PurchasePanel : MonoBehaviour
 {
     [SerializeField] private int plrIndex, purchaseIndex;
-    [SerializeField] private TextMeshProUGUI titleText, descText, subDescText, upgradeBtnText;
+    [SerializeField] private TextMeshProUGUI titleText, descText, subDescText, upgradeBtnText, cancelBtnText;
     [SerializeField] private Button upgradeBtn, cancelBtn;
+    private int selectedUpgradeTier, selectedPurchasePrice;
 
+    private readonly int baseUpgradePrice = 500, priceIncreasePerLevel = 750, upgradeCap = 15;
+
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Purchase Panel opening and closing.
+     * ------------------------------------------------------------------------------------------------------------------ */
     public void PurchasePanelOpened(EventSystemShop eventSystem)
     {
         upgradeBtn.interactable = true;
@@ -22,31 +29,72 @@ public class PurchasePanel : MonoBehaviour
         cancelBtn.interactable = false;
     }
 
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Updating UI elements in the Purchase Panel
+     * ------------------------------------------------------------------------------------------------------------------ */
     public void SetTextElements(int buttonHovered)
     {
         purchaseIndex = buttonHovered;
+        if (purchaseIndex <= 5)
+            selectedUpgradeTier = BetweenScenes.PlayerShopUpgrades[plrIndex][purchaseIndex];
         titleText.text = purchasePanelTitleStrings[purchaseIndex];
         descText.text = purchasePanelDescStrings[purchaseIndex];
+        SetSubDescText();
         SetUpgradeButtonText();
+    }
+
+    private void SetSubDescText()
+    {
+        switch (purchaseIndex)
+        {
+            case 8: // Ready Button
+                subDescText.text = "";
+                break;
+            case 7: // Buy Extra Ship
+                string pluralOrNot = BetweenScenes.PlayerShopLives == 1 ? "" : "s";
+                subDescText.text = "Currently: " + BetweenScenes.PlayerShopLives + " Ship" + pluralOrNot;
+                break;
+            case 6: // Charge Shields
+                subDescText.text = "Currently: " + (BetweenScenes.PlayerShopShields[plrIndex] / 10) + "/8 Cells";
+                break;
+            default: // All upgradable stats use a +10% modifier.
+                subDescText.text = "Currently: +" + (selectedUpgradeTier * 10) + "%";
+                break;
+        }
     }
 
     private void SetUpgradeButtonText()
     {
-        //// Buttons are passed to this function are upgrade buttons, their final char will be int-compatible
-        //int currentUpgradeTier = BetweenScenes.PlayerShopUpgrades[plrIndex][upgrade];
+        cancelBtnText.text = "Cancel";
+        switch (purchaseIndex)
+        {
+            case 8: // Ready Button
+                upgradeBtnText.text = "";
+                cancelBtnText.text = "";
+                break;
+            case 7: // Buy Extra Ship
+                selectedPurchasePrice = 2500;
+                upgradeBtnText.text = "+1 Ship\n(2500c)";
+                break;
+            case 6: // Charge Shields
+                selectedPurchasePrice = 200;
+                upgradeBtnText.text = "+1 Shield Cell\n(200c)";
+                break;
+            default: // All upgradable stats use a +10% modifier.
+                selectedPurchasePrice = baseUpgradePrice + (priceIncreasePerLevel * selectedUpgradeTier);
+                upgradeBtnText.text = $"+10% Modifier\n({selectedPurchasePrice}c)";
+                break;
+        }
+    }
 
-        //// Determine price for the upgrade
-        //int tierComparedToBase = currentUpgradeTier - 10;
-        //int priceForUpgrade = baseUpgradePrice + (priceIncreasePerLevel * tierComparedToBase);
+    /* ------------------------------------------------------------------------------------------------------------------
+     * Purchasing something.
+     * ------------------------------------------------------------------------------------------------------------------ */
+    
+    public void AttemptPurchase()
+    {
 
-        //// Set text for button
-        //string tierInDecimalForm = currentUpgradeTier.ToString().Insert(currentUpgradeTier.ToString().Length - 1, ".");
-        //button.GetComponentInChildren<Text>().text = $"Current: x{tierInDecimalForm}\n({priceForUpgrade}c to Upgrade)";
-        //if (currentUpgradeTier == upgradeCap)
-        //{
-        //    button.GetComponentInChildren<Text>().text = $"Current: x{tierInDecimalForm}\n(Max upgrade)";
-        //}
-        //UpdatePlayerCounters(plrIndex);
     }
 
     /* ------------------------------------------------------------------------------------------------------------------

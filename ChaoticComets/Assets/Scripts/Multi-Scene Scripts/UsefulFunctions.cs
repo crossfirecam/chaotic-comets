@@ -75,7 +75,7 @@ public class UsefulFunctions : MonoBehaviour
         BetweenScenes.ResumingFromSave = false;
         BetweenScenes.TutorialMode = false;
         BetweenScenes.CheaterMode = false;
-        BetweenScenes.PlayerShopUpgrades[0] = new int[] { 10, 10, 10, 10 };
-        BetweenScenes.PlayerShopUpgrades[1] = new int[] { 10, 10, 10, 10 };
+        BetweenScenes.PlayerShopUpgrades[0] = new int[] { 0, 0, 0, 0, 0, 0 };
+        BetweenScenes.PlayerShopUpgrades[1] = new int[] { 0, 0, 0, 0, 0, 0 };
     }
 }

@@ -68,21 +68,21 @@ public class PlayerMisc : MonoBehaviour
 
     private void SetUpgradeLevelsForPlayer()
     {
-        // Set the current upgrade level for Player
-        upgradeSpeed = BetweenScenes.PlayerShopUpgrades[p.playerNumber][0] / 10f;
-        upgradeBrake = BetweenScenes.PlayerShopUpgrades[p.playerNumber][1] / 10f;
-        upgradeFireRate = BetweenScenes.PlayerShopUpgrades[p.playerNumber][2] / 10f;
-        upgradeShotSpeed = BetweenScenes.PlayerShopUpgrades[p.playerNumber][3] / 10f;
+        //// Set the current upgrade level for Player
+        //upgradeSpeed = BetweenScenes.PlayerShopUpgrades[p.playerNumber][0] / 10f;
+        //upgradeBrake = BetweenScenes.PlayerShopUpgrades[p.playerNumber][1] / 10f;
+        //upgradeFireRate = BetweenScenes.PlayerShopUpgrades[p.playerNumber][2] / 10f;
+        //upgradeShotSpeed = BetweenScenes.PlayerShopUpgrades[p.playerNumber][3] / 10f;
 
-        // Bullet force and fire rate are affected by multipliers purchased from the shop
-        p.plrWeapons.bulletForce *= upgradeShotSpeed;
-        p.plrWeapons.fireRateNormalHeld /= upgradeFireRate;
-        p.plrWeapons.fireRateRapid /= upgradeFireRate;
-        p.plrWeapons.fireRateTripleHeld /= upgradeFireRate;
+        //// Bullet force and fire rate are affected by multipliers purchased from the shop
+        //p.plrWeapons.bulletForce *= upgradeShotSpeed;
+        //p.plrWeapons.fireRateNormalHeld /= upgradeFireRate;
+        //p.plrWeapons.fireRateRapid /= upgradeFireRate;
+        //p.plrWeapons.fireRateTripleHeld /= upgradeFireRate;
 
-        // Thrust and brake efficiency are affected by multipliers purchased from the shop
-        p.plrMovement.thrustPower *= upgradeSpeed;
-        p.plrMovement.manualBrakePower *= upgradeBrake;
+        //// Thrust and brake efficiency are affected by multipliers purchased from the shop
+        //p.plrMovement.thrustPower *= upgradeSpeed;
+        //p.plrMovement.manualBrakePower *= upgradeBrake;
 
         p.plrUiSound.UpdatePointDisplays();
     }

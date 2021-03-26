@@ -87,31 +87,31 @@ public partial class ShopScript : MonoBehaviour
     /* ------------------------------------------------------------------------------------------------------------------
     * Upgrade Button - A button can only pass one variable. Passes which player pressed it, and figures out which one was pressed in code.
     * ------------------------------------------------------------------------------------------------------------------ */
-    public void PerformUpgrade(int plrIndex)
-    {
-        // Find button pressed, turn the last character in the name into an integer
-        Button buttonUpgrading = ShopRefs.plrEventSystems[plrIndex].currentSelectedGameObject.GetComponent<Button>();
-        int whichUpgrade = int.Parse(buttonUpgrading.name.Last().ToString());
+    //public void PerformUpgrade(int plrIndex)
+    //{
+    //    // Find button pressed, turn the last character in the name into an integer
+    //    Button buttonUpgrading = ShopRefs.plrEventSystems[plrIndex].currentSelectedGameObject.GetComponent<Button>();
+    //    int whichUpgrade = int.Parse(buttonUpgrading.name.Last().ToString());
 
-        // If the upgrade hasn't reached the upgrade cap, then attempt the upgrade
-        // If it can be afforded, perform it. If not, flash the credits text red
-        if (BetweenScenes.PlayerShopUpgrades[plrIndex][whichUpgrade] < upgradeCap)
-        {
-            int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenes.PlayerShopUpgrades[plrIndex][whichUpgrade] - 10);
-            if (BetweenScenes.PlayerShopCredits[plrIndex] >= price)
-            {
-                buttonUpgrading.GetComponent<AudioSource>().Play();
-                BetweenScenes.PlayerShopUpgrades[plrIndex][whichUpgrade] += 1;
-                BetweenScenes.PlayerShopCredits[plrIndex] -= price;
-                print($"Upgrades: {string.Join(",", BetweenScenes.PlayerShopUpgrades[plrIndex])} Credits left: {BetweenScenes.PlayerShopCredits[plrIndex]}");
-                //UpdateButtonUpgrade(plrIndex, buttonUpgrading);
-            }
-            else
-            {
-                StartCoroutine(FlashCreditsRed(plrIndex));
-            }
-        }
-    }
+    //    // If the upgrade hasn't reached the upgrade cap, then attempt the upgrade
+    //    // If it can be afforded, perform it. If not, flash the credits text red
+    //    if (BetweenScenes.PlayerShopUpgrades[plrIndex][whichUpgrade] < upgradeCap)
+    //    {
+    //        int price = baseUpgradePrice + priceIncreasePerLevel * (BetweenScenes.PlayerShopUpgrades[plrIndex][whichUpgrade] - 10);
+    //        if (BetweenScenes.PlayerShopCredits[plrIndex] >= price)
+    //        {
+    //            buttonUpgrading.GetComponent<AudioSource>().Play();
+    //            BetweenScenes.PlayerShopUpgrades[plrIndex][whichUpgrade] += 1;
+    //            BetweenScenes.PlayerShopCredits[plrIndex] -= price;
+    //            print($"Upgrades: {string.Join(",", BetweenScenes.PlayerShopUpgrades[plrIndex])} Credits left: {BetweenScenes.PlayerShopCredits[plrIndex]}");
+    //            //UpdateButtonUpgrade(plrIndex, buttonUpgrading);
+    //        }
+    //        else
+    //        {
+    //            StartCoroutine(FlashCreditsRed(plrIndex));
+    //        }
+    //    }
+    //}
 
     /* ------------------------------------------------------------------------------------------------------------------
     * Stat Flashing Methods - Gives player feedback if not enough credits or lives to perform an action.

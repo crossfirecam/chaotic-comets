@@ -16,6 +16,7 @@ public partial class ShopScript : MonoBehaviour
         ShopRefs.plrShipsText.text = "Ships: " + data.lives;
         BetweenScenes.PlayerShopCredits[plrToPrep] = data.playerList[plrToPrep].credits;
         BetweenScenes.PlayerShopLives = data.lives;
+        BetweenScenes.PlayerShopShields[plrToPrep] = data.playerList[plrToPrep].health;
         for (int i = 0; i < 5; i++)
         {
             if (data.playerList[plrToPrep].powerups[i] == 1)
