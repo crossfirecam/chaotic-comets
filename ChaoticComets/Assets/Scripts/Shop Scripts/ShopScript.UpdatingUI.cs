@@ -11,12 +11,12 @@ public partial class ShopScript : MonoBehaviour
      * ------------------------------------------------------------------------------------------------------------------ */
     private void PrepareUI(int plrToPrep)
     {
-        ShopRefs.listOfPlrShieldBars[plrToPrep].fillAmount = data.playerList[plrToPrep].health / 80;
-        ShopRefs.listOfPlrTotalScoreText[plrToPrep].text = "T: " + data.playerList[plrToPrep].totalCredits;
-        ShopRefs.plrShipsText.text = "Ships: " + data.lives;
         BetweenScenes.PlayerShopCredits[plrToPrep] = data.playerList[plrToPrep].credits;
         BetweenScenes.PlayerShopLives = data.lives;
         BetweenScenes.PlayerShopShields[plrToPrep] = data.playerList[plrToPrep].health;
+
+        UpdatePlayerUI(plrToPrep);
+        ShopRefs.listOfPlrTotalScoreText[plrToPrep].text = "T: " + data.playerList[plrToPrep].totalCredits;
         for (int i = 0; i < 5; i++)
         {
             if (data.playerList[plrToPrep].powerups[i] == 1)
@@ -28,7 +28,7 @@ public partial class ShopScript : MonoBehaviour
 
         if (plrToPrep == 1)
         {
-            //ShopRefs.player2GUI.SetActive(true);
+            ShopRefs.player2GUI.SetActive(true);
             ShopRefs.readyPromptText.text = $"Both players 'Ready' to continue to Level {data.level + 1}...";
         }
     }
@@ -51,14 +51,16 @@ public partial class ShopScript : MonoBehaviour
         Button buttonHovered = ShopRefs.plrEventSystems[plrIndex].currentSelectedGameObject.GetComponent<Button>();
         int whichHovered = int.Parse(buttonHovered.name.Last().ToString());
 
-        ShopRefs.plrPurchasePanels[plrIndex].SetTextElements(whichHovered);
+        ShopRefs.plrPurchasePanels[plrIndex].OnMainAreaButtonHover(whichHovered);
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
-     * UpdatePlayerCounters - After any button edit, update text of player's credits, and both player's lives
+     * UpdatePlayerCounters - After any button edit, update text of player's credits
      * ------------------------------------------------------------------------------------------------------------------ */
-    private void UpdatePlayerCounters(int plrIndex)
+    private void UpdatePlayerUI(int plrIndex)
     {
-        ShopRefs.listOfPlrScoreText[plrIndex].text = BetweenScenes.PlayerShopCredits[plrIndex] + "c";
+        ShopRefs.listOfPlrScoreText[plrIndex].text = BetweenScenes.PlayerShopCredits[plrIndex] + "¢";
+        ShopRefs.plrShipsText.text = "Ships: " + BetweenScenes.PlayerShopLives;
+        ShopRefs.listOfPlrShieldBars[plrIndex].fillAmount = BetweenScenes.PlayerShopShields[plrIndex] / 80;
     }
 }

@@ -10,8 +10,9 @@ public class PurchasePanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI titleText, descText, subDescText, upgradeBtnText, cancelBtnText;
     [SerializeField] private Button upgradeBtn, cancelBtn;
     private int selectedUpgradeTier, selectedPurchasePrice;
+    private bool selectedPurchaseMaxed;
 
-    private readonly int baseUpgradePrice = 500, priceIncreasePerLevel = 750, upgradeCap = 15;
+    private readonly int baseUpgradePrice = 500, priceIncreasePerLevel = 750, upgradeCap = 5;
 
 
     /* ------------------------------------------------------------------------------------------------------------------
@@ -33,15 +34,47 @@ public class PurchasePanel : MonoBehaviour
     /* ------------------------------------------------------------------------------------------------------------------
      * Updating UI elements in the Purchase Panel
      * ------------------------------------------------------------------------------------------------------------------ */
-    public void SetTextElements(int buttonHovered)
+    public void OnMainAreaButtonHover(int buttonHovered)
     {
         purchaseIndex = buttonHovered;
-        if (purchaseIndex <= 5)
-            selectedUpgradeTier = BetweenScenes.PlayerShopUpgrades[plrIndex][purchaseIndex];
         titleText.text = purchasePanelTitleStrings[purchaseIndex];
         descText.text = purchasePanelDescStrings[purchaseIndex];
+        UpdateTextElements();
+    }
+
+    private void UpdateTextElements()
+    {
+        if (purchaseIndex <= 5)
+            selectedUpgradeTier = BetweenScenes.PlayerShopUpgrades[plrIndex][purchaseIndex];
+        CheckPurchaseValidity();
         SetSubDescText();
         SetUpgradeButtonText();
+    }
+
+    private void CheckPurchaseValidity()
+    {
+        switch (purchaseIndex)
+        {
+            case 7: // Buy Extra Ship
+                selectedPurchasePrice = 2500;
+                break;
+            case 6: // Charge Shields
+                if (BetweenScenes.PlayerShopShields[plrIndex] / 10 == 8)
+                    selectedPurchasePrice = 0;
+                else
+                    selectedPurchasePrice = 200;
+                break;
+            default: // All upgradable stats use a +10% modifier.
+                if (selectedUpgradeTier == upgradeCap)
+                    selectedPurchasePrice = 0;
+                else
+                    selectedPurchasePrice = baseUpgradePrice + (priceIncreasePerLevel * selectedUpgradeTier);
+                break;
+        }
+        if (selectedPurchasePrice == 0)
+            selectedPurchaseMaxed = true;
+        else
+            selectedPurchaseMaxed = false;
     }
 
     private void SetSubDescText()
@@ -74,27 +107,62 @@ public class PurchasePanel : MonoBehaviour
                 cancelBtnText.text = "";
                 break;
             case 7: // Buy Extra Ship
-                selectedPurchasePrice = 2500;
                 upgradeBtnText.text = "+1 Ship\n(2500c)";
                 break;
             case 6: // Charge Shields
-                selectedPurchasePrice = 200;
-                upgradeBtnText.text = "+1 Shield Cell\n(200c)";
+                if (!selectedPurchaseMaxed)
+                    upgradeBtnText.text = "+1 Shield Cell\n(200c)";
+                else
+                    upgradeBtnText.text = "Shields Cells maxed";
                 break;
             default: // All upgradable stats use a +10% modifier.
-                selectedPurchasePrice = baseUpgradePrice + (priceIncreasePerLevel * selectedUpgradeTier);
-                upgradeBtnText.text = $"+10% Modifier\n({selectedPurchasePrice}c)";
+                if (!selectedPurchaseMaxed)
+                    upgradeBtnText.text = $"+10% Modifier\n({selectedPurchasePrice}c)";
+                else
+                    upgradeBtnText.text = "Upgrade maxed";
                 break;
         }
     }
 
-    /* ------------------------------------------------------------------------------------------------------------------
-     * Purchasing something.
-     * ------------------------------------------------------------------------------------------------------------------ */
-    
+    /// <summary>
+    /// Attempts a purchase of upgrade or item for a player in the shop.<br></br>
+    /// 1. Check purchase is not already maxed. (Max upgrade, max shields)<br></br>
+    /// 2. Check if purchase can be afforded by player.<br></br>
+    /// - Success: Check which upgrade it is, perform relevant functions.<br></br>
+    /// - Failure: Flash the player's credit counter red.
+    /// </summary>
     public void AttemptPurchase()
     {
+        if (!selectedPurchaseMaxed)
+        {
+            if (BetweenScenes.PlayerShopCredits[plrIndex] >= selectedPurchasePrice)
+            {
+                if (purchaseIndex <= 5)
+                    BetweenScenes.PlayerShopUpgrades[plrIndex][purchaseIndex] += 1;
+                else if (purchaseIndex == 6)
+                    BetweenScenes.PlayerShopShields[plrIndex] += 10f;
+                else if (purchaseIndex == 7)
+                    BetweenScenes.PlayerShopLives += 1;
 
+                BetweenScenes.PlayerShopCredits[plrIndex] -= selectedPurchasePrice;
+                upgradeBtn.GetComponent<AudioSource>().Play();
+                ShopScript.i.PurchaseSucceeded(plrIndex);
+                UpdateTextElements();
+            }
+            else
+            {
+                ShopScript.i.PurchaseFailed(plrIndex);
+            }
+        }
+    }
+
+    private void PurchaseUpgrade()
+    {
+        if (BetweenScenes.PlayerShopUpgrades[plrIndex][purchaseIndex] < upgradeCap)
+        {
+
+            ShopScript.i.PurchaseSucceeded(plrIndex);
+        }
     }
 
     /* ------------------------------------------------------------------------------------------------------------------

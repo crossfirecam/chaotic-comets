@@ -19,6 +19,8 @@ public partial class ShopScript : MonoBehaviour {
     public ShopManagerHiddenVars ShopRefs;
     public TextMeshProUGUI saveDisclaimer;
 
+    private static ShopScript _i;
+    public static ShopScript i { get { if (_i == null) _i = FindObjectOfType<ShopScript>(); return _i; } }
 
     /* ------------------------------------------------------------------------------------------------------------------
      * Awake & Start - Startup functions
