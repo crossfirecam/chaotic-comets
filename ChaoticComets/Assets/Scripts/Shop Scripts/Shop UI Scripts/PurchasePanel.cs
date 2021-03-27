@@ -7,13 +7,24 @@ using TMPro;
 public class PurchasePanel : MonoBehaviour
 {
     [SerializeField] private int plrIndex, purchaseIndex;
-    [SerializeField] private TextMeshProUGUI titleText, descText, subDescText, upgradeBtnText, cancelBtnText;
-    [SerializeField] private Button upgradeBtn, cancelBtn;
+    private TextMeshProUGUI titleText, descText, subDescText, upgradeBtnText, cancelBtnText;
+    private Button upgradeBtn, cancelBtn;
     private int selectedUpgradeTier, selectedPurchasePrice;
     private bool selectedPurchaseMaxed;
 
     private readonly int baseUpgradePrice = 500, priceIncreasePerLevel = 750, upgradeCap = 5;
 
+    private void Start()
+    {
+        titleText = transform.Find("Title").GetComponent<TextMeshProUGUI>();
+        descText = transform.Find("Desc").GetComponent<TextMeshProUGUI>();
+        subDescText = transform.Find("SubDesc").GetComponent<TextMeshProUGUI>();
+
+        upgradeBtn = transform.Find("BuyButton").GetComponent<Button>();
+        cancelBtn = transform.Find("CancelButton").GetComponent<Button>();
+        upgradeBtnText = upgradeBtn.GetComponentInChildren<TextMeshProUGUI>();
+        cancelBtnText = cancelBtn.GetComponentInChildren<TextMeshProUGUI>();
+    }
 
     /* ------------------------------------------------------------------------------------------------------------------
      * Purchase Panel opening and closing.
@@ -153,15 +164,6 @@ public class PurchasePanel : MonoBehaviour
             {
                 ShopScript.i.PurchaseFailed(plrIndex);
             }
-        }
-    }
-
-    private void PurchaseUpgrade()
-    {
-        if (BetweenScenes.PlayerShopUpgrades[plrIndex][purchaseIndex] < upgradeCap)
-        {
-
-            ShopScript.i.PurchaseSucceeded(plrIndex);
         }
     }
 

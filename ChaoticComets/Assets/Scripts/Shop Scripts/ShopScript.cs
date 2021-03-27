@@ -1,5 +1,6 @@
 ﻿using Rewired;
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -75,7 +76,6 @@ public partial class ShopScript : MonoBehaviour {
 
         PlayMusicIfEnabled();
         StartCoroutine(FadeBlack("from"));
-        LoadInButtonArrays();
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ public partial class ShopScript : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < BetweenScenes.PlayerCount; i++)
         {
-            ShopRefs.plrEventSystems[i].SetSelectedGameObject(ShopRefs.plrReadyBtns[i].gameObject);
+            ShopRefs.plrEventSystems[i].SetSelectedGameObject(ShopRefs.plrMainPanels[i].readyBtn.gameObject);
         }
     }
 
@@ -128,6 +128,22 @@ public partial class ShopScript : MonoBehaviour {
         }
         SceneManager.LoadScene("StartMenu");
     }
+
+
+    // If all players are ready, start the next level
+    public void CheckReadyStatus()
+    {
+        plrIsReady[0] = ShopRefs.plrMainPanels[0].plrReady;
+        plrIsReady[1] = ShopRefs.plrMainPanels[1].plrReady;
+        if (plrIsReady.All(x => x))
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                ShopRefs.plrMainPanels[i].readyBtn.GetComponent<Button>().interactable = false;
+            }
+            GoBackToGame();
+        }
+    }
 }
 
 /* ------------------------------------------------------------------------------------------------------------------
@@ -150,9 +166,7 @@ public class ShopManagerHiddenVars
 
     [Header("Shop UI References")]
     public TextMeshProUGUI readyPromptText;
-    public Button[] plrAboveReadyBtns;
-    public Button[] plrReadyBtns;
-    public PurchasePanel[] plrPurchasePanels;
+    public MainPanel[] plrMainPanels;
 
     [Header("Event System References")]
     public EventSystem pauseEventSystem;
@@ -160,6 +174,6 @@ public class ShopManagerHiddenVars
 
     [Header("Other References")]
     public GameObject musicManagerIfNotFoundInScene;
-    public GameObject fadeBlack, player2GUI, saveFailedPanel, mouseWarningPanel;
+    public GameObject fadeBlack, saveFailedPanel, mouseWarningPanel;
     public Text autoSaveWarningText;
 }

@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Linq;
-using System.Collections.Generic;
+using System.Collections;
 
 public partial class ShopScript : MonoBehaviour
 {
@@ -28,7 +27,7 @@ public partial class ShopScript : MonoBehaviour
 
         if (plrToPrep == 1)
         {
-            ShopRefs.player2GUI.SetActive(true);
+            ShopRefs.plrMainPanels[1].gameObject.SetActive(true);
             ShopRefs.readyPromptText.text = $"Both players 'Ready' to continue to Level {data.level + 1}...";
         }
     }
@@ -41,17 +40,14 @@ public partial class ShopScript : MonoBehaviour
     {
         // TODO Remove divider and shift Shop UI over if only in 1 Player Mode
     }
-
-    /* ------------------------------------------------------------------------------------------------------------------
-     * MainButtonHovered - Change what's shown on the purchasing panel when a button is hovered over.
-     * ------------------------------------------------------------------------------------------------------------------ */
-    public void MainButtonHovered(int plrIndex)
+    public void PurchaseSucceeded(int plrIndex)
     {
-        // Find button pressed, turn the last character in the name into an integer
-        Button buttonHovered = ShopRefs.plrEventSystems[plrIndex].currentSelectedGameObject.GetComponent<Button>();
-        int whichHovered = int.Parse(buttonHovered.name.Last().ToString());
+        UpdatePlayerUI(plrIndex);
+    }
 
-        ShopRefs.plrPurchasePanels[plrIndex].OnMainAreaButtonHover(whichHovered);
+    public void PurchaseFailed(int plrIndex)
+    {
+        StartCoroutine(FlashCreditsRed(plrIndex));
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
@@ -62,5 +58,19 @@ public partial class ShopScript : MonoBehaviour
         ShopRefs.listOfPlrScoreText[plrIndex].text = BetweenScenes.PlayerShopCredits[plrIndex] + "¢";
         ShopRefs.plrShipsText.text = "Ships: " + BetweenScenes.PlayerShopLives;
         ShopRefs.listOfPlrShieldBars[plrIndex].fillAmount = BetweenScenes.PlayerShopShields[plrIndex] / 80;
+    }
+
+    private bool[] isAlreadyFlashingCredits = { false, false };
+    private IEnumerator FlashCreditsRed(int playerFlashing)
+    {
+        if (!isAlreadyFlashingCredits[playerFlashing])
+        {
+            GetComponent<AudioSource>().Play(); // ShopManager contains a 'UiError'-playing AudioSource
+            isAlreadyFlashingCredits[playerFlashing] = true;
+            ShopRefs.listOfPlrScoreText[playerFlashing].color = Color.red;
+            yield return new WaitForSeconds(.5f);
+            ShopRefs.listOfPlrScoreText[playerFlashing].color = Color.white;
+            isAlreadyFlashingCredits[playerFlashing] = false;
+        }
     }
 }

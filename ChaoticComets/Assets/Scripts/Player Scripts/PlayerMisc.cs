@@ -40,7 +40,7 @@ public class PlayerMisc : MonoBehaviour
 
         p.credits = BetweenScenes.PlayerShopCredits[p.playerNumber];
         p.totalCredits = data.playerList[p.playerNumber].totalCredits;
-        p.shields = data.playerList[p.playerNumber].health;
+        p.shields = BetweenScenes.PlayerShopShields[p.playerNumber];
         p.bonus = data.playerList[p.playerNumber].bonusThreshold;
         if (data.playerList[p.playerNumber].powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
         if (data.playerList[p.playerNumber].powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
