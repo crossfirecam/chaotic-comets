@@ -8,9 +8,10 @@ public class PlayerWeapons : MonoBehaviour
     [Header("Weapon Systems")]
     public float bulletForce = 400f;
     public float rapidFireBetweenBullets = 0.06f;
-    internal float bulletRange = 320f;
+    private const float bulletRange = 320f;
+    public float bulletRangeMultipler = 1f;
     internal float bulletDestroyTime;
-    internal static float bulletTimeIfNormal, bulletTimeIfFar;
+    internal float bulletTimeIfNormal, bulletTimeIfFar;
     internal float nextFire = 0.0f, nextFireQuickFire = 0.0f; // Determines timing of weapon firing
 
     [Header("Upgradable Stats")]
@@ -28,7 +29,12 @@ public class PlayerWeapons : MonoBehaviour
         mainCannon = gameObject.transform.Find("MainCannon").transform;
         tripleCannon1 = gameObject.transform.Find("TripleCannon1").transform;
         tripleCannon2 = gameObject.transform.Find("TripleCannon2").transform;
-        bulletTimeIfNormal = bulletRange / bulletForce;
+        Invoke(nameof(SetBulletTime), 0.05f);
+    }
+
+    private void SetBulletTime()
+    {
+        bulletTimeIfNormal = (bulletRange / bulletForce) * bulletRangeMultipler;
         bulletTimeIfFar = bulletTimeIfNormal * 1.75f;
         bulletDestroyTime = bulletTimeIfNormal;
     }

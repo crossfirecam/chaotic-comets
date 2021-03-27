@@ -11,7 +11,7 @@ public class PlayerMisc : MonoBehaviour
     [SerializeField] PlayerMain p = default;
 
     // Upgrade Systems
-    public float upgradeSpeed, upgradeBrake, upgradeFireRate, upgradeShotSpeed;
+    public float upgradeBrake, upgradeTeleportRate, upgradeAutoRate, upgradeMunitionRate, upgradeShotSpeed, upgradeShotRange, upgradeShield;
 
     internal void OtherStartFunctions()
     {
@@ -44,8 +44,8 @@ public class PlayerMisc : MonoBehaviour
         p.bonus = data.playerList[p.playerNumber].bonusThreshold;
         if (data.playerList[p.playerNumber].powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
         if (data.playerList[p.playerNumber].powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
-        if (data.playerList[p.playerNumber].powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false); }
-        if (data.playerList[p.playerNumber].powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
+        if (data.playerList[p.playerNumber].powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
+        if (data.playerList[p.playerNumber].powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false); }
         if (data.playerList[p.playerNumber].powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
     }
 
@@ -59,30 +59,33 @@ public class PlayerMisc : MonoBehaviour
             p.plrSpawnDeath.PretendShipDoesntExist();
             GameManager.i.PlayerDied(p.playerNumber);
         }
-        //// If a player has died, but brought to life by another player, they'll have >1 life and 0 shields. Give revived player 80 shields.
-        //else if (tempGMLifeStates[plrToSet] == true && p.shields == 0)
-        //{
-        //    p.plrUiSound.prevshields = 80;
-        //}
     }
 
     private void SetUpgradeLevelsForPlayer()
     {
-        //// Set the current upgrade level for Player
-        //upgradeSpeed = BetweenScenes.PlayerShopUpgrades[p.playerNumber][0] / 10f;
-        //upgradeBrake = BetweenScenes.PlayerShopUpgrades[p.playerNumber][1] / 10f;
-        //upgradeFireRate = BetweenScenes.PlayerShopUpgrades[p.playerNumber][2] / 10f;
-        //upgradeShotSpeed = BetweenScenes.PlayerShopUpgrades[p.playerNumber][3] / 10f;
+        upgradeShield = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][0] / 2f); // Shield upgrade is in intervals of 50%
+        upgradeBrake = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][1] / 5f); // Other upgrades are in intervals of 20%
+        upgradeTeleportRate = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][2] / 5f);
+        upgradeAutoRate = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][3] / 5f);
+        upgradeMunitionRate = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][4] / 5f);
+        upgradeShotSpeed = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][5] / 5f);
+        upgradeShotRange = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][6] / 5f);
 
-        //// Bullet force and fire rate are affected by multipliers purchased from the shop
-        //p.plrWeapons.bulletForce *= upgradeShotSpeed;
-        //p.plrWeapons.fireRateNormalHeld /= upgradeFireRate;
-        //p.plrWeapons.fireRateRapid /= upgradeFireRate;
-        //p.plrWeapons.fireRateTripleHeld /= upgradeFireRate;
+        p.damageFromImpact /= upgradeShield;
+        p.damageFromUfoBullet /= upgradeShield;
 
-        //// Thrust and brake efficiency are affected by multipliers purchased from the shop
-        //p.plrMovement.thrustPower *= upgradeSpeed;
-        //p.plrMovement.manualBrakePower *= upgradeBrake;
+        p.plrMovement.manualBrakePower *= upgradeBrake;
+        p.plrAbility.powerChargeTime /= upgradeTeleportRate;
+
+        p.plrWeapons.fireRateNormalHeld /= upgradeAutoRate;
+        p.plrWeapons.fireRateTripleHeld /= upgradeAutoRate;
+
+        p.plrWeapons.fireRateRapidWithTriple /= upgradeMunitionRate;
+        p.plrWeapons.fireRateRapid /= upgradeMunitionRate;
+        p.plrWeapons.fireRateTripleHeld /= upgradeMunitionRate;
+
+        p.plrWeapons.bulletForce *= upgradeShotSpeed;
+        p.plrWeapons.bulletRangeMultipler *= upgradeShotRange;
 
         p.plrUiSound.UpdatePointDisplays();
     }

@@ -17,6 +17,7 @@ public class PlayerMain : MonoBehaviour {
     internal float highDamageThreshold = 6f;
     private const float minTimeBetweenDamage = 0.05f;
     internal float damageFromImpact = 30f;
+    internal float damageFromUfoBullet = 10f;
 
     [Header("Player Scripts")]
     internal PlayerInput plrInput = default;
@@ -37,13 +38,17 @@ public class PlayerMain : MonoBehaviour {
 
     // ----------
 
-    void Start () {
+    private void Awake() {
         GetComponents();
+    }
+
+    private void Start()
+    {
         plrMisc.OtherStartFunctions();
     }
-    
+
     // If game is not paused, then run per-frame updates
-    void Update () {
+    private void Update() {
         if (!UiManager.i.GameIsPaused()) {
             plrInput.CheckInputs();
             plrMovement.ShipMovement();
@@ -92,8 +97,10 @@ public class PlayerMain : MonoBehaviour {
                 triggerObject.GetComponent<CircleCollider2D>().enabled = false;
                 Destroy(triggerObject.gameObject, 5f);
 
-                if (triggerObject.gameObject.CompareTag("bullet3")) { shields -= 10f; }
-                else { shields -= 20f; }
+                if (triggerObject.gameObject.CompareTag("bullet3")) // UFO-Follower
+                    shields -= damageFromUfoBullet;
+                else // UFO-Passer
+                    shields -= damageFromUfoBullet * 2f;
                 nextDamagePossible = Time.time + minTimeBetweenDamage;
                 plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactSoft;
 

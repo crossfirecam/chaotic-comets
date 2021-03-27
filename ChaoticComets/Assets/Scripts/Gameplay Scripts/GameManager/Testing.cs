@@ -12,18 +12,38 @@ public class Testing : MonoBehaviour
 
     [Header("Testing Environments")]
     public bool onLevelNegativeOne = false;
-    public int playerCount = 1;
 
-    [Header("What's Reported in ")]
+    [Header("What's Reported in Console")]
     public bool speedReportTest2P = false;
+
+    [Header("Upgrades (Shield, Brake, TeleR, AutoR, MunitR, ShotSp, ShotRa)")]
+    public int[] player1Upgrades = new int[7];
+    public int[] player2Upgrades = new int[7];
+
     private void Awake()
     {
         BetweenScenes.CheaterMode = true;
+        BetweenScenes.PlayerCount = 2;
+        UiManager.i.ShowP2UI();
+        if (onLevelNegativeOne)
+            GameManager.i.levelNo = -1;
+
+        // Set testing upgrades for players
+        for (int j = 0; j < 7; j++)
+        {
+            BetweenScenes.PlayerShopUpgrades[0][j] = player1Upgrades[j];
+            BetweenScenes.PlayerShopUpgrades[1][j] = player2Upgrades[j];
+        }
+    }
+
+    private void Start()
+    {
         if (onLevelNegativeOne)
         {
-            GameManager.i.levelNo = -1;
+            Debug.LogWarning("Testing: Manually enable PlayerShip2");
+            GameManager.i.Refs.playerShip1.plrSpawnDeath.RespawnShip();
+            GameManager.i.Refs.playerShip2.plrSpawnDeath.RespawnShip();
         }
-        BetweenScenes.PlayerCount = playerCount;
     }
     private void Update()
     {

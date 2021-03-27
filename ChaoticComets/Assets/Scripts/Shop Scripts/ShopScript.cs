@@ -54,13 +54,17 @@ public partial class ShopScript : MonoBehaviour {
         for (int i = 0; i < BetweenScenes.PlayerCount; i++)
         {
             PrepareUI(i);
-            ShopRefs.plrShipsText.text = "Ships: " + data.lives;
             BetweenScenes.PlayerShopUpgrades[i] = data.playerList[i].upgrades;
         }
+        ShopRefs.plrAreaText.text = "Area: " + data.level;
         // In single player mode, say that P2 is ready and move P1's buttons to the center
         if (data.playerCount == 1) {
             plrIsReady[1] = true;
             Player1OnlyGUI();
+        }
+        else
+        {
+            Player1And2GUI();
         }
 
         // If save is in cheater mode, change some details
@@ -113,7 +117,7 @@ public partial class ShopScript : MonoBehaviour {
      * Scene Change Functions
      * ------------------------------------------------------------------------------------------------------------------ */
     public void GoBackToGame() {
-        ShopRefs.readyPromptText.text = $"Prepare for Level {data.level + 1}!";
+        ShopRefs.readyPromptText.text = $"Prepare for Area {data.level + 1}!";
         StartCoroutine(FadeBlack("to"));
         Invoke(nameof(LoadMainGame), 1f);
     }
@@ -134,10 +138,12 @@ public partial class ShopScript : MonoBehaviour {
     public void CheckReadyStatus()
     {
         plrIsReady[0] = ShopRefs.plrMainPanels[0].plrReady;
-        plrIsReady[1] = ShopRefs.plrMainPanels[1].plrReady;
+        if (BetweenScenes.PlayerCount == 2)
+            plrIsReady[1] = ShopRefs.plrMainPanels[1].plrReady;
+
         if (plrIsReady.All(x => x))
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < BetweenScenes.PlayerCount; i++)
             {
                 ShopRefs.plrMainPanels[i].readyBtn.GetComponent<Button>().interactable = false;
             }
@@ -162,11 +168,13 @@ public class ShopManagerHiddenVars
     public GameObject[][] listOfPlrPowerups = new GameObject[2][];
     public Image[] listOfPlrShieldBars, listOfPlrAbilityBars;
     public TextMeshProUGUI[] listOfPlrScoreText, listOfPlrTotalScoreText;
-    public TextMeshProUGUI plrShipsText;
+    public TextMeshProUGUI plrShipsText, plrAreaText;
 
     [Header("Shop UI References")]
     public TextMeshProUGUI readyPromptText;
+    public GameObject[] plrShopUis;
     public MainPanel[] plrMainPanels;
+    public GameObject shopDivider;
 
     [Header("Event System References")]
     public EventSystem pauseEventSystem;

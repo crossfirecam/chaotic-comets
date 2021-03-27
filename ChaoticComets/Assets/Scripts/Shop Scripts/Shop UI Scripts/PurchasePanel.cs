@@ -13,6 +13,8 @@ public class PurchasePanel : MonoBehaviour
     private bool selectedPurchaseMaxed;
 
     private readonly int baseUpgradePrice = 500, priceIncreasePerLevel = 750, upgradeCap = 5;
+    private readonly int shieldUpgradePrice = 10000, shieldUpgradeCap = 2;
+    // Total cost of 10,000c per maxed upgrade. Total cost of 30,000c for maxed shield upgrade. All upgrades = 110,000c.
 
     private void Start()
     {
@@ -55,7 +57,7 @@ public class PurchasePanel : MonoBehaviour
 
     private void UpdateTextElements()
     {
-        if (purchaseIndex <= 5)
+        if (purchaseIndex <= 6)
             selectedUpgradeTier = BetweenScenes.PlayerShopUpgrades[plrIndex][purchaseIndex];
         CheckPurchaseValidity();
         SetSubDescText();
@@ -66,16 +68,22 @@ public class PurchasePanel : MonoBehaviour
     {
         switch (purchaseIndex)
         {
-            case 7: // Buy Extra Ship
+            case 8: // Buy Extra Ship
                 selectedPurchasePrice = 2500;
                 break;
-            case 6: // Charge Shields
+            case 7: // Charge Shields
                 if (BetweenScenes.PlayerShopShields[plrIndex] / 10 == 8)
                     selectedPurchasePrice = 0;
                 else
                     selectedPurchasePrice = 200;
                 break;
-            default: // All upgradable stats use a +10% modifier.
+            case 0: // Shield Strength Upgrade. Uses +50% modifiers, limited to 2.
+                if (selectedUpgradeTier == shieldUpgradeCap)
+                    selectedPurchasePrice = 0;
+                else
+                    selectedPurchasePrice = shieldUpgradePrice + (shieldUpgradePrice * selectedUpgradeTier);
+                break;
+            default: // All other upgradable stats use a +20% modifier, limited to 10.
                 if (selectedUpgradeTier == upgradeCap)
                     selectedPurchasePrice = 0;
                 else
@@ -92,18 +100,21 @@ public class PurchasePanel : MonoBehaviour
     {
         switch (purchaseIndex)
         {
-            case 8: // Ready Button
+            case 9: // Ready Button
                 subDescText.text = "";
                 break;
-            case 7: // Buy Extra Ship
+            case 8: // Buy Extra Ship
                 string pluralOrNot = BetweenScenes.PlayerShopLives == 1 ? "" : "s";
                 subDescText.text = "Currently: " + BetweenScenes.PlayerShopLives + " Ship" + pluralOrNot;
                 break;
-            case 6: // Charge Shields
+            case 7: // Charge Shields
                 subDescText.text = "Currently: " + (BetweenScenes.PlayerShopShields[plrIndex] / 10) + "/8 Cells";
                 break;
-            default: // All upgradable stats use a +10% modifier.
-                subDescText.text = "Currently: +" + (selectedUpgradeTier * 10) + "%";
+            case 0: // Shield Strength Upgrade uses a +50% modifier.
+                subDescText.text = "Currently: +" + (selectedUpgradeTier * 50) + "%";
+                break;
+            default: // All other upgradable stats use a +20% modifier.
+                subDescText.text = "Currently: +" + (selectedUpgradeTier * 20) + "%";
                 break;
         }
     }
@@ -113,22 +124,28 @@ public class PurchasePanel : MonoBehaviour
         cancelBtnText.text = "Cancel";
         switch (purchaseIndex)
         {
-            case 8: // Ready Button
+            case 9: // Ready Button
                 upgradeBtnText.text = "";
                 cancelBtnText.text = "";
                 break;
-            case 7: // Buy Extra Ship
+            case 8: // Buy Extra Ship
                 upgradeBtnText.text = "+1 Ship\n(2500c)";
                 break;
-            case 6: // Charge Shields
+            case 7: // Charge Shields
                 if (!selectedPurchaseMaxed)
                     upgradeBtnText.text = "+1 Shield Cell\n(200c)";
                 else
                     upgradeBtnText.text = "Shields Cells maxed";
                 break;
-            default: // All upgradable stats use a +10% modifier.
+            case 0: // Shield Strength Upgrade
                 if (!selectedPurchaseMaxed)
-                    upgradeBtnText.text = $"+10% Modifier\n({selectedPurchasePrice}c)";
+                    upgradeBtnText.text = $"+50% Modifier\n({selectedPurchasePrice}c)";
+                else
+                    upgradeBtnText.text = "Upgrade maxed";
+                break;
+            default: // All other upgradable stats use a +20% modifier.
+                if (!selectedPurchaseMaxed)
+                    upgradeBtnText.text = $"+20% Modifier\n({selectedPurchasePrice}c)";
                 else
                     upgradeBtnText.text = "Upgrade maxed";
                 break;
@@ -148,11 +165,11 @@ public class PurchasePanel : MonoBehaviour
         {
             if (BetweenScenes.PlayerShopCredits[plrIndex] >= selectedPurchasePrice)
             {
-                if (purchaseIndex <= 5)
+                if (purchaseIndex <= 6)
                     BetweenScenes.PlayerShopUpgrades[plrIndex][purchaseIndex] += 1;
-                else if (purchaseIndex == 6)
-                    BetweenScenes.PlayerShopShields[plrIndex] += 10f;
                 else if (purchaseIndex == 7)
+                    BetweenScenes.PlayerShopShields[plrIndex] += 10f;
+                else if (purchaseIndex == 8)
                     BetweenScenes.PlayerShopLives += 1;
 
                 BetweenScenes.PlayerShopCredits[plrIndex] -= selectedPurchasePrice;
@@ -170,13 +187,15 @@ public class PurchasePanel : MonoBehaviour
     /* ------------------------------------------------------------------------------------------------------------------
      * Strings for the Purchase Panel to explain upgrades.
      * ------------------------------------------------------------------------------------------------------------------ */
-    private readonly string[] purchasePanelTitleStrings = { "Brake Power", "Teleport Rate",
+    private readonly string[] purchasePanelTitleStrings = { "Shield Strength",
+                                                          "Brake Power", "Teleport Rate",
                                                           "Auto Firerate", "Munitions Firerate",
                                                           "Shot Speed", "Shot Range",
                                                           "Charge Shields", "Buy Extra Ship",
                                                           "Ready To Leave" };
 
-    private readonly string[] purchasePanelDescStrings = { "Stop faster when holding the manual brake.",
+    private readonly string[] purchasePanelDescStrings = { "Take more hits. \n+0% = 3 impacts\n+50% = 4 impacts\n+100% = 6 impacts",
+                                                         "Stop faster when holding the manual brake.",
                                                          "Hyperspace becomes usable more often.",
                                                          "Holding down 'Fire' for automatic fire will shoot bullets faster.",
                                                          "The cooldown between shots with Triple or Rapid Shot can be reduced.",

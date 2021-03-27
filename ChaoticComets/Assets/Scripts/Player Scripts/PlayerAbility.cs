@@ -11,14 +11,17 @@ public class PlayerAbility : MonoBehaviour
 
     internal GameObject teleportIn, teleportOut;
 
-    private void Start()
+    private void Awake()
     {
         teleportIn = gameObject.transform.Find("TeleportParticlesIn").gameObject;
         teleportOut = gameObject.transform.Find("TeleportParticlesOut").gameObject;
     }
 
     private const float maxPowerMeter = 80f,
-                        powerDepleteTime = 1f, powerChargeTime = 12f, powerChargeTimeShort = 4f;
+                        powerDepleteTime = 1f, powerChargeTimeShort = 4f;
+
+    public float powerChargeTime = 16f;
+
     private IEnumerator RechargePowerMeter()
     {
         p.power = 0f;

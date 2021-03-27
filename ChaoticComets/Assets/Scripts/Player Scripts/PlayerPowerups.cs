@@ -150,7 +150,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
             case Powerups.FarShot:
                 ifFarShot = true;
-                p.plrWeapons.bulletDestroyTime = PlayerWeapons.bulletTimeIfFar;
+                p.plrWeapons.bulletDestroyTime = p.plrWeapons.bulletTimeIfFar;
                 break;
             case Powerups.TripleShot:
                 ifTripleShot = true;
@@ -211,7 +211,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
             case Powerups.FarShot:
                 ifFarShot = false;
-                p.plrWeapons.bulletDestroyTime = PlayerWeapons.bulletTimeIfNormal;
+                p.plrWeapons.bulletDestroyTime = p.plrWeapons.bulletTimeIfNormal;
                 break;
             case Powerups.TripleShot:
                 ifTripleShot = false;

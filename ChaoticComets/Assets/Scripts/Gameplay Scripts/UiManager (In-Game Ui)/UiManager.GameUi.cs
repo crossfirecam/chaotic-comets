@@ -5,16 +5,16 @@ using UnityEngine.UI;
 public partial class UiManager : MonoBehaviour
 {
     /* ------------------------------------------------------------------------------------------------------------------
-     * Game State UI - Wave, Ships, Bonus counters in lower middle of screen.
+     * Game State UI - Area, Ships, Bonus counters in lower middle of screen.
      * ------------------------------------------------------------------------------------------------------------------ */
     [SerializeField] private AudioSource gameUiBonusAudSrc;
-    [SerializeField] private TextMeshProUGUI gameUiWave, gameUiShips, gameUiBonus;
+    [SerializeField] private TextMeshProUGUI gameUiArea, gameUiShips, gameUiBonus;
 
-    public void SetWaveText(int wave)
+    public void SetWaveText(int level)
     {
-        gameUiWave.text = "Wave: " + wave;
-        if (wave == -1) // Tutorial Mode
-            gameUiWave.text = "(Training)";
+        gameUiArea.text = "Area: " + level;
+        if (level == -1) // Tutorial Mode
+            gameUiArea.text = "(Training)";
     }
 
     public void SetShipsText(int ships)

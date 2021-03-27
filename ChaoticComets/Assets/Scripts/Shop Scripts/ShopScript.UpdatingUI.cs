@@ -23,23 +23,26 @@ public partial class ShopScript : MonoBehaviour
                 ShopRefs.listOfPlrPowerups[plrToPrep][i].SetActive(true);
             }
         }
-        ShopRefs.readyPromptText.text = $"Press 'Ready' to continue to Level {data.level + 1}...";
-
-        if (plrToPrep == 1)
-        {
-            ShopRefs.plrMainPanels[1].gameObject.SetActive(true);
-            ShopRefs.readyPromptText.text = $"Both players 'Ready' to continue to Level {data.level + 1}...";
-        }
     }
 
 
     /* ------------------------------------------------------------------------------------------------------------------
-     * Player 1 Only GUI - If One Player mode is selected, edit where the buttons and text are in the shop.
+     * Selective GUI Placement - Depending on player count selected, edit layout and text in the shop.
      * ------------------------------------------------------------------------------------------------------------------ */
     private void Player1OnlyGUI()
     {
-        // TODO Remove divider and shift Shop UI over if only in 1 Player Mode
+        Vector3 plr1UiStartPos = ShopRefs.plrShopUis[0].transform.localPosition;
+        ShopRefs.plrShopUis[0].transform.localPosition = new Vector3(0f, plr1UiStartPos.y, plr1UiStartPos.z);
+        ShopRefs.shopDivider.SetActive(false);
+        ShopRefs.readyPromptText.text = $"Press 'Ready' to continue to Area {data.level + 1}...";
     }
+
+    private void Player1And2GUI()
+    {
+        ShopRefs.plrShopUis[1].gameObject.SetActive(true);
+        ShopRefs.readyPromptText.text = $"Both players 'Ready' to continue to Area {data.level + 1}...";
+    }
+
     public void PurchaseSucceeded(int plrIndex)
     {
         UpdatePlayerUI(plrIndex);

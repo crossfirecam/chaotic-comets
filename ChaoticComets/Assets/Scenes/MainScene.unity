@@ -2848,8 +2848,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onLevelNegativeOne: 1
-  playerCount: 2
-  speedReportTest2P: 1
+  speedReportTest2P: 0
+  player1Upgrades: 00000000000000000000000000000000000000000000000000000000
+  player2Upgrades: 00000000000000000000000000000000000000000000000000000000
 --- !u!1 &372029258
 GameObject:
   m_ObjectHideFlags: 0
@@ -15164,6 +15165,10 @@ PrefabInstance:
       propertyPath: respawnOverlay
       value: 
       objectReference: {fileID: 749273344}
+    - target: {fileID: 1146411267, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1260381270780048, guid: 5cf0dc9415eb8e742aece150306297e5, type: 3}
       propertyPath: m_Name
       value: SpaceShip Plr1
@@ -41602,7 +41607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameUiBonusAudSrc: {fileID: 1120531679}
-  gameUiWave: {fileID: 689312814}
+  gameUiArea: {fileID: 689312814}
   gameUiShips: {fileID: 377000399}
   gameUiBonus: {fileID: 745514231}
   plrUiCurrentCredits:

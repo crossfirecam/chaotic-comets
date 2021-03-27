@@ -9629,6 +9629,7 @@ MonoBehaviour:
   bonus: 4999
   shields: 80
   power: 0
+  collisionsCanDamage: 0
   deathExplosion: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
     type: 3}
   modelPlayer: {fileID: 301448257594196552}
@@ -9793,9 +9794,10 @@ MonoBehaviour:
   p: {fileID: 114782296946591882}
   bulletForce: 500
   rapidFireBetweenBullets: 0.06
+  bulletRangeMultipler: 1
   fireRateRapid: 1.4
   fireRateRapidWithTriple: 2
-  fireRateTriple: 0.7
+  fireRateTripleHeld: 0.7
   fireRateTripleQuickFire: 0.4
   fireRateNormalHeld: 0.4
   fireRateNormalQuickFire: 0.1
@@ -9828,10 +9830,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p: {fileID: 114782296946591882}
-  upgradeSpeed: 0
   upgradeBrake: 0
-  upgradeFireRate: 0
+  upgradeTeleportRate: 0
+  upgradeAutoRate: 0
+  upgradeMunitionRate: 0
   upgradeShotSpeed: 0
+  upgradeShotRange: 0
+  upgradeShield: 0
 --- !u!114 &1146411266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9858,6 +9863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p: {fileID: 114782296946591882}
+  powerChargeTime: 16
 --- !u!114 &412295513
 MonoBehaviour:
   m_ObjectHideFlags: 0

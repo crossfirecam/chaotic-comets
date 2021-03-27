@@ -28,12 +28,12 @@ public class Saving_PlayerManager
 
         for (int i = 0; i < playerCount; i++)
         {
-            // Powerup order: Insurance, Far Shot, Auto-Brake, Rapid Shot, Triple Shot
+            // Powerup order: Insurance, Far Shot, Rapid Shot, Auto-Brake, Triple Shot
             int[] powerupsToSave = { 0, 0, 0, 0, 0 };
             if (playerScripts[i].plrPowerups.ifInsurance) { powerupsToSave[0] = 1; }
             if (playerScripts[i].plrPowerups.ifFarShot) { powerupsToSave[1] = 1; }
-            if (playerScripts[i].plrPowerups.ifAutoBrake) { powerupsToSave[2] = 1; }
-            if (playerScripts[i].plrPowerups.ifRapidShot) { powerupsToSave[3] = 1; }
+            if (playerScripts[i].plrPowerups.ifRapidShot) { powerupsToSave[2] = 1; }
+            if (playerScripts[i].plrPowerups.ifAutoBrake) { powerupsToSave[3] = 1; }
             if (playerScripts[i].plrPowerups.ifTripleShot) { powerupsToSave[4] = 1; }
 
             // Initilise new Player
@@ -57,9 +57,9 @@ public class Saving_PlayerManager
         public int credits = 0;
         public int totalCredits = 0;
         public int bonusThreshold = 0;
-        // Powerup order: Insurance, Far Shot, Auto-Brake, Rapid Shot, Triple Shot
+        // Powerup order: Insurance, Far Shot, Rapid Shot, Auto-Brake, Triple Shot
         public int[] powerups = { 0, 0, 0, 0, 0 };
-        // Upgrade order: Speed, brake efficiency, fire rate, shot speed
-        public int[] upgrades = { 10, 10, 10, 10 };
+        // Upgrade order: Shield Str, Brake, Tele Rate, Auto Rate, Munit Rate, Shot Sp, Shot Ra
+        public int[] upgrades = { 0, 0, 0, 0, 0, 0, 0 };
     }
 }

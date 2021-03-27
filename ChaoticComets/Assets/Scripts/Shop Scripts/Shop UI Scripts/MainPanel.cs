@@ -19,8 +19,8 @@ public class MainPanel : MonoBehaviour
 
     private void Start()
     {
-        readyBtn = transform.Find("ButtonReady8").GetComponent<Button>();
-        aboveReadyBtn = transform.Find("Button6").GetComponent<Button>();
+        readyBtn = transform.Find("ButtonReady9").GetComponent<Button>();
+        aboveReadyBtn = transform.Find("Button7").GetComponent<Button>();
         readyBtnText = readyBtn.GetComponentInChildren<TextMeshProUGUI>();
         purchasePanel = transform.parent.Find("PurchasePanel").GetComponent<PurchasePanel>();
 
@@ -63,7 +63,7 @@ public class MainPanel : MonoBehaviour
         // Find all of a player's buttons that aren't 'Ready' button, and disable them
         foreach (Button btn in mainPlayerButtons)
         {
-            if (!btn.transform.name.EndsWith("Ready8"))
+            if (!btn.transform.name.EndsWith("Ready9"))
             {
                 btn.interactable = !plrReady;
             }
