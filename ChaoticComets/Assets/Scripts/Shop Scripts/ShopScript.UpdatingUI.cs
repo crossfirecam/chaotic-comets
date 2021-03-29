@@ -11,7 +11,6 @@ public partial class ShopScript : MonoBehaviour
     private void PrepareUI(int plrToPrep)
     {
         BetweenScenes.PlayerShopCredits[plrToPrep] = data.playerList[plrToPrep].credits;
-        BetweenScenes.PlayerShopLives = data.lives;
         BetweenScenes.PlayerShopShields[plrToPrep] = data.playerList[plrToPrep].health;
 
         UpdatePlayerUI(plrToPrep);
@@ -39,9 +38,15 @@ public partial class ShopScript : MonoBehaviour
 
     private void Player1And2GUI()
     {
+        ShopRefs.plr2GameUi.SetActive(true);
         ShopRefs.plrShopUis[1].gameObject.SetActive(true);
         ShopRefs.readyPromptText.text = $"Both players 'Ready' to continue to Area {data.level + 1}...";
     }
+
+
+    /* ------------------------------------------------------------------------------------------------------------------
+     * 
+     * ------------------------------------------------------------------------------------------------------------------ */
 
     public void PurchaseSucceeded(int plrIndex)
     {

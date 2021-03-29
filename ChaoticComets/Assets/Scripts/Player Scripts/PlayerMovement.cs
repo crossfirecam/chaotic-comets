@@ -60,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 p.rbPlayer.AddRelativeForce(Vector2.up * p.plrInput.thrustInput * Time.deltaTime * thrustPower);
+                p.plrUiSound.audioShipThrust.pitch = .8f + (currentSpeed / 13f / 1.5f); // Pitch base is .8, add on a normalized currentSpeed value that's reduced by 50%
                 if (currentSpeed != 0) { p.rbPlayer.drag = currentSpeed * (1f / currentSpeed); }
             }
         }

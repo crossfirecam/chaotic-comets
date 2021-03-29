@@ -35,6 +35,7 @@ public class PlayerSpawnDeath : MonoBehaviour
         }
         p.shields = 0;
         p.power = 0;
+        p.plrAbility.StopCoroutine("RechargePowerMeter");
         if (GameManager.i.playerLives != 0) // Only remove a life from the counter if the players have at least one to spare.
         {
             p.plrUiSound.prevshields = 80; Invoke(nameof(RespawnShip), 3f);

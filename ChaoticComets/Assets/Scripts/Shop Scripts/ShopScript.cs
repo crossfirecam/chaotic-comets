@@ -51,6 +51,7 @@ public partial class ShopScript : MonoBehaviour {
         }
 
         // Prepare UI for each player
+        BetweenScenes.PlayerShopLives = data.lives;
         for (int i = 0; i < BetweenScenes.PlayerCount; i++)
         {
             PrepareUI(i);
@@ -172,6 +173,7 @@ public class ShopManagerHiddenVars
 
     [Header("Shop UI References")]
     public TextMeshProUGUI readyPromptText;
+    public GameObject plr2GameUi;
     public GameObject[] plrShopUis;
     public MainPanel[] plrMainPanels;
     public GameObject shopDivider;

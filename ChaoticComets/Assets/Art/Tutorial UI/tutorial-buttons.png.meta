@@ -59,6 +59,12 @@ TextureImporter:
   - first:
       213: 3928087384007563415
     second: button_contStart
+  - first:
+      213: -3972761883640861952
+    second: button_ContStickArrowL
+  - first:
+      213: 5316236271389532863
+    second: button_ContStickArrowR
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -538,6 +544,48 @@ TextureImporter:
       bones: []
       spriteID: 798d672f9ae538630800000000000000
       internalID: 3928087384007563415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button_ContStickArrowL
+      rect:
+        serializedVersion: 2
+        x: 1079
+        y: 19
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00bef5c8d1aedd8c0800000000000000
+      internalID: -3972761883640861952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button_ContStickArrowR
+      rect:
+        serializedVersion: 2
+        x: 1181
+        y: 19
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb26832e8b017c940800000000000000
+      internalID: 5316236271389532863
       vertices: []
       indices: 
       edges: []

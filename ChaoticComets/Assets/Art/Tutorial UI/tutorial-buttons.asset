@@ -132,6 +132,18 @@ MonoBehaviour:
     m_Scale: 1.5
     m_Name: button_contStart
     m_HashCode: 1522313791
+  - m_ElementType: 2
+    m_Unicode: 0
+    m_GlyphIndex: 19
+    m_Scale: 1
+    m_Name: button_ContStickArrowL
+    m_HashCode: -1517195412
+  - m_ElementType: 2
+    m_Unicode: 0
+    m_GlyphIndex: 20
+    m_Scale: 1
+    m_Name: button_ContStickArrowR
+    m_HashCode: -1517195406
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -433,6 +445,38 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     sprite: {fileID: 1284536679622011347, guid: 743007761258f1c46b1ff2bd1584040e,
+      type: 3}
+  - m_Index: 19
+    m_Metrics:
+      m_Width: 138
+      m_Height: 138
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 145
+      m_HorizontalAdvance: 138
+    m_GlyphRect:
+      m_X: 1079
+      m_Y: 19
+      m_Width: 61
+      m_Height: 61
+    m_Scale: 0.6
+    m_AtlasIndex: 0
+    sprite: {fileID: -3972761883640861952, guid: 743007761258f1c46b1ff2bd1584040e,
+      type: 3}
+  - m_Index: 20
+    m_Metrics:
+      m_Width: 138
+      m_Height: 138
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 145
+      m_HorizontalAdvance: 138
+    m_GlyphRect:
+      m_X: 1181
+      m_Y: 19
+      m_Width: 61
+      m_Height: 61
+    m_Scale: 0.6
+    m_AtlasIndex: 0
+    sprite: {fileID: 5316236271389532863, guid: 743007761258f1c46b1ff2bd1584040e,
       type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []
