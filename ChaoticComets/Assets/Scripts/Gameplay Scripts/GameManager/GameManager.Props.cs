@@ -102,19 +102,19 @@ public partial class GameManager : MonoBehaviour
             }
             if (originChoice < 1f)
             { // Spawn on the left
-                spawnPosition = new Vector2(screenLeft - 1.5f, Random.Range(-9f, 9f));
+                spawnPosition = new Vector2(screenLeft - 1.5f, Random.Range(-6f, 8f));
             }
             else if (originChoice < 2f)
             { // Spawn on the right
-                spawnPosition = new Vector2(screenRight + 1.5f, Random.Range(-9f, 9f));
+                spawnPosition = new Vector2(screenRight + 1.5f, Random.Range(-6f, 8f));
             }
             else if (originChoice < 3f)
             { // Spawn on the top
-                spawnPosition = new Vector2(Random.Range(-12f, 12f), screenTop + 1.5f);
+                spawnPosition = new Vector2(Random.Range(-13f, 13f), screenTop + 1.5f);
             }
             else if (originChoice < 4f)
             { // Spawn on the bottom
-                spawnPosition = new Vector2(Random.Range(-12f, 12f), screenBottom - 1.5f);
+                spawnPosition = new Vector2(Random.Range(-13f, 13f), screenBottom - 1.5f);
             }
         }
         else

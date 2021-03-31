@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerWeapons : MonoBehaviour
@@ -13,12 +14,13 @@ public class PlayerWeapons : MonoBehaviour
     internal float bulletDestroyTime;
     internal float bulletTimeIfNormal, bulletTimeIfFar;
     internal float nextFire = 0.0f, nextFireQuickFire = 0.0f; // Determines timing of weapon firing
+    internal int numOfActiveBullets, capOfActiveBullets = 2;
 
     [Header("Upgradable Stats")]
-    public float fireRateRapid = 1.4f;
-    public float fireRateRapidWithTriple = 2f;
-    public float fireRateTripleHeld = 0.7f, fireRateTripleQuickFire = 0.2f;
-    public float fireRateNormalHeld = 0.4f, fireRateNormalQuickFire = 0.1f;
+    internal float fireRateRapid = 1.2f;
+    internal float fireRateRapidWithTriple = 1.6f;
+    internal float fireRateTripleHeld = 0.6f, fireRateTripleQuickFire = 0.2f;
+    internal float fireRateNormalHeld = 0.4f, fireRateNormalQuickFire = 0.1f;
 
     [Header("References")]
     public GameObject bullet;
@@ -40,42 +42,57 @@ public class PlayerWeapons : MonoBehaviour
     }
 
     // If rapid shot or triple shot, shoot uniquely. If not, shoot typical projectile
+    /// <summary>
+    /// <br>Fire bullets if the on-screen amount are below a cap.</br>
+    /// <br>- Normal: fire one bullet, minimal cooldown.</br>
+    /// <br>- Triple shot: fire three in a pattern, same cooldown as normal.</br>
+    /// <br>- Rapid shot: fire many in rapid succession, long cooldown.</br>
+    /// </summary>
     internal void FiringLogic()
     {
-        if (p.plrPowerups.ifRapidShot)
+        if (numOfActiveBullets < capOfActiveBullets)
         {
-            if (p.plrPowerups.ifTripleShot)
-                nextFire = Time.time + fireRateRapidWithTriple;
+            if (p.plrPowerups.ifRapidShot)
+            {
+                if (p.plrPowerups.ifTripleShot)
+                    nextFire = Time.time + fireRateRapidWithTriple;
+                else
+                    nextFire = Time.time + fireRateRapid;
+                nextFireQuickFire = nextFire; // Quick firing does not work with Rapid Shot
+                StartCoroutine(RapidShot());
+            }
+            else if (p.plrPowerups.ifTripleShot)
+            {
+                nextFire = Time.time + fireRateTripleHeld;
+                nextFireQuickFire = Time.time + fireRateTripleQuickFire;
+                CreateBullet(mainCannon.position, mainCannon.rotation);
+                CreateBullet(tripleCannon1.position, tripleCannon1.rotation, false);
+                CreateBullet(tripleCannon2.position, tripleCannon2.rotation, false);
+            }
             else
-                nextFire = Time.time + fireRateRapid;
-            nextFireQuickFire = nextFire; // Quick firing does not work with Rapid Shot
-            StartCoroutine(RapidShot());
-        }
-        else if (p.plrPowerups.ifTripleShot)
-        {
-            nextFire = Time.time + fireRateTripleHeld;
-            nextFireQuickFire = Time.time + fireRateTripleQuickFire;
-            CreateBullet(mainCannon.position, mainCannon.rotation);
-            CreateBullet(tripleCannon1.position, tripleCannon1.rotation);
-            CreateBullet(tripleCannon2.position, tripleCannon2.rotation);
-        }
-        else
-        {
-            nextFire = Time.time + fireRateNormalHeld;
-            nextFireQuickFire = Time.time + fireRateNormalQuickFire;
-            CreateBullet(mainCannon.position, mainCannon.rotation);
+            {
+                nextFire = Time.time + fireRateNormalHeld;
+                nextFireQuickFire = Time.time + fireRateNormalQuickFire;
+                CreateBullet(mainCannon.position, mainCannon.rotation);
+            }
         }
     }
 
-    internal void FireSingleShot()
-    {
-
-    }
-    private void CreateBullet(Vector3 position, Quaternion rotation)
+    private void CreateBullet(Vector3 position, Quaternion rotation, bool contributesToActiveBulletCount = true)
     {
         GameObject newBullet = Instantiate(bullet, position, rotation);
         newBullet.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
         newBullet.GetComponent<BulletBehaviour>().FizzleOutBullet(bulletDestroyTime);
+        if (contributesToActiveBulletCount)
+        {
+            numOfActiveBullets += 1;
+            Invoke(nameof(RemoveBulletFromList), bulletDestroyTime);
+        }
+    }
+
+    private void RemoveBulletFromList()
+    {
+        numOfActiveBullets -= 1;
     }
 
     private IEnumerator RapidShot()
@@ -85,14 +102,14 @@ public class PlayerWeapons : MonoBehaviour
             for (int i = 0; i < 3; i++)
             {
                 CreateBullet(mainCannon.position, mainCannon.rotation);
-                CreateBullet(tripleCannon1.position, tripleCannon1.rotation);
-                CreateBullet(tripleCannon2.position, tripleCannon2.rotation);
+                CreateBullet(tripleCannon1.position, tripleCannon1.rotation, false);
+                CreateBullet(tripleCannon2.position, tripleCannon2.rotation, false);
                 yield return new WaitForSeconds(rapidFireBetweenBullets);
             }
         }
         else
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
                 CreateBullet(mainCannon.position, mainCannon.rotation);
                 yield return new WaitForSeconds(rapidFireBetweenBullets);

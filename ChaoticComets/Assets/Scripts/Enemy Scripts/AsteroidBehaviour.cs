@@ -21,6 +21,10 @@ public class AsteroidBehaviour : MonoBehaviour {
 
     void Start ()
     {
+        if (BetweenScenes.Difficulty == 1)
+            maxThrust *= 1.25f;
+        else if (BetweenScenes.Difficulty == 2)
+            maxThrust *= 1.5f;
         GetComponents();
         UsefulFunctions.FindThrust(rbAsteroid, maxThrust);
         UsefulFunctions.FindTorque(rbAsteroid, maxSpin);
@@ -61,7 +65,7 @@ public class AsteroidBehaviour : MonoBehaviour {
                 int asteroidAmount = Random.Range(2, 4);
                 for (int i = 0; i < asteroidAmount; i++)
                 {
-                    Instantiate(asteroidType, transform.position, transform.rotation);
+                    Instantiate(asteroidType, transform.position, transform.rotation, GameManager.i.Refs.propParent);
                 }
                 GameManager.i.UpdateNumberAsteroids(asteroidAmount - 1);
             }
