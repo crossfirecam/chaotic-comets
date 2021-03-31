@@ -1,32 +1,36 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public partial class MainMenu : MonoBehaviour
 {
 
-    public GameObject saveOptionDialog, difficultyDialog, mainMenuPanel, optionsDialog;
+    [Header("Dialogs")]
+    public GameObject saveOptionDialog;
+    public GameObject difficultyDialog, mainMenuPanel, optionsDialog;
 
-    // Options screen
+    [Header("Options Screen")]
     public Button btnFullscreenToggle;
     public Slider optionMusicSlider, optionSFXSlider;
     public GameObject cheatDisclaimer, cheatDisclaimerResumeSave;
 
-    // Save confirmation screen
-    public Text saveDescriptionText;
+    [Header("Save Confirm Screen")]
+    public TextMeshProUGUI saveDescriptionText;
 
-    // Difficulty selection screen
-    public Text difficultyTitleText, difficultyText;
-    public Button diffBackButton, diffEasyButton, diffNormalButton, diffHardButton;
+    [Header("Difficulty Screen")]
+    public Button diffBackButton;
+    public Button diffEasyButton, diffNormalButton, diffHardButton;
+    public TextMeshProUGUI difficultyTitleText, difficultyText;
     private readonly string diffTitle0 = "Select difficulty", diffTitle1 = "Select difficulty\n(both players)";
     private readonly string diffText0 = "Go back to main menu.";
-    private readonly string diffText1 = "Ship is always equipped with Auto-Brake and comes to a complete stop. No manual braking required.";
-    private readonly string diffText2 = "Standard gameplay. Try other difficulties to change ship's handling.";
-    private readonly string diffText3 = "Ship's manual brake and Auto-Brake are less effective. A real test of maneuverability.";
+    private readonly string diffText1 = "- Ship comes to a complete stop.\n- Asteroids move slowly. \n- UFO's are just here to play.";
+    private readonly string diffText2 = "- Ship requires manual braking.\n- Asteroids are a threat.\n- UFO's are aggressive.";
+    private readonly string diffText3 = "- Ship has a weaker manual brake.\n- Asteroids are much faster.\n- UFO's will attack without prejudice.";
 
-    // Misc UI objects
-    public Button returnToMenuButton, saveFirstButton, optionsFirstButton;
+    [Header("Misc UI Nav Objects")]
     public Transform playerDecorDiffDialog;
+    public Button returnToMenuButton, saveFirstButton, optionsFirstButton;
 
     /* ------------------------------------------------------------------------------------------------------------------
      * Save Dialog - Checking for save file, and showing dialog
@@ -49,7 +53,7 @@ public partial class MainMenu : MonoBehaviour
     }
 
     // Display a prompt to make a new game or resume saved game
-    private Text saveDialogHeader, saveDialogInfo, saveDialogNewGame;
+    private TextMeshProUGUI saveDialogHeader, saveDialogInfo, saveDialogNewGame;
     public void ShowSavePrompt()
     {
         SetBackButton();
@@ -57,9 +61,9 @@ public partial class MainMenu : MonoBehaviour
 
         if (saveDialogHeader == null)
         {
-            saveDialogHeader = saveOptionDialog.transform.Find("SaveDialog").Find("SaveHeader").GetComponent<Text>();
-            saveDialogInfo = saveOptionDialog.transform.Find("SaveDialog").Find("SaveInfo").GetComponent<Text>();
-            saveDialogNewGame = saveOptionDialog.transform.Find("SaveDialog").Find("SaveNewBtn").GetComponentInChildren<Text>();
+            saveDialogHeader = saveOptionDialog.transform.Find("SaveDialog").Find("SaveHeader").GetComponent<TextMeshProUGUI>();
+            saveDialogInfo = saveOptionDialog.transform.Find("SaveDialog").Find("SaveInfo").GetComponent<TextMeshProUGUI>();
+            saveDialogNewGame = saveOptionDialog.transform.Find("SaveDialog").Find("SaveNewBtn").GetComponentInChildren<TextMeshProUGUI>();
         }
 
         string savePlayerCount = $"{(data.playerCount == 1 ? "One" : "Two")}";
@@ -67,9 +71,7 @@ public partial class MainMenu : MonoBehaviour
         saveDialogNewGame.text = $"New {savePlayerCount} Player Game";
 
         string saveDifficulty;
-        #pragma warning disable IDE0066 // Cannot use switch statement in Unity, unfortunately
         switch (data.difficulty)
-        #pragma warning restore IDE0066 // Cannot use switch statement in Unity, unfortunately
         {
             case 0: saveDifficulty = "Easy"; break;
             case 1: saveDifficulty = "Normal"; break;
@@ -163,11 +165,11 @@ public partial class MainMenu : MonoBehaviour
     {
         if (Screen.fullScreen)
         {
-            btnFullscreenToggle.GetComponentInChildren<Text>().text = "Fullscreen ON";
+            btnFullscreenToggle.GetComponentInChildren<TextMeshProUGUI>().text = "Fullscreen ON";
         }
         else
         {
-            btnFullscreenToggle.GetComponentInChildren<Text>().text = "Fullscreen OFF";
+            btnFullscreenToggle.GetComponentInChildren<TextMeshProUGUI>().text = "Fullscreen OFF";
         }
     }
 

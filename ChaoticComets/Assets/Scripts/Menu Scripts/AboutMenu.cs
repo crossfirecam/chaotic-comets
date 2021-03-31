@@ -12,8 +12,7 @@ public class AboutMenu : MonoBehaviour {
     // UI variables
     public Sprite devIntro, devPre1, devPre2, devPre3, devPreFinal, dev1_0, dev1_1, dev1_2, dev1_3, devUpcoming;
     public Image devImage;
-    public TextMeshProUGUI devText;
-    public Text devNextButtonText;
+    public TextMeshProUGUI devText, devNextButtonText;
     private readonly string devTextIntro = "Chaotic Comets has been in development since late 2018. Press the button below to learn more about the game's history.",
         devTextPre1 = "<u>Early October 2018</u>: Chaotic Comet's development began with a simple experiment of game physics. Much of the material was placeholders.",
         devTextPre2 = "<u>Late October 2018</u>: The project was in a playable state. Asteroid physics, a health/power system, and a basic menu system was added.",
