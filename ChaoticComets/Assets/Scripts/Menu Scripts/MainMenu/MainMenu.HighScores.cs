@@ -2,17 +2,15 @@
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using static HighScoreHandling;
 
 public partial class MainMenu : MonoBehaviour
 {
     // Basis of this code from Code Monkey https://www.youtube.com/watch?v=iAbaqGYdnyI
 
+    [Header("High Score Population")]
     public TextMeshProUGUI txtScoresHeader;
     public Transform scoreContainer, scoreTemplate;
-    public GameObject resetScoresDialog;
-    public Button btnResetNo;
     private List<Transform> highscoreEntryTransformList;
 
     /* ------------------------------------------------------------------------------------------------------------------
@@ -130,29 +128,6 @@ public partial class MainMenu : MonoBehaviour
     /* ------------------------------------------------------------------------------------------------------------------
      * Reset Panel Methods
      * ------------------------------------------------------------------------------------------------------------------ */
-
-    Navigation navSelectUp = new Navigation { mode = Navigation.Mode.Explicit };
-    Navigation navSelectDown = new Navigation { mode = Navigation.Mode.Explicit };
-    public void ShowResetPanel()
-    {
-        SetBackButton();
-        resetScoresDialog.SetActive(true);
-        btnResetNo.Select();
-
-        // Initialise navigation change variables
-        Transform resetDialogItself = resetScoresDialog.transform.Find("ResetDialog");
-        Button resetNoButton = resetDialogItself.Find("ResetNoButton").GetComponent<Button>();
-        Button resetCPUButton = resetDialogItself.Find("ResetRemoveCPUButton").GetComponent<Button>();
-        Button resetYesButton = resetDialogItself.Find("ResetYesButton").GetComponent<Button>();
-
-        // Change attributes of button navigation depending on if the CPU removal button has been pressed (can also be reset)
-        bool cpuButtonPressable = PlayerPrefs.GetInt("RemovedCPUs") == 0;
-        resetCPUButton.interactable = cpuButtonPressable;
-        navSelectDown.selectOnDown = cpuButtonPressable ? resetCPUButton : resetYesButton;
-        navSelectUp.selectOnUp = cpuButtonPressable ? resetCPUButton : resetNoButton;
-        resetNoButton.navigation = navSelectDown;
-        resetYesButton.navigation = navSelectUp;
-    }
 
     // When Reset Scores button is pressed, reset scores to default values, and repopulate the table
     public void ResetPanelYes()

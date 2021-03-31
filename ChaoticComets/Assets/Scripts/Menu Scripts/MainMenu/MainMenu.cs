@@ -5,10 +5,9 @@ using UnityEngine.Audio;
 
 public partial class MainMenu : MonoBehaviour
 {
+    [Header("Main Menu Misc")]
     public AudioMixer mixer;
     public GameObject fadeBlack;
-    private MusicManager musicManager;
-    public GameObject musicManagerIfNotFoundInScene;
     private AudioSource audioMenuBack;
 
     // ----------
@@ -18,14 +17,13 @@ public partial class MainMenu : MonoBehaviour
         UsefulFunctions.ResetBetweenScenesScript();
         ChangeScoreTypeAndPopulate(PlayerPrefs.GetInt("ScorePreference", 0));
 
-        
         // Check most recently used controller every .2 seconds
         StartCoroutine(UsefulFunctions.CheckController());
 
         // If returning to main menu from About or Help, play a sound and select the button. If not, then fade the screen in.
         if (BetweenScenes.BackToMainMenuButton != "")
         {
-            Button buttonToSelect = mainMenuPanel.transform.Find(BetweenScenes.BackToMainMenuButton + "Button").GetComponent<Button>();
+            Button buttonToSelect = mainMenuPanel.Find(BetweenScenes.BackToMainMenuButton + "Button").GetComponent<Button>();
             buttonToSelect.Select();
             audioMenuBack.Play();
             BetweenScenes.BackToMainMenuButton = "";
@@ -34,10 +32,6 @@ public partial class MainMenu : MonoBehaviour
         {
             StartCoroutine(FadeBlack("from"));
         }
-    }
-
-    private void Update() {
-        CheckHighlightedButton();
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
@@ -85,15 +79,9 @@ public partial class MainMenu : MonoBehaviour
     {
         // Find Music Manager & audio source for moving back in Main Menu UI
         audioMenuBack = GetComponent<AudioSource>();
-        musicManager = FindObjectOfType<MusicManager>();
-        if (!musicManager)
-        {
-            Instantiate(musicManagerIfNotFoundInScene);
-            musicManager = FindObjectOfType<MusicManager>();
-        }
 
         // Find the SFX slider in Options, and set default values (for some reason GetFloat's defaultValue wouldn't work...)
-        musicManager.sfxDemo = optionSFXSlider.GetComponent<AudioSource>();
+        MusicManager.i.sfxDemo = optionsPanel.optionSFXSlider.GetComponent<AudioSource>();
         if (!PlayerPrefs.HasKey("Music"))
         {
             PlayerPrefs.SetFloat("Music", 0.8f);
@@ -102,7 +90,7 @@ public partial class MainMenu : MonoBehaviour
         }
 
         // Change music to main menu track, set volumes
-        musicManager.ChangeMusicTrack(0);
+        MusicManager.i.ChangeMusicTrack(0);
         float musicVol = PlayerPrefs.GetFloat("Music");
         float sfxVol = PlayerPrefs.GetFloat("SFX");
         mixer.SetFloat("MusicVolume", Mathf.Log10(musicVol) * 20);

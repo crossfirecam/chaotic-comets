@@ -41,17 +41,8 @@ public partial class MainMenu : MonoBehaviour
         SceneManager.LoadScene("AboutMenu");
     }
 
-    public void EndGame()
+    public void ExitGame()
     {
         Application.Quit();
-    }
-
-    public void ChangeMusicPassToManager(float musVolume)
-    {
-        musicManager.ChangeMusic(musVolume);
-    }
-    public void ChangeSFXPassToManager(float sfxVolume)
-    {
-        musicManager.ChangeSFX(sfxVolume);
     }
 }

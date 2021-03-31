@@ -217,15 +217,37 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 298724647}
-        m_MethodName: ShowOptions
+        m_MethodName: NotifyMainMenuWhichButtonToReturnTo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 365174845}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 365174850}
+        m_MethodName: ShowOptionsPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &12481746
 MonoBehaviour:
@@ -754,7 +776,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -793,11 +815,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 65080455}
+  - component: {fileID: 65080459}
   - component: {fileID: 65080457}
   - component: {fileID: 65080456}
   - component: {fileID: 65080458}
   m_Layer: 5
-  m_Name: ResetPanel
+  m_Name: ResetScoresPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -957,6 +980,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &65080459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65080454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f64d56b8fd651fb42adc2322d596a4d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenu: {fileID: 298724647}
 --- !u!1 &96527357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,7 +1234,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 298724647}
+      - m_Target: {fileID: 365174850}
         m_MethodName: SwapFullscreen
         m_Mode: 1
         m_Arguments:
@@ -1287,7 +1323,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1479,7 +1515,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 298724647}
+      - m_Target: {fileID: 1395995623}
         m_MethodName: SetDifficultyAndStart
         m_Mode: 3
         m_Arguments:
@@ -1568,7 +1604,22 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1395995623}
+          m_MethodName: ChangeDifficultyText
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2169,32 +2220,13 @@ MonoBehaviour:
   txtScoresHeader: {fileID: 1655859944}
   scoreContainer: {fileID: 1718238723}
   scoreTemplate: {fileID: 1059034397}
-  resetScoresDialog: {fileID: 65080454}
-  btnResetNo: {fileID: 913191092}
-  saveOptionDialog: {fileID: 742459296}
-  difficultyDialog: {fileID: 1395995618}
-  mainMenuPanel: {fileID: 881011852}
-  optionsDialog: {fileID: 365174845}
-  btnFullscreenToggle: {fileID: 132405646}
-  optionMusicSlider: {fileID: 690606543}
-  optionSFXSlider: {fileID: 1003452687}
-  cheatDisclaimer: {fileID: 702658256}
-  cheatDisclaimerResumeSave: {fileID: 600555768}
-  saveDescriptionText: {fileID: 1019562142}
-  diffBackButton: {fileID: 1531019593}
-  diffEasyButton: {fileID: 1693011360}
-  diffNormalButton: {fileID: 1273157037}
-  diffHardButton: {fileID: 152333750}
-  difficultyTitleText: {fileID: 426707450}
-  difficultyText: {fileID: 1098011561}
-  playerDecorDiffDialog: {fileID: 854379930}
-  returnToMenuButton: {fileID: 0}
-  saveFirstButton: {fileID: 1558276304}
-  optionsFirstButton: {fileID: 1364189512}
+  mainMenuPanel: {fileID: 881011853}
+  optionsPanel: {fileID: 365174850}
+  difficultyPanel: {fileID: 1395995623}
+  savePanel: {fileID: 742459301}
+  resetScoresPanel: {fileID: 65080459}
   mixer: {fileID: 24100000, guid: c45b130275ef2b747be4423907a74a75, type: 2}
   fadeBlack: {fileID: 1402773993}
-  musicManagerIfNotFoundInScene: {fileID: 8774387490616601870, guid: 376023999fb623c4b8bb77d8bf26210d,
-    type: 3}
 --- !u!4 &298724648
 Transform:
   m_ObjectHideFlags: 0
@@ -2664,6 +2696,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 365174848}
+  - component: {fileID: 365174850}
   - component: {fileID: 365174847}
   - component: {fileID: 365174846}
   - component: {fileID: 365174849}
@@ -2830,6 +2863,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &365174850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365174845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8a144c3551b421469b471b33d513db4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnFullscreenToggle: {fileID: 132405646}
+  optionsFirstButton: {fileID: 1364189512}
+  optionMusicSlider: {fileID: 690606543}
+  optionSFXSlider: {fileID: 1003452687}
+  cheatDisclaimer: {fileID: 702658256}
+  cheatDisclaimerResumeSave: {fileID: 600555768}
 --- !u!1 &375896299
 GameObject:
   m_ObjectHideFlags: 0
@@ -2842,7 +2893,7 @@ GameObject:
   - component: {fileID: 375896302}
   - component: {fileID: 375896301}
   m_Layer: 5
-  m_Name: ResetDialog
+  m_Name: ResetScoresDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4758,7 +4809,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 298724647}
+      - m_Target: {fileID: 365174850}
         m_MethodName: ChangeMusicPassToManager
         m_Mode: 0
         m_Arguments:
@@ -4787,7 +4838,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4978,6 +5029,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 742459297}
+  - component: {fileID: 742459301}
   - component: {fileID: 742459299}
   - component: {fileID: 742459298}
   - component: {fileID: 742459300}
@@ -5142,6 +5194,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &742459301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742459296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7c74d9f5048de248ab901dd3a088c58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenu: {fileID: 298724647}
+  saveFirstButton: {fileID: 1558276304}
+  saveDialogHeader: {fileID: 1696882225}
+  saveDialogInfo: {fileID: 1019562142}
+  saveDialogNewGame: {fileID: 209236589}
 --- !u!1 &787760652
 GameObject:
   m_ObjectHideFlags: 0
@@ -5394,7 +5463,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 298724647}
+      - m_Target: {fileID: 742459301}
         m_MethodName: SaidNoToResuming
         m_Mode: 1
         m_Arguments:
@@ -5460,7 +5529,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -6241,7 +6310,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -6717,7 +6786,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 298724647}
+      - m_Target: {fileID: 365174850}
         m_MethodName: ChangeSFXPassToManager
         m_Mode: 0
         m_Arguments:
@@ -6746,7 +6815,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7854,7 +7923,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -9009,7 +9078,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 298724647}
+      - m_Target: {fileID: 1395995623}
         m_MethodName: SetDifficultyAndStart
         m_Mode: 3
         m_Arguments:
@@ -9098,7 +9167,22 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1395995623}
+          m_MethodName: ChangeDifficultyText
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -9367,7 +9451,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -9540,6 +9624,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 298724647}
+        m_MethodName: NotifyMainMenuWhichButtonToReturnTo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 298724647}
         m_MethodName: CheckForSaveFile
         m_Mode: 3
@@ -9954,7 +10049,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -10129,6 +10224,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1395995621}
+  - component: {fileID: 1395995623}
   - component: {fileID: 1395995620}
   - component: {fileID: 1395995619}
   - component: {fileID: 1395995622}
@@ -10294,6 +10390,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1395995623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395995618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da597384c34f464d9ab7550a92e95e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerDecorDiffDialog: {fileID: 854379930}
+  diffBackButton: {fileID: 1531019593}
+  diffEasyButton: {fileID: 1693011360}
+  diffNormalButton: {fileID: 1273157037}
+  diffHardButton: {fileID: 152333750}
+  difficultyTitleText: {fileID: 426707450}
+  difficultyText: {fileID: 1098011561}
+  mainMenu: {fileID: 298724647}
 --- !u!1 &1397659125
 GameObject:
   m_ObjectHideFlags: 0
@@ -11113,7 +11229,22 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1395995623}
+          m_MethodName: ChangeDifficultyText
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -11499,9 +11630,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 298724647}
-        m_MethodName: SetDifficultyAndStart
-        m_Mode: 3
+      - m_Target: {fileID: 742459301}
+        m_MethodName: SaidYesToResuming
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11597,7 +11728,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -11702,16 +11833,27 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 298724647}
-        m_MethodName: ShowResetPanel
-        m_Mode: 1
+      - m_Target: {fileID: 65080454}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 65080459}
+        m_MethodName: ShowResetPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1565482496
 MonoBehaviour:
@@ -11993,7 +12135,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 298724647}
+      - m_Target: {fileID: 365174850}
         m_MethodName: ToggleCheats
         m_Mode: 0
         m_Arguments:
@@ -12046,7 +12188,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -13417,7 +13559,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 298724647}
+      - m_Target: {fileID: 1395995623}
         m_MethodName: SetDifficultyAndStart
         m_Mode: 3
         m_Arguments:
@@ -13506,7 +13648,22 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298724647}
-          m_MethodName: OnMenuGoBack
+          m_MethodName: BackToMenu
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1395995623}
+          m_MethodName: ChangeDifficultyText
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -13853,7 +14010,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 298724647}
-        m_MethodName: EndGame
+        m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15588,6 +15745,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 298724647}
+        m_MethodName: NotifyMainMenuWhichButtonToReturnTo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 298724647}
         m_MethodName: CheckForSaveFile
         m_Mode: 3
