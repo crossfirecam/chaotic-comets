@@ -16,9 +16,10 @@ public class Testing : MonoBehaviour
     [Header("What's Reported in Console")]
     public bool speedReportTest2P = false;
 
-    [Header("Upgrades (Shield, Brake, TeleR, AutoR, MunitR, ShotSp, ShotRa)")]
-    public int[] player1Upgrades = new int[7];
-    public int[] player2Upgrades = new int[7];
+    [Header("Upgrades (Shi, Tele, Spd, Brk, AutoR, ShotLi, ShotSp, ShotRa)")]
+    public int[] player1Upgrades = new int[8];
+    public int[] player2Upgrades = new int[8];
+    // Testing Shi & Tele upgrade doesn't work on level -1.
 
     private void Awake()
     {
@@ -29,7 +30,7 @@ public class Testing : MonoBehaviour
             GameManager.i.levelNo = -1;
 
         // Set testing upgrades for players
-        for (int j = 0; j < 7; j++)
+        for (int j = 0; j < 8; j++)
         {
             BetweenScenes.PlayerShopUpgrades[0][j] = player1Upgrades[j];
             BetweenScenes.PlayerShopUpgrades[1][j] = player2Upgrades[j];

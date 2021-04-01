@@ -8,7 +8,7 @@ public class PlayerMain : MonoBehaviour {
 
     [Header("Player Statistics")]
     public int playerNumber;
-    public int credits = 0, totalCredits = 0, bonus = 4999;
+    public int credits = 0, totalCredits = 0, bonus = 9999;
     public float shields = 80, power = 0;
 
     [Header("Impacts, Death, Respawning")]

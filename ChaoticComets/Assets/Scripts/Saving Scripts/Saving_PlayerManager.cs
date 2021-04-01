@@ -59,7 +59,7 @@ public class Saving_PlayerManager
         public int bonusThreshold = 0;
         // Powerup order: Insurance, Far Shot, Rapid Shot, Auto-Brake, Triple Shot
         public int[] powerups = { 0, 0, 0, 0, 0 };
-        // Upgrade order: Shield Str, Brake, Tele Rate, Auto Rate, Munit Rate, Shot Sp, Shot Ra
-        public int[] upgrades = { 0, 0, 0, 0, 0, 0, 0 };
+        // Upgrade order: Shield Strength, Brake, Tele Rate, Auto Rate, Shot Limit, Shot Speed, Shot Range
+        public int[] upgrades = { 0, 0, 0, 0, 0, 0, 0, 0 };
     }
 }

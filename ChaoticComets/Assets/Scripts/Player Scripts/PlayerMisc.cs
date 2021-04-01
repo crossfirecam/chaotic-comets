@@ -11,7 +11,8 @@ public class PlayerMisc : MonoBehaviour
     [SerializeField] PlayerMain p = default;
 
     // Upgrade Systems
-    public float upgradeBrake, upgradeTeleportRate, upgradeAutoRate, upgradeMunitionRate, upgradeShotSpeed, upgradeShotRange, upgradeShield;
+    public float upgradeSpeed, upgradeBrake, upgradeTeleportRate, upgradeAutoRate, upgradeShotSpeed, upgradeShotRange, upgradeShield;
+    public int upgradeShotLimit;
 
     internal void OtherStartFunctions()
     {
@@ -63,27 +64,27 @@ public class PlayerMisc : MonoBehaviour
 
     private void SetUpgradeLevelsForPlayer()
     {
+        // Most upgrades are in intervals of 20%
         upgradeShield = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][0] / 2f); // Shield upgrade is in intervals of 50%
-        upgradeBrake = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][1] / 5f); // Other upgrades are in intervals of 20%
-        upgradeTeleportRate = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][2] / 5f);
-        upgradeAutoRate = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][3] / 5f);
-        upgradeMunitionRate = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][4] / 5f);
-        upgradeShotSpeed = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][5] / 5f);
-        upgradeShotRange = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][6] / 5f);
+        upgradeTeleportRate = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][1] / 5f);
+        upgradeSpeed = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][2] / 10f); // Weaken the speed upgrade
+        upgradeBrake = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][3] / 5f);
+        upgradeAutoRate = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][4] / 5f);
+        upgradeShotLimit = BetweenScenes.PlayerShopUpgrades[p.playerNumber][5]; // Shot limit upgrade is in intervals of 1 shot
+        upgradeShotSpeed = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][6] / 5f);
+        upgradeShotRange = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][7] / 5f);
 
         p.damageFromImpact /= upgradeShield;
         p.damageFromUfoBullet /= upgradeShield;
-
-        p.plrMovement.manualBrakePower *= upgradeBrake;
         p.plrAbility.powerChargeTime /= upgradeTeleportRate;
+
+        p.plrMovement.thrustPower *= upgradeSpeed;
+        p.plrMovement.manualBrakePower *= upgradeBrake;
 
         p.plrWeapons.fireRateNormalHeld /= upgradeAutoRate;
         p.plrWeapons.fireRateTripleHeld /= upgradeAutoRate;
 
-        p.plrWeapons.fireRateRapidWithTriple /= upgradeMunitionRate;
-        p.plrWeapons.fireRateRapid /= upgradeMunitionRate;
-        p.plrWeapons.fireRateTripleHeld /= upgradeMunitionRate;
-
+        p.plrWeapons.capOfActiveBullets += (int) upgradeShotLimit;
         p.plrWeapons.bulletForce *= upgradeShotSpeed;
         p.plrWeapons.bulletRangeMultipler *= upgradeShotRange;
 
