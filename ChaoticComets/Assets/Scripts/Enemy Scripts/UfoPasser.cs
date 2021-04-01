@@ -6,20 +6,53 @@
 
 public class UfoPasser : Ufo
 {
+    private float beginningDirection;
     public float currentDeviation;
-    private void Update()
-    {
-        // Weapon systems. If criteria are met, then shoot depending on enemy type
-        if (ShipAbleToShoot())
-        {
-            WeaponLogicPasser();
-        }
+    private float passerDirChangeInterval = 1f;
+    private float lastDirChangeTime = 0f;
 
-        // Stabilise 3D model
-        transform.rotation = Quaternion.Euler(-50, 0, 0);
+    private new void Start()
+    {
+        base.Start();
+
+        // If spawned on the left, set beginningDirection to 1. Else, set to -1.
+        float whereStarted = transform.position.x;
+        beginningDirection = whereStarted < 0f ? 1 : -1;
+    }
+    private new void Update()
+    {
+        base.Update();
 
         CheckUfoScreenWrap(true);
     }
+
+    internal override void ChangeDifficultyStats()
+    {
+        base.ChangeDifficultyStats();
+
+        // Passer will change directions more often at higher difficulty.
+        if (BetweenScenes.Difficulty == 1)
+        {
+            passerDirChangeInterval *= .8f;
+        }
+        else if (BetweenScenes.Difficulty == 2)
+        {
+            passerDirChangeInterval *= .6f;
+        }
+    }
+
+    public void SetBeginningDirection(int passedValue)
+    {
+        if (passedValue == 0)
+        {
+            beginningDirection = 1f;
+        }
+        else if (passedValue == 1)
+        {
+            beginningDirection = -1f;
+        }
+    }
+
     private void FixedUpdate()
     {
         timer += Time.fixedDeltaTime;
@@ -27,7 +60,7 @@ public class UfoPasser : Ufo
         {
             if (!playerFound)
             {
-                FindPlayerPasser();
+                FindPlayer();
             }
 
             // If UFO has more than 10 health, continue moving
@@ -38,11 +71,7 @@ public class UfoPasser : Ufo
             // If alien has less than 10 health, it will run away in a single direction and attempt to teleport
             else
             {
-                if (!ufoRetreating)
-                {
-                    direction = player.position - transform.position; // Direction is reversed in AlienRetreat();
-                    AlienRetreat();
-                }
+                AlienRetreat();
             }
             direction = direction.normalized;
             rb.MovePosition(rb.position + direction * alienSpeedCurrent * Time.fixedDeltaTime);
@@ -52,8 +81,9 @@ public class UfoPasser : Ufo
     // UFO-Passer will move left to right, deviating with up/down/straight on Y axis
     private void MoveLogicPasser()
     {
-        if (System.Math.Round(timer, 1) % 1f == 0f)
+        if (timer >= lastDirChangeTime + passerDirChangeInterval)
         {
+            lastDirChangeTime = timer;
             int whileTimer = 0;
             while(whileTimer < 20)
             {
@@ -81,7 +111,7 @@ public class UfoPasser : Ufo
                 currentDeviation = 0f;
             }
         }
-        direction = new Vector2(1, currentDeviation);
+        direction = new Vector2(beginningDirection, currentDeviation);
     }
     //
     private enum PasserMove { Up, Down, Straight };
@@ -109,47 +139,5 @@ public class UfoPasser : Ufo
                 break;
         }
         return false;
-    }
-
-    internal void WeaponLogicPasser()
-    {
-
-        Vector2 towardPlayer = (player.position - transform.position);
-        float angle = Mathf.Atan2(towardPlayer.y, towardPlayer.x) * Mathf.Rad2Deg - 90f;
-        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-
-        Vector3 bulletPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - 4);
-        GameObject newBullet = Instantiate(bullet, bulletPosition, q);
-        newBullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, bulletSpeed));
-        Destroy(newBullet, 2f);
-
-        lastTimeShot = Time.time;
-    }
-    private void FindPlayerPasser()
-    {
-        // Choose a player to target
-        float randomFloat = Random.Range(0.0f, 1f);
-        if (randomFloat >= 0.5f && !GameManager.i.player1dead && !GameManager.i.player1TEMPDEAD)
-        {
-            player = GameObject.FindWithTag("Player").transform;
-        }
-        else if (randomFloat <= 0.49f && !GameManager.i.player2dead && !GameManager.i.player2TEMPDEAD)
-        {
-            player = GameObject.FindWithTag("Player 2").transform;
-        }
-
-        // Once player is found, don't shoot for 1 second, and disable random movement
-        // If no player is found, then tell UFO to enable random movement
-        if (player != null)
-        {
-            lastTimeShot = Time.time + 1f;
-            playerFound = true;
-        }
-
-        // Fringe case - one player alive, they die, a bullet hits almost dead UFO, and it wouldn't activate shields
-        if (alienHealth <= 10f && !ufoRetreating)
-        {
-            AlienRetreat();
-        }
     }
 }

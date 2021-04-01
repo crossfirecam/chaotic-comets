@@ -10,10 +10,16 @@ public abstract partial class Ufo : MonoBehaviour
 
     internal void AlienRetreat()
     {
-        alienSpeedCurrent = alienSpeedBase * retreatSpeedMultiplier; // Reverse direction
-        ufoRetreating = true;
-        forceField.SetActive(true);
-        Invoke(nameof(TeleportStartFromInvoke), 3f);
+        if (!ufoRetreating)
+        {
+            // Face the player, but then reverse direction.
+            direction = player.position - transform.position;
+            alienSpeedCurrent = alienSpeedBase * retreatSpeedMultiplier;
+
+            ufoRetreating = true;
+            forceField.SetActive(true);
+            Invoke(nameof(TeleportStartFromInvoke), 3f);
+        }
     }
 
     // TODO Temporary bodge to allow Unity to invoke TeleportStart().

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public abstract partial class Ufo : MonoBehaviour
 {
@@ -6,42 +7,28 @@ public abstract partial class Ufo : MonoBehaviour
     // private float difficultyIncrease = 0.95f; TODO add this functionality later
     public float alienHealth;
     public float alienMaxHealth;
-    private int pointsToScore = 100;
-    private readonly int teleportKillPoints = 500;
+    private int pointsToScore = 50;
+    private const int teleportKillPoints = 500;
+
+    private BulletBehaviour lastTouchedPlrBullet;
 
     // All UFO type enemies react to player bullets in the same way
     private void OnTriggerEnter2D(Collider2D playerBullet)
     {
         if (playerBullet.gameObject.CompareTag("bullet") || playerBullet.gameObject.CompareTag("bullet2"))
         {
-            if (GameManager.i.tutorialMode && TutorialManager.i.ufoFollowerDocile)
-            {
-                FlickShieldOn();
-                ReflectBullet(playerBullet);
-            }
+            lastTouchedPlrBullet = playerBullet.GetComponent<BulletBehaviour>();
+            HandleDocileTutorialUFOs();
 
-            // If UFO has shields up, don't deal damage. Instead, reflect bullet
+            // If UFO has shields up, don't deal damage. Instead, reflect bullet.
             if (forceField.activeInHierarchy)
             {
-                ReflectBullet(playerBullet);
+                ReflectBullet();
             }
-            // If UFO is not retreating, deal damage and score credits
-            else if (!ufoRetreating)
+            // If UFO does not have shields up, deal damage and score credits
+            else
             {
-                alienHealth -= 10f;
-                playerBullet.gameObject.GetComponent<BulletBehaviour>().DestroyBullet();
-
-                // If UFO is teleporting & has 10 health or less, then grant more points for an escape kill
-                if (ufoTeleporting && alienHealth <= 10f)
-                {
-                    pointsToScore = teleportKillPoints;
-                    DetermineIfDead();
-                }
-
-                if (alienHealth >= 0f)
-                {
-                    DealDamageGrantPoints(playerBullet);
-                }
+                DealDamage();
             }
         }
     }
@@ -66,8 +53,28 @@ public abstract partial class Ufo : MonoBehaviour
         if (ufoRetreating) { magnitude /= 3; }
         collision.gameObject.GetComponent<Rigidbody2D>().AddForce(-force * magnitude);
     }
-    // If alien has 0 or less health, it is dying. Can only be set to dying state once
-    private void DetermineIfDead()
+
+    private void DealDamage()
+    {
+        alienHealth -= 10f;
+        lastTouchedPlrBullet.DestroyBullet();
+
+        // If UFO is teleporting & has 10 health or less, then grant more points for an escape kill
+        if (ufoTeleporting && alienHealth <= 10f)
+        {
+            pointsToScore = teleportKillPoints;
+            SetToDyingState();
+        }
+
+        if (alienHealth >= 0f)
+            CreateExplosionGrantPoints();
+
+    }
+
+    /// <summary>
+    /// If alien has 0 or less health, it is dying. Can only be set to dying state once.
+    /// </summary>
+    private void SetToDyingState()
     {
         if (!deathStarted && alienHealth <= 0f)
         {
@@ -91,37 +98,38 @@ public abstract partial class Ufo : MonoBehaviour
     private void DeathRoutine()
     {
         CancelInvoke(nameof(DeathExplosions));
-        /* Increase stats for next time TODO fix these
-        shootingDelay = shootingDelay * difficultyIncrease;
-        alienSpeed = alienSpeed / difficultyIncrease;
-        alienMaxHealth = alienMaxHealth / difficultyIncrease;
-        alienHealth = alienMaxHealth;
-        // Maximum Stats
-        if (shootingDelay < 1.3f) { shootingDelay = 1.3f; }
-        if (alienSpeed > 1.6f) { alienSpeed = 1.6f; }
-        if (alienMaxHealth > 90f) { alienMaxHealth = 90f; }*/
         GameManager.i.AlienAndPowerupLogic(GameManager.PropSpawnReason.AlienRespawn);
         Destroy(gameObject);
     }
 
-    private void ReflectBullet(Collider2D playerBullet)
+    private void ReflectBullet()
     {
-        Vector2 force = gameObject.transform.position - playerBullet.transform.position;
+        Vector2 force = gameObject.transform.position - lastTouchedPlrBullet.transform.position;
         int magnitude = 1000;
-        playerBullet.gameObject.GetComponent<Rigidbody2D>().AddForce(-force * magnitude);
-        playerBullet.GetComponent<BulletBehaviour>().UfoReflectedBullet();
+        lastTouchedPlrBullet.gameObject.GetComponent<Rigidbody2D>().AddForce(-force * magnitude);
+        lastTouchedPlrBullet.GetComponent<BulletBehaviour>().UfoReflectedBullet();
         audioAlienSfx.clip = audClipAliexSfxShieldReflect;
         audioAlienSfx.Play();
     }
 
-    private void DealDamageGrantPoints(Collider2D playerBullet)
+    private void CreateExplosionGrantPoints()
     {
         GameObject newExplosion = Instantiate(playerBulletExplosion, transform.position, transform.rotation);
         Destroy(newExplosion, 2f);
         audioAlienSfx.clip = audClipAlienSfxTakenDamage;
         audioAlienSfx.pitch = 1f;
         audioAlienSfx.Play();
-        if (playerBullet.CompareTag("bullet")) { playerShip1.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
-        if (playerBullet.CompareTag("bullet2")) { playerShip2.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
+        if (lastTouchedPlrBullet.CompareTag("bullet")) { playerShip1.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
+        if (lastTouchedPlrBullet.CompareTag("bullet2")) { playerShip2.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
+    }
+
+    private void HandleDocileTutorialUFOs()
+    {
+        // If in tutorial mode and marked as docile, do not deal damage.
+        if (GameManager.i.tutorialMode && TutorialManager.i.ufoFollowerDocile)
+        {
+            FlickShieldOn();
+            ReflectBullet();
+        }
     }
 }

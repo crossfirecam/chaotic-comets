@@ -29,6 +29,7 @@ public abstract partial class Ufo : MonoBehaviour
     // All UFO type enemies start by finding players, setting speed, etc
     internal virtual void Start()
     {
+        ChangeDifficultyStats();
         rb = FindObjectOfType<Rigidbody2D>();
 
         alienSpeedCurrent = alienSpeedBase;
@@ -44,6 +45,35 @@ public abstract partial class Ufo : MonoBehaviour
             Destroy(gameObject);
         }
 
+        bulletExpireTime = bulletRange / bulletForce;
+
+    }
+
+    internal virtual void Update()
+    {
+        if (ShipAbleToShoot())
+            ShootBullet();
+
+        // Stabilise 3D model
+        transform.rotation = Quaternion.Euler(-50, 0, 0);
+    }
+
+    internal virtual void ChangeDifficultyStats()
+    {
+        if (BetweenScenes.Difficulty == 1)
+        {
+            bulletForce *= 1.5f;
+            alienSpeedBase *= 1.2f;
+            bulletRange *= 1.2f;
+            shootingDelay *= 0.75f;
+        }
+        else if (BetweenScenes.Difficulty == 2)
+        {
+            bulletForce *= 2f;
+            alienSpeedBase *= 1.4f;
+            bulletRange *= 1.4f;
+            shootingDelay *= 0.5f;
+        }
     }
 
     public GameObject[] ReturnAlienSounds()

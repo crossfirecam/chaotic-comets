@@ -3,14 +3,70 @@
 public abstract partial class Ufo : MonoBehaviour
 {
     [Header("Weapon System Variables")]
-    public float shootingDelay = 1.5f; // Seconds between bullets fired
-    public float bulletSpeed = 250; // How fast the bullet fires
+    internal float bulletRange = 400f;
+    internal float shootingDelay = 1.5f;
+    internal float bulletForce = 250f;
+    internal float bulletExpireTime;
+
     internal float lastTimeShot = 0f; // Keeps track of when UFO last fired a bullet
 
     [Header("Targetting System Variables")]
     internal float timer = 0;
     internal Transform player;
     internal bool playerFound = false, playerTooFar = false;
+
+    internal virtual void ShootBullet()
+    {
+        Vector2 towardPlayer = player.position - transform.position;
+        float angle = Mathf.Atan2(towardPlayer.y, towardPlayer.x) * Mathf.Rad2Deg - 90f;
+        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        Vector3 bulletPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - 4);
+        GameObject newBullet = Instantiate(bullet, bulletPosition, q);
+        newBullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, bulletForce));
+        newBullet.GetComponent<BulletBehaviour>().FizzleOutBullet(bulletExpireTime);
+
+        lastTimeShot = Time.time;
+    }
+
+    internal virtual void FindPlayer()
+    {
+        // Choose a player to target
+        float randomFloat = Random.Range(0.0f, 1f);
+        if (randomFloat >= 0.5f && !GameManager.i.player1dead && !GameManager.i.player1TEMPDEAD)
+        {
+            player = GameObject.FindWithTag("Player").transform;
+        }
+        else if (randomFloat <= 0.49f && !GameManager.i.player2dead && !GameManager.i.player2TEMPDEAD)
+        {
+            player = GameObject.FindWithTag("Player 2").transform;
+        }
+
+        // Once player is found, don't shoot for 1 second
+        if (player != null)
+        {
+            lastTimeShot = Time.time + 1f;
+            playerFound = true;
+        }
+
+        // Fringe case - one player alive, they die, a bullet hits almost dead UFO, and it wouldn't activate shields
+        if (alienHealth <= 10f && !ufoRetreating)
+        {
+            AlienRetreat();
+        }
+    }
+
+
+
+
+
+
+    // If a player the UFO is following has died, reset variables. So it chases after another player
+    public void PlayerDied()
+    {
+        playerFound = false;
+        player = null;
+    }
 
     internal bool IsPlayerTooClose(float threshold)
     {
@@ -39,9 +95,10 @@ public abstract partial class Ufo : MonoBehaviour
                 if (!doesDespawnAtEdge) { timer = 0; }
 
                 // If UFO is Passer, kill the UFO when it reaches the edge, unless retreating
-                if (doesDespawnAtEdge && savedPosition.x > GameManager.i.screenRight && !ufoRetreating)
+                if (doesDespawnAtEdge && !ufoRetreating)
                 {
-                    DeathRoutine();
+                    if (savedPosition.x > GameManager.i.screenRight || savedPosition.x < GameManager.i.screenLeft)
+                        DeathRoutine();
                 }
                 // If UFO screenwraps, tell UFO to face the player again so it can accelerate toward them once popping out the other side
                 // This isn't to happen while UFO is retreating, or else it gets stuck on the edges of the screen
@@ -61,12 +118,5 @@ public abstract partial class Ufo : MonoBehaviour
         return Time.time > lastTimeShot + shootingDelay             // UFO has not shot too recently
             && playerFound && !playerTooFar                         // UFO has found a player, and they're not far away
             && !deathStarted && !ufoTeleporting && !ufoRetreating;  // UFO is not dying, teleporting, or retreating
-    }
-
-    // If a player the UFO is following has died, reset variables. So it chases after another player
-    public void PlayerDied()
-    {
-        playerFound = false;
-        player = null;
     }
 }

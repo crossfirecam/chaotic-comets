@@ -98,7 +98,7 @@ public partial class GameManager : MonoBehaviour
             float originChoice = Random.Range(0f, 4f);
             if (type == PropType.UfoPasser)
             {
-                originChoice = 0.5f;
+                originChoice = Random.Range(0f, 2f);
             }
             if (originChoice < 1f)
             { // Spawn on the left

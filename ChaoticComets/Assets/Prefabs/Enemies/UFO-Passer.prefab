@@ -4841,7 +4841,7 @@ Transform:
   m_GameObject: {fileID: 1001724363263860}
   m_LocalRotation: {x: -0.42261827, y: 0, z: 0, w: 0.9063079}
   m_LocalPosition: {x: 11, y: -1.0259008, z: 0}
-  m_LocalScale: {x: 0.26, y: 0.26, z: 0.26}
+  m_LocalScale: {x: 0.23, y: 0.23, z: 0.23}
   m_Children:
   - {fileID: 4629594965760025949}
   - {fileID: 5460637174620012352}
@@ -4862,16 +4862,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96ae5cde42677f343982f4e84418bc55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alienHealth: 80
-  alienMaxHealth: 80
-  forceField: {fileID: 190270562}
-  playerShip1: {fileID: 0}
-  playerShip2: {fileID: 0}
-  shootingDelay: 3
-  bulletSpeed: 250
+  alienHealth: 60
+  alienMaxHealth: 60
   retreatSpeedMultiplier: -2
   direction: {x: 0, y: 0}
-  alienSpeedBase: 2
+  alienSpeedBase: 1.6
   audioAlienHum: {fileID: 2226360239011395511}
   audioAlienSfx: {fileID: 82704775472134234}
   audClipAliexSfxShieldReflect: {fileID: 8300000, guid: 52a8e7e6dd767e34db82d86a8b696c4b,
@@ -4884,6 +4879,9 @@ MonoBehaviour:
   playerBulletExplosion: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
     type: 3}
   teleportEffect: {fileID: 3142331801263296304}
+  forceField: {fileID: 190270562}
+  playerShip1: {fileID: 0}
+  playerShip2: {fileID: 0}
   currentDeviation: 0
 --- !u!58 &58430078344468964
 CircleCollider2D:
@@ -10027,6 +10025,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
@@ -10042,6 +10045,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8660254
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -10054,16 +10062,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.8660254
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
         type: 3}
