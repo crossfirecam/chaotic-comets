@@ -4864,7 +4864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alienHealth: 80
   alienMaxHealth: 80
-  retreatSpeedMultiplier: -3
+  retreatSpeedMultiplier: -2
   direction: {x: 0, y: 0}
   alienSpeedBase: 2
   audioAlienHum: {fileID: 3400528432045659323}

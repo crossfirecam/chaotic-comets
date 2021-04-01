@@ -2843,14 +2843,14 @@ ParticleSystem:
     separateAxes: 0
     frequency: 0.15
     damping: 1
-    octaves: 1
+    octaves: 2
     octaveMultiplier: 0.5
     octaveScale: 2
-    quality: 2
+    quality: 1
     scrollSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 1.5
       minScalar: 0
       maxCurve:
         serializedVersion: 2

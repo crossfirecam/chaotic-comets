@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
-  points: 50
+  points: 60
   maxThrust: 80
   maxSpin: 10
   asteroidSize: 1

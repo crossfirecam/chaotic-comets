@@ -7,6 +7,7 @@ public abstract partial class Ufo : MonoBehaviour
     internal float shootingDelay = 1.5f;
     internal float bulletForce = 250f;
     internal float bulletExpireTime;
+    internal float bulletDeviationLimit = 16f;
 
     internal float lastTimeShot = 0f; // Keeps track of when UFO last fired a bullet
 
@@ -19,6 +20,8 @@ public abstract partial class Ufo : MonoBehaviour
     {
         Vector2 towardPlayer = player.position - transform.position;
         float angle = Mathf.Atan2(towardPlayer.y, towardPlayer.x) * Mathf.Rad2Deg - 90f;
+        float slightBulletDeviation = Random.Range(-bulletDeviationLimit, bulletDeviationLimit);
+        angle += slightBulletDeviation;
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
 
         Vector3 bulletPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - 4);

@@ -134,7 +134,7 @@ public class PurchasePanel : MonoBehaviour
                 cancelBtnText.text = "";
                 break;
             case BtnIndexLife: // Buy Extra Ship
-                upgradeBtnText.text = "+1 Ship\n(2500c)";
+                upgradeBtnText.text = "+1 Ship\n(5000c)";
                 break;
             case BtnIndShieldCell: // Charge Shields
                 if (!selectedPurchaseMaxed)
