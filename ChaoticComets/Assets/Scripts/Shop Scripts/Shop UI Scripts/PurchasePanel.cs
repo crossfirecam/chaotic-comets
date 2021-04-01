@@ -13,8 +13,10 @@ public class PurchasePanel : MonoBehaviour
     private bool selectedPurchaseMaxed;
 
     private readonly int baseUpgradePrice = 500, priceIncreasePerLevel = 750, upgradeCap = 5;
-    private readonly int shieldUpgradePrice = 10000, shieldUpgradeCap = 2;
-    // Total cost of 10,000c per maxed upgrade. Total cost of 30,000c for maxed shield upgrade. All upgrades = 110,000c.
+    private readonly int majorUpgradePrice = 10000, majorUpgradeCap = 2;
+    // Total cost of 10,000c per maxed normal upgrade. Total cost of 30,000c for maxed major upgrades. All upgrades: 140,000c
+
+    private const int BtnIndReady = 10, BtnIndexLife = 9, BtnIndShieldCell = 8, BtnIndShotLimit = 5, BtnIndShieldStr = 0;
 
     private void Start()
     {
@@ -57,7 +59,7 @@ public class PurchasePanel : MonoBehaviour
 
     private void UpdateTextElements()
     {
-        if (purchaseIndex <= 6)
+        if (purchaseIndex <= 7) // Tiered upgrades are between 0 and 7.
             selectedUpgradeTier = BetweenScenes.PlayerShopUpgrades[plrIndex][purchaseIndex];
         CheckPurchaseValidity();
         SetSubDescText();
@@ -66,27 +68,26 @@ public class PurchasePanel : MonoBehaviour
 
     private void CheckPurchaseValidity()
     {
+        selectedPurchasePrice = 0; // Default value, won't be overwritten if the purchase isn't valid.
         switch (purchaseIndex)
         {
-            case 8: // Buy Extra Ship
-                selectedPurchasePrice = 2500;
+            case BtnIndexLife: // Extra Ship always valid to buy.
+                selectedPurchasePrice = 5000;
                 break;
-            case 7: // Charge Shields
-                if (BetweenScenes.PlayerShopShields[plrIndex] / 10 == 8)
-                    selectedPurchasePrice = 0;
-                else
+            case BtnIndShieldCell: // Charge Shields requires less than 8 Cells to buy.
+                if (BetweenScenes.PlayerShopShields[plrIndex] / 10 != 8)
                     selectedPurchasePrice = 200;
                 break;
-            case 0: // Shield Strength Upgrade. Uses +50% modifiers, limited to 2.
-                if (selectedUpgradeTier == shieldUpgradeCap)
-                    selectedPurchasePrice = 0;
-                else
-                    selectedPurchasePrice = shieldUpgradePrice + (shieldUpgradePrice * selectedUpgradeTier);
+            case BtnIndShotLimit: // Shot Limit Upgrade is limited to 2.
+                if (selectedUpgradeTier != majorUpgradeCap)
+                    selectedPurchasePrice = majorUpgradePrice + (majorUpgradePrice * selectedUpgradeTier);
                 break;
-            default: // All other upgradable stats use a +20% modifier, limited to 10.
-                if (selectedUpgradeTier == upgradeCap)
-                    selectedPurchasePrice = 0;
-                else
+            case BtnIndShieldStr: // Shield Strength Upgrade is limited to 2.
+                if (selectedUpgradeTier != majorUpgradeCap)
+                    selectedPurchasePrice = majorUpgradePrice + (majorUpgradePrice * selectedUpgradeTier);
+                break;
+            default: // All other upgradable stats are limited to 5.
+                if (selectedUpgradeTier != upgradeCap)
                     selectedPurchasePrice = baseUpgradePrice + (priceIncreasePerLevel * selectedUpgradeTier);
                 break;
         }
@@ -100,17 +101,20 @@ public class PurchasePanel : MonoBehaviour
     {
         switch (purchaseIndex)
         {
-            case 9: // Ready Button
+            case BtnIndReady: // Ready Button
                 subDescText.text = "";
                 break;
-            case 8: // Buy Extra Ship
+            case BtnIndexLife: // Buy Extra Ship
                 string pluralOrNot = BetweenScenes.PlayerShopLives == 1 ? "" : "s";
                 subDescText.text = "Currently: " + BetweenScenes.PlayerShopLives + " Ship" + pluralOrNot;
                 break;
-            case 7: // Charge Shields
+            case BtnIndShieldCell: // Charge Shields
                 subDescText.text = "Currently: " + (BetweenScenes.PlayerShopShields[plrIndex] / 10) + "/8 Cells";
                 break;
-            case 0: // Shield Strength Upgrade uses a +50% modifier.
+            case BtnIndShotLimit: // Shot Limit Upgrade uses +1 Shot modifiers
+                subDescText.text = "Currently: Max " + (2 + selectedUpgradeTier) + " Shots";
+                break;
+            case BtnIndShieldStr: // Shield Strength Upgrade uses a +50% modifier.
                 subDescText.text = "Currently: +" + (selectedUpgradeTier * 50) + "%";
                 break;
             default: // All other upgradable stats use a +20% modifier.
@@ -122,32 +126,33 @@ public class PurchasePanel : MonoBehaviour
     private void SetUpgradeButtonText()
     {
         cancelBtnText.text = "Cancel";
+        upgradeBtnText.text = "Upgrade maxed"; // Default value, overwritten if upgrade isn't maxed.
         switch (purchaseIndex)
         {
-            case 9: // Ready Button
+            case BtnIndReady: // Ready Button
                 upgradeBtnText.text = "";
                 cancelBtnText.text = "";
                 break;
-            case 8: // Buy Extra Ship
+            case BtnIndexLife: // Buy Extra Ship
                 upgradeBtnText.text = "+1 Ship\n(2500c)";
                 break;
-            case 7: // Charge Shields
+            case BtnIndShieldCell: // Charge Shields
                 if (!selectedPurchaseMaxed)
-                    upgradeBtnText.text = "+1 Shield Cell\n(200c)";
+                    upgradeBtnText.text = "+1 Cell\n(200c)";
                 else
-                    upgradeBtnText.text = "Shields Cells maxed";
+                    upgradeBtnText.text = "Shield Cells maxed";
                 break;
-            case 0: // Shield Strength Upgrade
+            case BtnIndShotLimit: // Shot Limit Upgrade
                 if (!selectedPurchaseMaxed)
-                    upgradeBtnText.text = $"+50% Modifier\n({selectedPurchasePrice}c)";
-                else
-                    upgradeBtnText.text = "Upgrade maxed";
+                    upgradeBtnText.text = $"+1 Shot\n({selectedPurchasePrice}c)";
+                break;
+            case BtnIndShieldStr: // Shield Strength Upgrade
+                if (!selectedPurchaseMaxed)
+                    upgradeBtnText.text = $"+50%\n({selectedPurchasePrice}c)";
                 break;
             default: // All other upgradable stats use a +20% modifier.
                 if (!selectedPurchaseMaxed)
-                    upgradeBtnText.text = $"+20% Modifier\n({selectedPurchasePrice}c)";
-                else
-                    upgradeBtnText.text = "Upgrade maxed";
+                    upgradeBtnText.text = $"+20%\n({selectedPurchasePrice}c)";
                 break;
         }
     }
@@ -165,12 +170,16 @@ public class PurchasePanel : MonoBehaviour
         {
             if (BetweenScenes.PlayerShopCredits[plrIndex] >= selectedPurchasePrice)
             {
-                if (purchaseIndex <= 6)
-                    BetweenScenes.PlayerShopUpgrades[plrIndex][purchaseIndex] += 1;
-                else if (purchaseIndex == 7)
+                if (purchaseIndex == BtnIndShieldCell)
+                {
                     BetweenScenes.PlayerShopShields[plrIndex] += 10f;
-                else if (purchaseIndex == 8)
+                    if (BetweenScenes.PlayerShopShields[plrIndex] > 80f)
+                        BetweenScenes.PlayerShopShields[plrIndex] = 80f;
+                }
+                else if (purchaseIndex == BtnIndexLife)
                     BetweenScenes.PlayerShopLives += 1;
+                else // All other upgrades
+                    BetweenScenes.PlayerShopUpgrades[plrIndex][purchaseIndex] += 1;
 
                 BetweenScenes.PlayerShopCredits[plrIndex] -= selectedPurchasePrice;
                 upgradeBtn.GetComponent<AudioSource>().Play();
@@ -187,21 +196,22 @@ public class PurchasePanel : MonoBehaviour
     /* ------------------------------------------------------------------------------------------------------------------
      * Strings for the Purchase Panel to explain upgrades.
      * ------------------------------------------------------------------------------------------------------------------ */
-    private readonly string[] purchasePanelTitleStrings = { "Shield Strength",
-                                                          "Brake Power", "Teleport Rate",
-                                                          "Auto Firerate", "Munitions Firerate",
+    private readonly string[] purchasePanelTitleStrings = { "Shield Strength", "Teleport Rate",
+                                                          "Ship Speed", "Brake Power",
+                                                          "Auto Firerate", "Shot Limit",
                                                           "Shot Speed", "Shot Range",
                                                           "Charge Shields", "Buy Extra Ship",
                                                           "Ready To Leave" };
 
     private readonly string[] purchasePanelDescStrings = { "Take more hits. \n+0% = 3 impacts\n+50% = 4 impacts\n+100% = 6 impacts",
-                                                         "Stop faster when holding the manual brake.",
                                                          "Hyperspace becomes usable more often.",
+                                                         "Accelerate faster and a gain a higher top speed.",
+                                                         "Stop faster when holding the manual brake.",
                                                          "Holding down 'Fire' for automatic fire will shoot bullets faster.",
-                                                         "The cooldown between shots with Triple or Rapid Shot can be reduced.",
+                                                         "The limit for active bullets will be increased.",
                                                          "All bullets will travel faster.",
                                                          "All bullets will travel further.",
                                                          "Pay to repair the shield of your ship.",
-                                                         "Buy a spare Ship.\n(Note: Every 5000 total points gives a free Ship)",
+                                                         "Buy a spare Ship.\n(Note: Every 10,000 total points gives a free Ship)",
                                                          "" };
 }

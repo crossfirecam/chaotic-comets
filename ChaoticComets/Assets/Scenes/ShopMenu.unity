@@ -410,7 +410,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 498, y: 403.59}
+  m_AnchoredPosition: {x: -93.5, y: 403.59}
   m_SizeDelta: {x: 199.24857, y: 45.144104}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &246136125
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1827,6 +1827,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Colors.m_HighlightedColor.r
       value: 0.9529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 1792810070062250236, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1792810070143707150, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
         type: 3}
@@ -5343,6 +5348,11 @@ PrefabInstance:
       propertyPath: eventSystem
       value: 
       objectReference: {fileID: 1830773145}
+    - target: {fileID: 1792810070062250236, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1792810070143707150, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
         type: 3}
       propertyPath: eventSystem
@@ -5507,6 +5517,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_firstOverflowCharacterIndex
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1792810071088213206, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
+        type: 3}
+      propertyPath: mainPlayerButtons.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1792810071088213206, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
+        type: 3}
+      propertyPath: mainPlayerButtons.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1792810071088213206, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
+        type: 3}
+      propertyPath: mainPlayerButtons.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1792810071088213206, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
+        type: 3}
+      propertyPath: mainPlayerButtons.Array.data[3]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1792810071520169587, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
         type: 3}

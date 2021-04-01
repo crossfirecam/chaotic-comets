@@ -12,15 +12,15 @@ public class MainPanel : MonoBehaviour
     private PurchasePanel purchasePanel;
 
     [HideInInspector] public Button readyBtn;
-    private Button aboveReadyBtn;
+    private Button btnToBlockWhenReadied;
     private TextMeshProUGUI readyBtnText;
 
     public bool plrReady = false;
 
     private void Start()
     {
-        readyBtn = transform.Find("ButtonReady9").GetComponent<Button>();
-        aboveReadyBtn = transform.Find("Button7").GetComponent<Button>();
+        readyBtn = transform.Find("ButtonReady10").GetComponent<Button>();
+        btnToBlockWhenReadied = transform.Find("MaintenanceSection/Button8").GetComponent<Button>();
         readyBtnText = readyBtn.GetComponentInChildren<TextMeshProUGUI>();
         purchasePanel = transform.parent.Find("PurchasePanel").GetComponent<PurchasePanel>();
 
@@ -57,13 +57,13 @@ public class MainPanel : MonoBehaviour
         // Set text and nav for Ready button (disable moving up if player is readied)
         plrReady = !plrReady;
         readyBtnText.text = plrReady ? "Unready" : "Ready";
-        customNav.selectOnUp = plrReady ? null : aboveReadyBtn;
+        customNav.selectOnRight = plrReady ? null : btnToBlockWhenReadied;
         readyBtn.navigation = customNav;
 
         // Find all of a player's buttons that aren't 'Ready' button, and disable them
         foreach (Button btn in mainPlayerButtons)
         {
-            if (!btn.transform.name.EndsWith("Ready9"))
+            if (btn != readyBtn)
             {
                 btn.interactable = !plrReady;
             }
@@ -94,7 +94,7 @@ public class MainPanel : MonoBehaviour
     /* ------------------------------------------------------------------------------------------------------------------
     * Button Lists - Many functions in ShopScript tell a variety of buttons to toggle interactivity. To do this, initilise the buttons that belong to this player.
     * ------------------------------------------------------------------------------------------------------------------ */
-    private Button[] mainPlayerButtons;
+    [SerializeField] private Button[] mainPlayerButtons;
     private void LoadInButtonArrays()
     {
         Button[] listOfButtons = FindObjectsOfType<Button>();
@@ -102,7 +102,7 @@ public class MainPanel : MonoBehaviour
 
         foreach (Button btn in listOfButtons)
         {
-            if (btn.transform.parent == transform)
+            if (btn.transform.parent == transform || btn.transform.parent.parent == transform)
                 buttonsTemp.Add(btn);
         }
         mainPlayerButtons = buttonsTemp.ToArray();
