@@ -19,7 +19,7 @@ public class MainPanel : MonoBehaviour
 
     private void Start()
     {
-        readyBtn = transform.Find("ButtonReady10").GetComponent<Button>();
+        readyBtn = transform.Find("ButtonReady").GetComponent<Button>();
         btnToBlockWhenReadied = transform.Find("MaintenanceSection/Button8").GetComponent<Button>();
         readyBtnText = readyBtn.GetComponentInChildren<TextMeshProUGUI>();
         purchasePanel = transform.parent.Find("PurchasePanel").GetComponent<PurchasePanel>();
@@ -35,7 +35,8 @@ public class MainPanel : MonoBehaviour
     {
         // Find button pressed, turn the last character in the name into an integer
         Button buttonHovered = plrEvents.currentSelectedGameObject.GetComponent<Button>();
-        int whichHovered = int.Parse(buttonHovered.name.Last().ToString());
+        bool success = int.TryParse(buttonHovered.name.Last().ToString(), out int whichHovered);
+        if (!success) { whichHovered = 10; } // If last char can't be parsed as int, it is the Ready button.
         plrEvents.firstSelectedGameObject = buttonHovered.gameObject;
 
         purchasePanel.OnMainAreaButtonHover(whichHovered);

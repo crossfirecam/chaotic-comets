@@ -4,7 +4,6 @@ using UnityEngine;
 public abstract partial class Ufo : MonoBehaviour
 {
     [Header("Defence System Variables")]
-    // private float difficultyIncrease = 0.95f; TODO add this functionality later
     public float alienHealth;
     public float alienMaxHealth;
     private int pointsToScore = 50;

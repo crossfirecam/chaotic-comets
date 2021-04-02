@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622538094009692569}
   m_LocalRotation: {x: -0.76961166, y: 0.6385121, z: -0.00036031322, w: -0.00043429286}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 0.04, y: 0.04, z: 0.24}
   m_Children: []
   m_Father: {fileID: 9113086293988037873}
@@ -4710,7 +4710,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4889,7 +4888,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286a35b3fa214414db56a294e77bce6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gM: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f, type: 3}
   ifBulletNotAlien: 1
   ifBulletReflected: 0
 --- !u!82 &9174657322050886477

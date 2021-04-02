@@ -57,8 +57,6 @@ public partial class GameManager : MonoBehaviour
         Refs.tutorialManager.SetActive(true);
         tutorialMode = true;
         playerLives = -1; // Player lives don't matter in tutorial mode.
-
-        // TODO tutorial should set all UI values to 0
     }
 
     private void StartNormalMode()

@@ -22,7 +22,7 @@ public abstract partial class Ufo : MonoBehaviour
         }
     }
 
-    // TODO Temporary bodge to allow Unity to invoke TeleportStart().
+    // A bodge to allow Unity to invoke TeleportStart().
     // Even though the parameter on the function is entirely optional, Unity still insists on not allowing Invoke() to call it, since it can't handle parameters at all.
     private void TeleportStartFromInvoke()
     {

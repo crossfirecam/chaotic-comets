@@ -3,7 +3,6 @@
 public class BulletBehaviour : MonoBehaviour {
 
     // General purpose variables
-    public bool ifBulletNotAlien;
     private readonly float animationStopTime = .2f;
     public bool ifBulletReflected;
 
