@@ -47,7 +47,7 @@ public partial class TutorialManager : MonoBehaviour
      * Popup string editing
      * ------------------------------------------------------------------------------------------------------------------ */
 
-    // Replace a placeholder value with the corresponding control style's key prompts. Find a better way to do this TODO
+    // Replace a placeholder value with the corresponding control style's key prompts.
     //                                         Rotate                            Thrust       Brake        Ability      Shoot        Pause
     private readonly string[] replaceOrig =  { "R_Rotate",                                 "R_Thrust",  "R_Brake",   "R_Ability", "R_Shoot",   "R_Pause" };
     private readonly string[] replaceP1Key = { "Press <sprite=1> or <sprite=3>",           "sprite=0",  "sprite=2",  "sprite=4",  "sprite=5",  "sprite=12" };
@@ -70,13 +70,13 @@ public partial class TutorialManager : MonoBehaviour
         }
 
         StringBuilder editedPopup = new StringBuilder();
-        editedPopup.Append(popups[popUpIndex].GetComponent<TextMeshProUGUI>().text);
+        editedPopup.Append(popups[popUpIndex].GetComponentInChildren<TextMeshProUGUI>().text);
 
         for (int i = 0; i < replaceOrig.Length; i++)
         {
             editedPopup.Replace(replaceOrig[i], replaceChosen[i]);
         }
-        popups[popUpIndex].GetComponent<TextMeshProUGUI>().text = editedPopup.ToString();
+        popups[popUpIndex].GetComponentInChildren<TextMeshProUGUI>().text = editedPopup.ToString();
     }
 
     /* ------------------------------------------------------------------------------------------------------------------

@@ -26,6 +26,7 @@ public partial class MainMenu : MonoBehaviour
 
     public void VisitTutorial()
     {
+        BetweenScenes.BackToMainMenuButton = "Tutorial";
         BetweenScenes.TutorialMode = true;
         SceneManager.LoadScene("MainScene");
     }
