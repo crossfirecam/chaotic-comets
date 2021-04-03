@@ -9,66 +9,71 @@ public partial class ShopScript : MonoBehaviour
     {
 
         // Change music track
-        musicManager = FindObjectOfType<MusicManager>();
-        if (!musicManager)
-        {
-            Instantiate(ShopRefs.musicManagerIfNotFoundInScene);
-            musicManager = FindObjectOfType<MusicManager>();
-        }
-
-        musicManager.ChangeMusicTrack(2);
+        MusicManager.i.ChangeMusicTrack(2);
 
         if (PlayerPrefs.GetFloat("Music") > 0f)
         {
-            musicManager.currentMusicPlayer.Play();
+            MusicManager.i.currentMusicPlayer.Play();
         }
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
     * Pausing
     * ------------------------------------------------------------------------------------------------------------------ */
+
+    /// <summary>
+    /// When player pauses or resumes the game from Shop, toggle these actions:<br/>
+    /// - Swapping both player's EventSystemShop's for pause panel EventSystem<br/>
+    /// - Pause or resume music<br/>
+    /// - Open or close pause panel, select relevent button<br/>
+    /// - Pause or resume timescale<br/>
+    /// <br/>
+    /// ShopMenu cannot be paused if either a Save Warning or Mouse Warning panel is active.<br/>
+    /// </summary>
+    /// <param name="intent">0 = Open Pause Menu, 1 = Close Pause Menu</param>
     public void PauseGame(int intent)
     {
         if (intent == 0 && !ShopRefs.saveFailedPanel.activeInHierarchy && !ShopRefs.mouseWarningPanel.activeInHierarchy)
-        { // Pause game
+        {
+            MusicManager.i.PauseMusic();
 
-            DisablePlrEventsEnablePauseEvents();
-
-            if (musicManager != null)
-            {
-                musicManager.PauseMusic();
-            }
             ShopRefs.gamePausePanel.SetActive(true);
-            ShopRefs.buttonWhenPaused.Select();
+            TogglePlrEventsAndPauseEvents(true);
 
             Time.timeScale = 0;
         }
         else if (intent == 1)
-        { // Resume game
+        {
+            if (PlayerPrefs.GetFloat("Music") > 0f)
+                MusicManager.i.ResumeMusic();
 
-            ShopRefs.buttonWhenLeavingPauseBugFix.Select(); // Select it with pause event system, not upcoming event systems
+            ShopRefs.gamePausePanel.SetActive(false);
+            TogglePlrEventsAndPauseEvents(false);
+
+            Time.timeScale = 1;
+        }
+    }
+
+    private void TogglePlrEventsAndPauseEvents(bool paused)
+    {
+        if (paused)
+        {
+            ShopRefs.plrEventSystems[0].gameObject.SetActive(false);
+            ShopRefs.plrEventSystems[1].gameObject.SetActive(false);
+            ShopRefs.pauseEventSystem.GetComponent<RewiredStandaloneInputModule>().enabled = true;
+            ShopRefs.buttonWhenPaused.Select();
+        }
+        else
+        {
+            // Select an off-screen button with pauseEventSystem to prevent a UI bug
+            ShopRefs.buttonWhenLeavingPauseBugFix.Select();
             ShopRefs.pauseEventSystem.GetComponent<RewiredStandaloneInputModule>().enabled = false;
-
             // Resume event systems for however many players are present
             for (int i = 0; i < BetweenScenes.PlayerCount; i++)
             {
                 ShopRefs.plrEventSystems[i].gameObject.SetActive(true);
             }
-
-            if (PlayerPrefs.GetFloat("Music") > 0f && musicManager != null)
-            {
-                musicManager.ResumeMusic();
-            }
-            ShopRefs.gamePausePanel.SetActive(false);
-            Time.timeScale = 1;
         }
-    }
-
-    private void DisablePlrEventsEnablePauseEvents()
-    {
-        ShopRefs.plrEventSystems[0].gameObject.SetActive(false);
-        ShopRefs.plrEventSystems[1].gameObject.SetActive(false);
-        ShopRefs.pauseEventSystem.GetComponent<RewiredStandaloneInputModule>().enabled = true;
     }
 
     /* ------------------------------------------------------------------------------------------------------------------

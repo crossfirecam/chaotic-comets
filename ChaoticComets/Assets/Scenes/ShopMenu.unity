@@ -332,7 +332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -93.5, y: 403.59}
+  m_AnchoredPosition: {x: -93, y: 399.7}
   m_SizeDelta: {x: 199.24857, y: 45.144104}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &246136125
@@ -394,7 +394,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 1024
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -5351,6 +5351,7 @@ MonoBehaviour:
     gamePausePanel: {fileID: 1901279113}
     buttonWhenPaused: {fileID: 931932296}
     buttonWhenLeavingPauseBugFix: {fileID: 1401353247}
+    pauseUiSaveWarningText: {fileID: 845383136}
     listOfPlr1Powerups:
     - {fileID: 806049408}
     - {fileID: 1797351980}
@@ -5386,17 +5387,14 @@ MonoBehaviour:
     - {fileID: 1471520386}
     - {fileID: 1375650736}
     shopDivider: {fileID: 540609146}
+    shopUiSaveDisclaimer: {fileID: 246136125}
     pauseEventSystem: {fileID: 943909818}
     plrEventSystems:
     - {fileID: 1830773145}
     - {fileID: 1175646212}
-    musicManagerIfNotFoundInScene: {fileID: 8774387490616601870, guid: 376023999fb623c4b8bb77d8bf26210d,
-      type: 3}
     fadeBlack: {fileID: 973035256}
     saveFailedPanel: {fileID: 898476507}
     mouseWarningPanel: {fileID: 151928997}
-    autoSaveWarningText: {fileID: 0}
-  saveDisclaimer: {fileID: 246136125}
 --- !u!4 &2119128600
 Transform:
   m_ObjectHideFlags: 0

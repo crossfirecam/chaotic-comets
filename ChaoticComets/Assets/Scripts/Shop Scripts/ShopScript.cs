@@ -15,10 +15,8 @@ public partial class ShopScript : MonoBehaviour {
 
     [Header("References")]
     private Saving_PlayerManager data;
-    private MusicManager musicManager;
     private Player player1, player2;
     public ShopManagerHiddenVars ShopRefs;
-    public TextMeshProUGUI saveDisclaimer;
 
     private static ShopScript _i;
     public static ShopScript i { get { if (_i == null) _i = FindObjectOfType<ShopScript>(); return _i; } }
@@ -47,7 +45,7 @@ public partial class ShopScript : MonoBehaviour {
         if (data == null)
         {
             ShopRefs.saveFailedPanel.SetActive(true);
-            DisablePlrEventsEnablePauseEvents();
+            TogglePlrEventsAndPauseEvents(true);
         }
 
         // Prepare UI for each player
@@ -71,9 +69,9 @@ public partial class ShopScript : MonoBehaviour {
         // If save is in cheater mode, change some details
         if (BetweenScenes.CheaterMode)
         {
-            ShopRefs.autoSaveWarningText.text = "In Cheat Mode, progress is not saved.\nCheat buttons aren't available in the Depot.";
-            ShopRefs.autoSaveWarningText.color = Color.red;
-            saveDisclaimer.text = "<u>Progress not saved</u>\nGame is in Cheat Mode.";
+            ShopRefs.pauseUiSaveWarningText.text = "In Cheat Mode, progress is not saved.\nCheat buttons aren't available in the Depot.";
+            ShopRefs.pauseUiSaveWarningText.color = Color.red;
+            ShopRefs.shopUiSaveDisclaimer.text = "<u>Progress not saved</u>\nGame is in Cheat Mode.";
         }
 
         // DelayedReady() prevents player that is holding 'Shoot' button from instantly readying up.
@@ -162,6 +160,7 @@ public class ShopManagerHiddenVars
     [Header("Pause UI References")]
     public GameObject gamePausePanel;
     public Button buttonWhenPaused, buttonWhenLeavingPauseBugFix;
+    public TextMeshProUGUI pauseUiSaveWarningText;
 
     [Header("Player UI References")]
     public GameObject[] listOfPlr1Powerups;
@@ -177,13 +176,12 @@ public class ShopManagerHiddenVars
     public GameObject[] plrShopUis;
     public MainPanel[] plrMainPanels;
     public GameObject shopDivider;
+    public TextMeshProUGUI shopUiSaveDisclaimer;
 
     [Header("Event System References")]
     public EventSystem pauseEventSystem;
     public EventSystemShop[] plrEventSystems;
 
     [Header("Other References")]
-    public GameObject musicManagerIfNotFoundInScene;
     public GameObject fadeBlack, saveFailedPanel, mouseWarningPanel;
-    public Text autoSaveWarningText;
 }

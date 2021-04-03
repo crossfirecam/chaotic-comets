@@ -119,15 +119,15 @@ public partial class UiManager : MonoBehaviour
         {
             totalScore += GameManager.i.Refs.playerShip2.totalCredits;
             mode = $"2P ({difficulty})";
-            Text changeCongratsTextIf2P;
+            TextMeshProUGUI changeCongratsTextIf2P;
             if (originOfRequest == "GameOver")
             {
-                changeCongratsTextIf2P = panelGameOver.transform.Find("NewScoreParts").Find("EnterNameText").GetComponent<Text>();
+                changeCongratsTextIf2P = panelGameOver.transform.Find("NewScoreParts").Find("EnterNameText").GetComponent<TextMeshProUGUI>();
                 changeCongratsTextIf2P.text = "New highscore!\nEnter your names.";
             }
             else if (originOfRequest == "MissionCancel")
             {
-                changeCongratsTextIf2P = panelGameOverAlt.transform.Find("NewScoreParts").Find("EnterNameText").GetComponent<Text>();
+                changeCongratsTextIf2P = panelGameOverAlt.transform.Find("NewScoreParts").Find("EnterNameText").GetComponent<TextMeshProUGUI>();
                 changeCongratsTextIf2P.text = "...but you got a new highscore!\nEnter your names.";
             }
         }
