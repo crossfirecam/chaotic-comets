@@ -29,7 +29,7 @@ public partial class ShopScript : MonoBehaviour
     /// <param name="intent">0 = Open Pause Menu, 1 = Close Pause Menu</param>
     public void PauseGame(int intent)
     {
-        if (intent == 0 && !ShopRefs.saveFailedPanel.activeInHierarchy && !ShopRefs.mouseWarningPanel.activeInHierarchy)
+        if (intent == 0 && NoPausePreventingPanelsOpen())
         {
             MusicManager.i.PauseMusic();
 
@@ -49,6 +49,11 @@ public partial class ShopScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Disable the player's EventSystemShop's and enable the pause menu's EventSystem, or vice versa.<br/>
+    /// This disallows players from controlling the Shop interface while pause menu is active.
+    /// </summary>
+    /// <param name="paused">True = Paused, False = Unpaused</param>
     private void TogglePlrEventsAndPauseEvents(bool paused)
     {
         if (paused)
@@ -71,8 +76,16 @@ public partial class ShopScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks that Save Failed and Mouse Warning dialogs are inactive before allowing pausing. 
+    /// </summary>
+    private bool NoPausePreventingPanelsOpen()
     {
+        return !ShopRefs.saveFailedPanel.activeInHierarchy && !ShopRefs.mouseWarningPanel.activeInHierarchy;
     }
+
+
+
 
     /* ------------------------------------------------------------------------------------------------------------------
      * Mouse Warning - Functions that show user a warning when clicking in shop
@@ -89,7 +102,7 @@ public partial class ShopScript : MonoBehaviour
     {
         mouseWarningActive = true;
         ShopRefs.mouseWarningPanel.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         mouseWarningActive = false;
         ShopRefs.mouseWarningPanel.SetActive(false);
     }

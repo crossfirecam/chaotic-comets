@@ -8,11 +8,15 @@ public class UsefulFunctions : MonoBehaviour
     /* ------------------------------------------------------------------------------------------------------------------
      * Initial Prop Movement Calculation
      * ------------------------------------------------------------------------------------------------------------------ */
-    // Give random thrust to newly spawned props. Thanks to metalted and GlassesGuy on Unity forum (https://answers.unity.com/questions/1646067/)
+
+    /// <summary>
+    /// Give random thrust to newly spawned props.
+    /// </summary>
+    /// <param name="rb">Spawned object's rigidbody</param>
+    /// <param name="maxThrust">The maximum thrust a spawned object can be given</param>
+    // Thanks to metalted and GlassesGuy on Unity forum (https://answers.unity.com/questions/1646067/)
     public static void FindThrust(Rigidbody2D rb, float maxThrust)
     {
-
-        // Add random spin and thrust
         float minThrust = 0.7f * maxThrust;
         float angle = Random.Range(-359, 359);
         float thrust = Random.Range(minThrust, maxThrust);
@@ -22,11 +26,18 @@ public class UsefulFunctions : MonoBehaviour
         rb.AddForce(force);
     }
 
+    /// <summary>
+    /// Give random spin to newly spawned props. This spin does not affect movement calulcations.
+    /// </summary>
+    /// <param name="rb">Spawned object's rigidbody</param>
+    /// <param name="maxSpin">The maximum spin a spawned object can be given</param>
     public static void FindTorque(Rigidbody2D rb, float maxSpin)
     {
         float spin = Random.Range(-maxSpin, maxSpin);
         rb.AddTorque(spin);
     }
+
+
 
 
     /* ------------------------------------------------------------------------------------------------------------------
@@ -35,8 +46,10 @@ public class UsefulFunctions : MonoBehaviour
 
     private static Controller controller;
     public static GraphicRaycaster mouseInputOnCanvas;
-    
-    // Check every fifth of a second if the last used controller type has changed
+
+    /// <summary>
+    /// Check every fifth of a second if the last used controller type has changed.
+    /// </summary>
     public static IEnumerator CheckController()
     {
         while (true)
@@ -46,11 +59,13 @@ public class UsefulFunctions : MonoBehaviour
         }
     }
 
-    // Return which controller has last been used
+    /// <summary>
+    /// Return which controller has last been used.
+    /// </summary>
     public static void CheckLastUsedController()
     {
         if (mouseInputOnCanvas == null)
-        { SetupControllerCheck(); }
+            SetupControllerCheck();
 
         controller = ReInput.controllers.GetLastActiveController();
         //print(controller.hardwareName + " " + cursorForcedStay);
@@ -58,7 +73,9 @@ public class UsefulFunctions : MonoBehaviour
         mouseInputOnCanvas.enabled = controller.hardwareName == "Mouse";
     }
 
-    // When a scene starts, find the Canvas, so the GraphicRaycaster can be disabled when cursor is invisible
+    /// <summary>
+    /// When a scene starts, find the Canvas, so the GraphicRaycaster can be disabled when cursor is invisible.
+    /// </summary>
     public static void SetupControllerCheck()
     {
         mouseInputOnCanvas = FindObjectOfType<Canvas>().GetComponent<GraphicRaycaster>();
@@ -66,10 +83,16 @@ public class UsefulFunctions : MonoBehaviour
         Cursor.visible = controller.hardwareName == "Mouse";
     }
 
+
+
+
     /* ------------------------------------------------------------------------------------------------------------------
      * Other
      * ------------------------------------------------------------------------------------------------------------------ */
 
+    /// <summary>
+    /// When returning to main menu from gameplay, reset the states of certain BetweenScenes variables.
+    /// </summary>
     public static void ResetBetweenScenesScript()
     {
         BetweenScenes.ResumingFromSave = false;
@@ -87,7 +110,7 @@ public class UsefulFunctions : MonoBehaviour
     /// </summary>
     /// <param name="intent">0 = Fade TO black<br/>1 = Fade FROM black</param>
     /// <param name="fadeScreenOverlay">The fading image component that covers the screen</param>
-    /// <param name="secondsToFade">Time it takes for screen to fade in or out. Default is 0.4f</param>
+    /// <param name="secondsToFade">Approximate time it takes for screen to fade in or out. Default is 0.4f</param>
     public static IEnumerator FadeScreenBlack(string intent, Image fadeScreenOverlay, float secondsToFade = 0.4f)
     {
         Color origColor = fadeScreenOverlay.color;
@@ -97,9 +120,9 @@ public class UsefulFunctions : MonoBehaviour
             fadingAlpha = 1f;
             while (fadingAlpha > 0f && !fadingInterrupted)
             {
-                fadingAlpha -= 0.01f;
+                fadingAlpha -= 0.04f;
                 fadeScreenOverlay.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);
-                yield return new WaitForSeconds(secondsToFade / 100f);
+                yield return new WaitForSeconds(secondsToFade / 25f);
             }
             if (!fadingInterrupted)
                 fadeScreenOverlay.gameObject.SetActive(false);
@@ -111,9 +134,9 @@ public class UsefulFunctions : MonoBehaviour
 
             while (fadingAlpha < 1f)
             {
-                fadingAlpha += 0.01f;
+                fadingAlpha += 0.04f;
                 fadeScreenOverlay.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);
-                yield return new WaitForSeconds(secondsToFade / 100f);
+                yield return new WaitForSeconds(secondsToFade / 25f);
             }
             fadingInterrupted = false;
         }

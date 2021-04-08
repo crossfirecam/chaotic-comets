@@ -2,19 +2,19 @@
 
 public class AsteroidBehaviour : MonoBehaviour {
 
-    // General purpose variables
-    public bool debugMode = false;
+    [Header("General purpose variables")]
     public int points;
+    public bool debugMode = false;
     private bool beenHit = false;
 
-    // Movement, physics variables
+    [Header("Movement, physics variables")]
+    public int asteroidSize; // 3 = Large, 2 = Medium, 1 = Small
     public float maxThrust, maxSpin;
     private Rigidbody2D rbAsteroid;
-    public int asteroidSize; // 3 = Large, 2 = Medium, 1 = Small
 
-    // GameObject variables
-    public GameObject asteroidMedium, asteroidSmall;
+    [Header("GameObject variables")]
     public GameObject explosion;
+    public GameObject asteroidMedium, asteroidSmall;
     private GameObject playerShip1, playerShip2;
 
     // ----------
@@ -28,6 +28,7 @@ public class AsteroidBehaviour : MonoBehaviour {
         GetComponents();
         UsefulFunctions.FindThrust(rbAsteroid, maxThrust);
         UsefulFunctions.FindTorque(rbAsteroid, maxSpin);
+        RandomiseColourIfRainbowMode();
     }
     
     void Update ()
@@ -89,5 +90,14 @@ public class AsteroidBehaviour : MonoBehaviour {
         rbAsteroid = GetComponent<Rigidbody2D>();
         playerShip1 = GameObject.FindWithTag("Player");
         playerShip2 = GameObject.FindWithTag("Player 2");
+    }
+
+    private void RandomiseColourIfRainbowMode()
+    {
+        if (PlayerPrefs.GetInt("RainbowMode") == 1)
+        {
+            Color randColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.8f, 1f);
+            GetComponent<Renderer>().material.SetColor("_Color", randColor);
+        }
     }
 }

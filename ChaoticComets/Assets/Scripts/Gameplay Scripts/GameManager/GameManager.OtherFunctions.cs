@@ -44,7 +44,6 @@ public partial class GameManager : MonoBehaviour
     /// <summary>
     /// Determine how much Time Bonus is given to the player(s) at the start of a level, then count down by 10p per second.
     /// </summary>
-    /// <returns></returns>
     private IEnumerator BonusCounter()
     {
         bonusValue = 300 + (bonusPerAsteroid * asteroidCount);

@@ -1176,9 +1176,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1341,9 +1341,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2575,9 +2575,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4694,9 +4694,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5728,9 +5728,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6105,8 +6105,8 @@ RectTransform:
   - {fileID: 670418417}
   - {fileID: 374633339}
   - {fileID: 459934449}
-  - {fileID: 1061111378}
   - {fileID: 1315207911}
+  - {fileID: 1061111378}
   - {fileID: 2004960403}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -6264,9 +6264,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7504,9 +7504,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8698,9 +8698,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9378,9 +9378,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9843,9 +9843,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9885,7 +9885,7 @@ RectTransform:
   m_Children:
   - {fileID: 1442484823}
   m_Father: {fileID: 654916580}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10385,9 +10385,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10969,9 +10969,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11406,9 +11406,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11825,7 +11825,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 654916580}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14446,9 +14446,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -15652,9 +15652,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -16998,9 +16998,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -17620,9 +17620,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -19587,9 +19587,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -19746,9 +19746,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 324522990}
-          m_MethodName: PauseGame
-          m_Mode: 3
+        - m_Target: {fileID: 8337964535622799180}
+          m_MethodName: ResumeGame
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

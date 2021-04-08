@@ -4,21 +4,20 @@ using TMPro;
 
 public class OptionsPanel : MonoBehaviour
 {
-    public Button btnFullscreenToggle, optionsFirstButton;
-    public Slider optionMusicSlider, optionSFXSlider;
-    public GameObject cheatDisclaimer, cheatDisclaimerResumeSave;
+    [SerializeField] private Button btnFullscreenToggle, optionsFirstButton;
+    [SerializeField] private Slider optionMusicSlider;
+    public Slider optionSFXSlider;
+    [SerializeField] private Toggle rainbowModeToggle;
+    [SerializeField] private GameObject cheatDisclaimer, cheatDisclaimerResumeSave;
 
-    public void Awake()
-    {
-        // Find the SFX slider in Options, and set default values (for some reason GetFloat's defaultValue wouldn't work...)
-        MusicManager.i.sfxDemo = optionSFXSlider.GetComponent<AudioSource>();
-    }
+
     public void ShowOptionsPanel()
     {
         optionsFirstButton.Select();
         SetBtnFullscreenText();
         optionMusicSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("Music"));
         optionSFXSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("SFX"));
+        SetRainbowModeToggleOnLoad();
     }
 
     public void SwapFullscreen()
@@ -43,6 +42,16 @@ public class OptionsPanel : MonoBehaviour
         BetweenScenes.CheaterMode = toggleValue;
         cheatDisclaimer.SetActive(toggleValue);
         cheatDisclaimerResumeSave.SetActive(toggleValue);
+    }
+
+    private void SetRainbowModeToggleOnLoad()
+    {
+        rainbowModeToggle.SetIsOnWithoutNotify(PlayerPrefs.GetInt("RainbowMode") == 1);
+    }
+
+    public void ToggleRainbowAsteroidMode(bool toggleValue)
+    {
+        PlayerPrefs.SetInt("RainbowMode", toggleValue ? 1 : 0);
     }
 
     public void ChangeMusicPassToManager(float musVolume)
