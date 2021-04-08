@@ -4442,7 +4442,7 @@ RectTransform:
   m_Children:
   - {fileID: 1741832715}
   m_Father: {fileID: 654916580}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6104,9 +6104,9 @@ RectTransform:
   - {fileID: 372029259}
   - {fileID: 670418417}
   - {fileID: 374633339}
-  - {fileID: 1315207911}
   - {fileID: 459934449}
   - {fileID: 1061111378}
+  - {fileID: 1315207911}
   - {fileID: 2004960403}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -9885,7 +9885,7 @@ RectTransform:
   m_Children:
   - {fileID: 1442484823}
   m_Father: {fileID: 654916580}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11417,6 +11417,75 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!1001 &1282719903
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23.392815
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.3519297
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.8867188
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774387490616601870, guid: 376023999fb623c4b8bb77d8bf26210d,
+        type: 3}
+      propertyPath: m_Name
+      value: MusicManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 376023999fb623c4b8bb77d8bf26210d, type: 3}
 --- !u!1 &1290425749
 GameObject:
   m_ObjectHideFlags: 0
@@ -11738,7 +11807,7 @@ GameObject:
   - component: {fileID: 1315207913}
   - component: {fileID: 1315207912}
   m_Layer: 5
-  m_Name: FadeBlack
+  m_Name: FadeBlackOverlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11756,7 +11825,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 654916580}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -45704,4 +45773,4 @@ MonoBehaviour:
   buttonWhenLeavingPauseBugFix: {fileID: 711785859}
   pauseAutoSaveWarningText: {fileID: 1882490850}
   pauseCheatMenu: {fileID: 427970269}
-  fadeBlack: {fileID: 1315207910}
+  fadeBlackOverlay: {fileID: 1315207912}

@@ -40,7 +40,7 @@ public partial class MainMenu : MonoBehaviour
     /// </summary>
     public void BackToMenu()
     {
-        if (!fadeBlack.activeInHierarchy)
+        if (!fadeBlackOverlay.gameObject.activeInHierarchy)
         {
             audioMenuBack.Play();
             savePanel.gameObject.SetActive(false);

@@ -7,18 +7,14 @@ public partial class ShopScript : MonoBehaviour
 {
     private void PlayMusicIfEnabled()
     {
-
-        // Change music track
         MusicManager.i.ChangeMusicTrack(2);
-
-        if (PlayerPrefs.GetFloat("Music") > 0f)
-        {
-            MusicManager.i.currentMusicPlayer.Play();
-        }
+        MusicManager.i.currentMusicPlayer.Play();
     }
 
+
+
     /* ------------------------------------------------------------------------------------------------------------------
-    * Pausing
+    * Pausing related code
     * ------------------------------------------------------------------------------------------------------------------ */
 
     /// <summary>
@@ -44,8 +40,7 @@ public partial class ShopScript : MonoBehaviour
         }
         else if (intent == 1)
         {
-            if (PlayerPrefs.GetFloat("Music") > 0f)
-                MusicManager.i.ResumeMusic();
+            MusicManager.i.ResumeMusic();
 
             ShopRefs.gamePausePanel.SetActive(false);
             TogglePlrEventsAndPauseEvents(false);
@@ -76,37 +71,7 @@ public partial class ShopScript : MonoBehaviour
         }
     }
 
-    /* ------------------------------------------------------------------------------------------------------------------
-    * FadeBlack
-    * ------------------------------------------------------------------------------------------------------------------ */
-    private IEnumerator FadeBlack(string ToOrFrom)
     {
-        Image tempFade = ShopRefs.fadeBlack.GetComponent<Image>();
-        Color origColor = tempFade.color;
-        float speedOfFade = 0.8f;
-        ShopRefs.fadeBlack.SetActive(true);
-        if (ToOrFrom == "from")
-        {
-            fadingAlpha = 1f;
-            while (fadingAlpha > 0f)
-            {
-                fadingAlpha -= speedOfFade * Time.deltaTime;
-                tempFade.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);
-                yield return null;
-            }
-            ShopRefs.fadeBlack.SetActive(false);
-        }
-        else if (ToOrFrom == "to")
-        {
-            fadingAlpha = 0f;
-            speedOfFade = 1.2f;
-            while (fadingAlpha < 1f)
-            {
-                fadingAlpha += speedOfFade * Time.deltaTime;
-                tempFade.color = new Color(origColor.r, origColor.g, origColor.b, fadingAlpha);
-                yield return null;
-            }
-        }
     }
 
     /* ------------------------------------------------------------------------------------------------------------------

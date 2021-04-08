@@ -47,7 +47,7 @@ public partial class UiManager : MonoBehaviour
             }
             congratsBonusText.text = "Time Bonus: 0";
         }
-        StartCoroutine(FadeScreenBlack("to"));
+        StartCoroutine(UsefulFunctions.FadeScreenBlack("to", fadeBlackOverlay));
         GameManager.i.Invoke("BringUpShop", 2f);
     }
 

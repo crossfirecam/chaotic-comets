@@ -11,7 +11,6 @@ public partial class ShopScript : MonoBehaviour {
 
     [Header("Shop Variables")]
     public bool[] plrIsReady = { false, false };
-    private float fadingAlpha = 0f;
 
     [Header("References")]
     private Saving_PlayerManager data;
@@ -78,7 +77,7 @@ public partial class ShopScript : MonoBehaviour {
         StartCoroutine(DelayedReady());
 
         PlayMusicIfEnabled();
-        StartCoroutine(FadeBlack("from"));
+        StartCoroutine(UsefulFunctions.FadeScreenBlack("from", ShopRefs.fadeBlackOverlay));
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
@@ -117,7 +116,7 @@ public partial class ShopScript : MonoBehaviour {
      * ------------------------------------------------------------------------------------------------------------------ */
     public void GoBackToGame() {
         ShopRefs.readyPromptText.text = $"Prepare for Area {data.level + 1}!";
-        StartCoroutine(FadeBlack("to"));
+        StartCoroutine(UsefulFunctions.FadeScreenBlack("to", ShopRefs.fadeBlackOverlay));
         Invoke(nameof(LoadMainGame), 1f);
     }
     private void LoadMainGame() {
@@ -183,5 +182,6 @@ public class ShopManagerHiddenVars
     public EventSystemShop[] plrEventSystems;
 
     [Header("Other References")]
-    public GameObject fadeBlack, saveFailedPanel, mouseWarningPanel;
+    public Image fadeBlackOverlay;
+    public GameObject saveFailedPanel, mouseWarningPanel;
 }

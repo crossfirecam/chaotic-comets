@@ -2111,7 +2111,7 @@ MonoBehaviour:
   savePanel: {fileID: 742459301}
   resetScoresPanel: {fileID: 65080459}
   mixer: {fileID: 24100000, guid: c45b130275ef2b747be4423907a74a75, type: 2}
-  fadeBlack: {fileID: 1402773993}
+  fadeBlackOverlay: {fileID: 1402773995}
 --- !u!4 &298724648
 Transform:
   m_ObjectHideFlags: 0
@@ -9791,7 +9791,7 @@ GameObject:
   - component: {fileID: 1402773996}
   - component: {fileID: 1402773995}
   m_Layer: 5
-  m_Name: FadeBlack
+  m_Name: FadeBlackOverlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

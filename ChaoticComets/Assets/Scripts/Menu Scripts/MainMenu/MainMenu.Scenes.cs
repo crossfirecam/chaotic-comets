@@ -5,7 +5,7 @@ public partial class MainMenu : MonoBehaviour
 {
     public void StartGame()
     {
-        StartCoroutine(FadeBlack("to"));
+        StartCoroutine(UsefulFunctions.FadeScreenBlack("to", fadeBlackOverlay));
         Invoke(nameof(LoadScene), 1f);
     }
 

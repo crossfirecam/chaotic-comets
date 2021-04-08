@@ -65,7 +65,7 @@ public partial class UiManager : MonoBehaviour
         {
             panelPauseMenu.SetActive(false);
             panelGameOverAlt.SetActive(true);
-            fadeBlack.SetActive(false);
+            fadeBlackOverlay.gameObject.SetActive(false);
             buttonWhenGameOverAlt.Select();
             FindFieldAndLoadLastName();
         }

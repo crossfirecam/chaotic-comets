@@ -66,7 +66,7 @@ public partial class GameManager : MonoBehaviour
             Refs.playerShip2.gameObject.SetActive(true);
             player2dead = false;
         }
-        UiManager.i.StartCoroutine(UiManager.i.FadeScreenBlack("from"));
+        StartCoroutine(UsefulFunctions.FadeScreenBlack("from", UiManager.i.fadeBlackOverlay));
 
         // Level -1 is used by the Testing script. In Level -1, nothing else spawns except ships.
         if (levelNo != -1)
