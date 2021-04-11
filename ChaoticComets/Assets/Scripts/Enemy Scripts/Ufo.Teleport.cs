@@ -93,11 +93,7 @@ public abstract partial class Ufo : MonoBehaviour
     {
         if (!deathStarted)
         {
-            if (!GameManager.i.tutorialMode)
-            {
-                GameManager.i.AlienAndPowerupLogic(GameManager.PropSpawnReason.AlienRespawn);
-            }
-            else
+            if (GameManager.i.tutorialMode)
             {
                 TutorialManager.i.ufoGone = true;
             }
@@ -155,8 +151,10 @@ public abstract partial class Ufo : MonoBehaviour
         shieldMaterial.color = new Color(origColor.r, origColor.g, origColor.b, 0.5f); // Set to default
     }
 
-    // The UFO can only stop retreating if within a certain area of the screen.
-    // If an attempt is made 3 times, the UFO is stuck just on the edge, and will teleport anyway.
+    /// <summary>
+    /// The UFO can only stop retreating if within a certain area of the screen.<br/>
+    /// If an attempt is made 3 times, the UFO is stuck just on the edge, and will teleport anyway.
+    /// </summary>
     private bool UfoIsInVisibleArea()
     {
         print("Checking if UFO is in visible area. Attempt #" + teleAttempts);

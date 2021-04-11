@@ -97,7 +97,6 @@ public abstract partial class Ufo : MonoBehaviour
     private void DeathRoutine()
     {
         CancelInvoke(nameof(DeathExplosions));
-        GameManager.i.AlienAndPowerupLogic(GameManager.PropSpawnReason.AlienRespawn);
         Destroy(gameObject);
     }
 

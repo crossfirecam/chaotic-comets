@@ -28,7 +28,7 @@ public class PlayerPowerups : MonoBehaviour
             // If all powerups have been collected, then give a random reward of credits or shield refill
             if (ifInsurance && ifFarShot && ifTripleShot && ifRapidShot && ifAutoBrake)
             {
-                PowerupDecided(); AllPowerupsObtained();
+                powerupUndecided = false; AllPowerupsObtained();
             }
             // If not all have been collected, then run a randomiser and pick a powerup
             // All powerups are 15% chance, shield top-up is 15%, and extra life is 5%
@@ -37,51 +37,50 @@ public class PlayerPowerups : MonoBehaviour
                 powerRandomiser = Random.Range(0, 20);
                 if (RandCheck(0, 3) && !ifFarShot)
                 { // Give far shot powerup, 15% chance
-                    PowerupDecided(); ApplyPowerup(Powerups.FarShot);
+                    powerupUndecided = false; ApplyPowerup(Powerups.FarShot);
                 }
                 else if (RandCheck(3, 6) && !ifTripleShot)
                 { // Give triple shot powerup, 15% chance
-                    PowerupDecided(); ApplyPowerup(Powerups.TripleShot);
+                    powerupUndecided = false; ApplyPowerup(Powerups.TripleShot);
                 }
                 else if (RandCheck(6, 9) && !ifRapidShot)
                 { // Give rapid shot powerup, 15% chance
-                    PowerupDecided(); ApplyPowerup(Powerups.RapidShot);
+                    powerupUndecided = false; ApplyPowerup(Powerups.RapidShot);
                 }
                 else if (RandCheck(9, 12) && !ifAutoBrake)
                 { // Give auto brake powerup, 15% chance
-                    PowerupDecided(); ApplyPowerup(Powerups.AutoBrake);
+                    powerupUndecided = false; ApplyPowerup(Powerups.AutoBrake);
                 }
                 else if (RandCheck(12, 15) && !ifInsurance && AtLeastOneOtherPowerup())
                 { // Give insurance powerup, 15% chance, needs another powerup active
-                    PowerupDecided(); ApplyPowerup(Powerups.Insurance);
+                    powerupUndecided = false; ApplyPowerup(Powerups.Insurance);
                 }
                 else if (RandCheck(15, 19) && p.shields <= 60f && p.collisionsCanDamage)
                 { // Give shield top-up, 15% chance, needs shields to be less than 60 and ship's collider to be active
-                    PowerupDecided(); ApplyPowerup(Powerups.ShieldRefill);
+                    powerupUndecided = false; ApplyPowerup(Powerups.ShieldRefill);
                 }
                 else if (powerRandomiser == 19)
                 { // Award extra life, 5% chance
-                    PowerupDecided(); ApplyPowerup(Powerups.ExtraLife);
+                    powerupUndecided = false; ApplyPowerup(Powerups.ExtraLife);
                 }
             }
             if (loopFailsafe > 20)
             {
                 Debug.LogWarning($"Powerup selection has failed after 20 rolls. Give extra life to avoid infinite loop.");
-                PowerupDecided(); ApplyPowerup(Powerups.ExtraLife);
+                powerupUndecided = false; ApplyPowerup(Powerups.ExtraLife);
             }
             loopFailsafe++;
         }
         Destroy(p.canister);
     }
-    private void PowerupDecided()
-    {
-        GameManager.i.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
-        powerupUndecided = false;
-    }
 
-    // Basically only gives insurance powerup once at least one other powerup is received
-    // Does this by determining if at least one of the others is received,
-    // If not at least one powerup has been received yet, tell GivePowerup() to select another powerup
+    // 
+
+    /// <summary>
+    /// Basically only gives insurance powerup once at least one other powerup is received.<br/>
+    /// Does this by determining if at least one of the others is received,<br/>
+    /// If not at least one powerup has been received yet, tell GivePowerup() to select another powerup
+    /// </summary>
     private bool AtLeastOneOtherPowerup()
     {
         if (ifFarShot || ifTripleShot || ifRapidShot || ifAutoBrake)
@@ -102,25 +101,15 @@ public class PlayerPowerups : MonoBehaviour
     {
         print("All powerups obtained");
         powerRandomiser = Random.Range(0, 20);
-        // 10% chance of extra life
-        if (RandCheck(0, 2))
+        // 5% chance of extra life.
+        if (RandCheck(0, 1))
         {
             ApplyPowerup(Powerups.ExtraLife);
         }
-        // 10% chance of 2500 credits
-        else if (RandCheck(2, 4))
-        {
-            ApplyPowerup(Powerups.MediumPrize);
-        }
-        // 40% chance of shield refill. If respawning to full shields already, or above 60 shields, skips to last prize
-        else if (RandCheck(4, 12) && p.shields <= 60f && p.collisionsCanDamage)
-        {
-            ApplyPowerup(Powerups.ShieldRefill);
-        }
-        // 40% chance of 1000 credits (80% if respawning or has above 60 shields)
+        // Rest of the chance is shield refill.
         else
         {
-            ApplyPowerup(Powerups.SmallPrize);
+            ApplyPowerup(Powerups.ShieldRefill);
         }
     }
 

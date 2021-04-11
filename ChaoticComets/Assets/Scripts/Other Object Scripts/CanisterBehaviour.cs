@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class PowerupBehaviour : MonoBehaviour {
+public class CanisterBehaviour : MonoBehaviour {
     
     // General purpose variables
     private Renderer rend;
@@ -37,21 +37,31 @@ public class PowerupBehaviour : MonoBehaviour {
         GameManager.i.CheckScreenWrap(transform, 0f, 0f, 0.5f, 0.5f);
     }
 
-    // Destroy canister when shot by players
+    /// <summary>
+    /// Destroy canister when shot by player bullet.
+    /// </summary>
+    /// <param name="triggerObject"></param>
     void OnTriggerEnter2D(Collider2D triggerObject) {
         if (triggerObject.gameObject.CompareTag("bullet") || triggerObject.gameObject.CompareTag("bullet2")) {
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
-            GameManager.i.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
+
+            // Disable trigger bullet and destroy it.
             triggerObject.enabled = false;
             Destroy(triggerObject.GetComponentInChildren<ParticleSystem>());
             Destroy(triggerObject.gameObject, 5f);
+
+            // Create a red explosion.
             GameObject newExplosion = Instantiate(explosion, transform.position, transform.rotation);
             Destroy(newExplosion, 2f);
+
+            RespawnIfTutorialMode();
             Destroy(gameObject);
         }
     }
 
-    // Play a sound and give random movement to newly spawned canisters
+    /// <summary>
+    /// Play a sound and give random movement to newly spawned canisters.
+    /// </summary>
     public void GiveRandomMovement() {
         audioPowerupExpire.clip = appearSound;
         audioPowerupExpire.Play();
@@ -79,9 +89,17 @@ public class PowerupBehaviour : MonoBehaviour {
             }
             yield return new WaitForSeconds(timeBetweenTicks);
         }
+        // Play canister expire effect, destroy canister.
         GameObject newPop = Instantiate(expirationPop, transform.position, transform.rotation);
         Destroy(newPop, 2f);
-        GameManager.i.AlienAndPowerupLogic(GameManager.PropSpawnReason.CanisterRespawn);
+
+        RespawnIfTutorialMode();
         Destroy(gameObject);
+    }
+
+    private void RespawnIfTutorialMode()
+    {
+        if (GameManager.i.tutorialMode)
+            GameManager.i.RespawnPropForTutorial("canister");
     }
 }

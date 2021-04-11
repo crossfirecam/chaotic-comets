@@ -50,8 +50,8 @@ public partial class GameManager : MonoBehaviour
         }
 
         // Set when the first UFO and canister will spawn
-        AlienAndPowerupLogic(PropSpawnReason.AlienFirst);
-        AlienAndPowerupLogic(PropSpawnReason.CanisterFirst);
+        StartCoroutine(nameof(UfoSpawning));
+        StartCoroutine(nameof(CanisterSpawning));
 
         StartCoroutine(nameof(BonusCounter));
     }
