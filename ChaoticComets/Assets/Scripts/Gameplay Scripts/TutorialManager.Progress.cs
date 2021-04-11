@@ -239,9 +239,11 @@ public partial class TutorialManager : MonoBehaviour
         }
         GameManager.i.SpawnProp(GameManager.PropType.UfoFollower);
         ufoFollower = FindObjectOfType<UfoFollower>();
-
         ufoFollowerDocile = false;
-        player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot);
+
+        if (!player1.plrPowerups.ifRapidShot)
+            player1.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot);
+
         taskSetupDone = true;
     }
 
