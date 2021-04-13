@@ -7,13 +7,13 @@ public partial class GameManager : MonoBehaviour
     private readonly int lastLevelWithoutEnemies = 1;
 
 
-    private float chanceOfSpawningUfo, baseChanceOfSpawningUfo = 0.1f;
+    private float chanceOfSpawningUfo, baseChanceOfSpawningUfo = 0.15f;
     private const float SpawningUfoInterval = 8f;
     private int ufoAmountSpawned, ufoCap;
     /// <summary>
     /// Each round except the first, UFO's are guaranteed to appear occasionally.<br/>
-    /// Attempt to spawn a UFO every 8 seconds, 20% chance of success.<br/>
-    /// Each time it fails, increase the chance by 5%. When it succeeds, reset chance to 20%.
+    /// Attempt to spawn a UFO every 8 seconds, 10/20/30% chance of success.<br/>
+    /// Each time it fails, increase the chance by 5%. When it succeeds, reset chance to base%.
     /// </summary>
     private IEnumerator UfoSpawning()
     {
@@ -24,14 +24,13 @@ public partial class GameManager : MonoBehaviour
         if (BetweenScenes.Difficulty == 1)
             baseChanceOfSpawningUfo = 0.2f;
         else if (BetweenScenes.Difficulty == 2)
-            baseChanceOfSpawningUfo = 0.3f;
+            baseChanceOfSpawningUfo = 0.25f;
         chanceOfSpawningUfo = baseChanceOfSpawningUfo;
 
-        yield return new WaitForSeconds(8); // Wait before starting.
+        yield return new WaitForSeconds(7); // Wait before starting.
 
         while (ufoAmountSpawned < ufoCap)
         {
-            Debug.Log("Attempting UFO spawn");
             float chanceCheck = Random.Range(0f, 1f);
             if (chanceCheck < chanceOfSpawningUfo)
             {
@@ -45,28 +44,34 @@ public partial class GameManager : MonoBehaviour
         }
     }
 
-    private readonly float chanceOfAppearing = 0.5f, chanceOfTwoAppearingIn2P = 0.25f;
-    private readonly float chanceOfSpawningCanister = 0.1f, spawningCanisterInterval = 5f;
+    private const float ChanceOfCanAppearing = 0.7f, ChanceOfTwoCansAppearingIn2P = 0.5f, ChanceOfLargeCanisterGroup = 0.05f, SpawningCanisterInterval = 5f;
+    private float chanceOfSpawningCanister = 0.05f;
     private int canisterAmountSpawned = 0, canisterCap = 1;
     /// <summary>
-    /// Each round, canisters only appear 50% of the entire time. In 25% of those cases and only in 2P mode, spawn another one.<br/>
-    /// If a canister is set to appear, every 5 seconds it has a 10% chance to spawn.
+    /// Each round, canisters only appear 70% of the entire time. In 50% of those cases and only in 2P mode, spawn another one.<br/>
+    /// <br/>
+    /// If a canister is set to appear, every 5 seconds it has a 5% chance to spawn.<br/>
+    /// - If this chance fails, the chance is increased by 2.5%. Resets to 5% when the spawn succeeds.<br/>
+    /// <br/>
+    /// On the first canister spawned, it has a 5% chance to turn into 6 canisters instead.<br/>
+    /// - This cancels the second canister spawn if there is one.
     /// </summary>
     private IEnumerator CanisterSpawning()
     {
         // Does canister appear this wave?
         float appearCheck = Random.Range(0f, 1f);
-        if (appearCheck < chanceOfAppearing)
-            yield return null;
+        if (appearCheck > ChanceOfCanAppearing)
+            yield break;
 
-        // In 2P, two canisters appearing is a 25% chance of successful spawn attempts.
+        // In 2P, two canisters appearing is a 50% chance of successful spawn attempts.
         if (canisterCap == 2)
         {
             float doubleSpawnCheck = Random.Range(0f, 1f);
-            if (doubleSpawnCheck > chanceOfTwoAppearingIn2P)
+            if (doubleSpawnCheck > ChanceOfTwoCansAppearingIn2P)
                 canisterCap = 1;
         }
 
+        Debug.Log("Canister will spawn during this Area. Amount: " + canisterCap);
         yield return new WaitForSeconds(5); // Wait before starting.
 
         while (canisterAmountSpawned < canisterCap)
@@ -74,10 +79,30 @@ public partial class GameManager : MonoBehaviour
             float chanceCheck = Random.Range(0f, 1f);
             if (chanceCheck < chanceOfSpawningCanister)
             {
+                chanceOfSpawningCanister = 0.05f;
                 canisterAmountSpawned += 1;
                 SpawnProp(PropType.Canister);
+
+                // 5% chance of 5 more canisters spawning in place of just one. Only applies to the first canister spawn attempt.
+                if (canisterAmountSpawned == 1)
+                {
+                    float largeGroupCheck = Random.Range(0f, 1f);
+                    if (largeGroupCheck < ChanceOfLargeCanisterGroup)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            yield return new WaitForSeconds(0.8f);
+                            SpawnProp(PropType.Canister);
+                        }
+                        canisterAmountSpawned += 5;
+                    }
+                }
             }
-            yield return new WaitForSeconds(spawningCanisterInterval);
+            else
+            {
+                chanceOfSpawningCanister += 0.025f;
+            }
+            yield return new WaitForSeconds(SpawningCanisterInterval);
         }
     }
 
@@ -137,7 +162,6 @@ public partial class GameManager : MonoBehaviour
         }
         else if (type == PropType.Asteroid)
         {
-            GameObject newAsteroid;
             if (!safeVersion)
                 Instantiate(Refs.largeAsteroidProp, spawnPosition, Quaternion.identity, Refs.propParent);
             else

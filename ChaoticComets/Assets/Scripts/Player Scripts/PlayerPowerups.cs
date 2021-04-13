@@ -106,10 +106,15 @@ public class PlayerPowerups : MonoBehaviour
         {
             ApplyPowerup(Powerups.ExtraLife);
         }
-        // Rest of the chance is shield refill.
-        else
+        // 55% chance of shield refill, and only if shields are below 60, and if shields are allowed to be recharged
+        else if (RandCheck(1, 12) && p.shields <= 60f && p.collisionsCanDamage)
         {
             ApplyPowerup(Powerups.ShieldRefill);
+        }
+        // 40% of the time or if shield refill fails, give 1500 credits
+        else
+        {
+            ApplyPowerup(Powerups.PointPrize);
         }
     }
 
@@ -122,7 +127,7 @@ public class PlayerPowerups : MonoBehaviour
      * Powerup Application, Removal
      * ------------------------------------------------------------------------------------------------------------------ */
 
-    public enum Powerups { Insurance, FarShot, RapidShot, AutoBrake, TripleShot, ShieldRefill, ExtraLife, MediumPrize, SmallPrize };
+    public enum Powerups { Insurance, FarShot, RapidShot, AutoBrake, TripleShot, ShieldRefill, ExtraLife, PointPrize };
 
     public void ApplyPowerup(Powerups powerup, bool playSound = true)
     {
@@ -157,11 +162,8 @@ public class PlayerPowerups : MonoBehaviour
             case Powerups.ExtraLife:
                 GrantExtraLife();
                 break;
-            case Powerups.MediumPrize:
-                p.ScorePoints(2500);
-                break;
-            case Powerups.SmallPrize:
-                p.ScorePoints(1000);
+            case Powerups.PointPrize:
+                p.ScorePoints(1500);
                 break;
             default:
                 print("Invalid powerup requested in PlayerPowerups");
