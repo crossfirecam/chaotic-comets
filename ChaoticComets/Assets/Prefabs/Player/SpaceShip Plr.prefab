@@ -9624,7 +9624,7 @@ MonoBehaviour:
   playerNumber: 1
   credits: 0
   totalCredits: 0
-  bonus: 4999
+  bonus: 9999
   shields: 80
   power: 0
   collisionsCanDamage: 0
@@ -9793,12 +9793,6 @@ MonoBehaviour:
   bulletForce: 500
   rapidFireBetweenBullets: 0.06
   bulletRangeMultipler: 1
-  fireRateRapid: 1.4
-  fireRateRapidWithTriple: 2
-  fireRateTripleHeld: 0.7
-  fireRateTripleQuickFire: 0.4
-  fireRateNormalHeld: 0.4
-  fireRateNormalQuickFire: 0.1
   bullet: {fileID: 1298484566697936, guid: 9c85a0c3106c44c46847d29b3c795192, type: 3}
 --- !u!114 &1146411264
 MonoBehaviour:
@@ -9828,13 +9822,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p: {fileID: 114782296946591882}
+  upgradeSpeed: 0
   upgradeBrake: 0
   upgradeTeleportRate: 0
   upgradeAutoRate: 0
-  upgradeMunitionRate: 0
   upgradeShotSpeed: 0
   upgradeShotRange: 0
   upgradeShield: 0
+  upgradeShotLimit: 0
 --- !u!114 &1146411266
 MonoBehaviour:
   m_ObjectHideFlags: 0

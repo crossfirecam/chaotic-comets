@@ -12,8 +12,8 @@ public abstract partial class Ufo : MonoBehaviour
     {
         if (!ufoRetreating)
         {
-            // Face the player (or random direction if player.position is null) but then reverse direction.
-            if (player.position != null)
+            // Face the player (or random direction if player is null) but then reverse direction.
+            if (player != null)
                 direction = player.position - transform.position;
             else
                 direction = Random.insideUnitCircle;
