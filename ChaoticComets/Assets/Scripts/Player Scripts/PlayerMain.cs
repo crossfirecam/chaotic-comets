@@ -67,10 +67,7 @@ public class PlayerMain : MonoBehaviour {
     // When ship collides with asteroid or ufo colliders
     void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.CompareTag("asteroid") || col.gameObject.CompareTag("ufo")) {
-            // Slightly push spaceship away from collided object, whether invulnerable or not. UFO pushback stacks with this
-            //Vector2 force = gameObject.transform.position - col.transform.position;
-            //int magnitude = 30;
-            //gameObject.GetComponent<Rigidbody2D>().AddForce(force * magnitude);
+
 
             if (collisionsCanDamage && Time.time > nextDamagePossible) {
                 nextDamagePossible = Time.time + minTimeBetweenDamage;
@@ -84,6 +81,10 @@ public class PlayerMain : MonoBehaviour {
                     plrSpawnDeath.ShipIsDead();
                 }
                 plrUiSound.audioShipSFX.Play();
+            }
+            else if (plrAbility.teleportOut.gameObject.activeInHierarchy)
+            {
+                if (col.gameObject.CompareTag("asteroid")) { col.gameObject.GetComponent<AsteroidBehaviour>().AsteroidWasHit(); }
             }
         }
     }

@@ -25,10 +25,13 @@ public class AsteroidBehaviour : MonoBehaviour {
             maxThrust *= 1.25f;
         else if (BetweenScenes.Difficulty == 2)
             maxThrust *= 1.5f;
+
         GetComponents();
         UsefulFunctions.FindThrust(rbAsteroid, maxThrust);
         UsefulFunctions.FindTorque(rbAsteroid, maxSpin);
+
         RandomiseColourIfRainbowMode();
+        CheckDebugMode();
     }
     
     void Update ()
@@ -49,7 +52,13 @@ public class AsteroidBehaviour : MonoBehaviour {
             if (otherObject.CompareTag("bullet2")) { playerShip2.GetComponent<PlayerMain>().ScorePoints(points); }
         }
     }
-
+    
+    /// <summary>
+    /// Asteroid has been touched by a player bullet.<br/>
+    /// - Play an explosion effect<br/>
+    /// - Split asteroid if it's a Large or Medium, into either 2 or 3 pieces<br/>
+    /// - Remove the original asteroid<br/>
+    /// </summary>
     public void AsteroidWasHit() {
         if (!beenHit) {
             beenHit = true;
@@ -80,9 +89,13 @@ public class AsteroidBehaviour : MonoBehaviour {
         }
     }
 
-    // Set asteroids to only take one hit to destroy
-    public void DebugMode() {
-        debugMode = true;
+    /// <summary>
+    /// Asteroids will be destroyed in one hit if GameManager has a setting enabled.
+    /// </summary>
+    public void CheckDebugMode()
+    {
+        if (GameManager.i.instantkillAsteroids)
+            debugMode = true;
     }
 
     private void GetComponents()

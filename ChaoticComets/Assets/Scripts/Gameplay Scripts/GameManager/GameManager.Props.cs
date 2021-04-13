@@ -7,16 +7,25 @@ public partial class GameManager : MonoBehaviour
     private readonly int lastLevelWithoutEnemies = 1;
 
 
-    private readonly float chanceOfSpawningUfo = 0.4f, spawningUfoInterval = 8f;
+    private float chanceOfSpawningUfo, baseChanceOfSpawningUfo = 0.1f;
+    private const float SpawningUfoInterval = 8f;
     private int ufoAmountSpawned, ufoCap;
     /// <summary>
     /// Each round except the first, UFO's are guaranteed to appear occasionally.<br/>
-    /// Attempt to spawn a UFO every 8 seconds.
+    /// Attempt to spawn a UFO every 8 seconds, 20% chance of success.<br/>
+    /// Each time it fails, increase the chance by 5%. When it succeeds, reset chance to 20%.
     /// </summary>
     private IEnumerator UfoSpawning()
     {
         if (levelNo <= lastLevelWithoutEnemies)
             yield return null;
+
+        // Difficulty increases UFO spawn chances
+        if (BetweenScenes.Difficulty == 1)
+            baseChanceOfSpawningUfo = 0.2f;
+        else if (BetweenScenes.Difficulty == 2)
+            baseChanceOfSpawningUfo = 0.3f;
+        chanceOfSpawningUfo = baseChanceOfSpawningUfo;
 
         yield return new WaitForSeconds(8); // Wait before starting.
 
@@ -28,8 +37,11 @@ public partial class GameManager : MonoBehaviour
             {
                 ufoAmountSpawned += 1;
                 ChooseUfoAndSpawn();
+                chanceOfSpawningUfo = baseChanceOfSpawningUfo;
             }
-            yield return new WaitForSeconds(spawningUfoInterval);
+            else
+                chanceOfSpawningUfo += 0.05f;
+            yield return new WaitForSeconds(SpawningUfoInterval);
         }
     }
 
@@ -69,7 +81,9 @@ public partial class GameManager : MonoBehaviour
         }
     }
 
-    // When alien or powerup is required, call SpawnProp
+    /// <summary>
+    /// When spawning a UFO, choose UfoFollower or UfoPasser with an equal chance.
+    /// </summary>
     public void ChooseUfoAndSpawn() {
         float randomiser = Random.Range(0f, 2f);
         if (randomiser < 1f)
@@ -111,33 +125,25 @@ public partial class GameManager : MonoBehaviour
         // Determine object to be spawned.
         if (type == PropType.UfoFollower)
         {
-            GameObject newFollower = Instantiate(Refs.ufoFollowerProp, Refs.propParent);
-            newFollower.transform.position = spawnPosition;
+            Instantiate(Refs.ufoFollowerProp, spawnPosition, Quaternion.identity, Refs.propParent);
         }
         if (type == PropType.UfoPasser)
         {
-            GameObject newPasser = Instantiate(Refs.ufoPasserProp, Refs.propParent);
-            newPasser.transform.position = spawnPosition;
+            Instantiate(Refs.ufoPasserProp, spawnPosition, Quaternion.identity, Refs.propParent);
         }
         else if (type == PropType.Canister)
         {
-            GameObject newCanister = Instantiate(Refs.canisterProp, Refs.propParent);
-            newCanister.transform.position = spawnPosition;
+            Instantiate(Refs.canisterProp, spawnPosition, Quaternion.identity, Refs.propParent);
         }
         else if (type == PropType.Asteroid)
         {
             GameObject newAsteroid;
             if (!safeVersion)
-                newAsteroid = Instantiate(Refs.largeAsteroidProp, spawnPosition, Quaternion.identity, Refs.propParent);
+                Instantiate(Refs.largeAsteroidProp, spawnPosition, Quaternion.identity, Refs.propParent);
             else
-                newAsteroid = Instantiate(Refs.largeAsteroidSafeProp, spawnPosition, Quaternion.identity, Refs.propParent);
+                Instantiate(Refs.largeAsteroidSafeProp, spawnPosition, Quaternion.identity, Refs.propParent);
 
             asteroidCount += 1;
-            if (instantkillAsteroids)
-            {
-                GameObject childAsteroid = newAsteroid.transform.GetChild(0).gameObject;
-                childAsteroid.GetComponent<AsteroidBehaviour>().DebugMode();
-            }
         }
     }
 

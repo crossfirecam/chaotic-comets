@@ -24,26 +24,28 @@ public partial class GameManager : MonoBehaviour
         if (player2dead && BetweenScenes.PlayerCount == 2)
             Refs.playerShip2.plrSpawnDeath.PretendShipDoesntExist(true);
 
-        // Asteroid number depends on level number. Iterated in SpawnProp()
+        // Asteroid number depends on level number. Iterated in SpawnProp(). Hard cap of 15 asteroids.
         asteroidCount = 0;
         int asteroidCap = (levelNo + 3) / 2;
+        if (asteroidCap >= 15)
+            asteroidCap = 15;
+
         for (int i = 0; i < asteroidCap; i++)
-        {
             SpawnProp(PropType.Asteroid);
-        }
+
         yield return new WaitForSeconds(0.01f);
 
         // Player Respawn
         if (!player1dead) { Refs.playerShip1.plrSpawnDeath.RespawnShip(); }
         if (!player2dead) { Refs.playerShip2.plrSpawnDeath.RespawnShip(); }
 
-        // Set a cap on how many UFOs can spawn. Double this in two-player. An aside... always one canteen per player per level.
-        if (levelNo == 1) { ufoCap = 0; }
-        else if (levelNo <= 3) { ufoCap = 1; }
-        else if (levelNo <= 7) { ufoCap = 2; }
-        else { ufoCap = 3; }
+        // Set a cap on how many UFOs can spawn.
+        if (levelNo == 1)
+            ufoCap = 0;
+        else
+            ufoCap = (levelNo / 3) + 1;
 
-        // Double the cap if both players are alive
+        // Double the Canister and UFO cap if both players are alive
         if (!(player1dead || player2dead))
         {
             canisterCap *= 2; ufoCap *= 2;
