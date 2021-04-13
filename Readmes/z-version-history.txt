@@ -1,0 +1,40 @@
+Chaotic Comets Version History
+
+------------------
+Version 1.4 - Final Update (2021 April)
+------------------
+- Shop overhauled. Now eight attributes of the player's ship can be improved.
+- Game UI takes up much less room.
+- Difficulty now affects asteroid speed and UFO aggressiveness.
+- Player ship weapons were rebalanced. Able to quickly fire manual shots.
+- Bonus timer that awards extra credits for fast level completion.
+
+------------------
+Version 1.3 - Tutorial & Red UFO Update (2020 June)
+------------------
+- Red Class UFO type added. Flies across screen, more damaging shots.
+- High Score board added to main menu.
+- Interactive Tutorial added. Teaches the player game concepts with control prompts.
+- Cheat mode added.
+
+------------------
+Version 1.2 - UFO Retreat & Shop Update (2019 June)
+------------------
+- UFOs now retreat at low health. Bonus credits for finishing off after they retreat.
+- Game auto-saves at the end of levels.
+- A shop is available between levels. Four attributes of the player's ship can be upgraded.
+
+------------------
+Version 1.1 - Effects Update (2019 May)
+------------------
+- Particle effects added to various props.
+- Music and extra SFX added.
+- UFOs that are not destroyed now teleport away at the end of levels.
+
+------------------
+Version 1.0 - Online Version (2019 March)
+------------------
+- This patch brought the game to the public and focused on UI changes.
+- Main menu greatly improved. Dialogs pop up that allow for difficulty and control options.
+- All UI is compatible with either gamepad or mouse.
+- Prior versions of the game were created for a design show in November 2018.

@@ -1,4 +1,4 @@
-Chaotic Comets Code Attributions:
+Chaotic Comets Code Attributions
 
 ------------------
 Major
@@ -20,14 +20,14 @@ The shop's local multiplayer UI couldn't have been done without great help from 
 ------------------
 Minor
 ------------------
-Two buttons could be highlighted at once if a gamepad and mouse are both used on certain menus. This was fixed by a small tweak by daterre
-- https://forum.unity.com/threads/button-keyboard-and-mouse-highlighting.294147/
-
 Asteroids and Powerups spawn with completely random direction, and can still start with their maximum speed. Code figured out by metalted and GlassesGuy.
 - https://answers.unity.com/questions/1646067/
 
 Scaling of the camera during non-16x9 resolutions achieved with AspectRatioEnforcer script by Eric Haines (Eric5h5)
 - http://wiki.unity3d.com/index.php?title=AspectRatioEnforcer
+
+Two buttons could be highlighted at once if a gamepad and mouse are both used on certain menus. This was fixed by a small tweak by daterre
+- https://forum.unity.com/threads/button-keyboard-and-mouse-highlighting.294147/
 
 A debugging tool for finding Missing Reference errors in Unity by Lior Tal of Gamasutra
 - https://www.gamasutra.com/blogs/LiorTal/20141208/231690/Finding_Missing_Object_References_in_Unity.php

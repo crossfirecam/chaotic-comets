@@ -1,4 +1,4 @@
-Chaotic Comets v1.3
+Chaotic Comets v1.4
 Developed by CrossfireCam (https://crossfirecam.itch.io/)
 
 ------------------

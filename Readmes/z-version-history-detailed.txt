@@ -1,0 +1,227 @@
+Chaotic Comets Detailed Version History
+
+------------------
+Version 1.4 Detailed Changelog (2021-04-14)
+------------------
+Shop Changes
+- The previous shop is no more. New shop has eight upgrades and two consumable purchases.
+    - Defence Upgrades: Shield Strength, Teleport Rate
+    - Evasion Upgrades: Ship Speed, Brake Power
+    - Weapons Upgrades: Auto Firerate, Shot Limit, Shot Speed, Shot Range
+    - Maintenance: Charge Shields, Buy Extra Ship
+- Each upgrade has its own purchase panel with a description and upgrade progress.
+    - Shield Strength and Shot Limit are premium upgrades, significantly improving the ship for more cost.
+    - All the other upgrades increase the base stat by 20% per tier, cheaper to start upgrading.
+
+Difficulty Changes
+- Difficulties scale how fast the asteroids will move, and the stats of UFO's.
+- It also increases base chance for UFO's to appear, and reduces bullet deviation of their shots.
+- Auto-Brake nerf for Hard mode removed.
+
+Player Changes
+- When respawning or starting a level, teleport meter is now set to 0.
+    - Asteroids that touch the player will be destroyed while the Teleport-Out sequence is playing.
+- Manual and automatic shots have different cooldowns. This allows the player to fire quickly by pressing Fire repeatedly. To balance this, the shot amount on-screen is limited to 2. Upgradable in shop.
+    - Triple Fire can take advantage of quick fire. Rapid Fire still has an unskippable long cooldown.
+- Ship takes more damage from impacts. Asteroids bounce the player less, leading to more hits from big asteroids.
+
+Gameplay Changes
+- Players are given a credit bonus depending how long it takes them to complete an area. This bonus starting point increases the more asteroids there are.
+- Both players in 2P mode share a life counter. The player who dies on 0 Ships can choose to respawn when the remaining player picks up a spare Ship.
+    - Bonus ships now take 10,000 total credits to obtain. Spare ships can be purchased in the Shop for 5,000c.
+- Multi-colour asteroids mode added to Options. Changes asteroids to random colours.
+- Spawnrate chance of UFO/Canister objects are reduced, but increase over time within a level.
+
+UFO Changes
+- Green Class UFO is now faster during chase animation.
+- Red Class UFO can now spawn on either side. Red Class is slightly smaller, less health, slower travelling.
+- Both UFO's have shot deviation that throw off shots a bit, but in general are more dangerous.
+- Both UFO's appear in all levels, but have a cap. This cap will continue to increase, instead of stopping at 3.
+
+Canister, Asteroid Changes
+- Canisters only appear in 70% of levels. Very rarely they will be replaced by 6 canisters at once!
+- Asteroids have a hard cap of 15 on screen at once. Base amount of asteroids per level takes longer to increase.
+
+UI Changes
+- UI size reduced to a small strip along the bottom of screen. Shield / ability bar appearance changed.
+- Background stars across the game now twinkle.
+- About & Help menus changed, added Controls section to Help.
+- Text is more crisp across the entire game.
+
+Bug Fixes (from 1.3)
+- UFO on edge of screen during level-end sequence will now immediately teleport away instead of lingering.
+- UFO that kills a lone player as they're beginning to retreat will no longer stand still.
+- Screen will not have fade-to-black related glitches when rapidly entering certain menus.
+
+
+
+
+
+
+------------------
+Version 1.3 Detailed Changelog (2020-06-05)
+------------------
+UFO Changes
+- Red Class UFO added. Flies across screen and disappears, deviating up/down on the way. Has heavier weaponry.
+- Green Class UFO improved. No longer rams the player, maintains a short distance. Follows through edges of the screen.
+- Shield is used during collisions. Flicks on and off when hitting a large object.
+- UFO spawn cap changed. Doubles in two-player mode.
+    - 0 UFOs on lvl 1,   1 UFO on lvl 2-3,   2 UFOs on lvl 4-7,   3 UFOs on all after. 
+
+Player Changes
+- Most aspects of the player have been changed.
+    - Base fire rate down, base thrust speed up, base shot speed up.
+    - Knockback from collisions reduced, and collisions no longer spin the player out of rotational control.
+    - Triple shot has a smaller cone (20deg to 12deg).
+    - Invulnerability time during shield charge-up is reduced.
+- Auto-Brake and manual brake will bring the ship to a complete stop.
+    - Auto-Brake shows a particle effect when stopping the ship fast enough.
+
+Gameplay Changes
+- High Scores added. Can be filtered by game mode and reset.
+    - The provided CPU nicknames are tributes to close friends.
+    - Last used nickname in each mode is saved for the next time.
+- Interactive tutorial added. Old 'Control Test' removed.
+    - Teaches the player with a choice of P1/P2 keyboard or Xbox prompts.
+- Cheat mode in Options for spawning props and granting items. Disables saving and high scores.
+- Shop upgrades are cheaper. (Previous cost + 750c) per level, down from (P cost + 2000c).
+    - Manual Brake Efficiency upgrade fixed to function properly.
+    - Extra lives come every 5000 points, down from 10,000.
+- Bullet size shrunk by half. Player and UFO slightly smaller. All asteroids are faster.
+
+Canister Changes
+- Powerup canister gives items more fairly. Less receiving of the same few powerups.
+- Powerup canister expires faster. Collecting it is urgent. Countdown before disappearing is much more brief.
+
+UI / Sound Changes
+- Removed all prompts for controller choices. Added 'Rewired' plugin to ease controller changing.
+    - Mouse cursor disappears whenever other control methods are used.
+- Fullscreen / Windowed toggle added.
+    - Window size can be manually changed. Any game window that isn't 16x9 is letter/pillarboxed.
+- Pause screen pauses all SFX and music, resumes them immediately.
+- Shop, About, Help, and Player UI updated considerably. All UI has sound effects.
+- Previously loud noises are reduced in volume.
+
+Bug Fixes (from 1.2)
+PLAYER FIXES:
+- Player now earns lives based on total credits, instead of current credits.
+- Player upgrades weren't transferred from one game to another under certain conditions.
+- Dead spaceships no longer collide with objects.
+UFO FIXES:
+- UFO attempting to retreat now will always retreat in the opposite direction. No more ramming into the player.
+- UFO attempting to retreat won't teleport while offscreen anymore.
+    - Checks to see if their location is visible by the player, then tries to teleport.
+- UFOs can no longer be instantly killed without going through the retreat phase.
+- UFO bullets killing a player now plays the ship explosion sound.
+MISC FIXES:
+- Canteens no longer clip into asteroids.
+- Music and SFX sliders are set correctly on startup.
+
+
+
+
+
+
+------------------
+Version 1.2 Detailed Changelog (2019-06-07)
+------------------
+UFO Changes
+- UFO will retreat from the player with shields up when on low health.
+    - While shield is up, bullets will reflect off of UFO shields.
+    - After retreating, UFO attempts to teleport. If shot at this moment, they will perish.
+- UFO's base speed and shot speed have increased.
+
+Player Changes
+- Impact with an asteroid or UFO will slightly push back the player.
+- Hard mode no longer removes the brake. It's only half as effective, however.
+
+Gameplay Changes
+- The end of each level will now auto-save, and give players the option of shopping for upgrades.
+    - Upgrades to ship top speed, brake efficiency, fire rate, and shot speed are possible.
+    - The price increases with each tier.
+    - Shop was extensively tested to work with keyboard, controller, or any swapping between the two.
+        - Mouse input is blocked. Any clicks of the mouse reset the UI and doesn't break it.
+- The game has save detection. If a game is quit, the last autosave is kept on file until the next time the game is attempted to be started. The player's given an option of resuming or starting a new game.
+    - That autosave won't be deleted until the setup for a new game to replace it has completed.
+
+Prop Changes
+- There is a limit of UFOs/canisters per level, that changes depending on level number. Asteroids have no limit.
+- UFOs, canisters, and asteroids can enter from any edge of the screen.
+- There can now be multiple UFOs or canisters onscreen.
+- UFOs and canisters have unique explosions. Discourages canister shooting.
+
+UI / Sound Changes
+- Music and SFX volume can be changed from main menu.
+- UFOs have a tracking sound effect added.
+- Fade transitions occur during certain scene changes.
+- Main menu has bigger dialogs.
+
+Bug Fixes (from 1.1)
+- Player bullets no longer stack with munition shots. Eg, triple shot used to shoot two bullets from main cannon.
+- Canisters & UFOs will no longer spawn with 0 asteroids onscreen.
+- Picking up a canister during end-of-level shield regen and being given full shields no longer cancels the canister's reward shields.
+
+
+
+
+
+
+------------------
+Version 1.1 Detailed Changelog (2019-05-21)
+------------------
+Player Changes
+- Top speed has been greatly reduced.
+    - Thrusters have visual and sound effects.
+- Teleport ability has visual cues and invulnerability time.
+    - Can no longer teleport once all asteroids are destroyed.
+
+UFO Changes
+- UFO no longer spawns during end level transition, and teleports away if not killed at the end of levels.
+- UFO cannot grant any more points by the player shooting in its dying state.
+
+UI / Sound Changes
+- Music added, can be disabled from main menu.
+- Player UI layout changed.
+- Main/Controls/About menu layouts changed.
+
+Misc Changes
+- Player button controls have been separated. Eg. Shooting is no longer set off by both Space AND controller A button.
+- A note has been added to controls screen. "Due to key rollover on some keyboards, players 1 & 2 (both playing on keyboard) cannot shoot, thrust and rotate all at the same time."
+    - The default controls were kept the same due to the low chance of that scenario happening.
+    - All other attempts to change the controls felt inconvenient to play with.
+
+
+
+
+
+
+------------------
+Version 1.0 Detailed Changelog (2019-03-18)
+------------------
+- Changed Main Menu UI, made keyboard/gamepad selection easier.
+- Updated all UI, compatible with both controller and keyboard.
+- Difficulty settings added. Easy: Auto braking, Normal: Typical braking, Hard: No braking.
+- Control test screen changed to be in the center of screen and has a pause menu.
+- Tweaks to shot speed, canteen size, and how ability meter is displayed.
+- Help/About menu layouts changed.
+
+
+
+
+
+
+------------------
+PRE-PUBLIC VERSIONS
+------------------
+These builds are not available publicly. Version 1.0 is the foundation for public updates.
+
+Early December 2018 b1.1 - Online Portfolio version
+- Native Xbox 360 controller support.
+- Spaceship can brake, and Auto-Brake powerup now stops the ship immediately.
+- Powerups more common, aliens less common.
+- Shield recharges between levels. Every 10,000 points = extra life.
+
+Late November 2018 b1.0 - Design Show Demo
+- Version of the game demonstrated at a design show.
+- Basic showcase of gameplay loop. 5-level demo.
+- Xbox controller support achieved using third-party rebind software
