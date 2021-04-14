@@ -9631,7 +9631,6 @@ MonoBehaviour:
   deathExplosion: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
     type: 3}
   modelPlayer: {fileID: 301448257594196552}
-  canister: {fileID: 0}
 --- !u!70 &70447958271372078
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -19590,7 +19589,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: de73287b84758f44e87652aebab1decc, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -24652,7 +24651,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: de73287b84758f44e87652aebab1decc, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -91,7 +91,7 @@ public abstract partial class Ufo : MonoBehaviour
     }
     internal bool IsPlayerTooFarY()
     {
-        return Mathf.Abs(player.position.y - transform.position.y) > 6f;
+        return Mathf.Abs(player.position.y - transform.position.y) > 7f;
     }
 
 

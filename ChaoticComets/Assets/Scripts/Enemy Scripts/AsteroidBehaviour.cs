@@ -10,12 +10,12 @@ public class AsteroidBehaviour : MonoBehaviour {
 
     [Header("Movement, physics variables")]
     public int asteroidSize; // 3 = Large, 2 = Medium, 1 = Small
-    public float maxThrust, maxSpin;
+    [SerializeField] private float maxThrust, maxSpin;
     private Rigidbody2D rbAsteroid;
 
     [Header("GameObject variables")]
-    public GameObject explosion;
-    public GameObject asteroidMedium, asteroidSmall;
+    [SerializeField] private GameObject explosion;
+    [SerializeField] private GameObject asteroidMedium, asteroidSmall;
     private GameObject playerShip1, playerShip2;
 
     // ----------

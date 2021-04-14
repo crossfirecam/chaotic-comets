@@ -13,16 +13,16 @@ public abstract partial class Ufo : MonoBehaviour
     internal float alienSpeedCurrent;
 
     [Header("Sound References")]
-    public AudioSource audioAlienHum;
-    public AudioSource audioAlienSfx;
-    public AudioClip audClipAliexSfxShieldReflect, audClipAlienSfxTakenDamage;
+    [SerializeField] private AudioSource audioAlienHum;
+    [SerializeField] private AudioSource audioAlienSfx;
+    [SerializeField] private AudioClip audClipAliexSfxShieldReflect, audClipAlienSfxTakenDamage;
 
     [Header("Other Variables / References")]
-    public GameObject bullet;
-    public GameObject deathExplosion, playerBulletExplosion, teleportEffect;
+    [SerializeField] private GameObject bullet;
+    [SerializeField] private GameObject deathExplosion, playerBulletExplosion, teleportEffect;
     internal bool deathStarted = false, ufoTeleporting = false, ufoRetreating = false;
-    public GameObject forceField;
-    public GameObject playerShip1, playerShip2;
+    [SerializeField] private GameObject forceField;
+    [SerializeField] private GameObject playerShip1, playerShip2;
 
     // ----------
 

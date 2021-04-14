@@ -4840,7 +4840,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1001724363263860}
   m_LocalRotation: {x: -0.42261827, y: 0, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: 11, y: -1.0259008, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.23, y: 0.23, z: 0.23}
   m_Children:
   - {fileID: 4629594965760025949}
@@ -4864,6 +4864,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alienHealth: 60
   alienMaxHealth: 60
+  player: {fileID: 0}
+  playerFound: 0
+  playerTooFar: 0
   retreatSpeedMultiplier: -2
   direction: {x: 0, y: 0}
   alienSpeedBase: 1.6
@@ -9894,7 +9897,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6070445249382643354}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1.0000001}
-  m_LocalPosition: {x: 10.78207, y: -0.9275259, z: 0.0825463}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4811040311596838}
@@ -9911,9 +9914,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243287936215163392, guid: c45b130275ef2b747be4423907a74a75,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 02594b40ab90a1948842f3b0506580e4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: fffe62c75e08b9d4fb196369c3764720, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0

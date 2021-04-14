@@ -82,6 +82,7 @@ public abstract partial class Ufo : MonoBehaviour
             deathStarted = true;
             if (ufoTeleporting) { rateOfExplosions = 0.2f; durationOfExplosions = 2.5f; }
             InvokeRepeating(nameof(DeathExplosions), 0.0f, rateOfExplosions);
+            StartCoroutine(nameof(PerishScanningNoise));
             Invoke(nameof(DeathRoutine), durationOfExplosions);
         }
     }

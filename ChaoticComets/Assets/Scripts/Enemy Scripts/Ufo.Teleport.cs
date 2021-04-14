@@ -21,6 +21,7 @@ public abstract partial class Ufo : MonoBehaviour
             alienSpeedCurrent = alienSpeedBase * retreatSpeedMultiplier;
 
             ufoRetreating = true;
+            StartCoroutine(nameof(PanicScanningNoise));
             forceField.SetActive(true);
             Invoke(nameof(TeleportStartFromInvoke), 3f);
         }
@@ -153,6 +154,29 @@ public abstract partial class Ufo : MonoBehaviour
             yield return null;
         }
         shieldMaterial.color = new Color(origColor.r, origColor.g, origColor.b, 0.5f); // Set to default
+    }
+
+    private const float TimeToPanicSound = 1f, VolumeChange = 0.1f, PitchChange = 0.15f;
+    private IEnumerator PanicScanningNoise()
+    {
+        float panicPitch = audioAlienHum.pitch + PitchChange;
+        while (audioAlienHum.pitch < panicPitch)
+        {
+            audioAlienHum.volume += VolumeChange / 20f;
+            audioAlienHum.pitch += PitchChange / 20f;
+            yield return new WaitForSeconds(TimeToPanicSound / 20f);
+        }
+    }
+
+    private const float TimeToPerishSound = 3f, EndPitch = 0.2f;
+    private IEnumerator PerishScanningNoise()
+    {
+        float perishPitch = audioAlienHum.pitch - EndPitch;
+        while (audioAlienHum.pitch > EndPitch)
+        {
+            audioAlienHum.pitch -= perishPitch / 20f;
+            yield return new WaitForSeconds(TimeToPerishSound / 20f);
+        }
     }
 
     /// <summary>

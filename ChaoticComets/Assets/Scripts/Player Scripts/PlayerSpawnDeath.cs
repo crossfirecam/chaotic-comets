@@ -158,6 +158,7 @@ public class PlayerSpawnDeath : MonoBehaviour
     internal void ShipChoseToRespawn()
     {
         GameManager.i.PlayerChoseToRespawn();
+        p.plrUiSound.UpdatePointDisplays();
         p.shields = 80;
         UiManager.i.ShowPlayerRespawnOverlay(p.playerNumber, false);
         p.plrInput.StartCoroutine(nameof(p.plrInput.DelayNewInputs)); // Slight delay so that ship doesn't fire as soon as it respawns
