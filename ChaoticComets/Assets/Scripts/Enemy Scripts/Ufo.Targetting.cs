@@ -34,16 +34,26 @@ public abstract partial class Ufo : MonoBehaviour
 
     internal virtual void FindPlayer()
     {
-        // Choose a player to target
-        float randomFloat = Random.Range(0.0f, 1f);
-        if (randomFloat >= 0.5f && !GameManager.i.player1dead && !GameManager.i.player1TEMPDEAD)
+        // Find both players if they're present
+        Transform tempPlayer1 = null, tempPlayer2 = null;
+        if (!GameManager.i.player1dead && !GameManager.i.player1TEMPDEAD)
+            tempPlayer1 = GameObject.FindWithTag("Player").transform;
+        if (!GameManager.i.player2dead && !GameManager.i.player2TEMPDEAD)
+            tempPlayer2 = GameObject.FindWithTag("Player 2").transform;
+
+        // Assign target based on if only one player is present, or select the closest if both are alive
+        if (tempPlayer1 != null && tempPlayer2 == null)
+            player = tempPlayer1;
+        else if (tempPlayer1 == null && tempPlayer2 != null)
+            player = tempPlayer2;
+        else if (tempPlayer1 != null && tempPlayer2 != null)
         {
-            player = GameObject.FindWithTag("Player").transform;
+            if (Vector2.Distance(tempPlayer1.position, transform.position) < Vector2.Distance(tempPlayer2.position, transform.position))
+                player = tempPlayer1;
+            else
+                player = tempPlayer2;
         }
-        else if (randomFloat <= 0.49f && !GameManager.i.player2dead && !GameManager.i.player2TEMPDEAD)
-        {
-            player = GameObject.FindWithTag("Player 2").transform;
-        }
+        
 
         // Once player is found, don't shoot for 1 second
         if (player != null)

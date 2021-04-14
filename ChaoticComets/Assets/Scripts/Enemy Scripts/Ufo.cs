@@ -65,7 +65,7 @@ public abstract partial class Ufo : MonoBehaviour
             bulletForce *= 1.5f;
             alienSpeedBase *= 1.2f;
             bulletRange *= 1.2f;
-            shootingDelay *= 0.75f;
+            shootingDelay *= 0.85f;
             bulletDeviationLimit *= 0.75f;
         }
         else if (BetweenScenes.Difficulty == 2)
@@ -73,7 +73,7 @@ public abstract partial class Ufo : MonoBehaviour
             bulletForce *= 2f;
             alienSpeedBase *= 1.4f;
             bulletRange *= 1.4f;
-            shootingDelay *= 0.5f;
+            shootingDelay *= 0.7f;
             bulletDeviationLimit *= 0.5f;
         }
     }

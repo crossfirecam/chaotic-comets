@@ -35,11 +35,11 @@ public abstract partial class Ufo : MonoBehaviour
 
     // If the UFO is in a visible area of the screen and not dying, then start the teleport sequence.
     // Caused either by the UFO getting to low health, tutorial popup 12, or because level is ending.
-    public void TeleportStart(bool forceLeaveEndOfLevel = false)
+    public void TeleportStart(bool forceLeave = false)
     {
         if (UfoIsInVisibleArea() ||
             (GameManager.i.tutorialMode && alienHealth == 70) || // Exception for Tutorial popup 12, the Red UFO teleports immediately
-            forceLeaveEndOfLevel == true)             // Exception for end of level, UFO will teleport immediately to avoid hurting player during ending sequence
+            forceLeave == true)             // Exception for end of level, UFO will teleport immediately to avoid hurting player during ending sequence
         {
             if (!deathStarted)
             {

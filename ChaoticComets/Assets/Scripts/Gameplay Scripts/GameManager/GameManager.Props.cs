@@ -8,7 +8,7 @@ public partial class GameManager : MonoBehaviour
 
 
     private float chanceOfSpawningUfo, baseChanceOfSpawningUfo = 0.15f;
-    private const float SpawningUfoInterval = 8f;
+    private const float SpawningUfoInterval = 8f, StopSpawningNewUfosInterval = 10f;
     private int ufoAmountSpawned, ufoCap;
     /// <summary>
     /// Each round except the first, UFO's are guaranteed to appear occasionally.<br/>
@@ -37,6 +37,7 @@ public partial class GameManager : MonoBehaviour
                 ufoAmountSpawned += 1;
                 ChooseUfoAndSpawn();
                 chanceOfSpawningUfo = baseChanceOfSpawningUfo;
+                yield return new WaitForSeconds(StopSpawningNewUfosInterval); // Guarantee a long gap between UFO's
             }
             else
                 chanceOfSpawningUfo += 0.05f;
@@ -106,12 +107,13 @@ public partial class GameManager : MonoBehaviour
         }
     }
 
+    private const float ChanceToSpawnGreenClass = 0.3f;
     /// <summary>
-    /// When spawning a UFO, choose UfoFollower or UfoPasser with an equal chance.
+    /// When spawning a UFO, choose UfoFollower or UfoPasser.
     /// </summary>
     public void ChooseUfoAndSpawn() {
-        float randomiser = Random.Range(0f, 2f);
-        if (randomiser < 1f)
+        float randomiser = Random.Range(0f, 1f);
+        if (randomiser < ChanceToSpawnGreenClass)
         {
             SpawnProp(PropType.UfoFollower);
         }
