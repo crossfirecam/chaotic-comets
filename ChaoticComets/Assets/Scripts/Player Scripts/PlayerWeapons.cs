@@ -13,7 +13,7 @@ public class PlayerWeapons : MonoBehaviour
     public float bulletRangeMultipler = 1f;
     internal float bulletDestroyTime;
     internal float bulletTimeIfNormal, bulletTimeIfFar;
-    internal float nextFire = 0.0f, nextFireQuickFire = 0.0f; // Determines timing of weapon firing
+    internal float nextFire = 0f, nextFireQuickFire = 0f; // Determines timing of weapon firing
     internal int numOfActiveBullets, capOfActiveBullets = 2;
 
     [Header("Upgradable Stats")]
@@ -32,6 +32,7 @@ public class PlayerWeapons : MonoBehaviour
         tripleCannon1 = gameObject.transform.Find("TripleCannon1").transform;
         tripleCannon2 = gameObject.transform.Find("TripleCannon2").transform;
         Invoke(nameof(SetBulletTime), 0.05f);
+        nextFire = Time.time + 0.2f; nextFireQuickFire = Time.time + 0.2f; // Avoids firing sound when holding down Fire between certain scenes
     }
 
     private void SetBulletTime()
