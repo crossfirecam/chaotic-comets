@@ -3,6 +3,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using static HighScoreHandling;
+using static Constants;
 
 public partial class MainMenu : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public partial class MainMenu : MonoBehaviour
     private void PopulateHighScoreTable()
     {
         // Remove all previously shown high score objects
-        GameObject[] previousScoreEntries = GameObject.FindGameObjectsWithTag("ScoreEntry");
+        GameObject[] previousScoreEntries = GameObject.FindGameObjectsWithTag(Tag_Other_ScoreEntry);
         foreach (GameObject entry in previousScoreEntries)
             Destroy(entry);
 

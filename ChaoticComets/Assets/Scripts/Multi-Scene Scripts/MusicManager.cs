@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using static Constants;
 
 public class MusicManager : MonoBehaviour
     {
@@ -41,11 +42,11 @@ public class MusicManager : MonoBehaviour
     public void FindAllSfxAndPlayPause(int intent)
     {
         List<GameObject> listOfSfxObjects = new List<GameObject>();
-        string[] tagsToFind = { "Player", "Player 2", "ufo", "bullet", "bullet2", "bullet3", "bullet4", "powerup", "MiscSounds"};
+        string[] tagsToFind = { Tag_Player1, Tag_Player2, Tag_Ufo, Tag_BulletP1, Tag_BulletP2, Tag_BulletUfoGreen, Tag_BulletUfoRed, Tag_Canister, Tag_Other_MiscSounds};
         foreach (var tag in tagsToFind)
         {
             GameObject[] listOfAudioFound = { };
-            if (tag == "ufo")
+            if (tag == Tag_Ufo)
             {
                 GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag(tag);
                 List<GameObject> listOfUfoSfx = new List<GameObject>();
@@ -53,7 +54,7 @@ public class MusicManager : MonoBehaviour
                     listOfUfoSfx.AddRange(ufo.GetComponent<Ufo>().ReturnAlienSounds());
                 listOfAudioFound = listOfUfoSfx.ToArray();
             }
-            else if (tag == "Player" || tag == "Player 2")
+            else if (tag == Tag_Player1 || tag == Tag_Player2)
             {
                 GameObject player = GameObject.FindGameObjectWithTag(tag);
                 if (player != null)

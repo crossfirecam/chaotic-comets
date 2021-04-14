@@ -90,6 +90,12 @@ public class UfoFollower : Ufo
         }
     }
 
+    public override void PlayerDied()
+    {
+        base.PlayerDied();
+        TeleportStart(true);
+    }
+
     internal override void ShootBullet()
     {
         if (!(GameManager.i.tutorialMode && TutorialManager.i.ufoFollowerDocile))
@@ -98,18 +104,9 @@ public class UfoFollower : Ufo
         }
     }
 
-    private int lifeCountWhenUfoSpawns = -1;
     internal override void FindPlayer()
     {
         base.FindPlayer();
-
-        // Store an int that represents how many Ships players have before engaging a UFO-Follower.
-        // Whether a player dies via the UFO or a hazard, compare the old and new Ship count.
-        // If the count has reduced, force UFO-Follower to teleport away.
-        if (lifeCountWhenUfoSpawns == -1)
-            lifeCountWhenUfoSpawns = GameManager.i.playerLives;
-        if (GameManager.i.playerLives < lifeCountWhenUfoSpawns)
-            TeleportStart(true);
 
         // Once player is found, disable random movement
         // If no player is found, then tell UFO to enable random movement

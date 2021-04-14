@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using static Constants;
 
 /*
  * This class acts as a general template for all enemy types to use. Different enemies have different FixedUpdates.
@@ -34,10 +34,10 @@ public abstract partial class Ufo : MonoBehaviour
 
         alienSpeedCurrent = alienSpeedBase;
 
-        playerShip1 = GameObject.FindGameObjectWithTag("Player");
+        playerShip1 = GameObject.FindGameObjectWithTag(Tag_Player1);
         if (BetweenScenes.PlayerCount == 2)
         {
-            playerShip2 = GameObject.FindGameObjectWithTag("Player 2");
+            playerShip2 = GameObject.FindGameObjectWithTag(Tag_Player2);
         }
         // If alien ship is called during level transition, it destroys itself
         if (GameManager.i.CheckIfEndOfLevel() && !ufoTeleporting) {

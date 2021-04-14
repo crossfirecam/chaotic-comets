@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using static Constants;
 
 public partial class TutorialManager : MonoBehaviour
 {
@@ -222,7 +223,7 @@ public partial class TutorialManager : MonoBehaviour
     }
     private void DestroyAllAsteroids()
     {
-        GameObject[] listOfAsteroids = GameObject.FindGameObjectsWithTag("asteroidParent");
+        GameObject[] listOfAsteroids = GameObject.FindGameObjectsWithTag(Tag_Other_AsteroidParent);
         foreach (GameObject asteroid in listOfAsteroids)
         {
             Destroy(asteroid.gameObject);

@@ -4,19 +4,19 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - bullet
   - asteroid
-  - bullet2
   - Player 2
-  - bullet3
   - powerup
   - asteroidParent
   - ufo
   - ufofadingpart
-  - bullet4
   - rewiredInputManager
   - MiscSounds
   - ScoreEntry
+  - bullet-p1
+  - bullet-p2
+  - bullet-ufo-green
+  - bullet-ufo-red
   layers:
   - Default
   - TransparentFX

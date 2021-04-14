@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static Constants;
 
 public class AsteroidBehaviour : MonoBehaviour {
 
@@ -41,15 +42,15 @@ public class AsteroidBehaviour : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D otherObject) {
         // Check for bullet
-        if (otherObject.CompareTag("bullet") || otherObject.CompareTag("bullet2")) {
+        if (otherObject.CompareTag(Tag_BulletP1) || otherObject.CompareTag(Tag_BulletP2)) {
             // Destroy bullet (delayed to allow for audio)
             otherObject.enabled = false;
             Destroy(otherObject.GetComponentInChildren<ParticleSystem>());
             Destroy(otherObject.gameObject, 5f);
             AsteroidWasHit();
             // Send points to player who shot
-            if (otherObject.CompareTag("bullet")) { playerShip1.GetComponent<PlayerMain>().ScorePoints(points); }
-            if (otherObject.CompareTag("bullet2")) { playerShip2.GetComponent<PlayerMain>().ScorePoints(points); }
+            if (otherObject.CompareTag(Tag_BulletP1)) { playerShip1.GetComponent<PlayerMain>().ScorePoints(points); }
+            if (otherObject.CompareTag(Tag_BulletP2)) { playerShip2.GetComponent<PlayerMain>().ScorePoints(points); }
         }
     }
     
@@ -101,8 +102,8 @@ public class AsteroidBehaviour : MonoBehaviour {
     private void GetComponents()
     {
         rbAsteroid = GetComponent<Rigidbody2D>();
-        playerShip1 = GameObject.FindWithTag("Player");
-        playerShip2 = GameObject.FindWithTag("Player 2");
+        playerShip1 = GameObject.FindWithTag(Tag_Player1);
+        playerShip2 = GameObject.FindWithTag(Tag_Player2);
     }
 
     private void RandomiseColourIfRainbowMode()

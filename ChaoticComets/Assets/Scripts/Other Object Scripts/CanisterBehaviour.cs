@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using static Constants;
 
 public class CanisterBehaviour : MonoBehaviour {
     
@@ -42,7 +43,7 @@ public class CanisterBehaviour : MonoBehaviour {
     /// </summary>
     /// <param name="triggerObject"></param>
     void OnTriggerEnter2D(Collider2D triggerObject) {
-        if (triggerObject.gameObject.CompareTag("bullet") || triggerObject.gameObject.CompareTag("bullet2")) {
+        if (triggerObject.gameObject.CompareTag(Tag_BulletP1) || triggerObject.gameObject.CompareTag(Tag_BulletP2)) {
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
 
             // Disable trigger bullet and destroy it.

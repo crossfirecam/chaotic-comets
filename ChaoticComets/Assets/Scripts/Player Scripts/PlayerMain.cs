@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static Constants;
 
 /*
  * This class contains all general code for the Player objects, referring to many other scripts for extra functionality.
@@ -32,7 +33,6 @@ public class PlayerMain : MonoBehaviour {
     [Header("References")]
     public GameObject deathExplosion;
     public GameObject modelPlayer;
-    public GameObject canister;
     internal Rigidbody2D rbPlayer;
     internal CapsuleCollider2D capsCollider;
 
@@ -66,12 +66,14 @@ public class PlayerMain : MonoBehaviour {
 
     // When ship collides with asteroid or ufo colliders
     void OnCollisionEnter2D(Collision2D col) {
-        if (col.gameObject.CompareTag("asteroid") || col.gameObject.CompareTag("ufo")) {
+        if (col.gameObject.CompareTag(Tag_Asteroid) || col.gameObject.CompareTag(Tag_Ufo)) {
 
 
             if (collisionsCanDamage && Time.time > nextDamagePossible) {
                 nextDamagePossible = Time.time + minTimeBetweenDamage;
-                if (col.gameObject.CompareTag("asteroid")) { col.gameObject.GetComponent<AsteroidBehaviour>().AsteroidWasHit(); }
+
+                if (col.gameObject.CompareTag(Tag_Asteroid))
+                    col.gameObject.GetComponent<AsteroidBehaviour>().AsteroidWasHit();
 
                 plrUiSound.audioShipSFX.clip = plrUiSound.audClipPlrSfxImpactSoft;
                 shields -= damageFromImpact;
@@ -84,21 +86,21 @@ public class PlayerMain : MonoBehaviour {
             }
             else if (plrAbility.teleportOut.gameObject.activeInHierarchy)
             {
-                if (col.gameObject.CompareTag("asteroid")) { col.gameObject.GetComponent<AsteroidBehaviour>().AsteroidWasHit(); }
+                if (col.gameObject.CompareTag(Tag_Asteroid)) { col.gameObject.GetComponent<AsteroidBehaviour>().AsteroidWasHit(); }
             }
         }
     }
 
     // When ship collides with alien bullet or powerup triggers
     void OnTriggerEnter2D(Collider2D triggerObject) {
-        if (triggerObject.gameObject.CompareTag("bullet3") || triggerObject.gameObject.CompareTag("bullet4"))
+        if (triggerObject.gameObject.CompareTag(Tag_BulletUfoGreen) || triggerObject.gameObject.CompareTag(Tag_BulletUfoRed))
         {
             if (collisionsCanDamage && Time.time > nextDamagePossible) {
                 Destroy(triggerObject.GetComponentInChildren<ParticleSystem>());
                 triggerObject.GetComponent<CircleCollider2D>().enabled = false;
                 Destroy(triggerObject.gameObject, 5f);
 
-                if (triggerObject.gameObject.CompareTag("bullet3")) // UFO-Follower
+                if (triggerObject.gameObject.CompareTag(Tag_BulletUfoGreen))
                     shields -= damageFromUfoBullet;
                 else // UFO-Passer
                     shields -= damageFromUfoBullet * 2f;
@@ -113,7 +115,7 @@ public class PlayerMain : MonoBehaviour {
                 plrUiSound.audioShipSFX.Play();
             }
         }
-        if (triggerObject.gameObject.CompareTag("powerup") && modelPlayer.activeInHierarchy) {
+        if (triggerObject.gameObject.CompareTag(Tag_Canister) && modelPlayer.activeInHierarchy) {
             Destroy(triggerObject.gameObject);
             plrPowerups.GivePowerup();
         }

@@ -71,7 +71,6 @@ public class PlayerPowerups : MonoBehaviour
             }
             loopFailsafe++;
         }
-        Destroy(p.canister);
     }
 
     // 

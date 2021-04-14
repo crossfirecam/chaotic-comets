@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Constants;
 
 public partial class GameManager : MonoBehaviour
 {
@@ -68,7 +69,7 @@ public partial class GameManager : MonoBehaviour
         if (!player1dead || !player2dead)
         {
             float waitTime = 1f;
-            GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
+            GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag(Tag_Ufo);
             if (listOfUfos.Length != 0)
             {
                 foreach (GameObject ufo in listOfUfos) { ufo.GetComponent<Ufo>().TeleportStart(true); }

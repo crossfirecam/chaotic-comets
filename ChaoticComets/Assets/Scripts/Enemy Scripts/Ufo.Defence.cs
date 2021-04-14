@@ -1,5 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using static Constants;
 
 public abstract partial class Ufo : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public abstract partial class Ufo : MonoBehaviour
     // All UFO type enemies react to player bullets in the same way
     private void OnTriggerEnter2D(Collider2D playerBullet)
     {
-        if (playerBullet.gameObject.CompareTag("bullet") || playerBullet.gameObject.CompareTag("bullet2"))
+        if (playerBullet.gameObject.CompareTag(Tag_BulletP1) || playerBullet.gameObject.CompareTag(Tag_BulletP2))
         {
             lastTouchedPlrBullet = playerBullet.GetComponent<BulletBehaviour>();
             HandleDocileTutorialUFOs();
@@ -39,12 +39,12 @@ public abstract partial class Ufo : MonoBehaviour
         int magnitude = 0;
 
         // Asteroid and player collisions do not cause damage to UFO
-        if (collision.gameObject.CompareTag("asteroid"))
+        if (collision.gameObject.CompareTag(Tag_Asteroid))
         {
             magnitude = 200;
             if (alienHealth > 0) { FlickShieldOn(); }
         }
-        else if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Player 2"))
+        else if (collision.gameObject.CompareTag(Tag_Player1) || collision.gameObject.CompareTag(Tag_Player2))
         {
             magnitude = 100;
             if (alienHealth > 0) { FlickShieldOn(); }
@@ -117,8 +117,8 @@ public abstract partial class Ufo : MonoBehaviour
         audioAlienSfx.clip = audClipAlienSfxTakenDamage;
         audioAlienSfx.pitch = 1f;
         audioAlienSfx.Play();
-        if (lastTouchedPlrBullet.CompareTag("bullet")) { playerShip1.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
-        if (lastTouchedPlrBullet.CompareTag("bullet2")) { playerShip2.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
+        if (lastTouchedPlrBullet.CompareTag(Tag_BulletP1)) { playerShip1.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
+        if (lastTouchedPlrBullet.CompareTag(Tag_BulletP2)) { playerShip2.GetComponent<PlayerMain>().ScorePoints(pointsToScore); }
     }
 
     private void HandleDocileTutorialUFOs()

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static Constants;
 
 public partial class GameManager : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public partial class GameManager : MonoBehaviour
     {
         if (playerNumber == 0) { player1TEMPDEAD = true; }
         else if (playerNumber == 1) { player2TEMPDEAD = true; }
-        GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag("ufo");
+        GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag(Tag_Ufo);
         foreach (GameObject ufo in listOfUfos)
         {
             ufo.GetComponent<Ufo>().PlayerDied();

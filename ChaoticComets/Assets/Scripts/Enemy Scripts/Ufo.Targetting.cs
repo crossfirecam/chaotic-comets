@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static Constants;
 
 public abstract partial class Ufo : MonoBehaviour
 {
@@ -37,9 +38,9 @@ public abstract partial class Ufo : MonoBehaviour
         // Find both players if they're present
         Transform tempPlayer1 = null, tempPlayer2 = null;
         if (!GameManager.i.player1dead && !GameManager.i.player1TEMPDEAD)
-            tempPlayer1 = GameObject.FindWithTag("Player").transform;
+            tempPlayer1 = GameObject.FindWithTag(Tag_Player1).transform;
         if (!GameManager.i.player2dead && !GameManager.i.player2TEMPDEAD)
-            tempPlayer2 = GameObject.FindWithTag("Player 2").transform;
+            tempPlayer2 = GameObject.FindWithTag(Tag_Player2).transform;
 
         // Assign target based on if only one player is present, or select the closest if both are alive
         if (tempPlayer1 != null && tempPlayer2 == null)
@@ -54,7 +55,6 @@ public abstract partial class Ufo : MonoBehaviour
                 player = tempPlayer2;
         }
         
-
         // Once player is found, don't shoot for 1 second
         if (player != null)
         {
@@ -75,7 +75,7 @@ public abstract partial class Ufo : MonoBehaviour
 
 
     // If a player the UFO is following has died, reset variables. So it chases after another player
-    public void PlayerDied()
+    public virtual void PlayerDied()
     {
         playerFound = false;
         player = null;

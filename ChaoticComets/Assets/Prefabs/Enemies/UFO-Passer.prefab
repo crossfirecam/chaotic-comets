@@ -4873,7 +4873,7 @@ MonoBehaviour:
     type: 3}
   audClipAlienSfxTakenDamage: {fileID: 8300000, guid: f65bcfa392c1eca4b87b049c8555bf6f,
     type: 3}
-  bullet: {fileID: 1554380111730868, guid: 1ec6e9ce4c2531b49a464f6cd48b9887, type: 3}
+  bullet: {fileID: 3208017387718840091, guid: acdfc6fb8ff8f8f499517950f6afa7ac, type: 3}
   deathExplosion: {fileID: 1000011128802252, guid: 29a9bec1f13fa1146afffc6beb59d029,
     type: 3}
   playerBulletExplosion: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
