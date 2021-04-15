@@ -164,7 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce86daf5f1a238e4c92c3cdcc95c9579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gM: {fileID: 0}
   explosion: {fileID: 1000011128802252, guid: 3e342c38ab73ab44ebb5703127ec5047, type: 3}
   expirationPop: {fileID: 1000011128802252, guid: f6a4a7394390216418a69a00926665f4,
     type: 3}

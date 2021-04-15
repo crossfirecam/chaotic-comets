@@ -10,7 +10,7 @@ public class PlayerUiSounds : MonoBehaviour
 
     // Sound Systems
     public AudioSource audioShipThrust, audioShipAutoBrake, audioShipSFX; // Thrust: passive thruster noise, SFX: powerup, extra life, impact noises
-    public AudioClip audClipPlrSfxImpactSoft, audClipPlrSfxImpactHard, audClipPlrSfxDeath;
+    public AudioClip audClipPlrSfxImpactSoft, audClipPlrSfxDeath;
 
     public void UpdatePointDisplays()
     {

@@ -9,12 +9,13 @@ public class PlayerAbility : MonoBehaviour
 {
     [SerializeField] PlayerMain p = default;
 
-    internal GameObject teleportIn, teleportOut;
+    internal GameObject teleportIn, teleportOut, teleportReadyIndicator;
 
     private void Awake()
     {
         teleportIn = gameObject.transform.Find("TeleportParticlesIn").gameObject;
         teleportOut = gameObject.transform.Find("TeleportParticlesOut").gameObject;
+        teleportReadyIndicator = gameObject.transform.Find("TeleportReadyParticles").gameObject;
     }
 
     private const float maxPowerMeter = 80f,
@@ -43,6 +44,7 @@ public class PlayerAbility : MonoBehaviour
             yield return new WaitForSeconds(delay);
         }
         p.power = 80f;
+        StartCoroutine(nameof(TeleportReadyEffect));
     }
 
     private IEnumerator DepletePowerMeter()
@@ -90,6 +92,14 @@ public class PlayerAbility : MonoBehaviour
         teleportOut.SetActive(true);
         yield return new WaitForSeconds(3);
         teleportOut.SetActive(false);
+    }
+
+    // When player's teleportation ability is ready, show an effect then disable it
+    private IEnumerator TeleportReadyEffect()
+    {
+        teleportReadyIndicator.SetActive(true);
+        yield return new WaitForSeconds(2);
+        teleportReadyIndicator.SetActive(false);
     }
 
     internal void ResetPowerMeter()

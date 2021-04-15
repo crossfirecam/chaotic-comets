@@ -24,6 +24,7 @@ PlrBlaster2 - BLASTER_Rapid_Charge_Pitch_Down_Brighter_stereo B
 PlrDeathExplosionEXPLOSION_Long_Pitched_Impact_with_Smooth_Tail_stereo
 PlrExtraLife - 8BIT_RETRO_Coin_Collect_Two_Note_Deep_Twinkle_mono
 PlrImpactSoft - IMPACT_Metal_Soft_Plate_01_mono
+PlrTeleportReady - UI_SCI-FI_Tone_Deep_Wet_12_stereo
 PlrThrusters - THRUSTER_Deep_Hot_Constant_loop_mono
 
 Music
