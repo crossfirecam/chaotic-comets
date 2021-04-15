@@ -132,6 +132,11 @@ public partial class TutorialManager : MonoBehaviour
                     ufoFollower = FindObjectOfType<UfoFollower>();
                     taskSetupDone = true;
                 }
+                if (!ufoFollower) // If player dies to passive UFO, replace the UFO when it teleports after player death
+                {
+                    GameManager.i.SpawnProp(GameManager.PropType.UfoFollower);
+                    ufoFollower = FindObjectOfType<UfoFollower>();
+                }
                 ContinueIf(player.GetButtonDown("Ability"));
                 break;
 
@@ -140,6 +145,11 @@ public partial class TutorialManager : MonoBehaviour
                 {
                     StartCoroutine(ReplaceUfoFollower());
                     taskSetupDone = true;
+                }
+                if (!ufoFollower && !ufoFollowerDocile) // If player dies after aggressive UFO spawns in, replace the UFO when it teleports after player death
+                {
+                    GameManager.i.SpawnProp(GameManager.PropType.UfoFollower);
+                    ufoFollower = FindObjectOfType<UfoFollower>();
                 }
                 ContinueIf(ufoFollower.alienHealth < 20);
                 break;
@@ -235,7 +245,7 @@ public partial class TutorialManager : MonoBehaviour
     {
         if (ufoFollower)
         {
-            ufoFollower.TeleportStart();
+            ufoFollower.TeleportStart(true);
             yield return new WaitForSeconds(3);
         }
         GameManager.i.SpawnProp(GameManager.PropType.UfoFollower);

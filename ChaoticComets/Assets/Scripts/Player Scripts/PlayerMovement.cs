@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Rotate the ship
         if (p.plrInput.turnInput != 0 && p.modelPlayer.activeInHierarchy)
-            transform.Rotate(Vector3.forward * -p.plrInput.turnInput * Time.deltaTime * turnThrustPower);
+            transform.Rotate(Vector3.forward * p.plrInput.turnInput * Time.deltaTime * turnThrustPower);
 
         currentSpeed = p.rbPlayer.velocity.magnitude;
 

@@ -2,11 +2,17 @@ Chaotic Comets v1.4
 Developed by CrossfireCam (https://crossfirecam.itch.io/)
 
 ------------------
-How To Start Game
+The Basics
 ------------------
-Launch 'Chaotic Comets.INSERT'. The game launches with either mouse or Xbox controller usable on the menus.
+This is a space shoot-em-up game inspired by Maelstrom and Asterax. Clear levels of asteroids to progress. There's a two player mode, shop for upgrades, interesting enemies, and various temporary powerups.
 
 For an idea of how to play, check out the 'Help' or 'Tutorial' section.
+
+The game can be played with keyboard or controller.
+Xbox / DualShock 4 / Switch Pro Controller have been set up manually.
+However, many controllers will work. Check 'Options' in-game to rebind controls. Go to 'More Info' in this document for details.
+
+Online multiplayer can be achieved using Parsec - third party software for streaming/players co-op games over the internet. https://parsec.app/
 
 To uninstall this game, delete the entire 'Chaotic Comets' folder.
 
@@ -18,12 +24,13 @@ Windows 10 - Smartscreen may block the game from opening. Click 'More info' and 
 Linux - Game may not work immediately. Go to the executable's 'Properties, Permissions' and check the box for 'Allow executing file as program'.
 
 Mac OS X - Game may not work immediately. Try going to 'System Preferences - Security & Privacy' to allow the game to run.
-NOTE ABOUT CONTROLLER SUPPORT: Mac OS X requires third-party drivers to use Xbox controllers. Experiment with solutions online, or stick with keyboard controls.
+NOTE ABOUT CONTROLLER SUPPORT: Mac OS X requires third-party drivers to use Xbox controllers. Experiment with solutions online, or use a different type of controller.
 
 ------------------
 More Info
 ------------------
-Online multiplayer can potentially be achieved using Parsec - third party software for streaming/players co-op games over the internet.
+All sorts of gamepad-style controllers will work with the game, but buttons may be misplaced because a generic Rewired template was used for controller support. Controls can be rebound manually in-game to better fit your controller.
+Check the full list of controllers compatible with the generic template here: https://guavaman.com/projects/rewired/docs/SupportedControllers.html
 
 If you find any bugs or the game crashes, please try your best to recall what may have caused the problem, and leave a comment on the itch.io page (https://crossfirecam.itch.io/chaotic-comets)
 Thank you for trying my game!

@@ -979,7 +979,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Visit Website
+  m_text: Visit My itch.io Page
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1257,33 +1257,36 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Coding, Modelling & Art by CrossfireCam
 
-
-    Developed with Unity.
-
-    Assets
-    made with Blender, Affinity Designer.
+    <u>https://crossfirecam.itch.io/</u>
 
 
-    <u>Unity Asset Store Products Used</u>
+    Developed
+    with Unity.
 
-    Controller
-    Support - Rewired
-
-    Music - Ultimate Game Music Collection
-
-    Sounds - Universal
-    Sound FX
-
-    Particles - Unity Particle Pack
+    Assets made with Blender, Affinity Designer.
 
 
-    Code attributions in attributions.txt
+    <u>Unity
+    Asset Store Products Used:</u>
 
-    Full
-    version history in versionhistory.txt
+    <i>Controller Support - Rewired
+
+    Music
+    - Ultimate Game Music Collection
+
+    Sounds - Universal Sound FX
+
+    Particles
+    - Unity Particle Pack</i>
 
 
-    <i>Website:</i> <u>https://crossfirecam.itch.io/</u>'
+    Check game''s folder for full
+
+    atributions
+    & version history.
+
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -13,10 +13,10 @@ TextureImporter:
     second: button_contLstick
   - first:
       213: -4694355065557524589
-    second: button_contLT
+    second: button_xboxLT
   - first:
       213: -945675483308755687
-    second: button_contRT
+    second: button_xboxRT
   - first:
       213: 324935613331680862
     second: button_A
@@ -40,7 +40,7 @@ TextureImporter:
     second: button_contA
   - first:
       213: 1255952930145107921
-    second: button_B
+    second: button_contB
   - first:
       213: -1324062080584536620
     second: button_Q
@@ -58,13 +58,37 @@ TextureImporter:
     second: button_Esc
   - first:
       213: 3928087384007563415
-    second: button_contStart
+    second: button_xboxStart
   - first:
       213: -3972761883640861952
     second: button_ContStickArrowL
   - first:
       213: 5316236271389532863
     second: button_ContStickArrowR
+  - first:
+      213: -4284462367233668240
+    second: button_swZL
+  - first:
+      213: -6763584009226631225
+    second: button_swZR
+  - first:
+      213: 5987827677412025147
+    second: button_swPlus
+  - first:
+      213: 6674485490052125170
+    second: button_psX
+  - first:
+      213: 6056250406140767238
+    second: button_psO
+  - first:
+      213: 3699229283613530679
+    second: button_psOptions
+  - first:
+      213: 2810310426758375802
+    second: button_psL2
+  - first:
+      213: -7903115839405796089
+    second: button_psR2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -213,7 +237,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: button_contLT
+      name: button_xboxLT
       rect:
         serializedVersion: 2
         x: 1152
@@ -234,7 +258,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: button_contRT
+      name: button_xboxRT
       rect:
         serializedVersion: 2
         x: 1254
@@ -402,7 +426,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: button_B
+      name: button_contB
       rect:
         serializedVersion: 2
         x: 1171
@@ -528,7 +552,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: button_contStart
+      name: button_xboxStart
       rect:
         serializedVersion: 2
         x: 1080
@@ -557,7 +581,7 @@ TextureImporter:
         width: 61
         height: 61
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -578,7 +602,7 @@ TextureImporter:
         width: 61
         height: 61
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -586,6 +610,174 @@ TextureImporter:
       bones: []
       spriteID: fb26832e8b017c940800000000000000
       internalID: 5316236271389532863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button_swZL
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 367
+        width: 162
+        height: 91
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07b02835d288a84c0800000000000000
+      internalID: -4284462367233668240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button_swZR
+      rect:
+        serializedVersion: 2
+        x: 1538
+        y: 367
+        width: 162
+        height: 91
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c7c889bd2ce222a0800000000000000
+      internalID: -6763584009226631225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button_swPlus
+      rect:
+        serializedVersion: 2
+        x: 1477
+        y: 207
+        width: 118
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3365683c89091350800000000000000
+      internalID: 5987827677412025147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button_psX
+      rect:
+        serializedVersion: 2
+        x: 1774
+        y: 207
+        width: 118
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f15e05b03980ac50800000000000000
+      internalID: 6674485490052125170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button_psO
+      rect:
+        serializedVersion: 2
+        x: 1912
+        y: 207
+        width: 118
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60ce5d038af1c0450800000000000000
+      internalID: 6056250406140767238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button_psOptions
+      rect:
+        serializedVersion: 2
+        x: 1821
+        y: 95
+        width: 163
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73ad1802f6d465330800000000000000
+      internalID: 3699229283613530679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button_psL2
+      rect:
+        serializedVersion: 2
+        x: 1732
+        y: 366
+        width: 162
+        height: 91
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a796287817a300720800000000000000
+      internalID: 2810310426758375802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button_psR2
+      rect:
+        serializedVersion: 2
+        x: 1900
+        y: 367
+        width: 162
+        height: 91
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 705547d340e725290800000000000000
+      internalID: -7903115839405796089
       vertices: []
       indices: 
       edges: []
