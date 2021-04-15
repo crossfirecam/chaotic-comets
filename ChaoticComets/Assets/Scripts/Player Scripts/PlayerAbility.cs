@@ -98,7 +98,7 @@ public class PlayerAbility : MonoBehaviour
     private IEnumerator TeleportReadyEffect()
     {
         teleportReadyIndicator.SetActive(true);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         teleportReadyIndicator.SetActive(false);
     }
 

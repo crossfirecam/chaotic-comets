@@ -93,7 +93,7 @@ public class PlayerMisc : MonoBehaviour
 
     internal IEnumerator FadeShip(string inOrOut, float fadingInEndTransparency = 1f)
     {
-        Renderer[] listOfShipParts = GetComponentsInChildren<Renderer>();
+        Renderer[] listOfShipParts = p.modelPlayer.GetComponentsInChildren<Renderer>();
         if (inOrOut == "Out")
         {
             p.collisionsCanDamage = false;
