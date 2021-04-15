@@ -25,10 +25,10 @@ public class PlayerUiSounds : MonoBehaviour
         UiManager.i.SetShipsText(GameManager.i.playerLives);
     }
 
-    public GameObject[] ReturnPlayerSounds()
+    public AudioSource[] ReturnPlayerSounds()
     {
-        GameObject[] playerSfx = { audioShipThrust.gameObject, audioShipSFX.gameObject, audioShipAutoBrake.gameObject,
-            p.plrAbility.teleportIn, p.plrAbility.teleportOut };
+        AudioSource[] playerSfx = { audioShipThrust, audioShipSFX, audioShipAutoBrake,
+            p.plrAbility.teleportIn.GetComponent<AudioSource>(), p.plrAbility.teleportOut.GetComponent<AudioSource>() };
         return playerSfx;
     }
 }

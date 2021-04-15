@@ -4864,14 +4864,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alienHealth: 80
   alienMaxHealth: 80
-  player: {fileID: 0}
-  playerFound: 0
-  playerTooFar: 0
   retreatSpeedMultiplier: -2
   direction: {x: 0, y: 0}
   alienSpeedBase: 2
   audioAlienHum: {fileID: 3400528432045659323}
   audioAlienSfx: {fileID: 82704775472134234}
+  audioAlienTeleport: {fileID: 8913687082344950493}
   audClipAliexSfxShieldReflect: {fileID: 8300000, guid: 52a8e7e6dd767e34db82d86a8b696c4b,
     type: 3}
   audClipAlienSfxTakenDamage: {fileID: 8300000, guid: f65bcfa392c1eca4b87b049c8555bf6f,

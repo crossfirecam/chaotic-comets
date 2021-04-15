@@ -14,7 +14,7 @@ public abstract partial class Ufo : MonoBehaviour
 
     [Header("Sound References")]
     [SerializeField] private AudioSource audioAlienHum;
-    [SerializeField] private AudioSource audioAlienSfx;
+    [SerializeField] private AudioSource audioAlienSfx, audioAlienTeleport;
     [SerializeField] private AudioClip audClipAliexSfxShieldReflect, audClipAlienSfxTakenDamage;
 
     [Header("Other Variables / References")]
@@ -78,9 +78,9 @@ public abstract partial class Ufo : MonoBehaviour
         }
     }
 
-    public GameObject[] ReturnAlienSounds()
+    public AudioSource[] ReturnAlienSounds()
     {
-        GameObject[] alienSfx = { audioAlienHum.gameObject, audioAlienSfx.gameObject };
+        AudioSource[] alienSfx = { audioAlienHum, audioAlienSfx, audioAlienTeleport };
         return alienSfx;
     }
 }

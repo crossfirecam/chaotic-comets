@@ -41,49 +41,49 @@ public class MusicManager : MonoBehaviour
 
     public void FindAllSfxAndPlayPause(int intent)
     {
-        List<GameObject> listOfSfxObjects = new List<GameObject>();
+        List<AudioSource> listOfSfxObjects = new List<AudioSource>();
         string[] tagsToFind = { Tag_Player1, Tag_Player2, Tag_Ufo, Tag_BulletP1, Tag_BulletP2, Tag_BulletUfoGreen, Tag_BulletUfoRed, Tag_Canister, Tag_Other_MiscSounds};
         foreach (var tag in tagsToFind)
         {
-            GameObject[] listOfAudioFound = { };
+            // Find all UFO noises
             if (tag == Tag_Ufo)
             {
                 GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag(tag);
-                List<GameObject> listOfUfoSfx = new List<GameObject>();
                 foreach (GameObject ufo in listOfUfos)
-                    listOfUfoSfx.AddRange(ufo.GetComponent<Ufo>().ReturnAlienSounds());
-                listOfAudioFound = listOfUfoSfx.ToArray();
+                    listOfSfxObjects.AddRange(ufo.GetComponent<Ufo>().ReturnAlienSounds());
             }
+            // Find all Player noises
             else if (tag == Tag_Player1 || tag == Tag_Player2)
             {
                 GameObject player = GameObject.FindGameObjectWithTag(tag);
                 if (player != null)
-                    listOfAudioFound = player.GetComponent<PlayerUiSounds>().ReturnPlayerSounds();
+                    listOfSfxObjects.AddRange(player.GetComponent<PlayerUiSounds>().ReturnPlayerSounds());
             }
+            // Find all other noises
             else
             {
-                listOfAudioFound = GameObject.FindGameObjectsWithTag(tag);
+                GameObject[] otherObjects = GameObject.FindGameObjectsWithTag(tag);
+                foreach (GameObject other in otherObjects)
+                    listOfSfxObjects.Add(other.GetComponent<AudioSource>());
             }
-            listOfSfxObjects.AddRange(listOfAudioFound);
-
         }
 
         if (intent == 0) // Pause
         {
-            foreach (GameObject sfxObject in listOfSfxObjects)
+            foreach (AudioSource sfxObject in listOfSfxObjects)
             {
-                if (sfxObject.GetComponent<AudioSource>().isPlaying)
+                if (sfxObject.isPlaying)
                 {
-                    sfxObject.GetComponent<AudioSource>().Pause();
+                    sfxObject.Pause();
                 }
             }
         }
         if (intent == 1) // Resume
         {
-            foreach (GameObject sfxObject in listOfSfxObjects)
+            foreach (AudioSource sfxObject in listOfSfxObjects)
             {
-                if (!sfxObject.GetComponent<AudioSource>().isPlaying)
-                    sfxObject.GetComponent<AudioSource>().UnPause();
+                if (!sfxObject.isPlaying)
+                    sfxObject.UnPause();
             }
         }
     }
