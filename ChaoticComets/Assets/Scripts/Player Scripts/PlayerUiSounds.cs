@@ -9,7 +9,7 @@ public class PlayerUiSounds : MonoBehaviour
     internal float prevshields;
 
     // Sound Systems
-    public AudioSource audioShipThrust, audioShipAutoBrake, audioShipSFX; // Thrust: passive thruster noise, SFX: powerup, extra life, impact noises
+    public AudioSource audioShipThrust, audioShipAutoBrake, audioShipSFX, audioShipTeleFail; // Thrust: passive thruster noise, SFX: powerup, extra life, impact noises
     public AudioClip audClipPlrSfxImpactSoft, audClipPlrSfxDeath;
 
     public void UpdatePointDisplays()

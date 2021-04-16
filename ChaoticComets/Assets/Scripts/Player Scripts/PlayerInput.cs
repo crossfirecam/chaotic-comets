@@ -50,7 +50,7 @@ public class PlayerInput : MonoBehaviour {
                 }
             }
 
-            if (player.GetButtonDown("Ability"))
+            if (player.GetButtonDown("Teleport"))
             {
                 UseAbility();
             }
@@ -67,9 +67,12 @@ public class PlayerInput : MonoBehaviour {
         // Then check if ship has full power with colliders enabled.
         if (((GameManager.i.asteroidCount != 0) || GameManager.i.tutorialMode))
         {
-            if (p.collisionsCanDamage && p.power == 80)
+            if (p.collisionsCanDamage)
             {
-                p.plrAbility.HyperspaceStart();
+                if (p.power == 80)
+                    p.plrAbility.HyperspaceStart();
+                else
+                    p.plrUiSound.audioShipTeleFail.Play();
             }
         }
     }

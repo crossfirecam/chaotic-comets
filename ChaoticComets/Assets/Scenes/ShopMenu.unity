@@ -677,6 +677,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537437, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[0].actionElementMaps.Array.data[1]._actionId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537437, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[0].actionElementMaps.Array.data[2]._actionId
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537437, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[0].actionElementMaps.Array.data[1]._keyboardKeyCode
+      value: 115
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537437, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[0].actionElementMaps.Array.data[2]._keyboardKeyCode
+      value: 119
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537437, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[0].actionElementMaps.Array.data[1]._axisContribution
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 886301060741537437, guid: 664b9294c73a9ec4d88471e43fe26df1,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[0].actionElementMaps.Array.data[2]._axisContribution
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 886301060741537438, guid: 664b9294c73a9ec4d88471e43fe26df1,
         type: 3}
       propertyPath: m_Name
@@ -3299,10 +3329,10 @@ MonoBehaviour:
   verticalActionId: -1
   submitActionId: -1
   cancelActionId: -1
-  m_HorizontalAxis: UIHorizontal
-  m_VerticalAxis: UIVertical
-  m_SubmitButton: UISubmit
-  m_CancelButton: UICancel
+  m_HorizontalAxis: ShopUiHori
+  m_VerticalAxis: ShopUiVert
+  m_SubmitButton: Shoot
+  m_CancelButton: 
   m_InputActionsPerSecond: 3
   m_RepeatDelay: 0.5
   m_allowMouseInput: 0
@@ -4548,10 +4578,10 @@ MonoBehaviour:
   verticalActionId: -1
   submitActionId: -1
   cancelActionId: -1
-  m_HorizontalAxis: UIHorizontal
-  m_VerticalAxis: UIVertical
-  m_SubmitButton: UISubmit
-  m_CancelButton: UICancel
+  m_HorizontalAxis: ShopUiHori
+  m_VerticalAxis: ShopUiVert
+  m_SubmitButton: Shoot
+  m_CancelButton: 
   m_InputActionsPerSecond: 3
   m_RepeatDelay: 0.5
   m_allowMouseInput: 1
