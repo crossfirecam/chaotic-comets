@@ -39,7 +39,7 @@ public partial class MainMenu : MonoBehaviour
         // Find Music Manager & audio source for moving back in Main Menu UI
         audioMenuBack = GetComponent<AudioSource>();
 
-        // Find the SFX slider in Options, and set default values (for some reason GetFloat's defaultValue wouldn't work...)
+        // Find the SFX slider in Options, and set default game values (for some reason GetFloat's defaultValue wouldn't work...)
         MusicManager.i.sfxDemo = optionsPanel.optionSFXSlider.GetComponent<AudioSource>();
         if (!PlayerPrefs.HasKey("Music"))
         {

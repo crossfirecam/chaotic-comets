@@ -2188,7 +2188,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14.31, y: -103.4}
+  m_AnchoredPosition: {x: -0.000025749, y: -103.4}
   m_SizeDelta: {x: 336.38428, y: 15.336525}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &737666164
@@ -2210,7 +2210,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Select your controller to see how to play.
+  m_text: Select your controller to see the default controls.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3589,12 +3589,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'With only one controller, P2 defaults to keyboard. To change this, go
-    to Options.
+  m_text: 'With only one controller, P2 defaults to keyboard.
 
 
-    If your controller doesn''t work or isn''t listed here, visit
-    Options to set the controls manually.
+    If your controller
+    doesn''t work or isn''t listed here, visit Options to set the controls manually.
 
 '
   m_isRightToLeft: 0
@@ -6689,7 +6688,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 56}
-  m_SizeDelta: {x: 207.90607, y: 51.1}
+  m_SizeDelta: {x: 266.90366, y: 51.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1681627138
 MonoBehaviour:

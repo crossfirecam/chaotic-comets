@@ -37,7 +37,7 @@ public partial class TutorialManager : MonoBehaviour
                 break;
 
             case 5: // Asteroids 2
-                ContinueIf(GameManager.i.asteroidCount == 0 || player.GetButtonDown("Ability"));
+                ContinueIf(GameManager.i.asteroidCount == 0 || player.GetButtonDown("Teleport"));
                 break;
 
             case 6: // Shields
@@ -57,7 +57,7 @@ public partial class TutorialManager : MonoBehaviour
                     DestroyAllAsteroids();
                     taskSetupDone = true;
                 }
-                ContinueIf(player1.shields == 80 && player.GetButtonDown("Ability"));
+                ContinueIf(player1.shields == 80 && player.GetButtonDown("Teleport"));
                 break;
 
             case 8: // Canteen
@@ -78,7 +78,7 @@ public partial class TutorialManager : MonoBehaviour
                     taskSetupDone = true;
                 }
                 ResetAsteroidsIfZero(true);
-                ContinueIf(player.GetButtonDown("Ability"));
+                ContinueIf(player.GetButtonDown("Teleport"));
                 break;
 
             case 10: // Powerup FarShot
@@ -90,7 +90,7 @@ public partial class TutorialManager : MonoBehaviour
                     taskSetupDone = true;
                 }
                 ResetAsteroidsIfZero(true);
-                ContinueIf(player.GetButtonDown("Ability"));
+                ContinueIf(player.GetButtonDown("Teleport"));
                 break;
 
             case 11: // Powerup Auto-Brake
@@ -102,7 +102,7 @@ public partial class TutorialManager : MonoBehaviour
                     taskSetupDone = true;
                 }
                 ResetAsteroidsIfZero(true);
-                ContinueIf(player.GetButtonDown("Ability"));
+                ContinueIf(player.GetButtonDown("Teleport"));
                 break;
 
             case 12: // UFO Red
@@ -137,7 +137,7 @@ public partial class TutorialManager : MonoBehaviour
                     GameManager.i.SpawnProp(GameManager.PropType.UfoFollower);
                     ufoFollower = FindObjectOfType<UfoFollower>();
                 }
-                ContinueIf(player.GetButtonDown("Ability"));
+                ContinueIf(player.GetButtonDown("Teleport"));
                 break;
 
             case 14: // Powerup RapidShot
@@ -159,7 +159,7 @@ public partial class TutorialManager : MonoBehaviour
                 {
                     StartCoroutine(ReplaceUfoFollower());
                 }
-                ContinueIf(ufoFollower.deathStarted || player.GetButtonDown("Ability")); // Allow skipping
+                ContinueIf(ufoFollower.deathStarted || player.GetButtonDown("Teleport")); // Allow skipping
                 break;
             case 16: // Powerup Insurance
                 // This could be skipped instantly if player is 0 shields.
@@ -183,7 +183,7 @@ public partial class TutorialManager : MonoBehaviour
                     DestroyAllAsteroids();
                     taskSetupDone = true;
                 }
-                ContinueIf(player.GetButtonDown("Ability") && player1.power == 80);
+                ContinueIf(player.GetButtonDown("Teleport") && player1.power == 80);
                 break;
 
             case 18: // End

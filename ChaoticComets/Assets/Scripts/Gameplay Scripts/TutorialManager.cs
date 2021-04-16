@@ -5,14 +5,14 @@ using UnityEngine;
 
 public partial class TutorialManager : MonoBehaviour
 {
-    public enum ControlType { KeyboardP1, KeyboardP2, Xbox, PS, Switch }
+    public enum ControlType { KeyboardUndecided, KeyboardP1, KeyboardP2, Xbox, PS, Switch }
 
     [Header("Tutorial Task Variables")]
     public int popUpIndex = -1;
     private bool taskSetupDone = false, ufoHit = false, popup16Ready = false;
     public bool ufoGone = false, ufoFollowerDocile = false;
     private int playerCreditsBefore = 0;
-    public ControlType chosenControlStyle = ControlType.KeyboardP1;
+    public ControlType chosenControlStyle = ControlType.KeyboardUndecided;
 
     [Header("References")]
     private Player player;
@@ -95,13 +95,8 @@ public partial class TutorialManager : MonoBehaviour
     {
         switch (chosenControl)
         {
-            case "KeyboardP1":
-                chosenControlStyle = ControlType.KeyboardP1;
-                break;
-            case "KeyboardP2":
-                chosenControlStyle = ControlType.KeyboardP2;
-                player1.GetComponent<PlayerInput>().SwapToP2InputForTutorial();
-                player = ReInput.players.GetPlayer(1);
+            case "Keyboard":
+                chosenControlStyle = ControlType.KeyboardUndecided;
                 break;
             case "Xbox":
                 chosenControlStyle = ControlType.Xbox;
@@ -113,6 +108,22 @@ public partial class TutorialManager : MonoBehaviour
                 chosenControlStyle = ControlType.Switch;
                 break;
         }
+        UiManager.i.DisplayTutorialPlayerDialog();
+    }
+
+    public void PlayerChosen(int playerId)
+    {
+        if (chosenControlStyle == ControlType.KeyboardUndecided)
+        {
+            if (playerId == 0)
+                chosenControlStyle = ControlType.KeyboardP1;
+            else
+                chosenControlStyle = ControlType.KeyboardP2;
+        }
+
+        player = ReInput.players.GetPlayer(playerId);
+        player1.GetComponent<PlayerInput>().SwapInputForTutorial(playerId);
+
         UiManager.i.DismissTutorialChoiceDialog();
         popUpIndex++;
         popups[popUpIndex].SetActive(true);

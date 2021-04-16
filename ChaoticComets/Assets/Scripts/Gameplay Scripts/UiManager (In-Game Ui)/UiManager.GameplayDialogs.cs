@@ -62,7 +62,8 @@ public partial class UiManager : MonoBehaviour
      * ------------------------------------------------------------------------------------------------------------------ */
     [Header("Tutorial Start Dialog UI")]
     [SerializeField] private GameObject panelTutorialChoice;
-    [SerializeField] private Button buttonWhenTutorialChoice;
+    [SerializeField] private GameObject panelPlayerChoice;
+    [SerializeField] private Button buttonWhenTutorialChoice, buttonWhenPlayerChoice;
     public void DisplayTutorialChoiceDialog()
     {
         Time.timeScale = 0;
@@ -75,6 +76,18 @@ public partial class UiManager : MonoBehaviour
         panelTutorialChoice.SetActive(false);
         buttonWhenTutorialChoice.Select();
     }
+
+    public void DisplayTutorialPlayerDialog()
+    {
+        panelPlayerChoice.SetActive(true);
+        buttonWhenPlayerChoice.Select();
+    }
+    public void DismissTutorialPlayerDialog()
+    {
+        panelPlayerChoice.SetActive(false);
+        buttonWhenPlayerChoice.Select();
+    }
+
 
     public bool GameIsOnTutorialScreen()
     {

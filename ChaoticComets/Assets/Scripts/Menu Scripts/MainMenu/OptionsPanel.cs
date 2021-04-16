@@ -7,8 +7,8 @@ public class OptionsPanel : MonoBehaviour
     [SerializeField] private Button btnFullscreenToggle, optionsFirstButton;
     [SerializeField] private Slider optionMusicSlider;
     public Slider optionSFXSlider;
-    [SerializeField] private Toggle rainbowModeToggle;
-    [SerializeField] private GameObject cheatDisclaimer, cheatDisclaimerResumeSave;
+    [SerializeField] private Toggle rainbowModeToggle, controlDialogToggle;
+    [SerializeField] private GameObject cheatDisclaimer, cheatDisclaimerResumeSave, controlDialog;
 
 
     public void ShowOptionsPanel()
@@ -17,7 +17,7 @@ public class OptionsPanel : MonoBehaviour
         SetBtnFullscreenText();
         optionMusicSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("Music"));
         optionSFXSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("SFX"));
-        SetRainbowModeToggleOnLoad();
+        SetTogglesOnLoad();
     }
 
     public void SwapFullscreen()
@@ -44,14 +44,20 @@ public class OptionsPanel : MonoBehaviour
         cheatDisclaimerResumeSave.SetActive(toggleValue);
     }
 
-    private void SetRainbowModeToggleOnLoad()
+    private void SetTogglesOnLoad()
     {
         rainbowModeToggle.SetIsOnWithoutNotify(PlayerPrefs.GetInt("RainbowMode") == 1);
+        controlDialogToggle.SetIsOnWithoutNotify(PlayerPrefs.GetInt("ContDialog") == 1);
     }
 
     public void ToggleRainbowAsteroidMode(bool toggleValue)
     {
         PlayerPrefs.SetInt("RainbowMode", toggleValue ? 1 : 0);
+    }
+    public void ToggleControlDialog(bool toggleValue)
+    {
+        controlDialog.SetActive(!toggleValue);
+        PlayerPrefs.SetInt("ContDialog", toggleValue ? 1 : 0);
     }
 
     public void ChangeMusicPassToManager(float musVolume)

@@ -84,9 +84,9 @@ public class PlayerInput : MonoBehaviour {
         canUseButtons = true;
     }
 
-    public void SwapToP2InputForTutorial()
+    public void SwapInputForTutorial(int playerId)
     {
-        player = ReInput.players.GetPlayer(1); // Force 2P controls for tutorial
+        player = ReInput.players.GetPlayer(playerId);
     }
 
     private bool ValidTimeToFire(float nextValidFiringTime)

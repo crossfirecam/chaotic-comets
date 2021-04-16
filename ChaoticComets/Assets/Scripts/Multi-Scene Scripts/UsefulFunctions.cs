@@ -41,7 +41,7 @@ public class UsefulFunctions : MonoBehaviour
 
 
     /* ------------------------------------------------------------------------------------------------------------------
-     * Controller Detection
+     * Enable cursor if mouse is moved, disable cursor if another controller is used.
      * ------------------------------------------------------------------------------------------------------------------ */
 
     private static Controller controller;
@@ -52,6 +52,13 @@ public class UsefulFunctions : MonoBehaviour
     /// </summary>
     public static IEnumerator CheckController()
     {
+        if (mouseInputOnCanvas == null)
+        {
+            mouseInputOnCanvas = FindObjectOfType<Canvas>().GetComponent<GraphicRaycaster>();
+            controller = ReInput.controllers.GetLastActiveController();
+            Cursor.visible = controller.hardwareName == "Mouse";
+        }
+
         while (true)
         {
             CheckLastUsedController();
@@ -64,23 +71,11 @@ public class UsefulFunctions : MonoBehaviour
     /// </summary>
     public static void CheckLastUsedController()
     {
-        if (mouseInputOnCanvas == null)
-            SetupControllerCheck();
 
         controller = ReInput.controllers.GetLastActiveController();
         //print(controller.hardwareName + " " + cursorForcedStay);
         Cursor.visible = controller.hardwareName == "Mouse";
         mouseInputOnCanvas.enabled = controller.hardwareName == "Mouse";
-    }
-
-    /// <summary>
-    /// When a scene starts, find the Canvas, so the GraphicRaycaster can be disabled when cursor is invisible.
-    /// </summary>
-    public static void SetupControllerCheck()
-    {
-        mouseInputOnCanvas = FindObjectOfType<Canvas>().GetComponent<GraphicRaycaster>();
-        controller = ReInput.controllers.GetLastActiveController();
-        Cursor.visible = controller.hardwareName == "Mouse";
     }
 
 
@@ -101,6 +96,9 @@ public class UsefulFunctions : MonoBehaviour
         BetweenScenes.PlayerShopUpgrades[0] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
         BetweenScenes.PlayerShopUpgrades[1] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
     }
+
+
+
 
     private static float fadingAlpha = 0f;
     private static bool fadingInterrupted = false;
