@@ -9,13 +9,13 @@ SFX - Ultimate Sound FX
 Music - Ultimate Game Music Collection
 Particles - Unity Particle Pack
 
-The game was started using an indepth series by Scripting is Fun for an Asteroids project.
-Since the first two weeks of dev, I've turned the game code into something much more ambitious, but this foundation is appreciated.
-- https://www.youtube.com/watch?v=TG_KLJ49URM&list=PLa5_l08N9jzMKA8gNHG42Mv3idfIkztBU
-
 The shop's local multiplayer UI couldn't have been done without great help from PastelStudios & eron82
 - http://blog.pastelstudios.com/2015/09/07/unity-tips-tricks-multiple-event-systems-single-scene-unity-5-1/
 - https://forum.unity.com/threads/solved-multiple-eventsystem.512695/
+
+The game was started using an indepth series by Scripting is Fun for an Asteroids project.
+Since the first two weeks of dev, I've turned the game code into something much more ambitious, but this foundation is appreciated.
+- https://www.youtube.com/playlist?list=PLa5_l08N9jzMKA8gNHG42Mv3idfIkztBU
 
 ------------------
 Minor

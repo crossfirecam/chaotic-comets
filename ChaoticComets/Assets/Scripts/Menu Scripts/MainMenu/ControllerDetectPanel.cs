@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Rewired;
+using TMPro;
 
 public class ControllerDetectPanel : MonoBehaviour
 {
@@ -9,11 +10,13 @@ public class ControllerDetectPanel : MonoBehaviour
     [SerializeField] private Image statusImgPl1, statusImgPl2;
     [SerializeField] private Sprite sprKeyboard, sprController;
     [SerializeField] private GameObject p1title, p2title;
+    [SerializeField] private TextMeshProUGUI p1Desc, p2Desc;
     private Player player1, player2;
+    private RectTransform rt;
 
     private void Awake()
     {
-
+        rt = GetComponent<RectTransform>();
         ReInput.ControllerConnectedEvent += OnControllerConnected;
         ReInput.ControllerDisconnectedEvent += OnControllerDisconnected;
         player1 = ReInput.players.GetPlayer(0);
@@ -34,14 +37,32 @@ public class ControllerDetectPanel : MonoBehaviour
     public void CheckControllers()
     {
         if (player1.controllers.Joysticks.Count == 0)
+        {
             statusImgPl1.sprite = sprKeyboard;
+            p1Desc.text = "";
+        }
         else
+        {
             statusImgPl1.sprite = sprController;
+            p1Desc.text = player1.controllers.Joysticks[0].name;
+        }
 
         if (player2.controllers.Joysticks.Count == 0)
+        {
             statusImgPl2.sprite = sprKeyboard;
+            p2Desc.text = "";
+        }
         else
+        {
             statusImgPl2.sprite = sprController;
+            p2Desc.text = player2.controllers.Joysticks[0].name;
+        }
+
+        // If there's text showing the current controller, then expand dialog slightly
+        if (p1Desc.text != "" || p2Desc.text != "")
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 70);
+        else
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 60);
     }
 
     // Used in 1P mode or Tutorial when P1 is set to be the learner.

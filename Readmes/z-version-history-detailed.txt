@@ -21,6 +21,7 @@ Difficulty Changes
 Player Changes
 - When respawning or starting a level, teleport meter is now set to 0.
     - Asteroids that touch the player will be destroyed while the Teleport-Out sequence is playing.
+    - When teleport is ready, a visual indicator and sound are played. If it's not ready, an error sound plays.
 - Manual and automatic shots have different cooldowns. This allows the player to fire quickly by pressing Fire repeatedly. To balance this, the shot amount on-screen is limited to 2. Upgradable in shop.
     - Triple Fire can take advantage of quick fire. Rapid Fire still has an unskippable long cooldown.
 - Ship takes more damage from impacts. Asteroids bounce the player less, leading to more hits from big asteroids.
@@ -33,8 +34,10 @@ Gameplay Changes
 - Spawnrate chance of UFO/Canister objects are reduced, but increase over time within a level.
 
 UFO Changes
-- Green Class UFO is now faster during chase animation.
+- Green Class UFO is less annoying. They stop further away from ships, are less common, and teleport away when a player dies.
+- Green Class UFO is now faster during chase animation. They'll target the player closest when they spawn.
 - Red Class UFO can now spawn on either side. Red Class is slightly smaller, less health, slower travelling.
+- Both UFO's have different sounds now, and have a 'panic' and 'dying' tracking sound effect.
 - Both UFO's have shot deviation that throw off shots a bit, but in general are more dangerous.
 - Both UFO's appear in all levels, but have a cap. This cap will continue to increase, instead of stopping at 3.
 
@@ -47,6 +50,12 @@ UI Changes
 - Background stars across the game now twinkle.
 - About & Help menus changed, added Controls section to Help.
 - Text is more crisp across the entire game.
+
+Controller Support
+- Controller support expanded. Tutorial has support for Keyboard, Xbox, DualShock 4, Switch Pro Controller.
+    - Rewired allows many more controllers beyond those to be used, may require rebinding in Options.
+    - A dialog on some menus shows current controllers being used for P1 & P2. Can be hidden in Options.
+    - Tutorial allows selection of P1 or P2 as the learner.
 
 Bug Fixes (from 1.3)
 - UFO on edge of screen during level-end sequence will now immediately teleport away instead of lingering.
