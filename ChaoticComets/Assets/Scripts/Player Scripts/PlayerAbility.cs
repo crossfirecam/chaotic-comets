@@ -65,6 +65,7 @@ public class PlayerAbility : MonoBehaviour
     internal void HyperspaceStart()
     {
         teleportIn.SetActive(true);
+        p.capsCollider.enabled = false;
         p.plrMisc.StartCoroutine(p.plrMisc.FadeShip("Out"));
         StartCoroutine(nameof(DepletePowerMeter));
         Invoke(nameof(HyperspaceEnd), 2f);
@@ -79,6 +80,7 @@ public class PlayerAbility : MonoBehaviour
         transform.position = newPosition;
         p.rbPlayer.velocity = Vector2.zero;
         teleportIn.SetActive(false);
+        p.capsCollider.enabled = true;
         p.plrMisc.StartCoroutine(p.plrMisc.FadeShip("In"));
         StartCoroutine(nameof(TeleportOutEffect));
         StartCoroutine(nameof(RechargePowerMeter));

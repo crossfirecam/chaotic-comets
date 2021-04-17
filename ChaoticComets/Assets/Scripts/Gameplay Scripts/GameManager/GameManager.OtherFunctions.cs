@@ -42,17 +42,20 @@ public partial class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Determine how much Time Bonus is given to the player(s) at the start of a level, then count down by 10p per second.
+    /// Determine how much Time Bonus is given to the player(s) at the start of a level, then count down by 10p per second.<br/>
+    /// The timer starts off with equivalent of 60sec, the max is 120sec.
     /// </summary>
-    private IEnumerator BonusCounter()
+    private IEnumerator TimeBonusCounter()
     {
-        bonusValue = 300 + (bonusPerAsteroid * asteroidCount);
+        bonusValue = TimeBonusBase + (TimeBonusPerAsteroid * asteroidCount);
+        if (bonusValue > TimeBonusMax)
+            bonusValue = TimeBonusMax;
+
         for (int i = bonusValue; i >= 0; i -= 10)
         {
             if (asteroidCount == 0)
-            {
                 break;
-            }
+
             bonusValue = i;
             UiManager.i.SetBonusText(bonusValue);
             yield return new WaitForSeconds(1f);

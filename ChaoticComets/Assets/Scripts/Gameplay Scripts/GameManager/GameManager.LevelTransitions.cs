@@ -56,7 +56,7 @@ public partial class GameManager : MonoBehaviour
         StartCoroutine(nameof(UfoSpawning));
         StartCoroutine(nameof(CanisterSpawning));
 
-        StartCoroutine(nameof(BonusCounter));
+        StartCoroutine(nameof(TimeBonusCounter));
     }
 
     /* ------------------------------------------------------------------------------------------------------------------

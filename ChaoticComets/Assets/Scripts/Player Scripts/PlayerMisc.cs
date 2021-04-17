@@ -113,7 +113,7 @@ public class PlayerMisc : MonoBehaviour
                     Color origColor = partMaterial.color;
                     partMaterial.color = new Color(origColor.r, origColor.g, origColor.b, fadeTick);
                 }
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
         else

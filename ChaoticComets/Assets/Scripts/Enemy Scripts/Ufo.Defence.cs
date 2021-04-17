@@ -41,7 +41,7 @@ public abstract partial class Ufo : MonoBehaviour
         // Asteroid and player collisions do not cause damage to UFO
         if (collision.gameObject.CompareTag(Tag_Asteroid))
         {
-            magnitude = 200;
+            magnitude = 100;
             if (alienHealth > 0) { FlickShieldOn(); }
         }
         else if (collision.gameObject.CompareTag(Tag_Player1) || collision.gameObject.CompareTag(Tag_Player2))
