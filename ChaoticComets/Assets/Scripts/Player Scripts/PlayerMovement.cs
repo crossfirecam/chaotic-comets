@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         {
             p.rbPlayer.drag = currentSpeed * (manualBrakePower / currentSpeed);
 
-            if (BetweenScenes.Difficulty == 2)
+            if (BetweenScenes.Difficulty >= 2)
                 p.rbPlayer.drag /= 1.5f;
         }
         // If ship is slow enough, stop it.

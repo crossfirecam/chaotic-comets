@@ -22,6 +22,7 @@ public class SavePanel : MonoBehaviour
             case 0: saveDifficulty = "Easy"; break;
             case 1: saveDifficulty = "Normal"; break;
             case 2: saveDifficulty = "Hard"; break;
+            case 3: saveDifficulty = "Insane"; break;
             default: saveDifficulty = "Error"; break;
         }
         string saveLevel = $"Level {data.level + 1}";

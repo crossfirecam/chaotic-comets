@@ -55,6 +55,10 @@ public class PurchasePanel : MonoBehaviour
         titleText.text = purchasePanelTitleStrings[purchaseIndex];
         descText.text = purchasePanelDescStrings[purchaseIndex];
         UpdateTextElements();
+
+        // On Insane Difficulty, shield upgrade shows a different string.
+        if (BetweenScenes.Difficulty == 3 && buttonHovered == 0)
+            descText.text = shieldUpgradeDescAltString;
     }
 
     private void UpdateTextElements()
@@ -204,7 +208,7 @@ public class PurchasePanel : MonoBehaviour
                                                           "Ready To Leave" };
 
     private readonly string[] purchasePanelDescStrings = { "Take more hits. \n+0% = 3 impacts\n+50% = 4 impacts\n+100% = 6 impacts",
-                                                         "Hyperspace becomes usable more often.",
+                                                         "Teleportation becomes usable more often.",
                                                          "Accelerate faster and a gain a higher top speed.",
                                                          "Stop faster when holding the manual brake.",
                                                          "Holding down 'Fire' for automatic fire will shoot bullets faster.",
@@ -214,4 +218,6 @@ public class PurchasePanel : MonoBehaviour
                                                          "Pay to repair the shield of your ship.",
                                                          "Buy a spare Ship.\n(Note: Every 10,000 total points gives a free Ship)",
                                                          "" };
+
+    private readonly string shieldUpgradeDescAltString = "Take more hits. \n+0% = 2 impacts\n+50% = 3 impacts\n+100% = 4 impacts";
 }

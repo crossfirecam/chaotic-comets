@@ -35,7 +35,7 @@ public class UfoPasser : Ufo
         {
             passerDirChangeInterval *= .8f;
         }
-        else if (BetweenScenes.Difficulty == 2)
+        else if (BetweenScenes.Difficulty >= 2)
         {
             passerDirChangeInterval *= .6f;
         }

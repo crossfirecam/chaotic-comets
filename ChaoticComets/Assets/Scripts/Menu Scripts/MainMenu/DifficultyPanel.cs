@@ -14,7 +14,8 @@ public class DifficultyPanel : MonoBehaviour
     private readonly string diffText0 = "Go back to main menu.";
     private readonly string diffText1 = "- Ship comes to a complete stop.\n- Asteroids move slowly. \n- UFO's are just here to play.";
     private readonly string diffText2 = "- Ship requires manual braking.\n- Asteroids are a threat.\n- UFO's are aggressive.";
-    private readonly string diffText3 = "- Ship has a weaker manual brake.\n- Asteroids are much faster.\n- UFO's will attack without prejudice.";
+    private readonly string diffText3 = "- Ship has a weaker manual brake.\n- Asteroids are fast.\n- UFO's will attack without prejudice.";
+    private readonly string diffText4 = "<u>Same as Hard except:</u>\n- Ship is 50% more vulnerable.\n- Asteroids are even faster.\n- Canisters are very rare.";
 
     [SerializeField] private MainMenu mainMenu;
 
@@ -54,5 +55,6 @@ public class DifficultyPanel : MonoBehaviour
         else if (EventSystem.current.currentSelectedGameObject.name == "Diff-EasyButton") { difficultyText.text = diffText1; }
         else if (EventSystem.current.currentSelectedGameObject.name == "Diff-NormalButton") { difficultyText.text = diffText2; }
         else if (EventSystem.current.currentSelectedGameObject.name == "Diff-HardButton") { difficultyText.text = diffText3; }
+        else if (EventSystem.current.currentSelectedGameObject.name == "Diff-InsaneButton") { difficultyText.text = diffText4; }
     }
 }
