@@ -9,7 +9,7 @@
     // B: Game is resumed from a found save file
     public static bool ResumingFromSave = false;
 
-    // When navigating to 'Help' or 'About' scenes, Main Menu uses this to remember which button to return selection to
+    // When navigating to 'Help', 'About', 'Tutorial' scenes, Main Menu uses this to remember which button to return selection to
     public static string BackToMainMenuButton = "";
 
     // Tutorial mode on or off

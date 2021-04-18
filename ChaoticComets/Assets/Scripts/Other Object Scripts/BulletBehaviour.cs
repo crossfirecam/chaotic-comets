@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using static Constants;
 
 public class BulletBehaviour : MonoBehaviour {
 
     // General purpose variables
     private readonly float animationStopTime = .2f;
-    public bool ifBulletReflected;
+    public bool ifBulletReflected, ifBulletAlreadyDealtDamage = false;
 
     // ----------
     
@@ -25,11 +26,11 @@ public class BulletBehaviour : MonoBehaviour {
         }
         else
         {
-            if (gameObject.GetComponentInChildren<ParticleSystem>() != null)
+            if (GetComponentInChildren<ParticleSystem>() != null)
             {
-                if (gameObject.GetComponentInChildren<ParticleSystem>().isPlaying)
+                if (GetComponentInChildren<ParticleSystem>().isPlaying)
                 {
-                    gameObject.GetComponentInChildren<ParticleSystem>().Stop();
+                    GetComponentInChildren<ParticleSystem>().Stop();
                 }
             }
             Invoke(nameof(RemoveBullet), animationStopTime);
@@ -39,8 +40,9 @@ public class BulletBehaviour : MonoBehaviour {
     // Bullet is called to be instantly removed, delay in actual removal so sound can play
     public void DestroyBullet()
     {
-        Destroy(gameObject.GetComponentInChildren<ParticleSystem>());
-        gameObject.GetComponent<Collider2D>().enabled = false;
+        ifBulletAlreadyDealtDamage = true;
+        GetComponent<Collider2D>().enabled = false;
+        Destroy(GetComponentInChildren<ParticleSystem>());
         Invoke(nameof(RemoveBullet), 2f);
 
     }

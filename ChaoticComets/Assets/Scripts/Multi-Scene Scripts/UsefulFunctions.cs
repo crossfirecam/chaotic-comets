@@ -90,6 +90,7 @@ public class UsefulFunctions : MonoBehaviour
     /// </summary>
     public static void ResetBetweenScenesScript()
     {
+        BetweenScenes.Difficulty = 1;
         BetweenScenes.ResumingFromSave = false;
         BetweenScenes.TutorialMode = false;
         BetweenScenes.CheaterMode = false;

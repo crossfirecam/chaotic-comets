@@ -43,16 +43,17 @@ public class AsteroidBehaviour : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D otherObject) {
-        // Check for bullet
-        if (otherObject.CompareTag(Tag_BulletP1) || otherObject.CompareTag(Tag_BulletP2)) {
-            // Destroy bullet (delayed to allow for audio)
-            otherObject.enabled = false;
-            Destroy(otherObject.GetComponentInChildren<ParticleSystem>());
-            Destroy(otherObject.gameObject, 5f);
-            AsteroidWasHit();
-            // Send points to player who shot
-            if (otherObject.CompareTag(Tag_BulletP1)) { playerShip1.GetComponent<PlayerMain>().ScorePoints(points); }
-            if (otherObject.CompareTag(Tag_BulletP2)) { playerShip2.GetComponent<PlayerMain>().ScorePoints(points); }
+        if (otherObject.CompareTag(Tag_BulletP1) || otherObject.CompareTag(Tag_BulletP2))
+        {
+            if (!otherObject.GetComponent<BulletBehaviour>().ifBulletAlreadyDealtDamage)
+            {
+                otherObject.GetComponent<BulletBehaviour>().DestroyBullet();
+                AsteroidWasHit();
+
+                // Send points to player who shot
+                if (otherObject.CompareTag(Tag_BulletP1)) { playerShip1.GetComponent<PlayerMain>().ScorePoints(points); }
+                if (otherObject.CompareTag(Tag_BulletP2)) { playerShip2.GetComponent<PlayerMain>().ScorePoints(points); }
+            }
         }
     }
     

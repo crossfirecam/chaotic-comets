@@ -14,20 +14,24 @@ public abstract partial class Ufo : MonoBehaviour
     // All UFO type enemies react to player bullets in the same way
     private void OnTriggerEnter2D(Collider2D playerBullet)
     {
-        if (playerBullet.gameObject.CompareTag(Tag_BulletP1) || playerBullet.gameObject.CompareTag(Tag_BulletP2))
+        if (playerBullet.CompareTag(Tag_BulletP1) || playerBullet.CompareTag(Tag_BulletP2))
         {
             lastTouchedPlrBullet = playerBullet.GetComponent<BulletBehaviour>();
-            HandleDocileTutorialUFOs();
 
-            // If UFO has shields up, don't deal damage. Instead, reflect bullet.
-            if (forceField.activeInHierarchy)
+            if (!lastTouchedPlrBullet.ifBulletAlreadyDealtDamage)
             {
-                ReflectBullet();
-            }
-            // If UFO does not have shields up, deal damage and score credits
-            else
-            {
-                DealDamage();
+                HandleDocileTutorialUFOs();
+
+                // If UFO has shields up, don't deal damage. Instead, reflect bullet.
+                if (forceField.activeInHierarchy)
+                {
+                    ReflectBullet();
+                }
+                // If UFO does not have shields up, deal damage and score credits
+                else
+                {
+                    DealDamage();
+                }
             }
         }
     }
@@ -35,7 +39,7 @@ public abstract partial class Ufo : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        Vector2 force = gameObject.transform.position - collision.transform.position;
+        Vector2 force = transform.position - collision.transform.position;
         int magnitude = 0;
 
         // Asteroid and player collisions do not cause damage to UFO

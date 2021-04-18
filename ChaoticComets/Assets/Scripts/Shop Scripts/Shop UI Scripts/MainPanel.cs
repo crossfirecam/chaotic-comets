@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using System;
 
 public class MainPanel : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class MainPanel : MonoBehaviour
 
         LoadInButtonArrays();
         plrEvents = ShopScript.i.ShopRefs.plrEventSystems[plrIndex];
+
+        if (BetweenScenes.Difficulty == 0)
+            DisableBrakeUpgrade();
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
@@ -107,5 +111,45 @@ public class MainPanel : MonoBehaviour
                 buttonsTemp.Add(btn);
         }
         mainPlayerButtons = buttonsTemp.ToArray();
+    }
+
+    /* ------------------------------------------------------------------------------------------------------------------
+    * Disable Brake Upgrade - In Easy mode, there's no need for brake upgrade to exist, so disable it.
+    * ------------------------------------------------------------------------------------------------------------------ */
+    [Header("Disable Brake Upgrade")]
+    public GameObject brakeUpgDisabledOverlay;
+    public Button brakeUpgBtn, btnAboveBrake, btnBelowBrake, btnLeftBrake;
+    private Navigation btnAboveBrakeNav, btnBelowBrakeNav, btnLeftBrakeNav;
+    private void DisableBrakeUpgrade()
+    {
+        DisableBrakeUpgChangeButtonNavs();
+        brakeUpgBtn.interactable = false;
+        brakeUpgDisabledOverlay.SetActive(true);
+        btnAboveBrake.navigation = btnAboveBrakeNav;
+        btnBelowBrake.navigation = btnBelowBrakeNav;
+        btnLeftBrake.navigation = btnLeftBrakeNav;
+    }
+
+    private void DisableBrakeUpgChangeButtonNavs()
+    {
+        btnAboveBrakeNav = new Navigation()
+        {
+            mode = Navigation.Mode.Explicit,
+            selectOnDown = btnBelowBrake,
+            selectOnLeft = btnAboveBrake.navigation.selectOnLeft,
+        };
+        btnBelowBrakeNav = new Navigation()
+        {
+            mode = Navigation.Mode.Explicit,
+            selectOnUp = btnAboveBrake,
+            selectOnDown = btnBelowBrake.navigation.selectOnDown,
+            selectOnLeft = btnBelowBrake.navigation.selectOnLeft
+        };
+        btnLeftBrakeNav = new Navigation()
+        {
+            mode = Navigation.Mode.Explicit,
+            selectOnUp = btnLeftBrake.navigation.selectOnUp,
+            selectOnDown = btnLeftBrake.navigation.selectOnDown
+        };
     }
 }

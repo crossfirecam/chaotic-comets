@@ -5743,31 +5743,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1399695003}
     m_Modifications:
-    - target: {fileID: 593584987576975291, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
-        type: 3}
-      propertyPath: m_Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 593584987576975291, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 593584987576975291, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 593584987576975291, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
-        type: 3}
-      propertyPath: m_FillCenter
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 593584987576975291, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
-        type: 3}
-      propertyPath: m_FillMethod
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1792810069935368549, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
         type: 3}
       propertyPath: eventSystem
