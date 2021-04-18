@@ -39,6 +39,7 @@ MusicTutorial - Space Map LOOP
 UI Sounds
 UiBonusCounter - UI_Beep_Single_Softer_stereo
 UiBonusDecreasing - UI_Beep_Single_Clean_Distinct_stereo
+UiBonusMessage - UI_SCI-FI_Compute_01_Wet_stereo
 UiClose - UI_Animate_Stutter_Beep_Disappear_stereo
 UiError - UI_Error_Double_Note_Down_Muffled_Short_stereo
 UiOpen - UI_Animate_Stutter_Beep_Appear_stereo

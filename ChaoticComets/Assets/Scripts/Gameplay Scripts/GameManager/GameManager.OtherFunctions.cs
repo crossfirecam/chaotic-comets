@@ -50,8 +50,9 @@ public partial class GameManager : MonoBehaviour
         bonusValue = TimeBonusBase + (TimeBonusPerAsteroid * asteroidCount);
         if (bonusValue > TimeBonusMax)
             bonusValue = TimeBonusMax;
+        savedMaxBonusLevel = bonusValue;
 
-        for (int i = bonusValue; i >= 0; i -= 10)
+        for (int i = bonusValue; i >= 0; i -= 1)
         {
             if (asteroidCount == 0)
                 break;

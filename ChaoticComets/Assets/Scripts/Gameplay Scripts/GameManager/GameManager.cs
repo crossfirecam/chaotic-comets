@@ -16,8 +16,8 @@ public partial class GameManager : MonoBehaviour
 
     [Header("General purpose variables")]
     public int asteroidCount;
-    public int levelNo = 0, bonusValue = 0;
-    private const int TimeBonusBase = 300, TimeBonusPerAsteroid = 150, TimeBonusMax = 1200;
+    public int levelNo = 0, bonusValue = 0, savedMaxBonusLevel;
+    private const int TimeBonusBase = 30, TimeBonusPerAsteroid = 15, TimeBonusMax = 120;
     internal float screenTop = 8.5f, screenBottom = -7.5f, screenLeft = -15f, screenRight = 15f;
 
     [Header("Inspector References")]
