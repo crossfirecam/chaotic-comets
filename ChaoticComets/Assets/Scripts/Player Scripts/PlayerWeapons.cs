@@ -100,7 +100,7 @@ public class PlayerWeapons : MonoBehaviour
     {
         if (p.plrPowerups.ifTripleShot)
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 2; i++)
             {
                 CreateBullet(mainCannon.position, mainCannon.rotation);
                 CreateBullet(tripleCannon1.position, tripleCannon1.rotation, false);

@@ -12,6 +12,7 @@ public partial class UiManager : MonoBehaviour
     [SerializeField] private GameObject panelPauseMenu;
     [SerializeField] private Button buttonWhenPaused, buttonWhenLeavingPauseBugFix;
     [SerializeField] private GameObject pauseAutoSaveWarningText, pauseCheatMenu;
+    [SerializeField] private RectTransform pauseDialogRt;
 
     public void PauseGame()
     {
@@ -26,6 +27,10 @@ public partial class UiManager : MonoBehaviour
         {
             pauseAutoSaveWarningText.SetActive(false);
         }
+
+        // If it's Cheat Mode, move the pause menu up to make room.
+        if (BetweenScenes.CheaterMode)
+            pauseDialogRt.localPosition = new Vector2(0f, 100f);
 
         // Delay player input, so thrusting and shooting can't happen on the same frame as the game is unpaused
         StartCoroutine(GameManager.i.Refs.playerShip1.GetComponent<PlayerInput>().DelayNewInputs());

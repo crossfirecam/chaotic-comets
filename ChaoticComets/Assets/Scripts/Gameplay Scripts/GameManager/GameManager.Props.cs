@@ -56,7 +56,7 @@ public partial class GameManager : MonoBehaviour
     /// If a canister is set to appear, every 5 seconds it has a 10% chance to spawn.<br/>
     /// - If this chance fails, the chance is increased by 2.5%. Resets to 10% when the spawn succeeds.<br/>
     /// <br/>
-    /// On the first canister spawned, it has a 5% chance to turn into 6 canisters instead.<br/>
+    /// On the first canister spawned, it has a 5% chance to turn into 3 canisters instead.<br/>
     /// - This cancels the second canister spawn if there is one.
     /// </summary>
     private IEnumerator CanisterSpawning()
@@ -88,13 +88,13 @@ public partial class GameManager : MonoBehaviour
                 canisterAmountSpawned += 1;
                 SpawnProp(PropType.Canister);
 
-                // 5% chance of 5 more canisters spawning in place of just one. Only applies to the first canister spawn attempt.
+                // 5% chance of 2 more canisters spawning in place of just one. Only applies to the first canister spawn attempt.
                 if (canisterAmountSpawned == 1)
                 {
                     float largeGroupCheck = Random.Range(0f, 1f);
                     if (largeGroupCheck < ChanceOfLargeCanisterGroup)
                     {
-                        for (int i = 0; i < 5; i++)
+                        for (int i = 0; i < 2; i++)
                         {
                             yield return new WaitForSeconds(0.8f);
                             SpawnProp(PropType.Canister);

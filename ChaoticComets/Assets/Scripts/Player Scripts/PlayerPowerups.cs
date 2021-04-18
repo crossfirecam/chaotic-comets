@@ -226,14 +226,11 @@ public class PlayerPowerups : MonoBehaviour
     // This function only exists because Enum values can't be used with Unity's button OnClick
     public void CheatGivePowerup(string powerup)
     {
-
-        if (powerup == "Random")
-        {
-            GivePowerup();
-        }
-        else if (Powerups.TryParse(powerup, out Powerups powerupToTry))
+        if (Powerups.TryParse(powerup, out Powerups powerupToTry))
         {
             ApplyPowerup(powerupToTry);
+            if (powerupToTry == Powerups.ShieldRefill)
+                UiManager.i.SetPlayerStatusBars(p.playerNumber, p.shields, p.power);
         }
         else
         {

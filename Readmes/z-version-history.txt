@@ -3,9 +3,9 @@ Chaotic Comets Version History
 ------------------
 Version 1.4 - Final Update (2021 April)
 ------------------
-- Shop overhauled. Now eight attributes of the player's ship can be improved.
-- Game UI takes up much less room.
+- Shop overhauled. Looks better, and more attributes of the player's ship can be improved.
 - Difficulty now affects asteroid speed and UFO aggressiveness. Added an Insane mode.
+- Game UI takes up much less room. Cheat menu improved.
 - Player ship weapons were rebalanced. Able to quickly fire manual shots.
 - Bonus timer that awards extra credits for fast level completion.
 - Controller support greatly improved.
