@@ -1,3 +1,5 @@
+Correct as of 1.4
+
 Bonus Object Sounds
 CaniSpawn - 8BIT_RETRO_Powerup_Spawn_Appear_Fading_mono
 CaniDespawning - 8BIT_RETRO_Powerup_Spawn_Appear_Fading_mono_EDIT
@@ -8,6 +10,7 @@ Enemy Sounds
 UfoBlaster - BLASTER_Slow_Bright_stereo
 UfoImpact - IMPACT_Bullet_Metal_15_mono
 UfoScanning - SPACECRAFT_Cartoon_01_Sweeping_Wind_Blink_Tone_loop_mono
+UfoScanning2 - SPACECRAFT_Cartoon_04_Sweeping_Blink_Tone_loop_mono
 UfoShieldReflect - MAGIC_SPELL_Spawn_mono
 
 Multiple Uses
@@ -15,13 +18,14 @@ AbilityTeleport - SPACE_WARP_Quick_Charge_Jump_Away_01_mono
 WeaponEnergyBlast - EXPLOSION_Short_Weak_Foof_stereo
 
 Player Sounds
+PlrAutoBrake - EXPLOSION_Short_Smooth_Brighter_Kickback_mono
 PlrBlaster1 - BLASTER_Rapid_Charge_Pitch_Down_Brighter_stereo
 PlrBlaster2 - BLASTER_Rapid_Charge_Pitch_Down_Brighter_stereo B
 PlrDeathExplosionEXPLOSION_Long_Pitched_Impact_with_Smooth_Tail_stereo
 PlrExtraLife - 8BIT_RETRO_Coin_Collect_Two_Note_Deep_Twinkle_mono
-PlrImpactHard - IMPACT_Metal_Scrap_Deep_Pipe_stereo
 PlrImpactSoft - IMPACT_Metal_Soft_Plate_01_mono
-PlrRetroThrusters - EXPLOSION_Short_Smooth_Brighter_Kickback_mono
+PlrTeleportNotReady - UI_Error_Subtle_Deep_stereo
+PlrTeleportReady - UI_SCI-FI_Tone_Deep_Wet_12_stereo
 PlrThrusters - THRUSTER_Deep_Hot_Constant_loop_mono
 
 Music
@@ -33,8 +37,12 @@ MusicShop - Deep Space Ambience LOOP
 MusicTutorial - Space Map LOOP
 
 UI Sounds
+UiBonusCounter - UI_Beep_Single_Softer_stereo
+UiBonusDecreasing - UI_Beep_Single_Clean_Distinct_stereo
+UiBonusMessage - UI_SCI-FI_Compute_01_Wet_stereo
 UiClose - UI_Animate_Stutter_Beep_Disappear_stereo
 UiError - UI_Error_Double_Note_Down_Muffled_Short_stereo
 UiOpen - UI_Animate_Stutter_Beep_Appear_stereo
 UiPress - UI_Beep_Double_Clean_Up_stereo
+UiTutorialPrompt - UI_SCI-FI_Tone_Deep_Wet_22_stereo
 UiUpgrade - TOOL_Impact_Wrench_Comperssed_Air_Segment_03_stereo

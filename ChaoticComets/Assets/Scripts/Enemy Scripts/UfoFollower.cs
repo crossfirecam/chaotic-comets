@@ -8,16 +8,9 @@ public class UfoFollower : Ufo
 {
     private bool movingRandomly = false;
     private Vector2 directionBeforeStopping = Vector2.zero;
-    private void Update()
+    private new void Update()
     {
-        // Weapon systems. If criteria are met, then shoot depending on enemy type
-        if (ShipAbleToShoot())
-        {
-            WeaponLogicFollower();
-        }
-
-        // Stabilise 3D model
-        transform.rotation = Quaternion.Euler(-50, 0, 0);
+        base.Update();
 
         CheckUfoScreenWrap();
     }
@@ -29,7 +22,7 @@ public class UfoFollower : Ufo
         {
             if (!playerFound)
             {
-                FindPlayerFollower();
+                FindPlayer();
             }
             else
             {
@@ -55,7 +48,7 @@ public class UfoFollower : Ufo
 
     internal void ChaseLogicFollower()
     {
-        if (IsPlayerTooClose(2f))
+        if (IsPlayerTooClose(6f))
         {
             // Stores the previously used direction vector.
             // Prevents a bug where a player that very slowly leaves the screen can leave the UFO standing still.
@@ -72,7 +65,7 @@ public class UfoFollower : Ufo
                 // Continue straight forward at a higher speed until player is close enough again.
                 if (!playerTooFar)
                 {
-                    alienSpeedCurrent = alienSpeedBase * 3f;
+                    alienSpeedCurrent = alienSpeedBase * 1.5f;
                     playerTooFar = true;
                 }
 
@@ -97,45 +90,30 @@ public class UfoFollower : Ufo
         }
     }
 
-    internal void WeaponLogicFollower()
+    public override void PlayerDied()
     {
-        if (!(gM.tutorialMode && tM.ufoFollowerDocile))
+        base.PlayerDied();
+        TeleportStart(true);
+    }
+
+    internal override void ShootBullet()
+    {
+        if (!(GameManager.i.tutorialMode && TutorialManager.i.ufoFollowerDocile))
         {
-            Vector2 towardPlayer = (player.position - transform.position);
-            float angle = Mathf.Atan2(towardPlayer.y, towardPlayer.x) * Mathf.Rad2Deg - 90f;
-            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-
-            Vector3 bulletPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - 4);
-            GameObject newBullet = Instantiate(bullet, bulletPosition, q);
-            newBullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, bulletSpeed));
-            Destroy(newBullet, 2f);
-
-            lastTimeShot = Time.time;
+            base.ShootBullet();
         }
     }
 
-    private void FindPlayerFollower()
+    internal override void FindPlayer()
     {
-        // Choose a player to target
-        float randomFloat = Random.Range(0.0f, 1f);
-        if (randomFloat >= 0.5f && !gM.player1dead && !gM.player1TEMPDEAD)
-        {
-            player = GameObject.FindWithTag("Player").transform;
-            direction = (player.position - transform.position);
-        }
-        else if (randomFloat <= 0.49f && !gM.player2dead && !gM.player2TEMPDEAD)
-        {
-            player = GameObject.FindWithTag("Player 2").transform;
-            direction = (player.position - transform.position);
-        }
+        base.FindPlayer();
 
-        // Once player is found, don't shoot for 1 second, and disable random movement
+        // Once player is found, disable random movement
         // If no player is found, then tell UFO to enable random movement
         if (player != null)
         {
-            lastTimeShot = Time.time + 1f;
-            playerFound = true;
             movingRandomly = false;
+            direction = player.position - transform.position;
         }
         else
         {
@@ -146,11 +124,7 @@ public class UfoFollower : Ufo
             }
         }
 
-        // Fringe case - one player alive, they die, a bullet hits almost dead UFO, and it wouldn't activate shields
-        if (alienHealth <= 10f && !ufoRetreating)
-        {
-            AlienRetreat();
-        }
+        // Edge case. If direction = zero, then UFO came into existence when both players are dead.
         if (direction == Vector2.zero)
         {
             print("UFO spawned when both players are dead. Randomise direction.");

@@ -1,5 +1,6 @@
 ﻿using Rewired;
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,17 +10,15 @@ using UnityEngine.UI;
 public partial class ShopScript : MonoBehaviour {
 
     [Header("Shop Variables")]
-    private readonly int baseUpgradePrice = 500, priceIncreasePerLevel = 750, upgradeCap = 15;
     public bool[] plrIsReady = { false, false };
-    private float fadingAlpha = 0f;
 
     [Header("References")]
     private Saving_PlayerManager data;
-    private MusicManager musicManager;
     private Player player1, player2;
     public ShopManagerHiddenVars ShopRefs;
-    public TextMeshProUGUI saveDisclaimer;
 
+    private static ShopScript _i;
+    public static ShopScript i { get { if (_i == null) _i = FindObjectOfType<ShopScript>(); return _i; } }
 
     /* ------------------------------------------------------------------------------------------------------------------
      * Awake & Start - Startup functions
@@ -45,35 +44,40 @@ public partial class ShopScript : MonoBehaviour {
         if (data == null)
         {
             ShopRefs.saveFailedPanel.SetActive(true);
-            DisablePlrEventsEnablePauseEvents();
+            TogglePlrEventsAndPauseEvents(true);
         }
 
         // Prepare UI for each player
+        BetweenScenes.PlayerShopLives = data.lives;
         for (int i = 0; i < BetweenScenes.PlayerCount; i++)
         {
             PrepareUI(i);
             BetweenScenes.PlayerShopUpgrades[i] = data.playerList[i].upgrades;
         }
+        ShopRefs.plrAreaText.text = "Area: " + data.level;
         // In single player mode, say that P2 is ready and move P1's buttons to the center
         if (data.playerCount == 1) {
             plrIsReady[1] = true;
             Player1OnlyGUI();
         }
+        else
+        {
+            Player1And2GUI();
+        }
 
         // If save is in cheater mode, change some details
         if (BetweenScenes.CheaterMode)
         {
-            ShopRefs.gamePausePanel.transform.Find("PauseDialog").Find("AutoSaveText").GetComponent<Text>().text = "In Cheat Mode, progress is not saved.\nCheat buttons aren't available in the Depot.";
-            ShopRefs.gamePausePanel.transform.Find("PauseDialog").Find("AutoSaveText").GetComponent<Text>().color = Color.red;
-            saveDisclaimer.text = "<u>Progress not saved</u>\nGame is in Cheat Mode.";
+            ShopRefs.pauseUiSaveWarningText.text = "In Cheat Mode, progress is not saved.\nCheat buttons aren't available in the Depot.";
+            ShopRefs.pauseUiSaveWarningText.color = Color.red;
+            ShopRefs.shopUiSaveDisclaimer.text = "<u>Progress not saved</u>\nGame is in Cheat Mode.";
         }
 
         // DelayedReady() prevents player that is holding 'Shoot' button from instantly readying up.
         StartCoroutine(DelayedReady());
 
         PlayMusicIfEnabled();
-        InitialiseButtonText();
-        StartCoroutine(FadeBlack("from"));
+        StartCoroutine(UsefulFunctions.FadeScreenBlack("from", ShopRefs.fadeBlackOverlay));
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
@@ -89,7 +93,7 @@ public partial class ShopScript : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < BetweenScenes.PlayerCount; i++)
         {
-            ShopRefs.plrEventSystems[i].SetSelectedGameObject(ShopRefs.plrReadyBtns[i].gameObject);
+            ShopRefs.plrEventSystems[i].SetSelectedGameObject(ShopRefs.plrMainPanels[i].readyBtn.gameObject);
         }
     }
 
@@ -111,9 +115,9 @@ public partial class ShopScript : MonoBehaviour {
      * Scene Change Functions
      * ------------------------------------------------------------------------------------------------------------------ */
     public void GoBackToGame() {
-        ShopRefs.readyPromptText.text = $"Prepare for Level {data.level + 1}!";
-        StartCoroutine(FadeBlack("to"));
-        Invoke("LoadMainGame", 1f);
+        ShopRefs.readyPromptText.text = $"Prepare for Area {data.level + 1}!";
+        StartCoroutine(UsefulFunctions.FadeScreenBlack("to", ShopRefs.fadeBlackOverlay));
+        Invoke(nameof(LoadMainGame), 1f);
     }
     private void LoadMainGame() {
         SceneManager.LoadScene("MainScene");
@@ -126,6 +130,24 @@ public partial class ShopScript : MonoBehaviour {
         }
         SceneManager.LoadScene("StartMenu");
     }
+
+
+    // If all players are ready, start the next level
+    public void CheckReadyStatus()
+    {
+        plrIsReady[0] = ShopRefs.plrMainPanels[0].plrReady;
+        if (BetweenScenes.PlayerCount == 2)
+            plrIsReady[1] = ShopRefs.plrMainPanels[1].plrReady;
+
+        if (plrIsReady.All(x => x))
+        {
+            for (int i = 0; i < BetweenScenes.PlayerCount; i++)
+            {
+                ShopRefs.plrMainPanels[i].readyBtn.GetComponent<Button>().interactable = false;
+            }
+            GoBackToGame();
+        }
+    }
 }
 
 /* ------------------------------------------------------------------------------------------------------------------
@@ -137,24 +159,29 @@ public class ShopManagerHiddenVars
     [Header("Pause UI References")]
     public GameObject gamePausePanel;
     public Button buttonWhenPaused, buttonWhenLeavingPauseBugFix;
+    public TextMeshProUGUI pauseUiSaveWarningText;
 
     [Header("Player UI References")]
     public GameObject[] listOfPlr1Powerups;
     public GameObject[] listOfPlr2Powerups;
     public GameObject[][] listOfPlrPowerups = new GameObject[2][];
     public Image[] listOfPlrShieldBars, listOfPlrAbilityBars;
-    public Text[] listOfPlrScoreText, listOfPlrLivesText, listOfPlrTotalScoreText;
+    public TextMeshProUGUI[] listOfPlrScoreText, listOfPlrTotalScoreText;
+    public TextMeshProUGUI plrShipsText, plrAreaText;
 
     [Header("Shop UI References")]
     public TextMeshProUGUI readyPromptText;
-    public Button[] plrAboveReadyBtns;
-    public Button[] plrReadyBtns;
+    public GameObject plr2GameUi;
+    public GameObject[] plrShopUis;
+    public MainPanel[] plrMainPanels;
+    public GameObject shopDivider;
+    public TextMeshProUGUI shopUiSaveDisclaimer;
 
     [Header("Event System References")]
     public EventSystem pauseEventSystem;
     public EventSystemShop[] plrEventSystems;
 
     [Header("Other References")]
-    public GameObject musicManagerIfNotFoundInScene;
-    public GameObject fadeBlack, player2GUI, saveFailedPanel, mouseWarningPanel;
+    public Image fadeBlackOverlay;
+    public GameObject saveFailedPanel, mouseWarningPanel;
 }

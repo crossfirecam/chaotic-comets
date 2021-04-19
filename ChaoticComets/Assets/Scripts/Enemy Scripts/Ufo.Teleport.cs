@@ -10,16 +10,37 @@ public abstract partial class Ufo : MonoBehaviour
 
     internal void AlienRetreat()
     {
-        alienSpeedCurrent = alienSpeedBase * retreatSpeedMultiplier; // Reverse direction
-        ufoRetreating = true;
-        forceField.SetActive(true);
-        Invoke(nameof(TeleportStart), 3f);
+        if (!ufoRetreating)
+        {
+            // Face the player (or random direction if player is null) but then reverse direction.
+            if (player != null)
+                direction = player.position - transform.position;
+            else
+                direction = Random.insideUnitCircle;
+
+            alienSpeedCurrent = alienSpeedBase * retreatSpeedMultiplier;
+
+            ufoRetreating = true;
+            StartCoroutine(nameof(PanicScanningNoise));
+            forceField.SetActive(true);
+            Invoke(nameof(TeleportStartFromInvoke), 3f);
+        }
     }
 
-    // If the UFO is in a visible area of the screen and not dying, then start the teleport sequence at the end of a level
-    public void TeleportStart()
+    // A bodge to allow Unity to invoke TeleportStart().
+    // Even though the parameter on the function is entirely optional, Unity still insists on not allowing Invoke() to call it, since it can't handle parameters at all.
+    private void TeleportStartFromInvoke()
     {
-        if (UfoIsInVisibleArea() || (gM.tutorialMode && alienHealth == 70)) // Exception for Tutorial popup 12, the Red UFO teleports immediately
+        TeleportStart();
+    }
+
+    // If the UFO is in a visible area of the screen and not dying, then start the teleport sequence.
+    // Caused either by the UFO getting to low health, tutorial popup 12, or because level is ending.
+    public void TeleportStart(bool forceLeave = false)
+    {
+        if (UfoIsInVisibleArea() ||
+            (GameManager.i.tutorialMode && alienHealth == 70) || // Exception for Tutorial popup 12, the Red UFO teleports immediately
+            forceLeave == true)             // Exception for end of level, UFO will teleport immediately to avoid hurting player during ending sequence
         {
             if (!deathStarted)
             {
@@ -34,11 +55,13 @@ public abstract partial class Ufo : MonoBehaviour
                 {
                     StartCoroutine(FadeOut(rend));
                 }
-                Invoke("TeleportEnd", 2f);
+                Invoke(nameof(TeleportEnd), 2f);
             }
         }
         else
-            Invoke(nameof(TeleportStart), 1f);
+        {
+            Invoke(nameof(TeleportStartFromInvoke), 1f);
+        }
     }
 
     // Fade the ship's material color as it teleports
@@ -75,13 +98,9 @@ public abstract partial class Ufo : MonoBehaviour
     {
         if (!deathStarted)
         {
-            if (!gM.tutorialMode)
+            if (GameManager.i.tutorialMode)
             {
-                gM.AlienAndPowerupLogic(GameManager.PropSpawnReason.AlienRespawn);
-            }
-            else
-            {
-                gM.Refs.tutorialManager.GetComponent<TutorialManager>().ufoGone = true;
+                TutorialManager.i.ufoGone = true;
             }
             Destroy(gameObject);
         }
@@ -94,7 +113,7 @@ public abstract partial class Ufo : MonoBehaviour
         audioAlienSfx.clip = audClipAliexSfxShieldReflect;
         audioAlienSfx.pitch = 0.7f;
         audioAlienSfx.Play();
-        if (!ufoRetreating) { StartCoroutine(ShieldFadesOn()); Invoke("FlickShieldOff", 0.3f); }
+        if (!ufoRetreating) { StartCoroutine(ShieldFadesOn()); Invoke(nameof(FlickShieldOff), 0.3f); }
     }
 
     private void FlickShieldOff()
@@ -137,14 +156,39 @@ public abstract partial class Ufo : MonoBehaviour
         shieldMaterial.color = new Color(origColor.r, origColor.g, origColor.b, 0.5f); // Set to default
     }
 
-    // The UFO can only stop retreating if within a certain area of the screen.
-    // If an attempt is made 3 times, the UFO is stuck just on the edge, and will teleport anyway.
+    private const float TimeToPanicSound = 1f, VolumeChange = 0.1f, PitchChange = 0.15f;
+    private IEnumerator PanicScanningNoise()
+    {
+        float panicPitch = audioAlienHum.pitch + PitchChange;
+        while (audioAlienHum.pitch < panicPitch)
+        {
+            audioAlienHum.volume += VolumeChange / 20f;
+            audioAlienHum.pitch += PitchChange / 20f;
+            yield return new WaitForSeconds(TimeToPanicSound / 20f);
+        }
+    }
+
+    private const float TimeToPerishSound = 3f, EndPitch = 0.2f;
+    private IEnumerator PerishScanningNoise()
+    {
+        float perishPitch = audioAlienHum.pitch - EndPitch;
+        while (audioAlienHum.pitch > EndPitch)
+        {
+            audioAlienHum.pitch -= perishPitch / 20f;
+            yield return new WaitForSeconds(TimeToPerishSound / 20f);
+        }
+    }
+
+    /// <summary>
+    /// The UFO can only stop retreating if within a certain area of the screen.<br/>
+    /// If an attempt is made 3 times, the UFO is stuck just on the edge, and will teleport anyway.
+    /// </summary>
     private bool UfoIsInVisibleArea()
     {
         print("Checking if UFO is in visible area. Attempt #" + teleAttempts);
-        if (transform.position.x > gM.screenLeft + teleBorderOffset && transform.position.x < gM.screenRight - teleBorderOffset)
+        if (transform.position.x > GameManager.i.screenLeft + teleBorderOffset && transform.position.x < GameManager.i.screenRight - teleBorderOffset)
         {
-            if (transform.position.y > gM.screenBottom + teleBorderOffset && transform.position.y < gM.screenTop - teleBorderOffset)
+            if (transform.position.y > GameManager.i.screenBottom + teleBorderOffset && transform.position.y < GameManager.i.screenTop - teleBorderOffset)
             {
                 return true;
             }

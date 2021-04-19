@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7573104357208989298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7573104357208989299}
+  - component: {fileID: 7573104356374691842}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7573104357208989299
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573104357208989298}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7573104356374691842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573104357208989298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a64b9a0b7529f1408767e5ace0c7f0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLives: 2
+  player1dead: 0
+  player2dead: 1
+  player1TEMPDEAD: 0
+  player2TEMPDEAD: 0
+  instantkillAsteroids: 0
+  cheatMode: 0
+  tutorialMode: 0
+  asteroidCount: 0
+  levelNo: 0
+  bonusValue: 0
+  Refs:
+    tutorialManager: {fileID: 0}
+    largeAsteroidSafeProp: {fileID: 1158260402081020, guid: c709e894203e8034ba9c16948a871155,
+      type: 3}
+    propParent: {fileID: 0}
+    playerShip1: {fileID: 0}
+    playerShip2: {fileID: 0}
+    largeAsteroidProp: {fileID: 1158260402081020, guid: 7e00352104cdbc04aa6bef0c7b13737e,
+      type: 3}
+    ufoFollowerProp: {fileID: 1001724363263860, guid: 418ffa82d403da44ca30571610216d37,
+      type: 3}
+    ufoPasserProp: {fileID: 1001724363263860, guid: 28fece484b566b348969c75145fb66e2,
+      type: 3}
+    canisterProp: {fileID: 1020648608047988, guid: 3a71328051a9a8d45bdefa3880e48d38,
+      type: 3}
+    musicManagerIfNotFoundInScene: {fileID: 8774387490616601870, guid: 376023999fb623c4b8bb77d8bf26210d,
+      type: 3}

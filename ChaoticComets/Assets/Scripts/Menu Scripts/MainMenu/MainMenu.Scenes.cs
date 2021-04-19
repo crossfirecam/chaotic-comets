@@ -5,7 +5,7 @@ public partial class MainMenu : MonoBehaviour
 {
     public void StartGame()
     {
-        StartCoroutine(FadeBlack("to"));
+        StartCoroutine(UsefulFunctions.FadeScreenBlack("to", fadeBlackOverlay));
         Invoke(nameof(LoadScene), 1f);
     }
 
@@ -26,6 +26,7 @@ public partial class MainMenu : MonoBehaviour
 
     public void VisitTutorial()
     {
+        BetweenScenes.BackToMainMenuButton = "Tutorial";
         BetweenScenes.TutorialMode = true;
         SceneManager.LoadScene("MainScene");
     }
@@ -41,17 +42,8 @@ public partial class MainMenu : MonoBehaviour
         SceneManager.LoadScene("AboutMenu");
     }
 
-    public void EndGame()
+    public void ExitGame()
     {
         Application.Quit();
-    }
-
-    public void ChangeMusicPassToManager(float musVolume)
-    {
-        musicManager.ChangeMusic(musVolume);
-    }
-    public void ChangeSFXPassToManager(float sfxVolume)
-    {
-        musicManager.ChangeSFX(sfxVolume);
     }
 }

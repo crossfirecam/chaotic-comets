@@ -4840,8 +4840,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1001724363263860}
   m_LocalRotation: {x: -0.42261827, y: 0, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: 11, y: -1.0259008, z: 0}
-  m_LocalScale: {x: 0.26, y: 0.26, z: 0.26}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.23, y: 0.23, z: 0.23}
   m_Children:
   - {fileID: 4629594965760025949}
   - {fileID: 5460637174620012352}
@@ -4862,28 +4862,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96ae5cde42677f343982f4e84418bc55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alienHealth: 80
-  alienMaxHealth: 80
-  forceField: {fileID: 190270562}
-  playerShip1: {fileID: 0}
-  playerShip2: {fileID: 0}
-  shootingDelay: 3
-  bulletSpeed: 250
+  alienHealth: 60
+  alienMaxHealth: 60
   retreatSpeedMultiplier: -2
   direction: {x: 0, y: 0}
-  alienSpeedBase: 2
+  alienSpeedBase: 1.6
   audioAlienHum: {fileID: 2226360239011395511}
   audioAlienSfx: {fileID: 82704775472134234}
+  audioAlienTeleport: {fileID: 8913687082344950493}
   audClipAliexSfxShieldReflect: {fileID: 8300000, guid: 52a8e7e6dd767e34db82d86a8b696c4b,
     type: 3}
   audClipAlienSfxTakenDamage: {fileID: 8300000, guid: f65bcfa392c1eca4b87b049c8555bf6f,
     type: 3}
-  bullet: {fileID: 1554380111730868, guid: 1ec6e9ce4c2531b49a464f6cd48b9887, type: 3}
+  bullet: {fileID: 3208017387718840091, guid: acdfc6fb8ff8f8f499517950f6afa7ac, type: 3}
   deathExplosion: {fileID: 1000011128802252, guid: 29a9bec1f13fa1146afffc6beb59d029,
     type: 3}
   playerBulletExplosion: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
     type: 3}
   teleportEffect: {fileID: 3142331801263296304}
+  forceField: {fileID: 190270562}
+  playerShip1: {fileID: 0}
+  playerShip2: {fileID: 0}
   currentDeviation: 0
 --- !u!58 &58430078344468964
 CircleCollider2D:
@@ -9896,7 +9895,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6070445249382643354}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1.0000001}
-  m_LocalPosition: {x: 10.78207, y: -0.9275259, z: 0.0825463}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4811040311596838}
@@ -9913,9 +9912,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243287936215163392, guid: c45b130275ef2b747be4423907a74a75,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 02594b40ab90a1948842f3b0506580e4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: fffe62c75e08b9d4fb196369c3764720, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -10027,6 +10026,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
@@ -10042,6 +10046,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8660254
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -10054,16 +10063,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.8660254
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d72020a478751b04ea02691e58dbd763,
         type: 3}
