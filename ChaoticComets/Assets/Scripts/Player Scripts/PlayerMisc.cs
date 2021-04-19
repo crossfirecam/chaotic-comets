@@ -50,7 +50,7 @@ public class PlayerMisc : MonoBehaviour
         p.shields = BetweenScenes.PlayerShopShields[p.playerNumber];
         p.bonus = data.playerList[p.playerNumber].bonusThreshold;
         if (data.playerList[p.playerNumber].powerups[0] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.Insurance, false); }
-        if (data.playerList[p.playerNumber].powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false); }
+        if (data.playerList[p.playerNumber].powerups[1] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.FarShot, false, false); } // Adding Far Shot at start doesn't set BulletTime
         if (data.playerList[p.playerNumber].powerups[2] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.RapidShot, false); }
         if (data.playerList[p.playerNumber].powerups[3] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false); }
         if (data.playerList[p.playerNumber].powerups[4] == 1) { p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.TripleShot, false); }
@@ -95,6 +95,9 @@ public class PlayerMisc : MonoBehaviour
         p.plrWeapons.bulletRangeMultipler *= upgradeShotRange;
 
         p.plrUiSound.UpdatePointDisplays();
+
+        // Set the base bullet timing.
+        p.plrWeapons.SetBulletTime();
     }
 
     internal IEnumerator FadeShip(string inOrOut, float fadingInEndTransparency = 1f)

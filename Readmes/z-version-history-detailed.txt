@@ -1,7 +1,7 @@
 Chaotic Comets Detailed Version History
 
 ------------------
-Version 1.4 Detailed Changelog (2021-04-14)
+Version 1.4 Detailed Changelog (2021-04-20)
 ------------------
 Shop Changes
 - The previous shop is no more. New shop has eight upgrades and two consumable purchases.
@@ -27,6 +27,8 @@ Player Changes
 - Manual and automatic shots have different cooldowns. This allows the player to fire quickly by pressing Fire repeatedly. To balance this, the shot amount on-screen is limited to 2. Upgradable in shop.
     - Triple Fire can take advantage of quick fire. Rapid Fire still has an unskippable long cooldown.
 - Ship takes more damage from impacts. Asteroids bounce the player less, leading to more hits from big asteroids.
+- Base bullet range is decreased. As a result range upgrades are less overpowered.
+    - Far Shot now also increases shot speed (including upgrades) by 40%.
 
 Gameplay Changes
 - Players are given a credit bonus depending how long it takes them to complete an area. This bonus starting point increases the more asteroids there are. Each level gets a bonus that's between 60 to 120 seconds.

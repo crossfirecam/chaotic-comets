@@ -212,10 +212,10 @@ public class PurchasePanel : MonoBehaviour
                                                          "Accelerate faster and a gain a higher top speed.",
                                                          "Stop faster when holding the manual brake.",
                                                          "Holding down 'Fire' for automatic fire will shoot bullets faster.",
-                                                         "The limit for active bullets will be increased.",
-                                                         "All bullets will travel faster.",
-                                                         "All bullets will travel further.",
-                                                         "Pay to repair the shield of your ship.",
+                                                         "Major increase of firepower. More bullets can be fired in one go.",
+                                                         "All bullets will travel faster. Rate of fire increases.",
+                                                         "All bullets will travel further. Rate of fire decreases.",
+                                                         "Repair the shield of your ship.",
                                                          "Buy a spare Ship.\n(Note: Every 10,000 total points gives a free Ship)",
                                                          "" };
 

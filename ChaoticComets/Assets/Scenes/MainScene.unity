@@ -12502,6 +12502,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13bde882902159c47804a588f3c5c1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1145391589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1145391590}
+  m_Layer: 0
+  m_Name: '- Spawned Effects -'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1145391590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145391589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1146411255 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114782296946591882, guid: 5cf0dc9415eb8e742aece150306297e5,
@@ -13471,7 +13501,7 @@ PrefabInstance:
     - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8774387490616601868, guid: 376023999fb623c4b8bb77d8bf26210d,
         type: 3}
@@ -48952,6 +48982,11 @@ PrefabInstance:
       propertyPath: Refs.playerShip2
       value: 
       objectReference: {fileID: 1411868225}
+    - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
+        type: 3}
+      propertyPath: Refs.effectParent
+      value: 
+      objectReference: {fileID: 1145391590}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: Refs.gameOverPanel

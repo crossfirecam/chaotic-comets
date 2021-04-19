@@ -7,9 +7,10 @@ public class PlayerWeapons : MonoBehaviour
     [SerializeField] PlayerMain p = default;
 
     [Header("Weapon Systems")]
-    public float bulletForce = 400f;
+    public float bulletForce = 500f;
+    internal float bulletForceBase = 0f;
     public float rapidFireBetweenBullets = 0.06f;
-    private const float bulletRange = 320f;
+    private const float BulletRange = 280f, FarShotForceIncrease = 1.4f, FarShotRangeIncrease = 0.75f;
     public float bulletRangeMultipler = 1f;
     internal float bulletDestroyTime;
     internal float bulletTimeIfNormal, bulletTimeIfFar;
@@ -31,15 +32,30 @@ public class PlayerWeapons : MonoBehaviour
         mainCannon = gameObject.transform.Find("MainCannon").transform;
         tripleCannon1 = gameObject.transform.Find("TripleCannon1").transform;
         tripleCannon2 = gameObject.transform.Find("TripleCannon2").transform;
-        Invoke(nameof(SetBulletTime), 0.05f);
         nextFire = Time.time + 0.2f; nextFireQuickFire = Time.time + 0.2f; // Avoids firing sound when holding down Fire between certain scenes
     }
 
-    private void SetBulletTime()
+    internal void SetBulletTime()
     {
-        bulletTimeIfNormal = (bulletRange / bulletForce) * bulletRangeMultipler;
-        bulletTimeIfFar = bulletTimeIfNormal * 1.75f;
-        bulletDestroyTime = bulletTimeIfNormal;
+        // Save the base bulletForce, because Far Shot can be added or removed later and change it.
+        if (bulletForceBase == 0f)
+            bulletForceBase = bulletForce;
+
+        if (p.plrPowerups.ifFarShot)
+            bulletForce *= FarShotForceIncrease;
+        else
+            bulletForce = bulletForceBase;
+
+        bulletTimeIfNormal = (BulletRange / bulletForce) * bulletRangeMultipler;
+        bulletTimeIfFar = (BulletRange / bulletForce) * (bulletRangeMultipler + FarShotRangeIncrease);
+        Debug.Log(bulletTimeIfNormal + " " + bulletTimeIfFar);
+        // Start of level setting of bulletDestroyTime
+        if (!p.plrPowerups.ifFarShot)
+            bulletDestroyTime = bulletTimeIfNormal;
+        else
+        {
+            bulletDestroyTime = bulletTimeIfFar;
+        }
     }
 
     // If rapid shot or triple shot, shoot uniquely. If not, shoot typical projectile

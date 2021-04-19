@@ -128,7 +128,7 @@ public class PlayerPowerups : MonoBehaviour
 
     public enum Powerups { Insurance, FarShot, RapidShot, AutoBrake, TripleShot, ShieldRefill, ExtraLife, PointPrize };
 
-    public void ApplyPowerup(Powerups powerup, bool playSound = true)
+    public void ApplyPowerup(Powerups powerup, bool playSound = true, bool updateBulletTime = true)
     {
         // If powerup is one that triggers a UI icon to turn on, then tell UiManager
         if ((int)powerup <= 4)
@@ -143,7 +143,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
             case Powerups.FarShot:
                 ifFarShot = true;
-                p.plrWeapons.bulletDestroyTime = p.plrWeapons.bulletTimeIfFar;
+                if (updateBulletTime) p.plrWeapons.SetBulletTime();
                 break;
             case Powerups.TripleShot:
                 ifTripleShot = true;
@@ -201,7 +201,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
             case Powerups.FarShot:
                 ifFarShot = false;
-                p.plrWeapons.bulletDestroyTime = p.plrWeapons.bulletTimeIfNormal;
+                p.plrWeapons.SetBulletTime();
                 break;
             case Powerups.TripleShot:
                 ifTripleShot = false;
@@ -228,6 +228,13 @@ public class PlayerPowerups : MonoBehaviour
     {
         if (Powerups.TryParse(powerup, out Powerups powerupToTry))
         {
+            // Cancel cheat if the powerup already exists
+            if (powerupToTry == Powerups.Insurance) { if (ifInsurance) return; }
+            if (powerupToTry == Powerups.FarShot) { if (ifFarShot) return; }
+            if (powerupToTry == Powerups.AutoBrake) { if (ifAutoBrake) return; }
+            if (powerupToTry == Powerups.RapidShot) { if (ifRapidShot) return; }
+            if (powerupToTry == Powerups.TripleShot) { if (ifTripleShot) return; }
+
             ApplyPowerup(powerupToTry);
             if (powerupToTry == Powerups.ShieldRefill)
                 UiManager.i.SetPlayerStatusBars(p.playerNumber, p.shields, p.power);
