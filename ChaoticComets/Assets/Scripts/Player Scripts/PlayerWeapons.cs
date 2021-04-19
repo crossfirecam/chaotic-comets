@@ -81,7 +81,7 @@ public class PlayerWeapons : MonoBehaviour
 
     private void CreateBullet(Vector3 position, Quaternion rotation, bool contributesToActiveBulletCount = true)
     {
-        GameObject newBullet = Instantiate(bullet, position, rotation);
+        GameObject newBullet = Instantiate(bullet, position, rotation, GameManager.i.Refs.effectParent);
         newBullet.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * bulletForce);
         newBullet.GetComponent<BulletBehaviour>().FizzleOutBullet(bulletDestroyTime);
         if (contributesToActiveBulletCount)

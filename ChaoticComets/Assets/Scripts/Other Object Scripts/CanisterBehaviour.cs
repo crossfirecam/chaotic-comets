@@ -52,7 +52,7 @@ public class CanisterBehaviour : MonoBehaviour {
             Destroy(triggerObject.gameObject, 5f);
 
             // Create a red explosion.
-            GameObject newExplosion = Instantiate(explosion, transform.position, transform.rotation);
+            GameObject newExplosion = Instantiate(explosion, transform.position, transform.rotation, GameManager.i.Refs.effectParent);
             Destroy(newExplosion, 2f);
 
             RespawnIfTutorialMode();
@@ -91,7 +91,7 @@ public class CanisterBehaviour : MonoBehaviour {
             yield return new WaitForSeconds(timeBetweenTicks);
         }
         // Play canister expire effect, destroy canister.
-        GameObject newPop = Instantiate(expirationPop, transform.position, transform.rotation);
+        GameObject newPop = Instantiate(expirationPop, transform.position, transform.rotation, GameManager.i.Refs.effectParent);
         Destroy(newPop, 2f);
 
         RespawnIfTutorialMode();

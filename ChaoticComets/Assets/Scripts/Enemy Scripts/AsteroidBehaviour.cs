@@ -67,7 +67,7 @@ public class AsteroidBehaviour : MonoBehaviour {
         if (!beenHit) {
             beenHit = true;
             // Explosion effect
-            GameObject newExplosion = Instantiate(explosion, transform.position, transform.rotation);
+            GameObject newExplosion = Instantiate(explosion, transform.position, transform.rotation, GameManager.i.Refs.effectParent);
             Destroy(newExplosion, 2f);
 
             // Large and Medium asteroids split into 2-3 pieces

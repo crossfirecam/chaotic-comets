@@ -26,7 +26,7 @@ public abstract partial class Ufo : MonoBehaviour
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
 
         Vector3 bulletPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - 4);
-        GameObject newBullet = Instantiate(bullet, bulletPosition, q);
+        GameObject newBullet = Instantiate(bullet, bulletPosition, q, GameManager.i.Refs.effectParent);
         newBullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, bulletForce));
         newBullet.GetComponent<BulletBehaviour>().FizzleOutBullet(bulletExpireTime);
 

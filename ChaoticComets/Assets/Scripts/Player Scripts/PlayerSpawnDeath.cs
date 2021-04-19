@@ -49,7 +49,7 @@ public class PlayerSpawnDeath : MonoBehaviour
         }
         p.plrUiSound.UpdatePointDisplays();
 
-        GameObject newExplosion = Instantiate(p.deathExplosion, transform.position, transform.rotation);
+        GameObject newExplosion = Instantiate(p.deathExplosion, transform.position, transform.rotation, GameManager.i.Refs.effectParent);
         Destroy(newExplosion, 2f);
 
         PretendShipDoesntExist();

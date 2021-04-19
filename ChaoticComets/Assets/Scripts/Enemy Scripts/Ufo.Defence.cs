@@ -94,7 +94,7 @@ public abstract partial class Ufo : MonoBehaviour
     // Repeating invoke that causes explosions
     private void DeathExplosions()
     {
-        GameObject newExplosion = Instantiate(deathExplosion, transform.position, transform.rotation);
+        GameObject newExplosion = Instantiate(deathExplosion, transform.position, transform.rotation, GameManager.i.Refs.effectParent);
         Destroy(newExplosion, 2f);
     }
 
@@ -117,7 +117,7 @@ public abstract partial class Ufo : MonoBehaviour
 
     private void CreateExplosionGrantPoints()
     {
-        GameObject newExplosion = Instantiate(playerBulletExplosion, transform.position, transform.rotation);
+        GameObject newExplosion = Instantiate(playerBulletExplosion, transform.position, transform.rotation, GameManager.i.Refs.effectParent);
         Destroy(newExplosion, 2f);
         audioAlienSfx.clip = audClipAlienSfxTakenDamage;
         audioAlienSfx.pitch = 1f;

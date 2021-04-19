@@ -97,6 +97,7 @@ public class GameManagerHiddenVars
 
     [Header("Prop References")]
     public Transform propParent;
+    public Transform effectParent;
     public PlayerMain playerShip1, playerShip2;
     public GameObject largeAsteroidProp, ufoFollowerProp, ufoPasserProp, canisterProp;
 
