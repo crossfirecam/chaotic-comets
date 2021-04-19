@@ -11,7 +11,8 @@ For an idea of how to play, check out the 'Help' or 'Tutorial' section.
 The game can be played with keyboard or controller. Many controllers will work.
 Check 'Options' in-game to rebind controls. Go to 'More Info' in this document for details on controller support.
 
-Online multiplayer can be achieved using Parsec - third party software for streaming/players co-op games over the internet. https://parsec.app/
+Online multiplayer can be achieved using Parsec. https://parsec.app/
+It's third party software for streaming & playing co-op games over the internet. 'More Info' for troubleshooting.
 
 To uninstall this game, delete the entire 'Chaotic Comets' folder.
 
@@ -20,7 +21,7 @@ OS Specific Instructions
 ------------------
 Windows 10 - Smartscreen may block the game from opening. Click 'More info' and 'Run anyway'.
 
-Linux - Game may not work immediately. Go to the executable's 'Properties, Permissions' and check the box for 'Allow executing file as program'.
+Linux - Game may not work immediately. Go to the executable's 'Properties - Permissions' and check the box for 'Allow executing file as program'.
 
 Mac OS X - Game may not work immediately. Try going to 'System Preferences - Security & Privacy' to allow the game to run.
 NOTE: Mac OS X may require third-party drivers to use certain controllers.
@@ -30,6 +31,10 @@ More Info
 ------------------
 All sorts of controllers will work with the game, but buttons may be misplaced because a generic Rewired template was used for controller support. Controls can be rebound manually in-game to better fit your controller.
 Check the full list of controllers compatible here: https://guavaman.com/projects/rewired/docs/SupportedControllers.html
+
+If a controller is experiencing drift on the sticks, visit 'Options - Rebind Controls - Calibrate' to correct the drift.
+
+If Parsec isn't accepting connecting player's keyboard or gamepad, visit https://support.parsec.app/hc/en-us/articles/115002702731-Issues-using-a-controller-mouse-or-keyboard
 
 If you find any bugs or the game crashes, please try your best to recall what may have caused the problem, and leave a comment on the itch.io page (https://crossfirecam.itch.io/chaotic-comets)
 Thank you for trying my game!

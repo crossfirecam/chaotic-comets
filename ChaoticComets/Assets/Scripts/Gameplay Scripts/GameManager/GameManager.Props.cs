@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using static Constants;
 
 public partial class GameManager : MonoBehaviour
 {
@@ -205,16 +206,25 @@ public partial class GameManager : MonoBehaviour
 
     public void SpawnPropFromCheat(string propStr)
     {
+        GameObject[] listOfCheatedProp;
         switch (propStr)
         {
             case "asteroid":
-                SpawnProp(PropType.Asteroid); break;
+                listOfCheatedProp = GameObject.FindGameObjectsWithTag(Tag_Asteroid);
+                if (listOfCheatedProp.Length < 30)
+                    SpawnProp(PropType.Asteroid); break;
             case "canister":
-                SpawnProp(PropType.Canister); break;
+                listOfCheatedProp = GameObject.FindGameObjectsWithTag(Tag_Canister);
+                if (listOfCheatedProp.Length < 10)
+                    SpawnProp(PropType.Canister); break;
             case "ufo-follower":
-                SpawnProp(PropType.UfoFollower); break;
+                listOfCheatedProp = GameObject.FindGameObjectsWithTag(Tag_Ufo);
+                if (listOfCheatedProp.Length < 10)
+                    SpawnProp(PropType.UfoFollower); break;
             case "ufo-passer":
-                SpawnProp(PropType.UfoPasser); break;
+                listOfCheatedProp = GameObject.FindGameObjectsWithTag(Tag_Ufo);
+                if (listOfCheatedProp.Length < 10)
+                    SpawnProp(PropType.UfoPasser); break;
         }
     }
 

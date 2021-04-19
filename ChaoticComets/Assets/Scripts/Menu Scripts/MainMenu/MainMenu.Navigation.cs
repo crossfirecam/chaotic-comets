@@ -7,6 +7,7 @@ public partial class MainMenu : MonoBehaviour
 
     [Header("Main Menu UI Nav")]
     [SerializeField] private Transform mainMenuPanel;
+    [SerializeField] private GameObject parsecDisclaimer;
     public OptionsPanel optionsPanel;
     public DifficultyPanel difficultyPanel;
     public SavePanel savePanel;
@@ -47,6 +48,7 @@ public partial class MainMenu : MonoBehaviour
             difficultyPanel.gameObject.SetActive(false);
             resetScoresPanel.gameObject.SetActive(false);
             optionsPanel.gameObject.SetActive(false);
+            parsecDisclaimer.SetActive(false);
 
             mainMenuPanel.gameObject.SetActive(true);
             returnToMenuButton.Select();
