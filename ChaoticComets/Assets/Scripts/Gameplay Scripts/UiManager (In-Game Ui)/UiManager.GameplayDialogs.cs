@@ -137,7 +137,6 @@ public partial class UiManager : MonoBehaviour
     {
         Time.timeScale = 1;
         panelTutorialChoice.SetActive(false);
-        buttonWhenTutorialChoice.Select();
     }
 
     public void DisplayTutorialPlayerDialog()
@@ -148,7 +147,7 @@ public partial class UiManager : MonoBehaviour
     public void DismissTutorialPlayerDialog()
     {
         panelPlayerChoice.SetActive(false);
-        buttonWhenPlayerChoice.Select();
+        buttonWhenTutorialChoice.Select();
     }
 
 

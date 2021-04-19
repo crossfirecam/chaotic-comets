@@ -48,7 +48,7 @@ public class PlayerWeapons : MonoBehaviour
 
         bulletTimeIfNormal = (BulletRange / bulletForce) * bulletRangeMultipler;
         bulletTimeIfFar = (BulletRange / bulletForce) * (bulletRangeMultipler + FarShotRangeIncrease);
-        Debug.Log(bulletTimeIfNormal + " " + bulletTimeIfFar);
+
         // Start of level setting of bulletDestroyTime
         if (!p.plrPowerups.ifFarShot)
             bulletDestroyTime = bulletTimeIfNormal;
