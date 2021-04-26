@@ -1,6 +1,12 @@
 Chaotic Comets Detailed Version History
 
 ------------------
+Version 1.4.1 Detailed Changelog (2021-04-26)
+------------------
+- Bug Fix: Tutorial bullet range was much too short. This has been corrected.
+- Slight Tweak: Time Bonus screen delays for an extra second when bonus amount first appears.
+
+------------------
 Version 1.4 Detailed Changelog (2021-04-20)
 ------------------
 Shop Changes

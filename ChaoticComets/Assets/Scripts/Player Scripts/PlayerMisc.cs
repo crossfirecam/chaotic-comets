@@ -38,6 +38,9 @@ public class PlayerMisc : MonoBehaviour
 
             SetUpgradeLevelsForPlayer();
         }
+
+        // Set the base bullet timing.
+        p.plrWeapons.SetBulletTime();
     }
 
     // Set the statistics depending on what player called the function.
@@ -95,9 +98,6 @@ public class PlayerMisc : MonoBehaviour
         p.plrWeapons.bulletRangeMultipler *= upgradeShotRange;
 
         p.plrUiSound.UpdatePointDisplays();
-
-        // Set the base bullet timing.
-        p.plrWeapons.SetBulletTime();
     }
 
     internal IEnumerator FadeShip(string inOrOut, float fadingInEndTransparency = 1f)
