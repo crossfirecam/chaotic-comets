@@ -6,7 +6,7 @@ Game made by CrossfireCam (https://crossfirecam.itch.io)
 This repository contains the source code for Chaotic Comets, made in Unity and using C# as a scripting language. Feel free to peruse it.
 For a playable game executable, please check out the itch.io page: https://crossfirecam.itch.io/chaotic-comets. Or the 'Releases' tab in this repo.
 
-The current version is v1.4, and the project has completed development. I'm open to updating the game with bug fixes if they're sent in.
+The current version is v1.4.1, and the project has completed development. I'm open to updating the game with bug fixes if they're sent in.
 
 Timeline of Project Releases:
 
