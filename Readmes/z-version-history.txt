@@ -9,6 +9,7 @@ Version 1.4 - Final Update (2021 April)
 - Player ship weapons were rebalanced. Able to quickly fire manual shots.
 - Bonus timer that awards extra credits for fast level completion.
 - Controller support greatly improved.
+- v1.4.1 Bug Fix: Tutorial bullet range no longer too short.
 
 ------------------
 Version 1.3 - Tutorial & Red UFO Update (2020 June)

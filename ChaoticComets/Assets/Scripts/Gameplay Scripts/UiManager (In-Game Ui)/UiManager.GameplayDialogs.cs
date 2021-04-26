@@ -38,8 +38,10 @@ public partial class UiManager : MonoBehaviour
         else
         {
             yield return new WaitForSeconds(1);
-
             congratsBonusText.gameObject.SetActive(true);
+            congratsBonusText.text = "Time Bonus: " + bonusToAward;
+            yield return new WaitForSeconds(1);
+
             for (int i = bonusToAward; i > 0; i -= 10)
             {
                 GameManager.i.Refs.playerShip1.credits += 10;
