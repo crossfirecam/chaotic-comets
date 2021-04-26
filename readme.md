@@ -1,4 +1,4 @@
-Chaotic Comets 1.4\
+Chaotic Comets 1.4.1\
 Game made by CrossfireCam (https://crossfirecam.itch.io)
 
 'Chaotic Comets' is an endless space shooter that supports one or two players. Play as a spacecraft tasked with clearing a field of asteroids, constantly on the lookout for enemy aliens that will hurt you and canisters that will help you.
@@ -15,6 +15,7 @@ Mar 2019 - v1.0 - Game brought online publicly.\
 May 2019 - v1.1 - Music & particle effects.\
 Jun 2019 - v1.2 - Improved enemy AI and add auto-saves / upgrade shop.\
 Jun 2020 - v1.3 - New enemy, high score board, interactive tutorial, many other features.\
-Apr 2021 - v1.4 - Shop redesign, UI improvement, gameplay tweaks, final update.
+Apr 2021 - v1.4 - Shop redesign, UI improvement, gameplay tweaks, final update.\
+Apr 2021 - v1.4.1 - Tutorial bug fix.
 
 Thanks in advance for trying my game, or just being interested in the code!
