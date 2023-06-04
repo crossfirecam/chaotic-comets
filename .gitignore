@@ -3,12 +3,13 @@
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
+[Ll]ogs/
 [Uu]ser[Ss]ettings/
 Assets/AssetStoreTools*
-ChaoticComets/Assets/Rewired
+Assets/Rewired
 
 # Compiled versions and old compiled versions
-/Packages/
+[Pp]ackages/
 
 # Visual Studio cache directory
 .vs/
