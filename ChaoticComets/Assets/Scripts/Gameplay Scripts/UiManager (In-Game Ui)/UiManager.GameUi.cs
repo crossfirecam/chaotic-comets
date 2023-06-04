@@ -25,24 +25,24 @@ public partial class UiManager : MonoBehaviour
     }
 
     private bool firstBonusSound = true;
-    private float[] pitchesToPlay = { 0.6f, 0.5f, 0.4f };
+    private float[] pitchesToPlay = { 0.4f, 0.3f };
     private int currentPitch = 1;
     public void SetBonusText(int bonus)
     {
-        // Change sound effect pitch. Alternate between four of them.
-        currentPitch += 1;
-        if (currentPitch == 3)
-            currentPitch = 0;
-        gameUiBonusAudSrc.pitch = pitchesToPlay[currentPitch];
-
-        // Don't play sound effect when text first appears
-        if (!firstBonusSound)
-            gameUiBonusAudSrc.Play();
-        else
-            firstBonusSound = false;
-
         gameUiBonus.text = "Time Bonus: " + bonus;
 
+        if (firstBonusSound)
+        {
+            firstBonusSound = false;
+            return;
+        }
+        
+        if (bonus % 2 == 0)
+        {
+            currentPitch = currentPitch == 0 ? 1 : 0;
+            gameUiBonusAudSrc.pitch = pitchesToPlay[currentPitch];
+            gameUiBonusAudSrc.Play();
+        }
     }
 
 
