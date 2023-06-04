@@ -1,6 +1,12 @@
 Chaotic Comets Version History
 
 ------------------
+Version 1.5 - For All The Marbles Update (2023 June)
+------------------
+- While putting together an online-playable version, I decided to make some truly final improvements to the game
+- TODO
+
+------------------
 Version 1.4 - Final Update (2021 April)
 ------------------
 - Shop overhauled. Looks better, and more attributes of the player's ship can be improved.

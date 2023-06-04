@@ -1,6 +1,11 @@
 Chaotic Comets Detailed Version History
 
 ------------------
+Version 1.5 Detailed Changelog (2021-06-??)
+------------------
+- TODO
+
+------------------
 Version 1.4.1 Detailed Changelog (2021-04-26)
 ------------------
 - Bug Fix: Tutorial bullet range was much too short. This has been corrected.
