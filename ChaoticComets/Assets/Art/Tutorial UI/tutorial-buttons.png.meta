@@ -90,7 +90,7 @@ TextureImporter:
       213: -7903115839405796089
     second: button_psR2
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -110,6 +110,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -118,9 +120,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -141,10 +143,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -160,6 +166,30 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -792,6 +822,36 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      button_swZL: -4284462367233668240
+      button_Space: 2862995772636924084
+      button_psO: 6056250406140767238
+      button_A: 324935613331680862
+      button_D: -2956941921079617493
+      button_contA: 835987129837155407
+      button_Q: -1324062080584536620
+      button_contB: 1255952930145107921
+      button_Esc: 1284536679622011347
+      button_swZR: -6763584009226631225
+      button_xboxStart: 3928087384007563415
+      button_K: -7083447977326419179
+      button_psL2: 2810310426758375802
+      button_swPlus: 5987827677412025147
+      button_Down: -6896281443205403669
+      button_psR2: -7903115839405796089
+      button_S: 7245257409494507130
+      button_L: -9198232738521873889
+      button_W: -3582496561044763741
+      button_psOptions: 3699229283613530679
+      button_contLstick: -2584047231467547047
+      button_Up: 8156069519851516526
+      button_ContStickArrowL: -3972761883640861952
+      button_ContStickArrowR: 5316236271389532863
+      button_xboxLT: -4694355065557524589
+      button_Right: 368637446995233890
+      button_psX: 6674485490052125170
+      button_Left: 2272073114564394301
+      button_xboxRT: -945675483308755687
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
