@@ -7,10 +7,19 @@ public class HelpMenu : MonoBehaviour {
 
     [SerializeField] private Button menuButton;
     private Button buttonToReturnTo;
+    [SerializeField] private GameObject desktopControls, webControls;
 
     private void Start()
     {
         StartCoroutine(UsefulFunctions.CheckController());
+
+        #if UNITY_WEBGL
+            desktopControls.SetActive(false);
+            webControls.SetActive(true);
+        #else
+            desktopControls.SetActive(true);
+            webControls.SetActive(false);
+        #endif
     }
 
     public void VisitMain() {

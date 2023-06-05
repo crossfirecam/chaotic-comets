@@ -22,9 +22,14 @@ public partial class TutorialManager : MonoBehaviour
 
     private static TutorialManager _i;
     public static TutorialManager i { get { if (_i == null) _i = FindObjectOfType<TutorialManager>(); return _i; } }
+    [SerializeField] private TextMeshProUGUI tutorialIntroSubtitle;
 
     private void Start()
     {
+        #if UNITY_WEBGL
+            tutorialIntroSubtitle.text = "Tutorial won't be accurate because of <u>limited controller support</u> on the <u>web version</u>.";
+        #endif
+
         player = ReInput.players.GetPlayer(0);
         player1.power = 0;
         player1.plrUiSound.UpdatePointDisplays();

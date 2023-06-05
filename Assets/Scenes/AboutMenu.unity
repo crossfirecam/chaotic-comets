@@ -1505,8 +1505,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 450}
-  m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 0
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2337,6 +2337,7 @@ MonoBehaviour:
   dev1_2: {fileID: 21300000, guid: c7d26f6d0136ca64dac1815756d07e08, type: 3}
   dev1_3: {fileID: 21300000, guid: b5bc3270fb150b24b86e7eeca055b42e, type: 3}
   dev1_4: {fileID: 21300000, guid: e1e3cea1da396b440bc3f476dbf215ec, type: 3}
+  dev1_5: {fileID: 0}
   devWhatNext: {fileID: 21300000, guid: cadfaa2b47f97ca4ebe7f8cc35222567, type: 3}
   devImage: {fileID: 894075492}
   devText: {fileID: 1787644969}
