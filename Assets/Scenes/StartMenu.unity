@@ -3174,6 +3174,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mixer: {fileID: 24100000, guid: c45b130275ef2b747be4423907a74a75, type: 2}
   fadeBlackOverlay: {fileID: 1402773995}
+  desktopExitButton: {fileID: 1712302390}
+  desktopParsecAdvice: {fileID: 1439877195}
   txtScoresHeader: {fileID: 1655859944}
   scoreContainer: {fileID: 1718238723}
   scoreTemplate: {fileID: 1059034397}
@@ -11452,7 +11454,7 @@ GameObject:
   - component: {fileID: 1195095680}
   - component: {fileID: 1195095679}
   m_Layer: 5
-  m_Name: OptionsPanel-Online
+  m_Name: ParsecAdvice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14160,7 +14162,7 @@ GameObject:
   - component: {fileID: 1439877196}
   - component: {fileID: 1439877195}
   m_Layer: 5
-  m_Name: OptionText (1)
+  m_Name: ParsecAdviceText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

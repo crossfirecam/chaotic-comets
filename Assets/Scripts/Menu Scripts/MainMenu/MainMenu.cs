@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using TMPro;
 
 public partial class MainMenu : MonoBehaviour
 {
@@ -9,10 +9,20 @@ public partial class MainMenu : MonoBehaviour
     public AudioMixer mixer;
     public Image fadeBlackOverlay;
     private AudioSource audioMenuBack;
+    [SerializeField] private GameObject desktopExitButton;
+    [SerializeField] private TextMeshProUGUI desktopParsecAdvice;
 
     // ----------
     private void Start()
     {
+        #if UNITY_WEBGL
+            desktopExitButton.SetActive(false);
+            desktopParsecAdvice.text = "To play <u>online multiplayer</u>, download Chaotic Comets for Win/Linux, then use Parsec.";
+        #else
+            desktopExitButton.SetActive(true);
+            desktopParsecAdvice.text = "To play <u>online multiplayer</u>, download Parsec.\n(See readme.txt)";
+        #endif
+
         StartupSoundManagement();
         UsefulFunctions.ResetBetweenScenesScript();
         ChangeScoreTypeAndPopulate(PlayerPrefs.GetInt("ScorePreference", 0));
