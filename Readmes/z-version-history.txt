@@ -7,7 +7,7 @@ Version 1.5 - For All The Marbles Update (2023 June)
 - TODO
 
 ------------------
-Version 1.4 - Final Update (2021 April)
+Version 1.4 - Overhaul Update (2021 April)
 ------------------
 - Shop overhauled. Looks better, and more attributes of the player's ship can be improved.
 - Difficulty now affects asteroid speed and UFO aggressiveness. Added an Insane mode.

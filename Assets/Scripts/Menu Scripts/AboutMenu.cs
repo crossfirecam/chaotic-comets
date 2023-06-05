@@ -10,19 +10,20 @@ public class AboutMenu : MonoBehaviour {
     public int stage = 0;
 
     // UI variables
-    public Sprite devIntro, devPre1, devPre2, devPreFinal, dev1_0, dev1_1, dev1_2, dev1_3, dev1_4, devWhatNext;
+    public Sprite devIntro, devPre1, devPre2, devPreFinal, dev1_0, dev1_1, dev1_2, dev1_3, dev1_4, dev1_5, devWhatNext;
     public Image devImage;
     public TextMeshProUGUI devText, devNextButtonText;
-    private readonly string devTextIntro = "Chaotic Comets was in development from late 2018 to early 2021. Press the button below to learn more about the game's history.",
-        devTextPre1 = "<u>Late October 2018</u>: The first build of the game that's worth showing. Asteroid physics, a health/teleport system, and a basic menu system were present.",
-        devTextPre2 = "<u>Early November 2018</u>: Further development led to adding UFO enemies and powerups.",
-        devTextPreFinal = "<u>Late November 2018</u>: Placeholder sprites were replaced with 3D assets made from scratch. This build was shown at a public design show. It was received well.",
-        devText1_0 = "<u>March 2019</u>: Chaotic Comets was revisited to be published online. It came with UI enhancements, difficulty options, and easier controller selection.",
-        devText1_1 = "<u>May 2019</u>: Chaotic Comets was updated to 1.1. Ship handling & visual effects were improved, sound effects / music were added, and plenty of bugs were fixed.",
-        devText1_2 = "<u>June 2019</u>: Chaotic Comets was updated to 1.2. UFO's have more interesting mechanics. Auto-saving and a shop between levels was introduced.",
-        devText1_3 = "<u>June 2020</u>: After a year of on-and-off dev, 1.3 was done. Includes a new UFO, interactive tutorial, highscores, and a <i>ton</i> of other features, code review & bug fixes.",
-        devText1_4 = "<u>April 2021</u>: A month was spent finishing the game with 1.4. Major improvements are the new UI and Shop, along with many tweaks to make the game more fun to play.",
-        devTextWhatNext = "After 3 years of this project being active, I consider Chaotic Comets as completed. I've done all I want to do with it, but am open to bug reports or minor changes. I hope you enjoy the game!";
+    private readonly string devTextIntro = "Chaotic Comets was in development from late 2018 to mid 2023. Press the button below to learn about the game's history.",
+        devTextPre1 = "<u>Late October 2018</u>: The earliest playable build featured asteroid physics, a health/teleport system, and a basic menu system.",
+        devTextPre2 = "<u>Early November 2018</u>: Further development added a UFO enemy and powerups.",
+        devTextPreFinal = "<u>Late November 2018</u>: The first public build was well-received at a university design show.",
+        devText1_0 = "<u>March 2019, v1.0</u>: The game was published online, coming with UI enhancements and difficulty options.",
+        devText1_1 = "<u>May 2019, v1.1</u>: Ship handling & visual effects were improved, and SFX/music were added.",
+        devText1_2 = "<u>June 2019, v1.2</u>: UFOs have more interesting mechanics. Auto-saving and a shop between levels was introduced.",
+        devText1_3 = "<u>June 2020, v1.3</u>: Additions included a new UFO, interactive tutorial, highscores, and many small features & bug fixes.",
+        devText1_4 = "<u>April 2021, v1.4</u>: A month was spent polishing the game with 1.4. Major improvements are the new UI and Shop.",
+        devText1_5 = "<u>June 2023, v1.5</u>: The game is now playable on the web! While the project was revisited, some final tweaks to the gameplay and presentation were made.",
+        devTextWhatNext = "After 5 years of occasional development progress, I consider Chaotic Comets complete. I hope you enjoy the game!";
     public Button returnToMenuButton;
 
     // ----------
@@ -79,10 +80,15 @@ public class AboutMenu : MonoBehaviour {
             devImage.sprite = dev1_3;
             devText.text = devText1_3;
         }
-        else if (stage == 8)
+        else if (stage == 7)
         {
             devImage.sprite = dev1_4;
             devText.text = devText1_4;
+        }
+        else if (stage == 8)
+        {
+            devImage.sprite = dev1_5;
+            devText.text = devText1_5;
             devNextButtonText.text = "What's Next? >";
         }
         else if (stage == 9) {
