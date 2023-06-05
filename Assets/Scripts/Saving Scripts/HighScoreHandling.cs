@@ -38,7 +38,7 @@ public static class HighScoreHandling
         // If any score 
         foreach (HighscoreEntry scoreToCompare in listOfMatchingMode)
         {
-            if (scoreToCompare.score < newScore)
+            if (scoreToCompare.credits < newScore)
             {
                 return true;
             }
@@ -57,12 +57,12 @@ public static class HighScoreHandling
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
         // Create & add new entry to 'highscores'
-        HighscoreEntry highscoreEntry = new HighscoreEntry { name = name, level = level, score = score, mode = mode };
+        HighscoreEntry highscoreEntry = new HighscoreEntry { name = name, level = level, credits = score, mode = mode };
         highscores.highscoreEntryList.Add(highscoreEntry);
 
         // Filter list to specific gamemode, sort, remove lowest entry
         List<HighscoreEntry> listOfMatchingMode = highscores.highscoreEntryList.Where(hs => hs.mode.StartsWith(modeToFilter.ToString())).ToList();
-        listOfMatchingMode = listOfMatchingMode.OrderByDescending(hs => hs.score).ToList();
+        listOfMatchingMode = listOfMatchingMode.OrderByDescending(hs => hs.credits).ToList();
         if (listOfMatchingMode.Count > 10)
         {
             listOfMatchingMode.RemoveRange(10, listOfMatchingMode.Count - 10);
@@ -80,7 +80,7 @@ public static class HighScoreHandling
     }
 
     /* ------------------------------------------------------------------------------------------------------------------
-     * ResetHighScoreEntries - Player can choose to erase the high score board. These are the preset values
+     * ResetHighScoreEntries - Player can choose to erase the high score board.
      * ------------------------------------------------------------------------------------------------------------------ */
     public static void ResetHighScoreEntries()
     {
@@ -88,65 +88,19 @@ public static class HighScoreHandling
         PlayerPrefs.SetString("highscoreTable", null);
         PlayerPrefs.SetString("SavedNameFor1P", "");
         PlayerPrefs.SetString("SavedNameFor2P", "");
-        PlayerPrefs.SetInt("RemovedCPUs", 0);
 
+        // Placeholder scores
         Highscores defaultEntries = new Highscores
         {
             highscoreEntryList = new List<HighscoreEntry>()
         };
-
-        // Default values
-        string[] defaultModes = { "1P (CPU)", "1P (CPU)", "1P (CPU)", "1P (CPU)", "1P (CPU)",
-                                  "2P (CPU)", "2P (CPU)", "2P (CPU)", "2P (CPU)", "2P (CPU)" };
-        string[] defaultNames = { "Rubén", "Bozza", "Nick", "Eric", "A Literal Bot",
-                                  "Justin & Alex", "The Twins", "Josh & Shane", "It's Joe! And Acorn!", "Rene & Bubba" };
-        int[] defaultLevels =   { 12, 9, 7, 4, 2,
-                                  10, 8, 6, 5, 3 };
-        int[] defaultScores =   { 20000, 16000, 12000, 6000, 2000,
-                                  18000, 14000, 10000, 8000, 4000 };
-
-        // For all ten entries, add an entry
         for (int i = 0; i < 10; i++)
-        {
-            HighscoreEntry defaultEntry = new HighscoreEntry { name = defaultNames[i], level = defaultLevels[i], score = defaultScores[i], mode = defaultModes[i] };
-            defaultEntries.highscoreEntryList.Add(defaultEntry);
-        }
+            defaultEntries.highscoreEntryList.Add(new HighscoreEntry { name = "", level = 0, credits = 0, mode = "1P" });
+        for (int i = 0; i < 10; i++)
+            defaultEntries.highscoreEntryList.Add(new HighscoreEntry { name = "", level = 0, credits = -1, mode = "2P" });
 
-        // Save updated Highscores
+        // Save blank scores
         string json = JsonUtility.ToJson(defaultEntries);
-        PlayerPrefs.SetString("highscoreTable", json);
-        PlayerPrefs.Save();
-    }
-
-    /* ------------------------------------------------------------------------------------------------------------------
-     * RemoveDefaultsFromScoreList - Any scores that are preset values are removed from the high score board
-     * ------------------------------------------------------------------------------------------------------------------ */
-    public static void RemoveDefaultsFromScoreList()
-    {
-        // Reset relevant PlayerPref
-        PlayerPrefs.SetInt("RemovedCPUs", 1);
-        PlayerPrefs.Save();
-
-        // Load saved Highscores
-        string jsonString = PlayerPrefs.GetString("highscoreTable");
-        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
-
-        Highscores trimmedScores = new Highscores
-        {
-            highscoreEntryList = new List<HighscoreEntry>()
-        };
-
-        // Check all scores for the CPU tag
-        foreach (HighscoreEntry entryToCheck in highscores.highscoreEntryList)
-        {
-            if (!entryToCheck.mode.Contains("CPU"))
-            {
-                trimmedScores.highscoreEntryList.Add(entryToCheck);
-            }
-        }
-
-        // Save updated Highscores
-        string json = JsonUtility.ToJson(trimmedScores);
         PlayerPrefs.SetString("highscoreTable", json);
         PlayerPrefs.Save();
     }
@@ -165,7 +119,7 @@ public static class HighScoreHandling
     {
         public string name;
         public int level;
-        public int score;
+        public int credits;
         public string mode;
     }
 }

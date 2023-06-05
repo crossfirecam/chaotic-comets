@@ -24,9 +24,9 @@ public partial class MainMenu : MonoBehaviour
 
         switch (mode)
         {
-            case 0: txtScoresHeader.text = "Top 10 Scores (Both Modes)"; break;
-            case 1: txtScoresHeader.text = "Top 10 Scores (1 Player Mode)"; break;
-            case 2: txtScoresHeader.text = "Top 10 Scores (2 Player Mode)"; break;
+            case 0: txtScoresHeader.text = "Top 10 Scores"; break;
+            case 1: txtScoresHeader.text = "Top 10 Scores (1P Mode)"; break;
+            case 2: txtScoresHeader.text = "Top 10 Scores (2P Mode)"; break;
         }
         PopulateHighScoreTable();
     }
@@ -54,7 +54,7 @@ public partial class MainMenu : MonoBehaviour
         // If ScorePreference is set to 0 (All Scores), sort the full list into the best 10, and create the table
         if (PlayerPrefs.GetInt("ScorePreference") == 0)
         {
-            List<HighscoreEntry> sortedList = highscores.highscoreEntryList.OrderByDescending(hs => hs.score).ToList();
+            List<HighscoreEntry> sortedList = highscores.highscoreEntryList.OrderByDescending(hs => hs.credits).ToList();
             if(sortedList.Count > 10)
             {
                 sortedList.RemoveRange(10, sortedList.Count - 10);
@@ -105,23 +105,17 @@ public partial class MainMenu : MonoBehaviour
         scoreEntry.gameObject.SetActive(true);
 
         // Populate entry with details. Mode displays an icon.
-        scoreEntry.Find("Name").GetComponent<TextMeshProUGUI>().text = highscoreEntry.name;
-        scoreEntry.Find("Level").GetComponent<TextMeshProUGUI>().text = highscoreEntry.level.ToString();
-        scoreEntry.Find("Credits").GetComponent<TextMeshProUGUI>().text = highscoreEntry.score.ToString();
+        TextMeshProUGUI nameText = scoreEntry.Find("Name").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI levelText = scoreEntry.Find("Level").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI creditsText = scoreEntry.Find("Credits").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI modeText = scoreEntry.Find("Mode").GetComponent<TextMeshProUGUI>();
-        if (highscoreEntry.mode != null)
-        {
-            modeText.text = highscoreEntry.mode.Replace("1P", "<sprite=0>");
-            modeText.text = modeText.text.Replace("2P", "<sprite=2>");
-        }
+        nameText.text = highscoreEntry.name;
+        levelText.text = highscoreEntry.level.ToString();
+        creditsText.text = highscoreEntry.credits.ToString();
+        modeText.text = highscoreEntry.mode.Replace("1P", "<sprite=0>").Replace("2P", "<sprite=2>");
 
-        // If level is 0, then the entry is telling user the list is empty. Remove 0's for level and credits columns.
-        if (highscoreEntry.level == 0)
-        {
-            scoreEntry.Find("Level").GetComponent<TextMeshProUGUI>().text = "";
-            scoreEntry.Find("Credits").GetComponent<TextMeshProUGUI>().text = "";
-            modeText.text = "";
-        }
+        if (highscoreEntry.credits < 0)
+            creditsText.text = "0";
 
         transformList.Add(scoreEntry);
     }
@@ -134,14 +128,6 @@ public partial class MainMenu : MonoBehaviour
     public void ResetPanelYes()
     {
         ResetHighScoreEntries();
-        ChangeScoreTypeAndPopulate(0);
-        BackToMenu();
-    }
-
-    // When Remove CPU Scores button is pressed, remove the default values, and repopulate the table
-    public void ResetPanelRemoveCPUs()
-    {
-        RemoveDefaultsFromScoreList();
         ChangeScoreTypeAndPopulate(0);
         BackToMenu();
     }
