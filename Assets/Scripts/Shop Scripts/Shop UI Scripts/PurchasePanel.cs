@@ -56,8 +56,8 @@ public class PurchasePanel : MonoBehaviour
         descText.text = purchasePanelDescStrings[purchaseIndex];
         UpdateTextElements();
 
-        // On Insane Difficulty, shield upgrade shows a different string.
-        if (BetweenScenes.Difficulty == 3 && buttonHovered == 0)
+        // On Hard Difficulty, shield upgrade shows a different string.
+        if (BetweenScenes.Difficulty == 2 && buttonHovered == 0)
             descText.text = shieldUpgradeDescAltString;
     }
 

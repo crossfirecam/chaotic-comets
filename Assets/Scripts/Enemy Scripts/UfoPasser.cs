@@ -31,26 +31,19 @@ public class UfoPasser : Ufo
         base.ChangeDifficultyStats();
 
         // Passer will change directions more often at higher difficulty.
-        if (BetweenScenes.Difficulty == 1)
-        {
-            passerDirChangeInterval *= .8f;
-        }
-        else if (BetweenScenes.Difficulty >= 2)
-        {
-            passerDirChangeInterval *= .6f;
+        switch (BetweenScenes.Difficulty) {
+            case 1:
+                passerDirChangeInterval *= .8f;
+                break;
+            case 2:
+                passerDirChangeInterval *= .6f;
+                break;
         }
     }
 
     public void SetBeginningDirection(int passedValue)
     {
-        if (passedValue == 0)
-        {
-            beginningDirection = 1f;
-        }
-        else if (passedValue == 1)
-        {
-            beginningDirection = -1f;
-        }
+        beginningDirection = passedValue == 0 ? 1f : -1f;
     }
 
     private void FixedUpdate()

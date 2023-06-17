@@ -25,8 +25,6 @@ public class AsteroidBehaviour : MonoBehaviour {
         if (BetweenScenes.Difficulty == 1)
             maxThrust *= 1.25f;
         else if (BetweenScenes.Difficulty == 2)
-            maxThrust *= 1.5f;
-        else if (BetweenScenes.Difficulty == 3)
             maxThrust *= 1.8f;
 
         GetComponents();

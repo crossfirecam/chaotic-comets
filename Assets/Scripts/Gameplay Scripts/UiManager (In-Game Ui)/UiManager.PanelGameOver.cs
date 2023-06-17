@@ -109,10 +109,8 @@ public partial class UiManager : MonoBehaviour
         string difficulty = "";
         switch (BetweenScenes.Difficulty)
         {
-            case 0: difficulty = "Easy"; break;
             case 1: difficulty = "Normal"; break;
             case 2: difficulty = "Hard"; break;
-            case 3: difficulty = "Insane"; break;
         }
         totalScore = GameManager.i.Refs.playerShip1.totalCredits;
         mode = $"1P ({difficulty})";

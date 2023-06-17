@@ -30,7 +30,7 @@ public class PlayerMisc : MonoBehaviour
                     $"{p.bonus} bonus threshold.");
             }
 
-            if (BetweenScenes.Difficulty == 3)
+            if (BetweenScenes.Difficulty == 2)
             {
                 p.damageFromImpact *= 1.5f;
                 p.damageFromUfoBullet *= 1.5f;

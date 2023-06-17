@@ -76,25 +76,11 @@ public class PlayerPowerups : MonoBehaviour
     // 
 
     /// <summary>
-    /// Basically only gives insurance powerup once at least one other powerup is received.<br/>
-    /// Does this by determining if at least one of the others is received,<br/>
-    /// If not at least one powerup has been received yet, tell GivePowerup() to select another powerup
+    /// Only gives insurance powerup when least one other powerup is received.<br/>
     /// </summary>
     private bool AtLeastOneOtherPowerup()
     {
-        if (ifFarShot || ifTripleShot || ifRapidShot || ifAutoBrake)
-        {
-            // If Easy mode is selected, check that auto-brake isn't the only one equipped (pointless to insure it)
-            if (BetweenScenes.Difficulty == 0 && ifAutoBrake && !ifFarShot && !ifTripleShot && !ifRapidShot)
-            {
-                return false;
-            }
-            else { return true; }
-        }
-        else
-        {
-            return false;
-        }
+        return ifFarShot || ifTripleShot || ifRapidShot || ifAutoBrake;
     }
     public void AllPowerupsObtained()
     {

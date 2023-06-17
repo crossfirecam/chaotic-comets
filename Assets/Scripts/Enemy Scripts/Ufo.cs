@@ -60,21 +60,21 @@ public abstract partial class Ufo : MonoBehaviour
 
     internal virtual void ChangeDifficultyStats()
     {
-        if (BetweenScenes.Difficulty == 1)
-        {
-            bulletForce *= 1.5f;
-            alienSpeedBase *= 1.2f;
-            bulletRange *= 1.2f;
-            shootingDelay *= 0.85f;
-            bulletDeviationLimit *= 0.75f;
-        }
-        else if (BetweenScenes.Difficulty >= 2)
-        {
-            bulletForce *= 2f;
-            alienSpeedBase *= 1.4f;
-            bulletRange *= 1.4f;
-            shootingDelay *= 0.7f;
-            bulletDeviationLimit *= 0.5f;
+        switch (BetweenScenes.Difficulty) {
+            case 1:
+                bulletForce *= 1.5f;
+                alienSpeedBase *= 1.2f;
+                bulletRange *= 1.2f;
+                shootingDelay *= 0.85f;
+                bulletDeviationLimit *= 0.75f;
+                break;
+            case 2:
+                bulletForce *= 2f;
+                alienSpeedBase *= 1.4f;
+                bulletRange *= 1.4f;
+                shootingDelay *= 0.7f;
+                bulletDeviationLimit *= 0.5f;
+                break;
         }
     }
 

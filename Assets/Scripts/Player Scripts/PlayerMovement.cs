@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     internal float thrustPower = 700f, turnThrustPower = 200f;
     // Braking
     private readonly float stopSpeedThreshold = 0.8f;
-    internal float manualBrakePower = 1f;
+    internal float manualBrakePower = 0.5f;
     private readonly float autoBrakeStrength = 5f;
 
     public void ShipMovement()
@@ -59,9 +59,6 @@ public class PlayerMovement : MonoBehaviour
         if (currentSpeed > stopSpeedThreshold)
         {
             p.rbPlayer.drag = currentSpeed * (manualBrakePower / currentSpeed);
-
-            if (BetweenScenes.Difficulty >= 2)
-                p.rbPlayer.drag /= 1.5f;
         }
         // If ship is slow enough, stop it.
         else
