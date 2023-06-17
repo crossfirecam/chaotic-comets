@@ -34,33 +34,33 @@ public class PlayerPowerups : MonoBehaviour
             // All powerups are 15% chance, shield top-up is 15%, and extra life is 5%
             else
             {
-                powerRandomiser = Random.Range(0, 20);
-                if (RandCheck(0, 3) && !ifFarShot)
-                { // Give far shot powerup, 15% chance
+                powerRandomiser = Random.Range(0, 100);
+                if (RandCheck(0, 20) && !ifFarShot)
+                { // Give far shot powerup, 20% chance
                     powerupUndecided = false; ApplyPowerup(Powerups.FarShot);
                 }
-                else if (RandCheck(3, 6) && !ifTripleShot)
-                { // Give triple shot powerup, 15% chance
+                else if (RandCheck(21, 40) && !ifTripleShot)
+                { // Give triple shot powerup, 20% chance
                     powerupUndecided = false; ApplyPowerup(Powerups.TripleShot);
                 }
-                else if (RandCheck(6, 9) && !ifRapidShot)
-                { // Give rapid shot powerup, 15% chance
+                else if (RandCheck(41, 60) && !ifRapidShot)
+                { // Give rapid shot powerup, 20% chance
                     powerupUndecided = false; ApplyPowerup(Powerups.RapidShot);
                 }
-                else if (RandCheck(9, 12) && !ifAutoBrake)
-                { // Give auto brake powerup, 15% chance
+                else if (RandCheck(61, 80) && !ifAutoBrake)
+                { // Give auto brake powerup, 20% chance
                     powerupUndecided = false; ApplyPowerup(Powerups.AutoBrake);
                 }
-                else if (RandCheck(12, 15) && !ifInsurance && AtLeastOneOtherPowerup())
-                { // Give insurance powerup, 15% chance, needs another powerup active
+                else if (RandCheck(81, 90) && !ifInsurance && AtLeastOneOtherPowerup())
+                { // Give insurance powerup, 10% chance, needs another powerup active
                     powerupUndecided = false; ApplyPowerup(Powerups.Insurance);
                 }
-                else if (RandCheck(15, 19) && p.shields <= 60f && p.collisionsCanDamage)
-                { // Give shield top-up, 15% chance, needs shields to be less than 60 and ship's collider to be active
+                else if (RandCheck(91, 97) && p.shields <= 60f && p.collisionsCanDamage)
+                { // Give shield top-up, 8% chance, needs shields to be less than 60 and ship's collider to be active
                     powerupUndecided = false; ApplyPowerup(Powerups.ShieldRefill);
                 }
-                else if (powerRandomiser == 19)
-                { // Award extra life, 5% chance
+                else
+                { // Award extra life, 2% chance (or 10% at >60 shields)
                     powerupUndecided = false; ApplyPowerup(Powerups.ExtraLife);
                 }
             }
@@ -85,21 +85,21 @@ public class PlayerPowerups : MonoBehaviour
     public void AllPowerupsObtained()
     {
         print("All powerups obtained");
-        powerRandomiser = Random.Range(0, 20);
-        // 5% chance of extra life.
-        if (RandCheck(0, 1))
-        {
-            ApplyPowerup(Powerups.ExtraLife);
-        }
+        powerRandomiser = Random.Range(0, 100);
         // 55% chance of shield refill, and only if shields are below 60, and if shields are allowed to be recharged
-        else if (RandCheck(1, 12) && p.shields <= 60f && p.collisionsCanDamage)
+        if (RandCheck(1, 55) && p.shields <= 60f && p.collisionsCanDamage)
         {
             ApplyPowerup(Powerups.ShieldRefill);
         }
         // 40% of the time or if shield refill fails, give 1500 credits
-        else
+        else if (RandCheck(56, 95))
         {
             ApplyPowerup(Powerups.PointPrize);
+        }
+        // 5% chance of extra life.
+        else
+        {
+            ApplyPowerup(Powerups.ExtraLife);
         }
     }
 

@@ -46,13 +46,13 @@ public partial class GameManager : MonoBehaviour
         }
     }
 
-    private const float ChanceOfCanAppearing = 0.75f, ChanceOfCanAppearingHard = 0.375f, ChanceOfTwoCansAppearingIn2P = 0.5f, 
+    private const float ChanceOfCanAppearing = 0.6f, ChanceOfCanAppearingHard = 0.3f, ChanceOfTwoCansAppearingIn2P = 0.5f, 
                         ChanceOfLargeCanisterGroup = 0.05f, SpawningCanisterInterval = 5f;
     private float chanceOfSpawningCanister = 0.1f;
     private int canisterAmountSpawned = 0, canisterCap = 1;
     /// <summary>
-    /// Each round, canisters only appear 75% of the entire time. In 50% of those cases and only in 2P mode, spawn another one.<br/>
-    /// On Hard Mode, canisters only appear 37.5% of the entire time.
+    /// Each round, canisters only appear 60% of the entire time. In 50% of those cases and only in 2P mode, spawn another one.<br/>
+    /// On Hard Mode, canisters only appear 30% of the entire time.
     /// <br/>
     /// If a canister is set to appear, every 5 seconds it has a 10% chance to spawn.<br/>
     /// - If this chance fails, the chance is increased by 2.5%. Resets to 10% when the spawn succeeds.<br/>
