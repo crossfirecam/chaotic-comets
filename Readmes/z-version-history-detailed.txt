@@ -1,6 +1,31 @@
 Chaotic Comets Detailed Version History
 
 ------------------
+Version 1.5 Detailed Changelog (2021-06-18)
+------------------
+Difficulty Changes
+- Easy/Insane difficulty removed. Normal made slightly harder, Hard made just as difficult as Insane
+- Asteroids are much faster in both
+- Difficulty is now set in Options, instead of asking the user every game
+
+Player Changes
+- Respawning, teleporting is much faster
+- Canisters nerfed, spawns less often and gives lives much less often
+
+UI Changes
+- Removed a lot of superfluous text across the game. Level transitions much faster
+- Added notice to web players that controller support may be better in the native app
+
+Shop Changes
+- Upgrades made cheaper, but the max modifier was changed to 50% for many of them
+- Removed ability to buy shields & lives in the shop
+
+
+
+
+
+
+------------------
 Version 1.4.1 Detailed Changelog (2021-04-26)
 ------------------
 - Bug Fix: Tutorial bullet range was much too short. This has been corrected.
