@@ -23,9 +23,9 @@ public class AsteroidBehaviour : MonoBehaviour {
     void Start ()
     {
         if (BetweenScenes.Difficulty == 1)
-            maxThrust *= 1.25f;
+            maxThrust *= 1.5f;
         else if (BetweenScenes.Difficulty == 2)
-            maxThrust *= 1.8f;
+            maxThrust *= 2f;
 
         GetComponents();
         UsefulFunctions.FindThrust(rbAsteroid, maxThrust);

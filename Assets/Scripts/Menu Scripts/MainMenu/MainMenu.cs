@@ -53,8 +53,8 @@ public partial class MainMenu : MonoBehaviour
         MusicManager.i.sfxDemo = optionsPanel.optionSFXSlider.GetComponent<AudioSource>();
         if (!PlayerPrefs.HasKey("Music"))
         {
-            PlayerPrefs.SetFloat("Music", 0.8f);
-            PlayerPrefs.SetFloat("SFX", 0.8f);
+            PlayerPrefs.SetFloat("Music", 0.6f);
+            PlayerPrefs.SetFloat("SFX", 0.6f);
             PlayerPrefs.SetInt("NewGameDifficulty", 1);
             PlayerPrefs.Save();
         }

@@ -78,7 +78,7 @@ public partial class GameManager : MonoBehaviour
         }
 
         Debug.Log("Canister will spawn during this Area. Amount: " + canisterCap);
-        yield return new WaitForSeconds(5); // Wait before starting.
+        yield return new WaitForSeconds(10); // Wait before starting.
 
         while (canisterAmountSpawned < canisterCap)
         {

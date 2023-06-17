@@ -68,7 +68,7 @@ public partial class ShopScript : MonoBehaviour {
         // If save is in cheater mode, change some details
         if (BetweenScenes.CheaterMode)
         {
-            ShopRefs.pauseUiSaveWarningText.text = "In Cheat Mode, progress is not saved.\nCheat buttons aren't available in the Depot.";
+            ShopRefs.pauseUiSaveWarningText.text = "In Cheat Mode, progress is not saved.";
             ShopRefs.pauseUiSaveWarningText.color = Color.red;
             ShopRefs.shopUiSaveDisclaimer.text = "<u>Progress not saved</u>\nGame is in Cheat Mode.";
         }

@@ -22,8 +22,8 @@ public class AboutMenu : MonoBehaviour {
         devText1_2 = "<u>June 2019, v1.2</u>: UFOs have more interesting mechanics. Auto-saving and a shop between levels was introduced.",
         devText1_3 = "<u>June 2020, v1.3</u>: Additions included a new UFO, interactive tutorial, highscores, and many small features & bug fixes.",
         devText1_4 = "<u>April 2021, v1.4</u>: A month was spent polishing the game with 1.4. Major improvements are the new UI and Shop.",
-        devText1_5 = "<u>June 2023, v1.4.2</u>: The game is now playable on the web! While the project was revisited, some final tweaks to the gameplay and presentation were made.",
-        devTextWhatNext = "After 5 years of occasional development progress, I consider Chaotic Comets complete. I hope you enjoy the game!";
+        devText1_5 = "<u>June 2023, v1.5</u>: The game is now playable on the web! While the project was revisited, some final tweaks to the gameplay and presentation were made.",
+        devTextWhatNext = "After 5 years of occasional development progress, Chaotic Comets is complete. I hope you enjoy the game!";
     public Button returnToMenuButton;
 
     // ----------
