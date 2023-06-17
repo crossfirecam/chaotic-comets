@@ -48304,6 +48304,7 @@ MonoBehaviour:
   panelGameOver: {fileID: 372029258}
   buttonWhenGameOver: {fileID: 402405118}
   currentNameField: {fileID: 1403264485}
+  currentNameFieldPlaceholder: {fileID: 1970482650}
   panelPauseMenu: {fileID: 1061111377}
   buttonWhenPaused: {fileID: 40200585}
   buttonWhenLeavingPauseBugFix: {fileID: 711785859}

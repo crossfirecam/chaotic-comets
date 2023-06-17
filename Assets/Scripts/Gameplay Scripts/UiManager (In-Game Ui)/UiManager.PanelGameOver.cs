@@ -10,6 +10,7 @@ public partial class UiManager : MonoBehaviour
     [SerializeField] private GameObject panelGameOver;
     [SerializeField] private Button buttonWhenGameOver;
     [SerializeField] private TMP_InputField currentNameField;
+    [SerializeField] private TextMeshProUGUI currentNameFieldPlaceholder;
     private int totalScore;
     private string mode;
 
@@ -117,11 +118,7 @@ public partial class UiManager : MonoBehaviour
         {
             totalScore += GameManager.i.Refs.playerShip2.totalCredits;
             mode = $"2P ({difficulty})";
-            if (originOfRequest == "GameOver")
-            {
-                TextMeshProUGUI changeCongratsTextIf2P = currentNameField.transform.Find("Text Area/Placeholder").GetComponent<TextMeshProUGUI>();
-                changeCongratsTextIf2P.text = "Enter names...";
-            }
+            currentNameFieldPlaceholder.text = "Enter names...";
         }
     }
 
