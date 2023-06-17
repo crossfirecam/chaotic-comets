@@ -12,11 +12,10 @@ public class PurchasePanel : MonoBehaviour
     private int selectedUpgradeTier, selectedPurchasePrice;
     private bool selectedPurchaseMaxed;
 
-    private readonly int baseUpgradePrice = 500, priceIncreasePerLevel = 750, upgradeCap = 5;
+    private readonly int baseUpgradePrice = 500, priceIncreasePerLevel = 500, upgradeCap = 5;
     private readonly int majorUpgradePrice = 10000, majorUpgradeCap = 2;
-    // Total cost of 10,000c per maxed normal upgrade. Total cost of 30,000c for maxed major upgrades. All upgrades: 140,000c
 
-    private const int BtnIndReady = 10, BtnIndexLife = 9, BtnIndShieldCell = 8, BtnIndShotLimit = 5, BtnIndShieldStr = 0;
+    private const int BtnIndReady = 8, BtnIndShotLimit = 5, BtnIndAutoFire = 4, BtnIndShieldStr = 0;
 
     private void Start()
     {
@@ -101,14 +100,17 @@ public class PurchasePanel : MonoBehaviour
             case BtnIndReady: // Ready Button
                 subDescText.text = "";
                 break;
-            case BtnIndShotLimit: // Shot Limit Upgrade uses +1 Shot modifiers
+            case BtnIndShotLimit: // Shot Limit: +1 Shot modifiers
                 subDescText.text = "Currently: Max " + (2 + selectedUpgradeTier) + " Shots";
                 break;
-            case BtnIndShieldStr: // Shield Strength Upgrade uses a +50% modifier.
+            case BtnIndShieldStr: // Shield Strength: +50% modifier.
                 subDescText.text = "Currently: +" + (selectedUpgradeTier * 50) + "%";
                 break;
-            default: // All other upgradable stats use a +20% modifier.
+            case BtnIndAutoFire: // Auto-Fire: +20% modifier
                 subDescText.text = "Currently: +" + (selectedUpgradeTier * 20) + "%";
+                break;
+            default: // All other upgradable stats use a +10% modifier.
+                subDescText.text = "Currently: +" + (selectedUpgradeTier * 10) + "%";
                 break;
         }
     }
@@ -123,17 +125,21 @@ public class PurchasePanel : MonoBehaviour
                 upgradeBtnText.text = "";
                 cancelBtnText.text = "";
                 break;
-            case BtnIndShotLimit: // Shot Limit Upgrade
+            case BtnIndShotLimit:
                 if (!selectedPurchaseMaxed)
                     upgradeBtnText.text = $"+1 Shot\n({selectedPurchasePrice}c)";
                 break;
-            case BtnIndShieldStr: // Shield Strength Upgrade
+            case BtnIndShieldStr:
                 if (!selectedPurchaseMaxed)
                     upgradeBtnText.text = $"+50%\n({selectedPurchasePrice}c)";
                 break;
-            default: // All other upgradable stats use a +20% modifier.
+            case BtnIndAutoFire:
                 if (!selectedPurchaseMaxed)
                     upgradeBtnText.text = $"+20%\n({selectedPurchasePrice}c)";
+                break;
+            default: // All other upgradable stats use a +20% modifier.
+                if (!selectedPurchaseMaxed)
+                    upgradeBtnText.text = $"+10%\n({selectedPurchasePrice}c)";
                 break;
         }
     }
@@ -151,16 +157,7 @@ public class PurchasePanel : MonoBehaviour
         {
             if (BetweenScenes.PlayerShopCredits[plrIndex] >= selectedPurchasePrice)
             {
-                if (purchaseIndex == BtnIndShieldCell)
-                {
-                    BetweenScenes.PlayerShopShields[plrIndex] += 10f;
-                    if (BetweenScenes.PlayerShopShields[plrIndex] > 80f)
-                        BetweenScenes.PlayerShopShields[plrIndex] = 80f;
-                }
-                else if (purchaseIndex == BtnIndexLife)
-                    BetweenScenes.PlayerShopLives += 1;
-                else // All other upgrades
-                    BetweenScenes.PlayerShopUpgrades[plrIndex][purchaseIndex] += 1;
+                BetweenScenes.PlayerShopUpgrades[plrIndex][purchaseIndex] += 1;
 
                 BetweenScenes.PlayerShopCredits[plrIndex] -= selectedPurchasePrice;
                 upgradeBtn.GetComponent<AudioSource>().Play();

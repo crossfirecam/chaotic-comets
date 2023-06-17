@@ -835,7 +835,16 @@ MonoBehaviour:
   plrIndex: 0
   readyBtn: {fileID: 0}
   plrReady: 0
-  mainPlayerButtons: []
+  mainPlayerButtons:
+  - {fileID: 7756567149636217161}
+  - {fileID: 1792810071864756826}
+  - {fileID: 1792810070990715845}
+  - {fileID: 1894066859023327830}
+  - {fileID: 1792810070405277194}
+  - {fileID: 1792810070283600362}
+  - {fileID: 1792810070404447448}
+  - {fileID: 1792810069935368549}
+  - {fileID: 1792810071599277230}
 --- !u!1 &1792810070143707148
 GameObject:
   m_ObjectHideFlags: 0
@@ -2272,7 +2281,7 @@ RectTransform:
   m_GameObject: {fileID: 1792810070990715867}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 155.06227}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1792810071009635732}

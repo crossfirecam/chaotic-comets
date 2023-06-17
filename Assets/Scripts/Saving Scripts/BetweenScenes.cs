@@ -18,7 +18,7 @@
     public static bool CheaterMode = false;
 
     // Upgrades for the players. These values are only committed to a save once the current shop and next area are passed.
-    // In order, upgrades are: Brake Power, Teleport Rate, Auto Firerate, Shot Limit, Shot Speed, Shot Range.
+    // In order, upgrades are: Shield Str, Teleport Rate, Ship Speed, Brake Power, Auto Firerate, Shot Limit, Shot Speed, Shot Range.
     public static int[][] PlayerShopUpgrades = new int[2][] {
         new int[] { 0, 0, 0, 0, 0, 0, 0, 0 },
         new int[] { 0, 0, 0, 0, 0, 0, 0, 0 }

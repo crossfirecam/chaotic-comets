@@ -77,11 +77,11 @@ public class PlayerMisc : MonoBehaviour
         upgradeShield = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][0] / 2f); // Shield upgrade is in intervals of 50%
         upgradeTeleportRate = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][1] / 5f);
         upgradeSpeed = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][2] / 10f); // Weaken the speed upgrade
-        upgradeBrake = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][3] / 5f);
+        upgradeBrake = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][3] / 10f);
         upgradeAutoRate = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][4] / 5f);
         upgradeShotLimit = BetweenScenes.PlayerShopUpgrades[p.playerNumber][5]; // Shot limit upgrade is in intervals of 1 shot
-        upgradeShotSpeed = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][6] / 5f);
-        upgradeShotRange = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][7] / 5f);
+        upgradeShotSpeed = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][6] / 10f);
+        upgradeShotRange = 1 + (BetweenScenes.PlayerShopUpgrades[p.playerNumber][7] / 10f);
 
         p.damageFromImpact /= upgradeShield;
         p.damageFromUfoBullet /= upgradeShield;
