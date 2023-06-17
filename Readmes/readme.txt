@@ -9,7 +9,7 @@ There's a two player mode, shop for upgrades, and various temporary powerups.
 The game can be played with keyboard or controller. Check 'Options' in-game to rebind controls.
 Online multiplayer can be achieved using Parsec: https://parsec.app/
 
-To uninstall this game, delete the entire 'Chaotic Comets' folder.
+To uninstall this game, delete the entire 'Chaotic Comets v1.5' folder.
 
 ------------------
 Troubleshooting
@@ -28,3 +28,4 @@ SOMETHING ELSE?
 - If key presses in other apps are causing inputs in Chaotic Comets, click back and forth between the windows to fix it
 - If Parsec isn't accepting connecting player's keyboard or gamepad, visit https://support.parsec.app/hc/en-us/articles/115002702731
 - If you find any bugs, please leave a comment at: https://crossfirecam.itch.io/chaotic-comets
+- The game may malfunction after upgrading from v1.4 to v1.5. Try visiting Options & clicking 'Reset Game Data'

@@ -9117,7 +9117,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: The ship is equipped with thrusters, a laser cannon, and panic-teleportation
     system. Replacements are pricey; avoid impacts with obstacles. (An extra ship
-    is granted every 20,000 credits)
+    is granted every 10,000 credits)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

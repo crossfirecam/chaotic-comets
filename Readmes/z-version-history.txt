@@ -3,8 +3,11 @@ Chaotic Comets Version History
 ------------------
 Version 1.5 - For All The Marbles Update (2023 June)
 ------------------
-- While putting together an online-playable version, I decided to make some truly final improvements to the game
-- TODO
+- While putting together an online-playable version, I decided to make some final improvements to the game
+- Difficulty changes: Now applied in the Options menu. Only two difficulties now, 'Normal' and 'Hard'. Both are more difficult
+- Ship changes: Ship handling improved, triple shot & rapid shot buffed
+- Shop changes: Shield/Life purchasing removed, most upgrades nerfed
+- Quality of Life: SFX changes, greatly reduced UI text, level transitions & respawning is faster
 
 ------------------
 Version 1.4 - Overhaul Update (2021 April)

@@ -131,5 +131,14 @@ public partial class MainMenu : MonoBehaviour
         ChangeScoreTypeAndPopulate(0);
         BackToMenu();
     }
+
+    // Added this to deal with potential problems after changes made in v1.5
+    public void ResetAllPanelYes()
+    {
+        ResetHighScoreEntries();
+        ChangeScoreTypeAndPopulate(0);
+        PlayerPrefs.DeleteAll();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("StartMenu");
+    }
 }
 
