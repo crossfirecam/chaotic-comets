@@ -68,7 +68,7 @@ public partial class GameManager : MonoBehaviour
     {
         if (!player1dead || !player2dead)
         {
-            float waitTime = 1f;
+            float waitTime = 0f;
             GameObject[] listOfUfos = GameObject.FindGameObjectsWithTag(Tag_Ufo);
             if (listOfUfos.Length != 0)
             {

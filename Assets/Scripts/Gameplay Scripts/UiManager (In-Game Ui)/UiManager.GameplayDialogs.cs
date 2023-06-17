@@ -20,27 +20,27 @@ public partial class UiManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Show 'Area Clear!' for two seconds.<br/>
+    /// Show 'Area Clear!' for one second.<br/>
     /// Show bonus congrats or failure text for one second.<br/>
     /// Start ticking down bonus if player has it, or skip.<br/>
-    /// Wait two seconds, and fade screen to the shop.
+    /// Wait a second, and fade screen to the shop.
     /// </summary>
     private IEnumerator CountdownBonus(int bonusTime)
     {
         int bonusToAward = FigureOutBonusAmount(bonusTime);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1f);
         congratsTitleText.gameObject.SetActive(true);
         if (bonusToAward == 0)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1f);
             congratsNoBonusText.SetActive(true);
         }
         else
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1f);
             congratsBonusText.gameObject.SetActive(true);
             congratsBonusText.text = "Time Bonus: " + bonusToAward;
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
 
             for (int i = bonusToAward; i > 0; i -= 10)
             {
@@ -60,7 +60,7 @@ public partial class UiManager : MonoBehaviour
             }
             congratsBonusText.text = "Time Bonus: 0";
         }
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         StartCoroutine(UsefulFunctions.FadeScreenBlack("to", fadeBlackOverlay));
         GameManager.i.Invoke("BringUpShop", 2f);
     }

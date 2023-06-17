@@ -1630,9 +1630,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243287936215163392, guid: c45b130275ef2b747be4423907a74a75,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: eda581b454cba4c4585fe1feda52153a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 2042eb7d25711cc49ac25acc8acba9a6, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 0.057
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -47961,7 +47961,7 @@ PrefabInstance:
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: cheatMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
@@ -48061,7 +48061,7 @@ PrefabInstance:
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
       propertyPath: instantkillAsteroids
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7573104356374691842, guid: 066c9ff725ed57f49b4f3e2606b5f38f,
         type: 3}
