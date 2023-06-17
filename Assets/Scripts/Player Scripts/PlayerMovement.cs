@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float currentSpeed;
     // Thrusting
-    internal float thrustPower = 700f, turnThrustPower = 200f;
+    internal float thrustPower = 700f, turnThrustPower = 240f;
     // Braking
     private readonly float stopSpeedThreshold = 0.8f;
     internal float manualBrakePower = 0.5f;

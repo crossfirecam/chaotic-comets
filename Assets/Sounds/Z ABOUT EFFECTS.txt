@@ -21,7 +21,7 @@ Player Sounds
 PlrAutoBrake - EXPLOSION_Short_Smooth_Brighter_Kickback_mono
 PlrBlaster1 - BLASTER_Rapid_Charge_Pitch_Down_Brighter_stereo
 PlrBlaster2 - BLASTER_Rapid_Charge_Pitch_Down_Brighter_stereo B
-PlrDeathExplosionEXPLOSION_Long_Pitched_Impact_with_Smooth_Tail_stereo
+PlrDeathExplosion (edited) - EXPLOSION_Long_Pitched_Impact_with_Smooth_Tail_stereo 
 PlrExtraLife - 8BIT_RETRO_Coin_Collect_Two_Note_Deep_Twinkle_mono
 PlrImpactSoft - IMPACT_Metal_Soft_Plate_01_mono
 PlrTeleportNotReady - UI_Error_Subtle_Deep_stereo

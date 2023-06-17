@@ -8,11 +8,10 @@ public partial class UiManager : MonoBehaviour
 {
     [Header("Game Over Dialog UI")]
     [SerializeField] private GameObject panelGameOver;
-    [SerializeField] private GameObject panelGameOverAlt;
-    [SerializeField] private Button buttonWhenGameOver, buttonWhenGameOverAlt;
+    [SerializeField] private Button buttonWhenGameOver;
+    [SerializeField] private TMP_InputField currentNameField;
     private int totalScore;
     private string mode;
-    private TMP_InputField currentNameField;
 
     // Show game over panel and pause the game when the game is over
     public void GameOver()
@@ -21,7 +20,7 @@ public partial class UiManager : MonoBehaviour
         BetweenScenes.ResumingFromSave = false;
         panelGameOver.SetActive(true);
         buttonWhenGameOver.Select();
-        FindFieldAndLoadLastName();
+        LoadLastUsedName();
 
         CalculateTotalScore("GameOver");
 
@@ -64,10 +63,10 @@ public partial class UiManager : MonoBehaviour
         if (HighScoreHandling.IsThisAHighScore(totalScore) && !GameManager.i.tutorialMode)
         {
             panelPauseMenu.SetActive(false);
-            panelGameOverAlt.SetActive(true);
+            panelGameOver.SetActive(true);
             fadeBlackOverlay.gameObject.SetActive(false);
-            buttonWhenGameOverAlt.Select();
-            FindFieldAndLoadLastName();
+            buttonWhenGameOver.Select();
+            LoadLastUsedName();
         }
         else
         {
@@ -121,28 +120,14 @@ public partial class UiManager : MonoBehaviour
             TextMeshProUGUI changeCongratsTextIf2P;
             if (originOfRequest == "GameOver")
             {
-                changeCongratsTextIf2P = panelGameOver.transform.Find("NewScoreParts").Find("EnterNameText").GetComponent<TextMeshProUGUI>();
-                changeCongratsTextIf2P.text = "New highscore!\nEnter your names.";
-            }
-            else if (originOfRequest == "MissionCancel")
-            {
-                changeCongratsTextIf2P = panelGameOverAlt.transform.Find("NewScoreParts").Find("EnterNameText").GetComponent<TextMeshProUGUI>();
-                changeCongratsTextIf2P.text = "...but you got a new highscore!\nEnter your names.";
+                changeCongratsTextIf2P = panelGameOver.transform.Find("NewScoreParts").Find("Placeholder").GetComponent<TextMeshProUGUI>();
+                changeCongratsTextIf2P.text = "Enter names...";
             }
         }
     }
 
-    private void FindFieldAndLoadLastName()
+    private void LoadLastUsedName()
     {
-        if (panelGameOver.activeInHierarchy)
-        {
-            currentNameField = panelGameOver.transform.Find("NewScoreParts").Find("NameField").GetComponent<TMP_InputField>();
-        }
-        else //(Refs.gameOverPanelAlt.activeInHierarchy)
-        {
-            currentNameField = panelGameOverAlt.transform.Find("NewScoreParts").Find("NameField").GetComponent<TMP_InputField>();
-        }
-        if (BetweenScenes.PlayerCount == 1) { currentNameField.text = PlayerPrefs.GetString("SavedNameFor1P"); }
-        else if (BetweenScenes.PlayerCount == 2) { currentNameField.text = PlayerPrefs.GetString("SavedNameFor2P"); }
+        currentNameField.text = PlayerPrefs.GetString(BetweenScenes.PlayerCount == 1 ? "SavedNameFor1P" : "SavedNameFor2P");
     }
 }

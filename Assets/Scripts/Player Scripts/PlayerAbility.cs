@@ -68,7 +68,7 @@ public class PlayerAbility : MonoBehaviour
         p.capsCollider.enabled = false;
         p.plrMisc.StartCoroutine(p.plrMisc.FadeShip("Out"));
         StartCoroutine(nameof(DepletePowerMeter));
-        Invoke(nameof(HyperspaceEnd), 2f);
+        Invoke(nameof(HyperspaceEnd), 1.5f);
     }
 
     private void HyperspaceEnd()
