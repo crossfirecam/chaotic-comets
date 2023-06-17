@@ -116,7 +116,7 @@ public class PlayerWeapons : MonoBehaviour
     {
         if (p.plrPowerups.ifTripleShot)
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 4; i++)
             {
                 CreateBullet(mainCannon.position, mainCannon.rotation);
                 CreateBullet(tripleCannon1.position, tripleCannon1.rotation, false);
@@ -126,7 +126,7 @@ public class PlayerWeapons : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 CreateBullet(mainCannon.position, mainCannon.rotation);
                 yield return new WaitForSeconds(rapidFireBetweenBullets);

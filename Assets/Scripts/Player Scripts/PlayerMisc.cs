@@ -32,8 +32,8 @@ public class PlayerMisc : MonoBehaviour
 
             if (BetweenScenes.Difficulty == 2)
             {
-                p.damageFromImpact *= 1.5f;
-                p.damageFromUfoBullet *= 1.5f;
+                p.damageFromImpact *= 1.7f;
+                p.damageFromUfoBullet *= 1.7f;
             }
 
             SetUpgradeLevelsForPlayer();

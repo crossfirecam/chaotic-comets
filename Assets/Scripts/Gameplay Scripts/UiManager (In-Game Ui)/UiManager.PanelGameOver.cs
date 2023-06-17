@@ -117,10 +117,9 @@ public partial class UiManager : MonoBehaviour
         {
             totalScore += GameManager.i.Refs.playerShip2.totalCredits;
             mode = $"2P ({difficulty})";
-            TextMeshProUGUI changeCongratsTextIf2P;
             if (originOfRequest == "GameOver")
             {
-                changeCongratsTextIf2P = panelGameOver.transform.Find("NewScoreParts").Find("Placeholder").GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI changeCongratsTextIf2P = currentNameField.transform.Find("Text Area/Placeholder").GetComponent<TextMeshProUGUI>();
                 changeCongratsTextIf2P.text = "Enter names...";
             }
         }

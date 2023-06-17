@@ -5,7 +5,7 @@ public class PlayerUiSounds : MonoBehaviour
     [SerializeField] PlayerMain p = default;
 
     // UI Systems
-    internal readonly int bonusInterval = 20000;
+    internal readonly int bonusInterval = 10000;
     internal float prevshields;
 
     // Sound Systems

@@ -11,8 +11,8 @@ public class OptionsPanel : MonoBehaviour
     [SerializeField] private GameObject cheatDisclaimer, cheatDisclaimerResumeSave, controlDialog;
 
     [SerializeField] private TextMeshProUGUI diffText;
-    private readonly string diffTextNormal = "- Ship takes 3 asteroid hits\n- Asteroids & UFOs move slowly\n- Canisters are common";
-    private readonly string diffTextHard = "- Ship takes 2 asteroid hits\n- Asteroids & UFOs are faster\n- Canisters are rare";
+    private readonly string diffTextNormal = "- Starting shields are strong\n- Asteroids & UFOs move slowly\n- Canisters are common";
+    private readonly string diffTextHard = "- Starting shields are weak\n- Asteroids & UFOs are faster\n- Canisters are rare";
 
     public void ShowOptionsPanel()
     {
