@@ -9,14 +9,13 @@ public partial class MainMenu : MonoBehaviour
     [SerializeField] private Transform mainMenuPanel;
     [SerializeField] private GameObject parsecDisclaimer;
     public OptionsPanel optionsPanel;
-    public DifficultyPanel difficultyPanel;
     public SavePanel savePanel;
     public ResetScoresPanel resetScoresPanel;
     private Button returnToMenuButton;
 
     /// <summary>
     /// <br>Checks if a save exists in Saving_SaveManager, which also isn't a save in Cheat Mode.</br>
-    /// <br>If a save exists, show SavePanel. If no save exists, show DifficultyPanel.</br>
+    /// <br>If a save exists, show SavePanel. If not, immediately start the game.</br>
     /// </summary>
     /// <param name="plrAmountRequested">Set by the 'One' or 'Two Player' buttons on main menu.</param>
     public void CheckForSaveFile(int plrAmountRequested)
@@ -24,7 +23,7 @@ public partial class MainMenu : MonoBehaviour
         BetweenScenes.PlayerCount = plrAmountRequested;
 
         // If save found, and cheat mode flag is not found in the save, show save prompt
-        // If none found, show difficulty prompt
+        // If none found, start the game
         if (Saving_SaveManager.LoadData() != null && !Saving_SaveManager.LoadData().isCheatModeOn)
         {
             savePanel.gameObject.SetActive(true);
@@ -32,8 +31,7 @@ public partial class MainMenu : MonoBehaviour
         }
         else
         {
-            difficultyPanel.gameObject.SetActive(true);
-            difficultyPanel.ShowDifficultyPanel();
+            StartGame();
         }
     }
     /// <summary>
@@ -45,7 +43,6 @@ public partial class MainMenu : MonoBehaviour
         {
             audioMenuBack.Play();
             savePanel.gameObject.SetActive(false);
-            difficultyPanel.gameObject.SetActive(false);
             resetScoresPanel.gameObject.SetActive(false);
             optionsPanel.gameObject.SetActive(false);
             parsecDisclaimer.SetActive(false);

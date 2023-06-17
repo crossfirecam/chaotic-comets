@@ -21,14 +21,11 @@ public class PlayerSpawnDeath : MonoBehaviour
         }
         else
         {
-            // If difficulty is easy, do not remove Auto-Brake
-            if (BetweenScenes.Difficulty != 0)
-                p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.AutoBrake);
-
             // If in tutorial mode, do not remove rapid shot (only section where player can die with a powerup)
             if (!GameManager.i.tutorialMode)
                 p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.RapidShot);
-
+            
+            p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.AutoBrake);
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.TripleShot);
             p.plrPowerups.RemovePowerup(PlayerPowerups.Powerups.FarShot);
             print($"Non-insurance powerups removed from player {p.playerNumber + 1}");
@@ -70,10 +67,6 @@ public class PlayerSpawnDeath : MonoBehaviour
     {
         if (GameManager.i.playerLives >= 0 || GameManager.i.tutorialMode)
         {
-            // If difficulty is Easy, equip Auto-Brake every respawn
-            if (BetweenScenes.Difficulty == 0)
-                p.plrPowerups.ApplyPowerup(PlayerPowerups.Powerups.AutoBrake, false);
-
             // Player becomes visible, collision damage is disabled until shields recharge, but collider itself is enabled to rebound objects
             p.modelPlayer.SetActive(true);
             p.collisionsCanDamage = false;

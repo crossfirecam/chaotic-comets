@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Saving_PlayerManager
 {
     public int playerCount = 1;
-    public int difficulty = 0;
+    public int difficulty = 1;
     public int level;
     public int lives;
     public bool player1dead, player2dead;

@@ -1,7 +1,7 @@
 ﻿public static class BetweenScenes {
     // Defaut value of 1 player for debugging. Alternative is '2'.
     public static int PlayerCount = 1;
-    // Default value of Normal difficulty for debugging. Alternatives are '0' Easy, '2' Hard, '3' Insane.
+    // Default value of Normal difficulty for debugging. Alternative is '2' Hard. (Deprecated values: 0, 3)
     public static int Difficulty = 1;
 
     // By default, the game assumes it's not being resumed from a save. Until it either...

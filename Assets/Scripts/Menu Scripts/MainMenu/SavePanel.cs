@@ -19,10 +19,8 @@ public class SavePanel : MonoBehaviour
         string saveDifficulty;
         switch (data.difficulty)
         {
-            case 0: saveDifficulty = "Easy"; break;
             case 1: saveDifficulty = "Normal"; break;
             case 2: saveDifficulty = "Hard"; break;
-            case 3: saveDifficulty = "Insane"; break;
             default: saveDifficulty = "Error"; break;
         }
         string saveLevel = $"Level {data.level + 1}";
@@ -44,7 +42,6 @@ public class SavePanel : MonoBehaviour
     public void SaidNoToResuming()
     {
         BetweenScenes.ResumingFromSave = false;
-        mainMenu.difficultyPanel.gameObject.SetActive(true);
-        mainMenu.difficultyPanel.ShowDifficultyPanel();
+        mainMenu.StartGame();
     }
 }
