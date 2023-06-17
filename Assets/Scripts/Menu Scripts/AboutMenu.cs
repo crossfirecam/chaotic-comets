@@ -42,7 +42,7 @@ public class AboutMenu : MonoBehaviour {
     }
 
     public void NextStageOfDev() {
-        if (stage < 9) { stage++; }
+        if (stage < 10) { stage++; }
         else { stage = 0; }
         if (stage == 0) {
             devImage.sprite = devIntro;
@@ -80,18 +80,18 @@ public class AboutMenu : MonoBehaviour {
             devImage.sprite = dev1_3;
             devText.text = devText1_3;
         }
-        else if (stage == 7)
+        else if (stage == 8)
         {
             devImage.sprite = dev1_4;
             devText.text = devText1_4;
         }
-        else if (stage == 8)
+        else if (stage == 9)
         {
             devImage.sprite = dev1_5;
             devText.text = devText1_5;
             devNextButtonText.text = "What's Next? >";
         }
-        else if (stage == 9) {
+        else if (stage == 10) {
             devImage.sprite = devWhatNext;
             devText.text = devTextWhatNext;
             devNextButtonText.text = "< Back to Beginning";
