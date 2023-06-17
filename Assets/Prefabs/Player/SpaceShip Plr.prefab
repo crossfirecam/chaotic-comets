@@ -9935,7 +9935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p: {fileID: 114782296946591882}
-  bulletForce: 500
+  bulletForce: 700
   rapidFireBetweenBullets: 0.06
   bulletRangeMultipler: 1
   bullet: {fileID: 1298484566697936, guid: 9c85a0c3106c44c46847d29b3c795192, type: 3}

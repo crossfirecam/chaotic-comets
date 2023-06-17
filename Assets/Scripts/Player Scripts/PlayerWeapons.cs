@@ -7,7 +7,7 @@ public class PlayerWeapons : MonoBehaviour
     [SerializeField] PlayerMain p = default;
 
     [Header("Weapon Systems")]
-    public float bulletForce = 500f;
+    public float bulletForce = 700f;
     internal float bulletForceBase = 0f;
     public float rapidFireBetweenBullets = 0.06f;
     private const float BulletRange = 280f, FarShotForceIncrease = 1.4f, FarShotRangeIncrease = 0.75f;

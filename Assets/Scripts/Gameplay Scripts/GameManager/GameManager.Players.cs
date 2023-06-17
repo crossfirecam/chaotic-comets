@@ -4,7 +4,7 @@ using static Constants;
 public partial class GameManager : MonoBehaviour
 {
     [Header("Player Status Variables")]
-    public int playerLives = 2;
+    public int playerLives = 3;
     public bool player1dead = false;
     public bool player2dead = true; // Only one player by default
     [HideInInspector] public bool player1TEMPDEAD = false, player2TEMPDEAD = false; // Only used to alert UFO that player is temporarily inactive
