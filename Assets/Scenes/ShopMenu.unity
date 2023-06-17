@@ -410,7 +410,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -93, y: 399.7}
-  m_SizeDelta: {x: 199.24857, y: 45.144104}
+  m_SizeDelta: {x: 87.8072, y: 45.1441}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &246136125
 MonoBehaviour:
@@ -432,12 +432,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b><u>Progress auto-saved</u></b>
+  m_text: '<b><u>Auto-saved</u></b>
 
-    Readying up will erase save.
+    Readying up
 
-    The
-    next Depot will save again.'
+    will erase save.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5959,6 +5958,11 @@ PrefabInstance:
       propertyPath: eventSystem
       value: 
       objectReference: {fileID: 1830773145}
+    - target: {fileID: 3868570112973198654, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000015258789
+      objectReference: {fileID: 0}
     - target: {fileID: 8694004416064757419, guid: 5f5d51ea9539197488a5ca0dd81a4bde,
         type: 3}
       propertyPath: m_textInfo.lineCount

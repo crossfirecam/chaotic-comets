@@ -75,13 +75,6 @@ public class PurchasePanel : MonoBehaviour
         selectedPurchasePrice = 0; // Default value, won't be overwritten if the purchase isn't valid.
         switch (purchaseIndex)
         {
-            case BtnIndexLife: // Extra Ship always valid to buy.
-                selectedPurchasePrice = 5000;
-                break;
-            case BtnIndShieldCell: // Charge Shields requires less than 8 Cells to buy.
-                if (BetweenScenes.PlayerShopShields[plrIndex] / 10 != 8)
-                    selectedPurchasePrice = 200;
-                break;
             case BtnIndShotLimit: // Shot Limit Upgrade is limited to 2.
                 if (selectedUpgradeTier != majorUpgradeCap)
                     selectedPurchasePrice = majorUpgradePrice + (majorUpgradePrice * selectedUpgradeTier);
@@ -108,13 +101,6 @@ public class PurchasePanel : MonoBehaviour
             case BtnIndReady: // Ready Button
                 subDescText.text = "";
                 break;
-            case BtnIndexLife: // Buy Extra Ship
-                string pluralOrNot = BetweenScenes.PlayerShopLives == 1 ? "" : "s";
-                subDescText.text = "Currently: " + BetweenScenes.PlayerShopLives + " Ship" + pluralOrNot;
-                break;
-            case BtnIndShieldCell: // Charge Shields
-                subDescText.text = "Currently: " + (BetweenScenes.PlayerShopShields[plrIndex] / 10) + "/8 Cells";
-                break;
             case BtnIndShotLimit: // Shot Limit Upgrade uses +1 Shot modifiers
                 subDescText.text = "Currently: Max " + (2 + selectedUpgradeTier) + " Shots";
                 break;
@@ -136,15 +122,6 @@ public class PurchasePanel : MonoBehaviour
             case BtnIndReady: // Ready Button
                 upgradeBtnText.text = "";
                 cancelBtnText.text = "";
-                break;
-            case BtnIndexLife: // Buy Extra Ship
-                upgradeBtnText.text = "+1 Ship\n(5000c)";
-                break;
-            case BtnIndShieldCell: // Charge Shields
-                if (!selectedPurchaseMaxed)
-                    upgradeBtnText.text = "+1 Cell\n(200c)";
-                else
-                    upgradeBtnText.text = "Shield Cells maxed";
                 break;
             case BtnIndShotLimit: // Shot Limit Upgrade
                 if (!selectedPurchaseMaxed)
@@ -202,21 +179,18 @@ public class PurchasePanel : MonoBehaviour
      * ------------------------------------------------------------------------------------------------------------------ */
     private readonly string[] purchasePanelTitleStrings = { "Shield Strength", "Teleport Rate",
                                                           "Ship Speed", "Brake Power",
-                                                          "Auto Firerate", "Shot Limit",
+                                                          "Auto-Fire", "Shot Limit",
                                                           "Shot Speed", "Shot Range",
-                                                          "Charge Shields", "Buy Extra Ship",
                                                           "Ready To Leave" };
 
     private readonly string[] purchasePanelDescStrings = { "Take more hits. \n+0% = 3 impacts\n+50% = 4 impacts\n+100% = 6 impacts",
-                                                         "Teleportation becomes usable more often.",
-                                                         "Accelerate faster and a gain a higher top speed.",
-                                                         "Stop faster when holding the manual brake.",
-                                                         "Holding down 'Fire' for automatic fire will shoot bullets faster.",
+                                                         "Reduce teleport cooldown.",
+                                                         "Accelerate faster, higher top speed.",
+                                                         "Stop faster with the manual brake.",
+                                                         "Holding down 'Fire' will shoot faster.",
                                                          "Major increase of firepower. More bullets can be fired in one go.",
-                                                         "All bullets will travel faster. Rate of fire increases.",
-                                                         "All bullets will travel further. Rate of fire decreases.",
-                                                         "Repair the shield of your ship.",
-                                                         "Buy a spare Ship.\n(Note: Every 10,000 total points gives a free Ship)",
+                                                         "Bullets travel faster. Rate of fire increases.",
+                                                         "Bullets travel further. Rate of fire decreases.",
                                                          "" };
 
     private readonly string shieldUpgradeDescAltString = "Take more hits. \n+0% = 2 impacts\n+50% = 3 impacts\n+100% = 4 impacts";
