@@ -15,7 +15,7 @@ public class PurchasePanel : MonoBehaviour
     private readonly int baseUpgradePrice = 500, priceIncreasePerLevel = 500, upgradeCap = 5;
     private readonly int majorUpgradePrice = 10000, majorUpgradeCap = 2;
 
-    private const int BtnIndReady = 8, BtnIndShotLimit = 5, BtnIndAutoFire = 4, BtnIndShieldStr = 0;
+    private const int BtnIndReady = 8, BtnIndShotLimit = 5, BtnIndAutoFire = 4, BtnIndTeleport = 1, BtnIndShieldStr = 0;
 
     private void Start()
     {
@@ -109,6 +109,9 @@ public class PurchasePanel : MonoBehaviour
             case BtnIndAutoFire: // Auto-Fire: +20% modifier
                 subDescText.text = "Currently: +" + (selectedUpgradeTier * 20) + "%";
                 break;
+            case BtnIndTeleport: // Auto-Fire: +20% modifier
+                subDescText.text = "Currently: +" + (selectedUpgradeTier * 20) + "%";
+                break;
             default: // All other upgradable stats use a +10% modifier.
                 subDescText.text = "Currently: +" + (selectedUpgradeTier * 10) + "%";
                 break;
@@ -134,6 +137,10 @@ public class PurchasePanel : MonoBehaviour
                     upgradeBtnText.text = $"+50%\n({selectedPurchasePrice}c)";
                 break;
             case BtnIndAutoFire:
+                if (!selectedPurchaseMaxed)
+                    upgradeBtnText.text = $"+20%\n({selectedPurchasePrice}c)";
+                break;
+            case BtnIndTeleport:
                 if (!selectedPurchaseMaxed)
                     upgradeBtnText.text = $"+20%\n({selectedPurchasePrice}c)";
                 break;

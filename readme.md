@@ -20,3 +20,6 @@ Apr 2021 - v1.4.1 - Tutorial bug fix.\
 Apr 2023 - v1.5 - Released on WebGL. Truly final update for some gameplay tweaks & UI cleanup.\
 
 Thanks in advance for trying my game, or just being interested in the code!
+
+To compile from source:
+- Install Rewired 1.1.44.0 from Unity Package Manager
