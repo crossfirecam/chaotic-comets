@@ -1,25 +1,23 @@
-Chaotic Comets 1.5\
-Game made by CrossfireCam (https://crossfirecam.itch.io)
+# Chaotic Comets
+An endless space-shooter game made by CrossfireCam (https://crossfirecam.itch.io)
 
-'Chaotic Comets' is an endless space shooter that supports one or two players. Play as a spacecraft tasked with clearing a field of asteroids, constantly on the lookout for enemy aliens that will hurt you and canisters that will help you.
+Play as a spacecraft tasked with clearing a field of asteroids, while remaining on the lookout for enemy aliens that will hurt you and canisters that will help you. Chaotic Comets supports 1 or 2 players.
 
-This repository contains the source code for Chaotic Comets, made in Unity and using C# as a scripting language. Feel free to peruse it.
-For a playable game executable, please check out the itch.io page: https://crossfirecam.itch.io/chaotic-comets. Or the 'Releases' tab in this repo.
+This repo contains the Unity/C# source code. To play the game, check out: https://crossfirecam.itch.io/chaotic-comets.
 
-The current version is v1.5, and the project has completed development. I'm open to updating the game with bug fixes if they're sent in.
+## Project Releases:
+- Nov 2018 (b1.0): Game shown at a university design show to 80 people
+- Mar 2019 (v1.0): Game released online
+- May 2019 (v1.1): Add music & particle effects
+- Jun 2019 (v1.2): Improved enemy AI. Add auto-saves & upgrade shop
+- Jun 2020 (v1.3): Add new enemy, high score board, interactive tutorial, & many other features
+- Apr 2021 (v1.4): Shop redesign, UI improvement, gameplay tweaks
+- Apr 2021 (v1.4.1): Tutorial bugfix
+- Apr 2023 (v1.5): WebGL build now available. Final update for gameplay tweaks & UI cleanup
+- Oct 2025 (v1.5.1): Patched Unity vulnerability CVE-2025-59489
 
-Timeline of Project Releases:
+## Dev stuff
+Development has stopped on this project, but I'll fix bug-reports submitted via the Issues page.
 
-Nov 2018 - b1.0 - Game shown at a university design show to 80 people.\
-Mar 2019 - v1.0 - Game brought online publicly.\
-May 2019 - v1.1 - Music & particle effects.\
-Jun 2019 - v1.2 - Improved enemy AI and add auto-saves / upgrade shop.\
-Jun 2020 - v1.3 - New enemy, high score board, interactive tutorial, many other features.\
-Apr 2021 - v1.4 - Shop redesign, UI improvement, gameplay tweaks, final update.\
-Apr 2021 - v1.4.1 - Tutorial bug fix.\
-Apr 2023 - v1.5 - Released on WebGL. Truly final update for some gameplay tweaks & UI cleanup.\
-
-Thanks in advance for trying my game, or just being interested in the code!
-
-To compile from source:
-- Install Rewired 1.1.44.0 from Unity Package Manager
+Special requirements to compile from source:
+- Rewired: Purchase a seat from Unity Asset Store. This project was built with Rewired 1.1.59.0.
