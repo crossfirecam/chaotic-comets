@@ -38,7 +38,7 @@ public class AboutMenu : MonoBehaviour {
     }
     public void VisitWebsite()
     {
-        Application.OpenURL("https:/crossfirecam.itch.io/");
+        Application.OpenURL("https://crossfirecam.itch.io/");
     }
 
     public void NextStageOfDev() {
